@@ -1,0 +1,24 @@
+import postgres;
+import web;
+import routes;
+extern fn platform_pool_set(pool: int): int;
+extern fn platform_run(host: string, port: int, workers: int): int;
+fn migrations(conn: int): int {
+    if (postgres.migration_table(conn) == 0) { return 0; }
+    if (postgres.migrate(conn, 1, "registry", web.read("backend/migrations/0001_registry.sql")) == 0) { return 0; }
+    return 1;
+}
+fn run(): int {
+    web.scope_begin();
+    if (web.chars(web.env("DATABASE_URL", "")) == 0 || web.chars(web.env("JWT_SECRET", "")) == 0) { println("DATABASE_URL and JWT_SECRET are required"); web.scope_end(); return 1; }
+    let pool: int = postgres.pool_open(web.env("DATABASE_URL", ""), 5);
+    if (pool == 0) { println("PostgreSQL connection failed"); web.scope_end(); return 1; }
+    let conn: int = postgres.acquire(pool);
+    let ready: int = migrations(conn);
+    postgres.release(pool, conn);
+    if (ready == 0) { println("Database migrations failed"); postgres.pool_close(pool); web.scope_end(); return 1; }
+    platform_pool_set(pool);
+    web.scope_end();
+    let result: int = platform_run(web.env("HOST", "0.0.0.0"), web.integer(web.parse(web.env("PORT", "8080"))), 8);
+    postgres.pool_close(pool); web.scope_end(); return result;
+}

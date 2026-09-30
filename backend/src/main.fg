@@ -1,0 +1,2 @@
+import server;
+native main { return server.run(); }

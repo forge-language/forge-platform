@@ -1,0 +1,36 @@
+import web;
+import postgres;
+import database;
+import auth;
+import manifest;
+import strings;
+fn list(conn: int, request: int): int {
+ let search: string = web.query(request, "q"); if (web.chars(search) > 100) { return web.validation(request, "search too long"); }
+ return database.response(conn, request, "SELECT COALESCE(jsonb_agg(item ORDER BY item->>'name'),'[]'::jsonb)::text FROM (SELECT r.manifest || jsonb_build_object('owner',p.owner_name,'published_at',r.published_at) AS item FROM packages p JOIN LATERAL (SELECT * FROM releases WHERE name=p.name ORDER BY major DESC,minor DESC,patch DESC LIMIT 1) r ON true WHERE p.name ILIKE '%'||$1||'%' OR r.manifest->>'description' ILIKE '%'||$1||'%' ORDER BY p.name LIMIT 100) t", database.args1(search), 200);
+}
+fn detail(conn: int, request: int, name: string): int {
+ return database.response(conn, request, "SELECT jsonb_build_object('name',p.name,'owner',p.owner_name,'versions',COALESCE((SELECT jsonb_agg(r.manifest || jsonb_build_object('published_at',r.published_at) ORDER BY major DESC,minor DESC,patch DESC) FROM releases r WHERE r.name=p.name),'[]'::jsonb))::text FROM packages p WHERE name=$1", database.args1(name), 200);
+}
+fn release(conn: int, request: int, name: string, version: string): int {
+ return database.response(conn, request, "SELECT manifest::text FROM releases WHERE name=$1 AND version=$2", database.args2(name, version), 200);
+}
+fn publish(conn: int, request: int, user: int): int {
+ if (web.kind(user) != 4) { return web.error(request, 401, "unauthorized"); }
+ if (web.rate(str_concat("publish:", web.field_text(user, "sub")), 30, 600) == 0) { return web.error(request, 429, "rate_limit"); }
+ let value: int = web.request_json(request);
+ if (manifest.valid(value) == 0) { return web.validation(request, "invalid release manifest; exact x.y.z dependency versions and a 40-character Git commit are required"); }
+ if (auth.admin(user) == 0 && web.equal(web.lower(manifest.repo_owner(web.field_text(value, "repository_url"))), web.lower(web.field_text(user, "sub"))) == 0) { return web.error(request, 403, "repository_owner_mismatch"); }
+ if (postgres.begin(conn) == 0) { return web.error(request, 500, "internal"); }
+ let name: string = web.field_text(value, "name"); let version: string = web.field_text(value, "version");
+ let lock: int = database.query(conn, "SELECT pg_advisory_xact_lock(hashtextextended($1,19))", database.args1(name)); let ok: int = postgres.ok(lock); postgres.clear(lock);
+ if (ok == 0) { postgres.rollback(conn); return web.error(request, 500, "internal"); }
+ let owner: int = database.fetch(conn, "SELECT to_jsonb(owner_name)::text FROM packages WHERE name=$1", database.args1(name));
+ if (web.kind(owner) != 0 && auth.admin(user) == 0 && web.equal(web.text(owner), web.field_text(user, "sub")) == 0) { postgres.rollback(conn); return web.error(request, 403, "package_owner_mismatch"); }
+ let present: int = database.exists(conn, "SELECT EXISTS(SELECT 1 FROM releases WHERE name=$1 AND version=$2)", database.args2(name,version));
+ if (present != 0) { postgres.rollback(conn); if (present < 0) { return web.error(request, 500, "internal"); } return web.error(request, 409, "immutable_release"); }
+ let row: int = database.query(conn, "INSERT INTO packages(name,owner_name) VALUES($1,$2) ON CONFLICT(name) DO NOTHING", database.args2(name,web.field_text(user,"sub"))); ok = postgres.ok(row); postgres.clear(row);
+ let args: int = database.args2(name,version); web.push(args, web.jstring(web.dump(value))); web.push(args, web.number(manifest.component(version,0))); web.push(args,web.number(manifest.component(version,1))); web.push(args,web.number(manifest.component(version,2)));
+ if (ok != 0) { row = database.query(conn, "INSERT INTO releases(name,version,manifest,major,minor,patch) VALUES($1,$2,$3::jsonb,$4::int,$5::int,$6::int)",args); ok=postgres.ok(row); postgres.clear(row); }
+ if (ok == 0 || postgres.commit(conn) == 0) { postgres.rollback(conn); return web.error(request, 500, "internal"); }
+ return web.respond(request, 201, web.dump(value));
+}

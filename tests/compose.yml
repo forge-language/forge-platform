@@ -1,0 +1,9 @@
+services:
+ postgres:
+  volumes: !override []
+  tmpfs: [/var/lib/postgresql/data]
+  restart: "no"
+ api:
+  restart: "no"
+ site:
+  restart: "no"

@@ -1,0 +1,63 @@
+import web;
+import strings;
+fn claims(request: int): int {
+    let header: string = web.header(request, "Authorization");
+    if (web.starts(header, "Bearer ") == 0) { return 0; }
+    let token: string = str_sub(header, 7, str_len(header) - 7);
+    let user: int = web.jwt_verify(token, web.env("JWT_SECRET", ""));
+    let role: string = web.field_text(user, "role");
+    if (web.equal(role, "admin") == 0 && web.equal(role, "user") == 0) { return 0; }
+    return user;
+}
+fn admin(user: int): int { return web.equal(web.field_text(user, "role"), "admin"); }
+fn frontend(): string {
+    let url: string = web.env("FRONTEND_URL", "http://localhost:5173");
+    while (str_len(url) > 0 && str_char_at(url, str_len(url) - 1) == 47) { url = str_sub(url, 0, str_len(url) - 1); }
+    return url;
+}
+fn clear_cookie(request: int): int { return web.set_cookie(request, "forge_oauth_nonce", "", 0, web.starts(web.env("BACKEND_BASE_URL", ""), "https://")); }
+fn failure(request: int, code: string): int {
+    let result: int = web.redirect(request, str_concat(str_concat(frontend(), "/?error="), code));
+    clear_cookie(request); return result;
+}
+fn login(request: int): int {
+    let client: string = web.env("GITHUB_CLIENT_ID", "");
+    if (str_len(client) == 0) { return failure(request, "unauthorized"); }
+    let url: string = str_concat(web.env("GITHUB_OAUTH_BASE_URL", "https://github.com"), "/login/oauth/authorize?client_id=");
+    url = str_concat(url, web.urlencode(client));
+    url = str_concat(url, "&redirect_uri=");
+    url = str_concat(url, web.urlencode(str_concat(web.env("BACKEND_BASE_URL", "http://localhost:8080"), "/api/auth/github/callback")));
+    url = str_concat(url, "&scope=read:user&state=");
+    let state: int = web.object(); let nonce: string = web.uuid();
+    web.set(state, "sub", web.jstring(nonce)); web.set(state, "role", web.jstring("oauth")); web.set(state, "exp", web.number(web.now() + 600)); web.set(state, "path", web.jstring(web.query(request, "state")));
+    url = str_concat(url, web.urlencode(web.jwt_sign(state, web.env("JWT_SECRET", ""))));
+    let result: int = web.redirect(request, url);
+    web.set_cookie(request, "forge_oauth_nonce", nonce, 600, web.starts(web.env("BACKEND_BASE_URL", ""), "https://"));
+    return result;
+}
+fn callback(conn: int, request: int): int {
+    let state: int = web.jwt_verify(web.query(request, "state"), web.env("JWT_SECRET", ""));
+    let nonce: string = web.cookie(request, "forge_oauth_nonce");
+    if (web.kind(state) != 4 || web.equal(web.field_text(state, "role"), "oauth") == 0 || web.chars(nonce) == 0 || web.equal(nonce, web.field_text(state, "sub")) == 0) { return failure(request, "unauthorized"); }
+    let code: string = web.query(request, "code");
+    if (str_len(code) == 0) { return failure(request, "unauthorized"); }
+    let form: string = str_concat("client_id=", web.urlencode(web.env("GITHUB_CLIENT_ID", "")));
+    form = str_concat(form, "&client_secret="); form = str_concat(form, web.urlencode(web.env("GITHUB_CLIENT_SECRET", "")));
+    form = str_concat(form, "&code="); form = str_concat(form, web.urlencode(code));
+    form = str_concat(form, "&redirect_uri="); form = str_concat(form, web.urlencode(str_concat(web.env("BACKEND_BASE_URL", "http://localhost:8080"), "/api/auth/github/callback")));
+    let exchanged: int = web.fetch(str_concat(web.env("GITHUB_OAUTH_BASE_URL", "https://github.com"), "/login/oauth/access_token"), "POST", form, "");
+    let token: string = web.field_text(exchanged, "access_token");
+    if (str_len(token) == 0 || web.present(exchanged, "error") != 0) { return failure(request, "unauthorized"); }
+    let profile: int = web.fetch(str_concat(web.env("GITHUB_API_BASE_URL", "https://api.github.com"), "/user"), "GET", "", token);
+    let login: string = web.field_text(profile, "login");
+    if (web.valid(login, "login") == 0) { return failure(request, "unauthorized"); }
+    let role: string = "user";
+    let path: string = web.field_text(state, "path");
+    if (web.valid(path, "return_path") == 0) { path = "/"; }
+    if (web.equal(login, web.env("ADMIN_GITHUB_USERNAME", "")) != 0) { role = "admin"; path = "/publish"; }
+    let user: int = web.object(); web.set(user, "sub", web.jstring(login)); web.set(user, "role", web.jstring(role)); web.set(user, "avatar_url", web.get(profile, "avatar_url")); web.set(user, "exp", web.number(web.now() + 604800));
+    let jwt: string = web.jwt_sign(user, web.env("JWT_SECRET", ""));
+    if (str_len(jwt) == 0) { return failure(request, "unauthorized"); }
+    let result: int = web.redirect(request, str_concat(str_concat(str_concat(frontend(), path), "#token="), jwt));
+    clear_cookie(request); return result;
+}

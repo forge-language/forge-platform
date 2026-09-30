@@ -1,0 +1,58 @@
+[
+  {
+    "name": "forge-postgres",
+    "version": "0.1.0",
+    "description": "Parameterized PostgreSQL queries, connection pools and transactional migrations.",
+    "repository_url": "https://github.com/Helloworld0822/forge-postgres",
+    "module": "postgres.fg",
+    "license": "MIT",
+    "dependencies": {},
+    "native": {
+      "library": "forge_postgres",
+      "cmake_target": "forge_postgres",
+      "pkg_config": [
+        "libpq"
+      ]
+    },
+    "git_commit": "6c0a7e5b682cd61e62a8a309be478850253695aa",
+    "readme": "# Forge PostgreSQL\n\nA Forge source module with pooled PostgreSQL connections, parameterized queries,\nexplicit transactions and SQLx-compatible numbered migrations. `postgres.fg`\ncontains the public API and migration orchestration. `src/bridge.c` provides the\nlibpq FFI, resource ownership and bounded thread-safe pool.\n\nRequires Forge with imported extern declarations and module forward declarations,\nPostgreSQL libpq development headers, C11, CMake and pthreads. Build the native\nbridge with `cmake -S . -B build && cmake --build build`. Import `postgres` with\n`forge -I /path/to/forge-postgres`, and link `libforge_postgres.a -lpq -lpthread`.\n\nA connection is exclusively owned from `acquire` to `release`. Release rolls back\nunfinished transactions. Close the pool only after all workers have stopped.\n`query` takes a parameter vector (`params`, `push`/`push_null`, `params_close`).\nValues from `value` remain valid until `clear`. Always clear results and parameter\nvectors, including failed queries. `exec` is exclusively for trusted SQL such as\nchecked-in migrations; never concatenate user values into SQL.\n\nThe pool contains at most 64 connections, waits at most 10 seconds for a lease,\nand applies 5-second statement and 3-second lock timeouts. Connection attempts use a fixed 5-second libpq timeout. No database credentials\nare stored in this repository. See the [libpq documentation](https://www.postgresql.org/docs/16/libpq-exec.html).\n"
+  },
+  {
+    "name": "forge-web",
+    "version": "0.1.1",
+    "description": "HTTP server, JSON, OAuth building blocks and signed JWTs for Forge.",
+    "repository_url": "https://github.com/Helloworld0822/forge-web",
+    "module": "web.fg",
+    "license": "MIT",
+    "dependencies": {},
+    "native": {
+      "library": "forge_web",
+      "cmake_target": "forge_web",
+      "pkg_config": [
+        "libmicrohttpd",
+        "json-c",
+        "libcurl",
+        "openssl"
+      ]
+    },
+    "git_commit": "8ef1ce0743895712415ea1c3b985ebdf662c15b0",
+    "readme": "# Forge Web\n\n`web.fg` provides Forge APIs for HTTP requests/responses, JSON values, validation,\nJWT HS256 signing/verification, outbound JSON HTTP requests, rate counters and\nbounded file uploads. Validation composition and response helpers are written in\nForge. The native FFI uses libmicrohttpd, json-c, libcurl and OpenSSL.\n\nJSON kinds: null/missing=0, boolean=1, integer=2, string=3, object=4, array=5,\ndouble=6. Handles and returned strings belong to the current request scope.\nStandalone programs call `scope_begin` / `scope_end`; HTTP callbacks get automatic\nscope cleanup. Never keep a JSON handle/string beyond its scope or transfer it\nto another thread. The native `fw_run` accepts a compiled Forge handler via a\nsmall C callback adapter; see the portfolio-platform integration example.\n\nRequires Linux/POSIX, C11, CMake/pkg-config, libmicrohttpd, json-c, libcurl,\nOpenSSL and pthreads. `cmake -S . -B build && cmake --build build` builds the bridge.\nUse a Forge compiler with imported extern declarations and module prototypes.\n\nLimits: 2 MiB JSON body, 25 MiB multipart request, one 20 MiB file, 4 MiB outbound\nresponse, 256 concurrent connections, 30-second client timeout, 10-second outbound\ntimeout. Uploads remain temporary until the Forge handler authorizes and calls\n`upload`. Temporary files are deleted on every unsuccessful request. File serving\nuses no-follow opens and rejects path traversal. The upload destination comes\nfrom application configuration, never from client filenames.\n\nJWT verifies the algorithm, signature in constant time, expiry and required\nclaims. Outbound HTTP permits only http/https and never follows redirects.\nX-Real-IP is trusted only when the direct peer is a private/loopback address.\nRate counters are bounded to 4096 keys and reset on process restart.\n\n`fw_run` currently binds IPv4 addresses. Parallel metadata HTTP requests use at most four workers. Cookie helpers support\nHttpOnly/SameSite and Secure attributes. TLS should terminate at nginx or another\nreverse proxy. Keep synchronous database/outbound work within configured worker\nand connection bounds. This library does not implement an async reactor.\n"
+  },
+  {
+    "name": "forge-browser",
+    "version": "0.1.2",
+    "description": "Forge DOM, browser events, same-origin HTTP, scoped lossless JSON and sanitized Markdown.",
+    "repository_url": "https://github.com/Helloworld0822/forge-browser",
+    "module": "browser.fg",
+    "license": "MIT",
+    "dependencies": {
+      "forge-web": "0.1.1"
+    },
+    "javascript": {
+      "entry": "src/bridge.js",
+      "package_file": "package.json"
+    },
+    "git_commit": "0ed935ca8e251ac0cce29a5322f9ae3e348d0ff3",
+    "readme": "# Forge Browser\n\n`browser.fg` is the Forge DOM/events/navigation/HTTP/storage API. `src/bridge.js`\nprovides browser primitives and lossless JSON handles for `web.fg`. Forge's\n`--emit-js` target generates application logic; this module does not embed\napplication routes, database policy or UI copy.\n\nBundle the bridge with esbuild and load it before the emitted JavaScript. JSON\nhandles are local to a synchronous callback; DOM handles persist until their\nsubtree is cleared. Never retain JSON handles across callbacks. Async HTTP\ncallbacks receive `{context,status,data,error}`. Applications reject stale\nresponses using their own route context. HTTP requests and authenticated uploads\nare restricted to `/api/` on the current origin. Markdown is sanitized with\nDOMPurify; HTML/event attributes and dangerous URL schemes are rejected.\n\nRequires the Forge JavaScript backend, browser BigInt/TextEncoder support, and\nNode for bundling. Native C builds cannot use this browser-only module. See\nportfolio-platform/frontend-forge for a complete integration.\n"
+  }
+]

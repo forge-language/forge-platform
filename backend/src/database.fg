@@ -1,0 +1,50 @@
+import postgres;
+import web;
+fn args1(value: string): int { let values: int = web.array(); web.push(values, web.jstring(value)); return values; }
+fn args2(a: string, b: string): int { let values: int = args1(a); web.push(values, web.jstring(b)); return values; }
+fn query(conn: int, sql: string, values: int): int {
+    let params: int = postgres.params();
+    let index: int = 0;
+    while (index < web.count(values)) {
+        let value: int = web.at(values, index);
+        if (web.kind(value) == 0) { postgres.push_null(params); }
+        else { if (web.kind(value) == 3) { postgres.push(params, web.text(value)); } else { postgres.push(params, web.dump(value)); } }
+        index = index + 1;
+    }
+    let result: int = postgres.query(conn, sql, params);
+    postgres.params_close(params);
+    return result;
+}
+fn fetch(conn: int, sql: string, values: int): int {
+    let result: int = query(conn, sql, values);
+    let value: int = 0;
+    if (postgres.ok(result) != 0 && postgres.rows(result) > 0) { value = web.parse(postgres.value(result, 0, 0)); }
+    postgres.clear(result);
+    return value;
+}
+fn response(conn: int, request: int, sql: string, values: int, status: int): int {
+    let result: int = query(conn, sql, values);
+    let success: int = 0;
+    if (postgres.ok(result) == 0) {
+        let state: string = postgres.state(result);
+        if (web.starts(state, "22") != 0 || web.equal(state, "23502") != 0 || web.equal(state, "23514") != 0) { success = web.validation(request, "invalid field value"); }
+        else { success = web.error(request, 500, "internal"); }
+    } else {
+        if (status == 204) {
+            if (postgres.affected(result) == 0) { success = web.error(request, 404, "not_found"); }
+            else { success = web.respond(request, 204, ""); }
+        } else {
+            if (postgres.rows(result) == 0) { success = web.error(request, 404, "not_found"); }
+            else { success = web.respond(request, status, postgres.value(result, 0, 0)); }
+        }
+    }
+    postgres.clear(result);
+    return success;
+}
+fn exists(conn: int, sql: string, values: int): int {
+    let result: int = query(conn, sql, values);
+    let value: int = -1;
+    if (postgres.ok(result) != 0 && postgres.rows(result) > 0) { value = web.equal(postgres.value(result, 0, 0), "t"); }
+    postgres.clear(result);
+    return value;
+}
