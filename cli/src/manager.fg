@@ -64,13 +64,54 @@ fn module_dir(value: int): string {
  while(i<str_len(file)){if(str_char_at(file,i)==47){slash=i+1;}i=i+1;}
  if(slash==0){return cache(value);}return str_concat(str_concat(cache(value),"/"),str_sub(file,0,slash));
 }
+fn array(): int { return web.array(); }
+fn add(values: int,value: string): int { return web.push(values,web.jstring(value)); }
+fn exclusions(): int { let values: int=array();add(values,".git");add(values,".forge");add(values,"build");add(values,"node_modules");add(values,".forge-npm-fingerprint");return values; }
+fn hash_paths(paths: int): string { return system.hash(paths,exclusions(),array()); }
+fn tool_version(command: string,argument: string): string { let args: int=system.argv(command);if(str_len(argument)>0){system.arg(args,argument);}let result: int=system.run(args,"");if(web.field_int(result,"status")!=0){return "unavailable";}return web.trim(web.field_text(result,"output")); }
+fn environment(): string {
+ let names: int=array();add(names,"PATH");add(names,"CC");add(names,"PKG_CONFIG_PATH");add(names,"PKG_CONFIG_LIBDIR");add(names,"PKG_CONFIG_SYSROOT_DIR");add(names,"CMAKE_GENERATOR");add(names,"CMAKE_TOOLCHAIN_FILE");add(names,"CFLAGS");add(names,"CPPFLAGS");add(names,"LDFLAGS");add(names,"CPATH");add(names,"C_INCLUDE_PATH");add(names,"LIBRARY_PATH");add(names,"SDKROOT");add(names,"npm_config_registry");add(names,"npm_config_arch");add(names,"npm_config_platform");
+ let result: string="";let i: int=0;while(i<web.count(names)){let name: string=web.text(web.at(names,i));result=str_concat(str_concat(str_concat(str_concat(result,name),"="),web.dump(web.jstring(web.env(name,"")))),"\n");i=i+1;}return result;
+}
+fn target(): string { return tool_version("uname","-srm"); }
+fn cache_key(input: string,outputs: int): string { let output: string=hash_paths(outputs);if(str_len(input)==0||str_len(output)==0){return "";}return system.sha256(str_concat(str_concat(input,"\n"),output)); }
+fn cache_hit(file: string,input: string,outputs: int): int { let key: string=cache_key(input,outputs);return str_len(key)>0 && web.equal(web.trim(web.read(file)),key)!=0; }
+fn cache_publish(file: string,input: string,outputs: int): int { let key: string=cache_key(input,outputs);if(str_len(key)==0){return 0;}return system.write(file,str_concat(key,"\n"))==0; }
+fn build_input(javascript: int,root: string,modules: int): string {
+ let paths: int=array();add(paths,".");add(paths,str_concat(root,"/build/bin/forge"));add(paths,str_concat(root,"/include"));
+ if(javascript!=0){add(paths,str_concat(root,"/libexec/esbuild"));}else{add(paths,str_concat(root,"/build/lib/libforge_runtime.a"));add(paths,str_concat(root,"/build/lib/libforge_std.a"));}
+ let keys: int=web.keys(modules);let i: int=0;while(i<web.count(keys)){
+  let m: int=web.get(modules,web.text(web.at(keys,i)));add(paths,cache(m));
+  if(javascript!=0 && web.kind(web.get(m,"javascript"))==4){let node_modules: string=str_concat(cache(m),"/node_modules");if(system.exists(node_modules)==0){return "";}add(paths,node_modules);}
+  if(javascript==0 && web.kind(web.get(m,"native"))==4){return "";}
+  i=i+1;
+ }
+ let files: string=system.hash(paths,exclusions(),array());if(str_len(files)==0){return "";}
+ let mode: string="native";if(javascript!=0){mode="javascript";}let tools: string=str_concat(str_concat(str_concat(str_concat(str_concat(str_concat("format=2\nmode=",mode),"\ntarget="),target()),"\nenv="),environment()),"\nfiles=");tools=str_concat(tools,files);
+ if(javascript!=0){tools=str_concat(str_concat(str_concat(str_concat(str_concat(tools,"\ncompiler-flags=--emit-js\nbundler-flags=--bundle --format=iife --target=es2022"),"\nnode="),tool_version("node","--version")),"\nnpm="),tool_version("npm","--version"));}else{tools=str_concat(str_concat(str_concat(tools,"\ncompiler-flags=--emit-c\ncc-flags=-std=gnu11 -O2 -lpthread -lm"),"\ncc="),tool_version(web.env("CC","cc"),"--version"));}
+ return system.sha256(tools);
+}
+fn cmake_input(module: string): string {
+ let paths: int=array();add(paths,module);let suffixes: int=array();add(suffixes,"CMakeLists.txt");add(suffixes,".cmake");let files: string=system.hash(paths,exclusions(),suffixes);if(str_len(files)==0){return "";}
+ return system.sha256(str_concat(str_concat(str_concat(str_concat(str_concat("format=1\nconfigure-flags=-DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=OFF\nfiles=",files),"\ncmake="),tool_version("cmake","--version")),"\ntarget="),str_concat(target(),str_concat("\nenv=",environment()))));
+}
+fn cmake_outputs(directory: string): int { let outputs: int=array();add(outputs,str_concat(directory,"/CMakeCache.txt"));let ninja: string=str_concat(directory,"/build.ninja");let makefile: string=str_concat(directory,"/Makefile");if(system.exists(ninja)!=0){add(outputs,ninja);}if(system.exists(makefile)!=0){add(outputs,makefile);}return outputs; }
+fn npm_input(module: string,package_file: string): string {
+ let paths: int=array();add(paths,package_file);add(paths,str_concat(module,"/package-lock.json"));let files: string=system.hash(paths,array(),array());if(str_len(files)==0){return "";}
+ return system.sha256(str_concat(str_concat(str_concat(str_concat(str_concat(str_concat(str_concat("format=1\nnpm-flags=ci --ignore-scripts --no-bin-links\nfiles=",files),"\nnode="),tool_version("node","--version")),"\nnpm="),tool_version("npm","--version")),"\ntarget="),str_concat(target(),str_concat("\nenv=",environment()))));
+}
 fn build(value: int,run: int): int {
  let lock: int=web.parse(web.read("forge.lock"));let deps: int=web.get(value,"dependencies");if(web.kind(deps)!=4){return fail("Missing dependencies object");}
  if(web.count(deps)>0 && (web.equal(web.dump(web.get(lock,"roots")),web.dump(deps))==0 || web.equal(web.field_text(lock,"registry"),registry())==0)){return fail("Run forge-pm install to refresh forge.lock");}
  let source: string=web.field_text(value,"entry");if(manifest.path(source)==0){return fail("Invalid entry path");}if(system.mkdir("build")==0){return 1;}
  let root: string=web.env("FORGE_ROOT","");if(str_len(root)==0){return fail("FORGE_ROOT is required; use the installed forge wrapper");}
- let javascript: int=web.equal(os_argv(2),"--emit-js");let forge: string=str_concat(root,"/build/bin/forge");let args: int=system.argv(forge);system.arg(args,source);if(javascript!=0){system.arg(args,"--emit-js");}else{system.arg(args,"--emit-c");}system.arg(args,"-o");if(javascript!=0){system.arg(args,"build/main.js");}else{system.arg(args,"build/main.c");}system.arg(args,"--forge-root");system.arg(args,root);
+ let javascript: int=web.equal(os_argv(2),"--emit-js");let forge: string=str_concat(root,"/build/bin/forge");
  let modules: int=web.get(lock,"packages");let keys: int=web.keys(modules);let i: int=0;
+ while(i<web.count(keys)){let m: int=web.get(modules,web.text(web.at(keys,i)));if(manifest.valid(m)==0||system.exists(cache(m))==0){return fail("Invalid lock or missing module; run install");}i=i+1;}
+ let outputs: int=array();if(javascript!=0){add(outputs,"build/main.js");add(outputs,"build/entry.js");add(outputs,"build/app.js");}else{add(outputs,"build/main.c");add(outputs,"build/app");}
+ let fingerprint: string=build_input(javascript,root,modules);if(cache_hit("build/.forge-build-fingerprint",fingerprint,outputs)!=0){println("Build cache hit");if(run!=0 && javascript==0){let cached: int=system.argv("./build/app");let cached_result: int=system.run(cached,"");println(web.field_text(cached_result,"output"));return web.field_int(cached_result,"status");}return 0;}
+ let args: int=system.argv(forge);system.arg(args,source);if(javascript!=0){system.arg(args,"--emit-js");}else{system.arg(args,"--emit-c");}system.arg(args,"-o");if(javascript!=0){system.arg(args,"build/main.js");}else{system.arg(args,"build/main.c");}system.arg(args,"--forge-root");system.arg(args,root);
+ i=0;
  while(i<web.count(keys)){let m: int=web.get(modules,web.text(web.at(keys,i)));if(manifest.valid(m)==0||system.exists(cache(m))==0){return fail("Invalid lock or missing module; run install");}system.arg(args,"-I");system.arg(args,module_dir(m));i=i+1;}
  if(system.success(args,"")==0){return fail("Forge compilation failed");}
  if(javascript!=0){
@@ -79,31 +120,32 @@ fn build(value: int,run: int): int {
    let m: int=web.get(modules,web.text(web.at(keys,i)));let bridge: int=web.get(m,"javascript");
    if(web.kind(bridge)==4){
     let package: string=str_concat(str_concat(cache(m),"/"),web.field_text(bridge,"package_file"));if(system.exists(package)==0){return fail("JavaScript module package file missing");}
-    let npm: int=system.argv("npm");system.arg(npm,"ci");system.arg(npm,"--prefix");system.arg(npm,cache(m));system.arg(npm,"--ignore-scripts");if(system.success(npm,"")==0){return fail("JavaScript dependencies require Node.js 22 and npm");}
+     let install_outputs: int=array();add(install_outputs,str_concat(cache(m),"/node_modules"));let install_input: string=npm_input(cache(m),package);
+     if(cache_hit(str_concat(cache(m),"/.forge-npm-fingerprint"),install_input,install_outputs)==0){let npm: int=system.argv("npm");system.arg(npm,"ci");system.arg(npm,"--prefix");system.arg(npm,cache(m));system.arg(npm,"--ignore-scripts");system.arg(npm,"--no-bin-links");if(system.success(npm,"")==0){return fail("JavaScript dependencies require Node.js 22 and npm");}install_input=npm_input(cache(m),package);if(cache_publish(str_concat(cache(m),"/.forge-npm-fingerprint"),install_input,install_outputs)!=0){return fail("Cannot publish npm cache fingerprint");}}
     let entry: string=str_concat(str_concat(str_concat(str_concat(system.cwd(),"/"),cache(m)),"/"),web.field_text(bridge,"entry"));imports=str_concat(str_concat(str_concat(imports,"import "),web.dump(web.jstring(entry))),";\n");
    }i=i+1;
   }
   imports=str_concat(imports,"import './main.js';\n");if(system.write("build/entry.js",imports)==0){return 1;}
   let bundler: int=system.argv(str_concat(root,"/libexec/esbuild"));system.arg(bundler,"build/entry.js");system.arg(bundler,"--bundle");system.arg(bundler,"--format=iife");system.arg(bundler,"--target=es2022");system.arg(bundler,"--outfile=build/app.js");
-  if(system.success(bundler,"")==0){return fail("Browser bundling failed");}println("Built build/app.js; load it in an HTML page with <div id=app></div>");return 0;
+   if(system.success(bundler,"")==0){return fail("Browser bundling failed");}fingerprint=build_input(javascript,root,modules);if(cache_publish("build/.forge-build-fingerprint",fingerprint,outputs)!=0){return fail("Cannot publish build cache fingerprint");}println("Built build/app.js; load it in an HTML page with <div id=app></div>");return 0;
  }
  let cc: int=system.argv(web.env("CC","cc"));system.arg(cc,"-std=gnu11");system.arg(cc,"-O2");system.arg(cc,"build/main.c");system.arg(cc,"-o");system.arg(cc,"build/app");system.arg(cc,"-I");system.arg(cc,str_concat(root,"/include"));
  let pkg: int=system.argv("pkg-config");system.arg(pkg,"--cflags");system.arg(pkg,"--libs");let pkg_count: int=0;i=0;
  while(i<web.count(keys)){
   let m: int=web.get(modules,web.text(web.at(keys,i)));let native_info: int=web.get(m,"native");
-  if(web.kind(native_info)==4){let dir: string=str_concat(cache(m),"/build");args=system.argv("cmake");system.arg(args,"-S");system.arg(args,cache(m));system.arg(args,"-B");system.arg(args,dir);system.arg(args,"-DCMAKE_BUILD_TYPE=Release");system.arg(args,"-DBUILD_TESTING=OFF");if(system.success(args,"")==0){return fail("Native module configuration failed");}
+   if(web.kind(native_info)==4){let dir: string=str_concat(cache(m),"/build");let configure_outputs: int=cmake_outputs(dir);let configure_input: string=cmake_input(cache(m));if(cache_hit(str_concat(dir,"/.forge-config-fingerprint"),configure_input,configure_outputs)==0){args=system.argv("cmake");system.arg(args,"-S");system.arg(args,cache(m));system.arg(args,"-B");system.arg(args,dir);system.arg(args,"-DCMAKE_BUILD_TYPE=Release");system.arg(args,"-DBUILD_TESTING=OFF");if(system.success(args,"")==0){return fail("Native module configuration failed");}configure_input=cmake_input(cache(m));configure_outputs=cmake_outputs(dir);if(cache_publish(str_concat(dir,"/.forge-config-fingerprint"),configure_input,configure_outputs)!=0){return fail("Cannot publish native configuration fingerprint");}}
    args=system.argv("cmake");system.arg(args,"--build");system.arg(args,dir);system.arg(args,"--target");system.arg(args,web.field_text(native_info,"cmake_target"));system.arg(args,"-j");system.arg(args,"4");if(system.success(args,"")==0){return fail("Native module build failed");}
    system.arg(cc,str_concat(str_concat(str_concat(dir,"/lib"),web.field_text(native_info,"library")),".a"));let packages: int=web.get(native_info,"pkg_config");let j: int=0;while(j<web.count(packages)){system.arg(pkg,web.text(web.at(packages,j)));pkg_count=pkg_count+1;j=j+1;}
   }i=i+1;
  }
  system.arg(cc,str_concat(root,"/build/lib/libforge_runtime.a"));system.arg(cc,str_concat(root,"/build/lib/libforge_std.a"));
  if(pkg_count>0){let result: int=system.run(pkg,"");if(web.field_int(result,"status")!=0){return fail("Install development libraries listed by pkg-config");}let flags: string=web.trim(web.field_text(result,"output"));let start: int=0;i=0;while(i<=str_len(flags)){if(i==str_len(flags)||str_char_at(flags,i)==32||str_char_at(flags,i)==10){if(i>start){system.arg(cc,str_sub(flags,start,i-start));}start=i+1;}i=i+1;}}
- system.arg(cc,"-lpthread");system.arg(cc,"-lm");if(system.success(cc,"")==0){return fail("C compiler/linker failed");}println("Built build/app");
+  system.arg(cc,"-lpthread");system.arg(cc,"-lm");if(system.success(cc,"")==0){return fail("C compiler/linker failed");}fingerprint=build_input(javascript,root,modules);if(cache_publish("build/.forge-build-fingerprint",fingerprint,outputs)!=0){return fail("Cannot publish build cache fingerprint");}println("Built build/app");
  if(run!=0){args=system.argv("./build/app");let result: int=system.run(args,"");println(web.field_text(result,"output"));return web.field_int(result,"status");}return 0;
 }
 fn run(): int {
  let command: string=os_argv(1);
- if(web.equal(command,"--version")!=0){println("forge-pm 0.1.0");return 0;}
+ if(web.equal(command,"--version")!=0){println("forge-pm 0.1.1");return 0;}
  if(web.equal(command,"init")!=0){if(system.exists("forge.json")!=0){return fail("forge.json already exists");}let name: string=os_argv(2);if(manifest.name(name)==0){name="forge-app";}let value: int=web.object();web.set(value,"name",web.jstring(name));web.set(value,"entry",web.jstring("main.fg"));web.set(value,"dependencies",web.object());if(system.write("forge.json",web.dump(value))==0){return 1;}if(system.exists("main.fg")==0){system.write("main.fg","native main { println(\"Hello, Forge!\"); return 0; }\n");}println("Created forge.json and main.fg");return 0;}
  if(web.equal(command,"search")!=0){if(web.equal(registry(),"builtin")!=0){let out: int=web.array();let items: int=catalog();let i: int=0;let query: string=web.lower(os_argv(2));while(i<web.count(items)){let m: int=web.at(items,i);if(str_contains(web.lower(web.field_text(m,"name")),query)!=0||str_contains(web.lower(web.field_text(m,"description")),query)!=0){web.push(out,m);}i=i+1;}println(web.dump(out));return 0;}let r: int=request(str_concat("/api/packages?q=",web.urlencode(os_argv(2))),"GET","");if(web.field_int(r,"status")!=200){return fail("Registry unavailable");}println(web.dump(web.get(r,"data")));return 0;}
  if(web.equal(command,"publish")!=0){if(web.equal(registry(),"builtin")!=0){return fail("Set FORGE_REGISTRY to your Forge registry website before publishing");}let file: string=os_argv(2);if(str_len(file)==0){file="module.json";}let value: int=web.parse(web.read(file));if(manifest.valid(value)==0){return fail("Invalid module.json release manifest");}if(str_len(web.env("FORGE_TOKEN",""))==0){return fail("Set FORGE_TOKEN using your website login token");}let r: int=request("/api/packages","POST",web.dump(value));if(web.field_int(r,"status")!=201){println(web.dump(web.get(r,"data")));return 1;}println("Release published");return 0;}

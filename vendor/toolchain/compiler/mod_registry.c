@@ -33,6 +33,14 @@ static const ForgeStdFn STRING_FNS[] = {
     {"str_append_str", "fr_str_append_str"},
     {"str_from_int", "fr_str_from_int"},
     {"str_reset_arena", "fr_str_arena_reset"},
+    {"str_view", "fr_str_view"},
+    {"str_view_len", "fr_str_view_len"},
+    {"str_view_at", "fr_str_view_at"},
+    {"str_builder", "fr_str_builder"},
+    {"str_builder_append", "fr_str_builder_append"},
+    {"str_builder_char", "fr_str_builder_char"},
+    {"str_builder_finish", "fr_str_builder_finish"},
+
 };
 
 static const ForgeStdFn MATH_FNS[] = {
@@ -154,7 +162,7 @@ static const ForgeStdFn GPU_FNS[] = {
 
 static const ForgeModule MODULES[] = {
     { .name = { "io", 2 }, .header = "forge/io.h", .fns = IO_FNS, .fn_count = 17 },
-    { .name = { "strings", 7 }, .header = "forge/string.h", .fns = STRING_FNS, .fn_count = 11 },
+    { .name = { "strings", 7 }, .header = "forge/string.h", .fns = STRING_FNS, .fn_count = sizeof(STRING_FNS) / sizeof(STRING_FNS[0]) },
     { .name = { "math", 4 }, .header = "forge/math.h", .fns = MATH_FNS, .fn_count = 6 },
     { .name = { "time", 4 }, .header = "forge/time.h", .fns = TIME_FNS, .fn_count = 2 },
     { .name = { "fs", 2 }, .header = "forge/fs.h", .fns = FS_FNS, .fn_count = 12 },

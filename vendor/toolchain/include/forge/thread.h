@@ -18,6 +18,7 @@ void fr_mutex_unlock(fr_mutex_t *m);
 
 fr_cond_t *fr_cond_create(void);
 void fr_cond_destroy(fr_cond_t *c);
+void fr_cond_signal(fr_cond_t *c);
 void fr_cond_broadcast(fr_cond_t *c);
 void fr_cond_wait(fr_cond_t *c, fr_mutex_t *m);
 

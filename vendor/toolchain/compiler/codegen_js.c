@@ -84,6 +84,14 @@ static int supported_standard(const char *name_) {
                                     "fr_str_append_str",
                                     "fr_str_from_int",
                                     "fr_str_arena_reset",
+                                    "fr_str_view",
+                                    "fr_str_view_len",
+                                    "fr_str_view_at",
+                                    "fr_str_builder",
+                                    "fr_str_builder_append",
+                                    "fr_str_builder_char",
+                                    "fr_str_builder_finish",
+
                                     "fr_abs_i",
                                     "fr_abs_f",
                                     "fr_min_i",
@@ -389,6 +397,10 @@ void codegen_emit_js(Program *prog, FILE *out) {
       "b==='number'?Number(a)===Number(b):a===b;},index=(s,n)=>{if(typeof "
       "s!=='string')return s[Number(n)];const b=bytes(s),j=Number(n);return "
       "j<0||j>=b.length?-1n:BigInt(b[j]);},i=v=>BigInt(v);\n"
+      "const cbytes=s=>{s=s==null?'':s;const end=s.indexOf(String.fromCharCode(0));return bytes(end<0?s:s.slice(0,end));};\n"
+      "const handles=new Map();let next=1n;const store=v=>{const h=next++;handles.set(h,v);return h;};\n"
+      "const view=h=>handles.get(h),builder=h=>{const b=handles.get(h);return b&&b.kind==='builder'?b:null;};\n"
+      "const reserve=(b,n)=>{if(n<=b.data.length)return;let cap=Math.max(64,b.data.length);while(cap<n)cap*=2;const d=new Uint8Array(cap);d.set(b.data.subarray(0,b.len));b.data=d;};\n"
       "return {add:(a,b)=>typeof a==='string'&&typeof "
       "b==='string'?a+b:arithmetic(a,b,'add'),sub:(a,b)=>arithmetic(a,b,'sub'),"
       "mul:(a,b)=>arithmetic(a,b,'mul'),div:(a,b)=>arithmetic(a,b,'div'),mod:("
@@ -402,7 +414,12 @@ void codegen_emit_js(Program *prog, FILE *out) {
       "append:(s,c)=>{if(c<0n||c>127n)throw new RangeError('JavaScript strings "
       "require valid UTF-8');return "
       "s+String.fromCharCode(Number(c));},fr_str_append_str:(s,t)=>s+t,fr_str_"
-      "from_int:String,fr_str_arena_reset:()=>0n,\n"
+      "from_int:String,fr_str_arena_reset:()=>{handles.clear();return 0n;},\n"
+      "fr_str_view:s=>store({kind:'view',data:cbytes(s)}),fr_str_view_len:h=>{const v=view(h);return i(v&&v.kind==='view'?v.data.length:0);},\n"
+      "fr_str_view_at:(h,n)=>{const v=view(h);return !v||v.kind!=='view'||n<0n||n>=BigInt(v.data.length)?-1n:BigInt(v.data[Number(n)]);},\n"
+      "fr_str_builder:()=>store({kind:'builder',data:new Uint8Array(0),len:0}),fr_str_builder_append:(h,s)=>{const b=builder(h);if(!b)return 0n;const d=cbytes(s);reserve(b,b.len+d.length);b.data.set(d,b.len);b.len+=d.length;return h;},\n"
+      "fr_str_builder_char:(h,c)=>{const b=builder(h);if(!b||c<=0n||c>255n)return 0n;reserve(b,b.len+1);b.data[b.len++]=Number(c);return h;},\n"
+      "fr_str_builder_finish:h=>{const b=builder(h);return b?decode(b.data.subarray(0,b.len)):null;},\n"
       "fr_abs_i:x=>x<0n?-x:x,fr_abs_f:Math.abs,fr_min_i:(a,b)=>a<b?a:b,fr_max_"
       "i:(a,b)=>a>b?a:b,fr_clamp_i:(x,a,b)=>x<a?a:x>b?b:x,fr_pow_i:(a,b)=>{if("
       "b<0n)return 0n;let "

@@ -34,7 +34,7 @@ class RegistryTest(unittest.TestCase):
  def test_publish_without_auth(self):self.assertEqual(request('POST','/api/packages',self.sample())[0],401)
  def test_expired_token(self):self.assertEqual(request('POST','/api/packages',self.sample(),token(expiry=int(time.time())-5))[0],401)
  def test_invalid_role(self):self.assertEqual(request('POST','/api/packages',self.sample(),token(role='oauth'))[0],401)
- def test_immutable(self):self.assertEqual(request('POST','/api/packages',self.sample('forge-postgres'),token())[0],409)
+ def test_immutable(self):self.assertEqual(request('POST','/api/packages',self.sample('forge-postgres',json.loads((ROOT/'backend/seed.json').read_text())[0]['version']),token())[0],409)
  def test_bad_inputs(self):
   cases={'name':'../escape','version':'1.01.0','git_commit':'main','module':'../secrets','repository_url':'file:///tmp/a','dependencies':{'evil':'^1.0.0'},'native':{'library':'--evil','cmake_target':'../evil','pkg_config':[';shell']}}
   for key,value in cases.items():

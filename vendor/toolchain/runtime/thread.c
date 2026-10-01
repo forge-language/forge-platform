@@ -41,6 +41,10 @@ fr_cond_t *fr_cond_create(void) {
 
 void fr_cond_destroy(fr_cond_t *c) { free(c); }
 
+void fr_cond_signal(fr_cond_t *c) {
+    if (c) WakeConditionVariable(&c->cv);
+}
+
 void fr_cond_broadcast(fr_cond_t *c) {
     if (c) WakeAllConditionVariable(&c->cv);
 }
@@ -142,6 +146,10 @@ void fr_cond_destroy(fr_cond_t *c) {
     if (!c) return;
     pthread_cond_destroy(&c->cv);
     free(c);
+}
+
+void fr_cond_signal(fr_cond_t *c) {
+    if (c) pthread_cond_signal(&c->cv);
 }
 
 void fr_cond_broadcast(fr_cond_t *c) {

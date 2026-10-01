@@ -7,7 +7,7 @@ bash scripts/install.sh --prefix "$ROOT/toolchain" --no-modify-path >/dev/null
 export PATH="$ROOT/toolchain/bin:$PATH"
 cd "$ROOT/project"
 forge init browser-app
-forge pkg add forge-browser 0.1.2
+forge pkg add forge-browser 0.1.3
 cat > main.fg <<'PROGRAM'
 import browser;
 import web;

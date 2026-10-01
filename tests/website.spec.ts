@@ -5,7 +5,7 @@ test('installation docs, real registry search and version detail',async({page})=
  await page.getByRole('link',{name:'설치하고 시작하기'}).click();await expect(page.getByText('curl -fsSL',{exact:false})).toBeVisible();
  await page.getByRole('link',{name:'모듈',exact:true}).click();await page.getByRole('searchbox').fill('postgres');
  await page.getByRole('heading',{name:'forge-postgres',exact:true}).click();await expect(page.getByRole('heading',{level:1})).toHaveText('forge-postgres');
- await expect(page.locator('code').filter({hasText:'forge pkg add forge-postgres 0.1.0'})).toBeVisible();
+ await expect(page.locator('code').filter({hasText:'forge pkg add forge-postgres 0.1.1'})).toBeVisible();
  await page.reload();await expect(page.getByRole('heading',{level:1})).toHaveText('forge-postgres');expect(errors).toEqual([]);
 });
 test('mobile navigation and anonymous publishing state',async({page})=>{

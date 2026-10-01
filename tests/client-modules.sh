@@ -2,14 +2,15 @@
 set -eu
 # Run inside the Ubuntu 22.04 release image with development libraries installed.
 ROOT=$(mktemp -d /tmp/forge-client-check.XXXXXX)
+trap 'rm -rf "$ROOT"' EXIT
 mkdir -p "$ROOT/home" "$ROOT/project"
 export FORGE_DOWNLOAD_BASE=http://localhost:18101
 bash /src/scripts/install.sh --prefix "$ROOT/toolchain" --no-modify-path >/dev/null
 export PATH="$ROOT/toolchain/bin:$PATH"
 cd "$ROOT/project"
 forge init module-app
-forge pkg add forge-postgres 0.1.0
-forge pkg add forge-web 0.1.1
+forge pkg add forge-postgres 0.1.1
+forge pkg add forge-web 0.1.2
 cat > main.fg <<'PROGRAM'
 import postgres;
 import web;

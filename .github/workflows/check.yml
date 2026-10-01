@@ -15,3 +15,4 @@ jobs:
    - run: sh scripts/test.sh
    - run: docker build -f Release.Containerfile -t forge-platform-release:local .
    - run: docker run --rm -v "$PWD:/src" -e BUILD_DIR=/src/build/glibc forge-platform-release:local sh -c 'sh scripts/build.sh && sh scripts/release.sh'
+   - run: python3 tests/installed-cache.py --local-release

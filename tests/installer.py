@@ -7,12 +7,12 @@ class Quiet(http.server.SimpleHTTPRequestHandler):
 class InstallerTest(unittest.TestCase):
  def setUp(self):
   self.temp=tempfile.TemporaryDirectory();self.home=pathlib.Path(self.temp.name)/'home';self.home.mkdir();self.dest=self.home/'.forge'
-  self.env={**os.environ,'FORGE_PROFILE_ROOT':str(self.home),'FORGE_HOME':str(self.dest),'FORGE_DOWNLOAD_BASE':'http://localhost:18101'}
+  self.env={**os.environ,'FORGE_PROFILE_ROOT':str(self.home),'FORGE_HOME':str(self.dest),'FORGE_DOWNLOAD_BASE':os.environ.get('FORGE_TEST_ORIGIN','http://localhost:18101')}
  def tearDown(self):self.temp.cleanup()
  def run_install(self,*args,env=None):return subprocess.run(['bash',str(INSTALL),*args],env=env or self.env,text=True,capture_output=True,timeout=180)
  def test_install_update_compile_and_uninstall(self):
   p=self.run_install();self.assertEqual(p.returncode,0,p.stderr)
-  version=subprocess.check_output([str(self.dest/'bin/forge'),'--version'],env=self.env,text=True);self.assertIn('0.3.0-preview.1',version)
+  version=subprocess.check_output([str(self.dest/'bin/forge'),'--version'],env=self.env,text=True);self.assertIn('0.3.0-preview.2',version)
   self.assertIn('forge-pm',subprocess.check_output([str(self.dest/'bin/forge-pm'),'--version'],env=self.env,text=True))
   source=self.home/'hello.fg';source.write_text('native main {println("설치 검증");return 0;}')
   p=subprocess.run([str(self.dest/'bin/forge'),str(source),'-o',str(self.home/'hello')],env=self.env,text=True,capture_output=True);self.assertEqual(p.returncode,0,p.stderr)
@@ -22,7 +22,7 @@ class InstallerTest(unittest.TestCase):
   def pm(*args):return subprocess.run([str(self.dest/'bin/forge-pm'),*args],cwd=project,env=self.env,text=True,capture_output=True,timeout=180)
   self.assertEqual(pm('init','hello-app').returncode,0);p=pm('run');self.assertEqual(p.returncode,0,p.stderr);self.assertIn('Hello, Forge!',p.stdout)
   self.assertEqual(pm('search','postgres').returncode,0)
-  p=pm('add','forge-postgres','0.1.0');self.assertEqual(p.returncode,0,p.stdout+p.stderr);lock=json.loads((project/'forge.lock').read_text());self.assertEqual(len(lock['packages']['forge-postgres']['git_commit']),40)
+  p=pm('add','forge-postgres','0.1.1');self.assertEqual(p.returncode,0,p.stdout+p.stderr);lock=json.loads((project/'forge.lock').read_text());self.assertEqual(len(lock['packages']['forge-postgres']['git_commit']),40)
   self.assertEqual(pm('remove','forge-postgres').returncode,0)
   p=self.run_install('--uninstall');self.assertEqual(p.returncode,0,p.stderr);self.assertFalse(self.dest.exists());self.assertNotIn('forge environment',(self.home/'.bashrc').read_text())
  def test_dependency_cycles_conflicts_preserve_lock(self):
@@ -54,7 +54,7 @@ class InstallerTest(unittest.TestCase):
   self.dest.mkdir();(self.dest/'precious.txt').write_text('keep');self.assertNotEqual(self.run_install().returncode,0);self.assertEqual((self.dest/'precious.txt').read_text(),'keep')
  def test_checksum_failure_preserves_current(self):
   p=self.run_install('--no-modify-path');self.assertEqual(p.returncode,0,p.stderr);before=os.readlink(self.dest/'current')
-  directory=pathlib.Path(self.temp.name)/'server';release=directory/'releases/0.3.0-preview.1';release.mkdir(parents=True);archive='forge-0.3.0-preview.1-linux-x86_64.tar.gz';(release/archive).write_bytes(b'corrupt');(release/(archive+'.sha256')).write_text('0'*64+'  '+archive)
+  directory=pathlib.Path(self.temp.name)/'server';release=directory/'releases/0.3.0-preview.2';release.mkdir(parents=True);archive='forge-0.3.0-preview.2-linux-x86_64.tar.gz';(release/archive).write_bytes(b'corrupt');(release/(archive+'.sha256')).write_text('0'*64+'  '+archive)
   handler=lambda *a,**kw:Quiet(*a,directory=str(directory),**kw)
   server=http.server.ThreadingHTTPServer(('127.0.0.1',0),handler);worker=threading.Thread(target=server.serve_forever,daemon=True);worker.start()
   try:

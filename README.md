@@ -18,7 +18,7 @@ compiler implementation.
 Linux x86_64, glibc 2.35+ (Ubuntu 22.04+), with `curl`, `tar`, `sha256sum`, `cc`:
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/Helloworld0822/forge-platform/main/scripts/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/forge-language/forge-platform/main/scripts/install.sh | bash
 source "$HOME/.forge/env"
 forge --version
 mkdir hello && cd hello
@@ -43,8 +43,8 @@ install the official modules before a public registry domain is configured:
 
 ```sh
 forge pkg search postgres
-forge pkg add forge-postgres 0.1.0
-forge pkg add forge-web 0.1.1
+forge pkg add forge-postgres 0.1.1
+forge pkg add forge-web 0.1.2
 forge build
 forge pkg list
 ```
@@ -58,7 +58,7 @@ Native module CMake files execute locally as part of the build.
 Browser output needs Node 22 and npm:
 
 ```sh
-forge pkg add forge-browser 0.1.2
+forge pkg add forge-browser 0.1.3
 forge build --emit-js
 # Load build/app.js from an HTML page containing <div id="app"></div>.
 ```
@@ -72,10 +72,21 @@ forge pkg search web
 forge pkg publish module.json
 ```
 
+## Incremental builds
+
+Unchanged native applications without external native modules reuse compiler/link
+outputs. The key checks project/import contents, manifests, the compiler/runtime,
+flags, tool versions, environment and output contents/permissions. Source or
+output changes rebuild; failed builds never publish a key. Native module builds
+always run CMake's dependency checks and the final linker, while unchanged CMake
+configuration can be reused. Browser builds also validate npm lockfiles and the
+installed dependency contents. Unsupported filesystem entries (including
+symlinks) and trees beyond the hashing limits build without caching.
+
 ## Hosting
 
 ```sh
-GIT_MASTER=1 git clone --recurse-submodules https://github.com/Helloworld0822/forge-platform.git
+GIT_MASTER=1 git clone --recurse-submodules https://github.com/forge-language/forge-platform.git
 cd forge-platform
 npm ci --prefix frontend
 # Generate a NEW .env for this stack; never copy production secrets.
@@ -105,6 +116,7 @@ python3 tests/installer.py
 # Release build (Ubuntu 22.04, glibc rather than musl):
 docker build -f Release.Containerfile -t forge-platform-release:local .
 docker run --rm -v "$PWD:/src" -e BUILD_DIR=/src/build/glibc forge-platform-release:local sh -c 'sh scripts/build.sh && sh scripts/release.sh'
+python3 tests/installed-cache.py --local-release
 ```
 
 Tests use disposable PostgreSQL, an isolated Compose project and port 18103.
@@ -115,12 +127,15 @@ tests cover repeated installation, compiling/running Forge, package pinning,
 checksum corruption, protected directories and uninstall. `tests/client-modules.sh`
 builds installed PostgreSQL/web modules on Ubuntu 22.04; `tests/client-browser.sh`
 builds an installed browser module using the distributed manager and bundler.
+`tests/build-cache.py` checks stage invalidation with controlled tools;
+`tests/installed-cache.py` installs the real release and checks native/browser cache
+hits, input/output invalidation, BigInt, UTF-8 and conservative symlink fallback.
 
 ## Related projects
 
-[Forge compiler](https://github.com/Helloworld0822/forge),
-[PostgreSQL](https://github.com/Helloworld0822/forge-postgres),
-[Web](https://github.com/Helloworld0822/forge-web),
-[Browser](https://github.com/Helloworld0822/forge-browser),
+[Forge compiler](https://github.com/forge-language/forge-preview),
+[PostgreSQL](https://github.com/forge-language/forge-postgres),
+[Web](https://github.com/forge-language/forge-web),
+[Browser](https://github.com/forge-language/forge-browser),
 [portfolio migration](https://github.com/Helloworld0822/portfolio-platform/pull/1).
 Performance conditions/raw results are in portfolio-platform/docs/forge-performance.md.
