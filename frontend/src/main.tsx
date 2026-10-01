@@ -34,7 +34,7 @@ mkdir hello && cd hello
 forge init hello-app
 forge run`}</Code><p className="mt-4 text-sm leading-7">지원: Linux x86_64 / glibc 2.35+ (Ubuntu 22.04 이상). curl, tar, sha256sum, cc가 필요합니다. 네이티브 모듈 빌드에는 Git, CMake, pkg-config와 해당 개발 라이브러리도 설치하세요.</p><Code>{`forge update
 forge uninstall`}</Code></div><div id="modules"><h2 className="text-2xl font-semibold mb-4">모듈 관리자</h2><Code>{`forge pkg search postgres
-forge pkg add forge-postgres 0.1.0
+forge pkg add forge-postgres 0.1.1
 forge pkg install
 forge build
 forge pkg list
