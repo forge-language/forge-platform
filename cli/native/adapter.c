@@ -20,6 +20,30 @@
 #define PM_HASH_MAX_NAME_BYTES (16ULL * 1024ULL * 1024ULL)
 #define PM_HASH_MAX_DEPTH 64
 
+const char *pm_executable(const char *command) {
+  char candidate[4096], resolved[4096];
+  if (!command || !*command)
+    return "";
+  if (strchr(command, '/'))
+    return realpath(command, resolved) && access(resolved, X_OK) == 0
+               ? fr_str_concat(resolved, "") : "";
+  const char *paths = getenv("PATH");
+  if (!paths)
+    return "";
+  for (const char *start = paths;;) {
+    const char *end = strchr(start, ':');
+    size_t length = end ? (size_t)(end - start) : strlen(start);
+    if (length < sizeof candidate &&
+        snprintf(candidate, sizeof candidate, "%.*s/%s",
+                 length ? (int)length : 1, length ? start : ".", command) < (int)sizeof candidate &&
+        access(candidate, X_OK) == 0 && realpath(candidate, resolved))
+      return fr_str_concat(resolved, "");
+    if (!end)
+      return "";
+    start = end + 1;
+  }
+}
+
 struct pm_hash_state {
   EVP_MD_CTX *digest;
   int64_t excludes;

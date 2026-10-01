@@ -215,6 +215,14 @@ class BuildCacheTest(unittest.TestCase):
         self.assert_success(self.run_manager("build"))
         self.assertFalse((self.project / "build/.forge-build-fingerprint").exists())
 
+    def test_compiler_wrapper_changes_without_version_change(self) -> None:
+        self.assert_success(self.run_manager("build"))
+        compiler = self.tools / "cc"
+        compiler.write_text(compiler.read_text() + "\nprint('wrapper changed')\n")
+        result = self.run_manager("build")
+        self.assert_success(result)
+        self.assertNotIn("Build cache hit", result.stdout)
+
     def test_cached_browser_run_keeps_browser_behavior(self) -> None:
         self.assert_success(self.run_manager("run", "--emit-js"))
         result = self.run_manager("run", "--emit-js")

@@ -79,7 +79,7 @@ fn cache_hit(file: string,input: string,outputs: int): int { let key: string=cac
 fn cache_publish(file: string,input: string,outputs: int): int { let key: string=cache_key(input,outputs);if(str_len(key)==0){return 0;}return system.write(file,str_concat(key,"\n"))==0; }
 fn build_input(javascript: int,root: string,modules: int): string {
  let paths: int=array();add(paths,".");add(paths,str_concat(root,"/build/bin/forge"));add(paths,str_concat(root,"/include"));
- if(javascript!=0){add(paths,str_concat(root,"/libexec/esbuild"));}else{add(paths,str_concat(root,"/build/lib/libforge_runtime.a"));add(paths,str_concat(root,"/build/lib/libforge_std.a"));}
+ if(javascript!=0){add(paths,str_concat(root,"/libexec/esbuild"));add(paths,system.executable("node"));add(paths,system.executable("npm"));}else{add(paths,str_concat(root,"/build/lib/libforge_runtime.a"));add(paths,str_concat(root,"/build/lib/libforge_std.a"));add(paths,system.executable(web.env("CC","cc")));}
  let keys: int=web.keys(modules);let i: int=0;while(i<web.count(keys)){
   let m: int=web.get(modules,web.text(web.at(keys,i)));add(paths,cache(m));
   if(javascript!=0 && web.kind(web.get(m,"javascript"))==4){let node_modules: string=str_concat(cache(m),"/node_modules");if(system.exists(node_modules)==0){return "";}add(paths,node_modules);}
@@ -92,12 +92,12 @@ fn build_input(javascript: int,root: string,modules: int): string {
  return system.sha256(tools);
 }
 fn cmake_input(module: string): string {
- let paths: int=array();add(paths,module);let suffixes: int=array();add(suffixes,"CMakeLists.txt");add(suffixes,".cmake");let files: string=system.hash(paths,exclusions(),suffixes);if(str_len(files)==0){return "";}
+ let paths: int=array();add(paths,module);let suffixes: int=array();add(suffixes,"CMakeLists.txt");add(suffixes,".cmake");let files: string=system.hash(paths,exclusions(),suffixes);let executable: int=array();add(executable,system.executable("cmake"));let tool: string=hash_paths(executable);if(str_len(files)==0||str_len(tool)==0){return "";}files=str_concat(files,tool);
  return system.sha256(str_concat(str_concat(str_concat(str_concat(str_concat("format=1\nconfigure-flags=-DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=OFF\nfiles=",files),"\ncmake="),tool_version("cmake","--version")),"\ntarget="),str_concat(target(),str_concat("\nenv=",environment()))));
 }
 fn cmake_outputs(directory: string): int { let outputs: int=array();add(outputs,str_concat(directory,"/CMakeCache.txt"));let ninja: string=str_concat(directory,"/build.ninja");let makefile: string=str_concat(directory,"/Makefile");if(system.exists(ninja)!=0){add(outputs,ninja);}if(system.exists(makefile)!=0){add(outputs,makefile);}return outputs; }
 fn npm_input(module: string,package_file: string): string {
- let paths: int=array();add(paths,package_file);add(paths,str_concat(module,"/package-lock.json"));let files: string=system.hash(paths,array(),array());if(str_len(files)==0){return "";}
+ let paths: int=array();add(paths,package_file);add(paths,str_concat(module,"/package-lock.json"));add(paths,system.executable("node"));add(paths,system.executable("npm"));let files: string=system.hash(paths,array(),array());if(str_len(files)==0){return "";}
  return system.sha256(str_concat(str_concat(str_concat(str_concat(str_concat(str_concat(str_concat("format=1\nnpm-flags=ci --ignore-scripts --no-bin-links\nfiles=",files),"\nnode="),tool_version("node","--version")),"\nnpm="),tool_version("npm","--version")),"\ntarget="),str_concat(target(),str_concat("\nenv=",environment()))));
 }
 fn build(value: int,run: int): int {

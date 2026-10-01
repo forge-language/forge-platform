@@ -15,8 +15,8 @@ The toolchain root has `build/bin/forge`, `build/lib/*.a` and `include/`.
 Manager paths must be executable binaries; configure their dynamic library paths
 externally if needed. The fixture never changes HOME or production data.
 
-The measured unchanged-build median was 112.514 ms before and 26.263 ms after
-(4.28×). These are seven alternating runs on the shared host, including process
+The measured unchanged-build median was 127.946 ms before and 33.337 ms after
+(3.84×). These are seven alternating runs on the shared host, including process
 startup, tool probes and content hashing. Large inputs and unsupported filesystem
 entries can eliminate cache benefits. Native external modules always run CMake
 build dependency checks and the linker; only CMake configuration is cached.

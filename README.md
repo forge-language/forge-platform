@@ -76,7 +76,8 @@ forge pkg publish module.json
 
 Unchanged native applications without external native modules reuse compiler/link
 outputs. The key checks project/import contents, manifests, the compiler/runtime,
-flags, tool versions, environment and output contents/permissions. Source or
+flags, resolved compiler/tool executable contents, tool versions, environment
+and output contents/permissions. Source or
 output changes rebuild; failed builds never publish a key. Native module builds
 always run CMake's dependency checks and the final linker, while unchanged CMake
 configuration can be reused. Browser builds also validate npm lockfiles and the
