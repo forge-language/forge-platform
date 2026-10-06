@@ -9,6 +9,7 @@ bash /src/scripts/install.sh --prefix "$ROOT/toolchain" --no-modify-path >/dev/n
 export PATH="$ROOT/toolchain/bin:$PATH"
 cd "$ROOT/project"
 forge init module-app
+cd module-app
 forge pkg add forge-postgres 0.1.1
 forge pkg add forge-web 0.1.2
 cat > main.fg <<'PROGRAM'

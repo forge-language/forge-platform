@@ -12,6 +12,7 @@ import json
 import os
 from pathlib import Path
 import subprocess
+import sys
 import tempfile
 import threading
 import urllib.parse
@@ -113,6 +114,9 @@ def main():
         execute(['bash', installer, '--version', args.version, '--prefix', prefix, '--no-modify-path'])
         require(args.version in execute([forge, '--version']), 'Wrong installed release version')
         try:
+            env['FORGE_PM'] = str(forge)
+            execute([sys.executable, Path(__file__).with_name('project-init.py')])
+            env.pop('FORGE_PM', None)
             native = root / 'native'
             manifest(native, 'installed-native-cache')
             (native / 'helper.fg').write_text('fn message(): string { return "native-v1"; }\n')

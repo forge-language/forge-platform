@@ -1,6 +1,7 @@
 import web;
 extern fn pm_run(args: int, directory: string): int;
 extern fn pm_mkdir(path: string): int;
+extern fn pm_mkdir_new(path: string): int;
 extern fn pm_write(path: string, text: string): int;
 extern fn pm_exists(path: string): int;
 extern fn pm_rename(a: string, b: string): int;
@@ -10,6 +11,7 @@ extern fn pm_hash(paths: int, excludes: int, suffixes: int): string;
 extern fn pm_executable(command: string): string;
 fn run(args: int, directory: string): int { return pm_run(args,directory); }
 fn mkdir(path: string): int { return pm_mkdir(path); }
+fn mkdir_new(path: string): int { return pm_mkdir_new(path); }
 fn write(path: string, text: string): int { return pm_write(path,text); }
 fn exists(path: string): int { return pm_exists(path); }
 fn rename(a: string,b: string): int { return pm_rename(a,b); }

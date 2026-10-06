@@ -247,6 +247,10 @@ const char *pm_hash(int64_t paths, int64_t excludes, int64_t suffixes) {
   return fr_str_concat(hex, "");
 }
 
+int64_t pm_mkdir_new(const char *path) {
+  return mkdir(path, 0700) == 0;
+}
+
 int64_t pm_mkdir(const char *path) {
   char *s = strdup(path);
   if (!s)

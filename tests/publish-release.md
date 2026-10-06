@@ -12,6 +12,7 @@ curl -fsSL https://raw.githubusercontent.com/forge-language/forge-platform/main/
 source "$HOME/.forge/env"
 forge --version
 forge init hello-app
+cd hello-app
 forge run
 ```
 

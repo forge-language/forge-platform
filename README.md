@@ -23,10 +23,12 @@ Linux x86_64, glibc 2.35+ (Ubuntu 22.04+), with `curl`, `tar`, `sha256sum`, `cc`
 curl -fsSL https://raw.githubusercontent.com/forge-language/forge-platform/main/scripts/install.sh | bash
 source "$HOME/.forge/env"
 forge --version
-mkdir hello && cd hello
 forge init hello-app
+cd hello-app
 forge run
 ```
+
+`forge init hello-app` creates a new `hello-app/` directory. Enter it with `cd hello-app` before running project commands. `forge init` uses `forge-app/`; `forge init .` initializes the current directory. Existing named directories are never overwritten.
 
 Downloads compiler + package manager, checks SHA-256, installs without sudo into
 `~/.forge`, and adds a managed PATH block. `--prefix`, `--version`,

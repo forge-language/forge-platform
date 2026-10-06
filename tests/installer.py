@@ -20,7 +20,7 @@ class InstallerTest(unittest.TestCase):
   p=self.run_install();self.assertEqual(p.returncode,0,p.stderr);self.assertEqual((self.home/'.bashrc').read_text().count('# >>> forge environment >>>'),1)
   project=self.home/'project';project.mkdir()
   def pm(*args):return subprocess.run([str(self.dest/'bin/forge-pm'),*args],cwd=project,env=self.env,text=True,capture_output=True,timeout=180)
-  self.assertEqual(pm('init','hello-app').returncode,0);p=pm('run');self.assertEqual(p.returncode,0,p.stderr);self.assertIn('Hello, Forge!',p.stdout)
+  self.assertEqual(pm('init','hello-app').returncode,0);project=project/'hello-app';p=pm('run');self.assertEqual(p.returncode,0,p.stderr);self.assertIn('Hello, Forge!',p.stdout)
   self.assertEqual(pm('search','postgres').returncode,0)
   p=pm('add','forge-postgres','0.1.1');self.assertEqual(p.returncode,0,p.stdout+p.stderr);lock=json.loads((project/'forge.lock').read_text());self.assertEqual(len(lock['packages']['forge-postgres']['git_commit']),40)
   self.assertEqual(pm('remove','forge-postgres').returncode,0)

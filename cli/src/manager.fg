@@ -143,10 +143,36 @@ fn build(value: int,run: int): int {
   system.arg(cc,"-lpthread");system.arg(cc,"-lm");if(system.success(cc,"")==0){return fail("C compiler/linker failed");}fingerprint=build_input(javascript,root,modules);if(cache_publish("build/.forge-build-fingerprint",fingerprint,outputs)!=0){return fail("Cannot publish build cache fingerprint");}println("Built build/app");
  if(run!=0){args=system.argv("./build/app");let result: int=system.run(args,"");println(web.field_text(result,"output"));return web.field_int(result,"status");}return 0;
 }
+fn init(): int {
+ if(os_argc()>3){return fail("Usage: forge init [name|.]");}
+ let name: string=os_argv(2);
+ if(str_len(name)==0){name="forge-app";}
+ let directory: string=name;
+ if(web.equal(directory,".")!=0){name="forge-app";}
+ else {
+  if(manifest.name(name)==0){return fail("Invalid project name: use 3-64 lowercase letters, digits or hyphens, starting with a letter and not ending with a hyphen");}
+  if(system.mkdir_new(directory)==0){return fail("Cannot create project directory (it may already exist)");}
+ }
+ let manifest_file: string=str_concat(directory,"/forge.json");
+ let source_file: string=str_concat(directory,"/main.fg");
+ if(system.exists(manifest_file)!=0){return fail("forge.json already exists");}
+ let value: int=web.object();
+ web.set(value,"name",web.jstring(name));
+ web.set(value,"entry",web.jstring("main.fg"));
+ web.set(value,"dependencies",web.object());
+ if(system.exists(source_file)==0){
+  if(system.write(source_file,"native main { println(\"Hello, Forge!\"); return 0; }\n")==0){return fail("Cannot write main.fg");}
+ }
+ if(system.write(manifest_file,web.dump(value))==0){return fail("Cannot write forge.json");}
+ println(str_concat("Created project in ",directory));
+ if(web.equal(directory,".")!=0){println("Run: forge run");}
+ else {println(str_concat(str_concat("Run: cd ",directory)," && forge run"));}
+ return 0;
+}
 fn run(): int {
  let command: string=os_argv(1);
  if(web.equal(command,"--version")!=0){println("forge-pm 0.1.1");return 0;}
- if(web.equal(command,"init")!=0){if(system.exists("forge.json")!=0){return fail("forge.json already exists");}let name: string=os_argv(2);if(manifest.name(name)==0){name="forge-app";}let value: int=web.object();web.set(value,"name",web.jstring(name));web.set(value,"entry",web.jstring("main.fg"));web.set(value,"dependencies",web.object());if(system.write("forge.json",web.dump(value))==0){return 1;}if(system.exists("main.fg")==0){system.write("main.fg","native main { println(\"Hello, Forge!\"); return 0; }\n");}println("Created forge.json and main.fg");return 0;}
+ if(web.equal(command,"init")!=0){return init();}
  if(web.equal(command,"search")!=0){if(web.equal(registry(),"builtin")!=0){let out: int=web.array();let items: int=catalog();let i: int=0;let query: string=web.lower(os_argv(2));while(i<web.count(items)){let m: int=web.at(items,i);if(str_contains(web.lower(web.field_text(m,"name")),query)!=0||str_contains(web.lower(web.field_text(m,"description")),query)!=0){web.push(out,m);}i=i+1;}println(web.dump(out));return 0;}let r: int=request(str_concat("/api/packages?q=",web.urlencode(os_argv(2))),"GET","");if(web.field_int(r,"status")!=200){return fail("Registry unavailable");}println(web.dump(web.get(r,"data")));return 0;}
  if(web.equal(command,"publish")!=0){if(web.equal(registry(),"builtin")!=0){return fail("Set FORGE_REGISTRY to your Forge registry website before publishing");}let file: string=os_argv(2);if(str_len(file)==0){file="module.json";}let value: int=web.parse(web.read(file));if(manifest.valid(value)==0){return fail("Invalid module.json release manifest");}if(str_len(web.env("FORGE_TOKEN",""))==0){return fail("Set FORGE_TOKEN using your website login token");}let r: int=request("/api/packages","POST",web.dump(value));if(web.field_int(r,"status")!=201){println(web.dump(web.get(r,"data")));return 1;}println("Release published");return 0;}
  let value: int=config();if(web.kind(value)!=4){return fail("Run forge-pm init first. Commands: init, search, add, remove, install, list, publish, build, run");}
