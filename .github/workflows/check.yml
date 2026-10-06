@@ -11,6 +11,7 @@ jobs:
      with: {node-version: 22, cache: npm, cache-dependency-path: frontend/package-lock.json}
    - run: npm ci --prefix frontend
    - run: node frontend/node_modules/@playwright/test/cli.js install --with-deps chromium
+   - run: python3 tests/download-origin.py
    - run: docker compose --env-file tests/config.env build
    - run: sh scripts/test.sh
    - run: docker build -f Release.Containerfile -t forge-platform-release:local .

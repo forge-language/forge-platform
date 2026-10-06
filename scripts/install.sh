@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 VERSION=0.3.0-preview.2
-BASE_URL=${FORGE_DOWNLOAD_BASE:-https://github.com/forge-language/forge-preview}
+BASE_URL=${FORGE_DOWNLOAD_BASE:-https://github.com/forge-language/forge}
 INSTALL_ROOT=${FORGE_HOME:-"$HOME/.forge"}
 PROFILE_ROOT=${FORGE_PROFILE_ROOT:-"$HOME"}
 MODIFY_PATH=1
@@ -52,7 +52,7 @@ printf '%s\n' forge-install-v1 > "$INSTALL_ROOT/.forge-install"
 TEMP_DIR=$(mktemp -d "$INSTALL_ROOT/.install.XXXXXX")
 trap 'rm -rf -- "$TEMP_DIR"' EXIT
 archive="forge-$VERSION-linux-x86_64.tar.gz"
-if [[ $BASE_URL == https://github.com/forge-language/forge-preview || $BASE_URL == https://github.com/Helloworld0822/forge ]]; then
+if [[ $BASE_URL == https://github.com/forge-language/forge || $BASE_URL == https://github.com/Helloworld0822/forge ]]; then
  RELEASE_URL="$BASE_URL/releases/download/v$VERSION/$archive"
  INSTALLER_URL=https://raw.githubusercontent.com/forge-language/forge-platform/main/scripts/install.sh
  REGISTRY_DEFAULT=builtin
