@@ -1,7 +1,9 @@
 import {test,expect} from '../frontend/node_modules/@playwright/test/index';
 test('installation docs, real registry search and version detail',async({page})=>{
  const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));
- await page.goto('/');await expect(page.getByRole('heading',{level:1})).toContainText('언어에서 서버까지');
+ const logoRequest=page.waitForResponse(response=>response.url().endsWith('/logo_named.webp')&&response.ok());await page.goto('/');await logoRequest;
+ await expect(page.getByRole('img',{name:'Forge'})).toBeVisible();await expect(page.locator('link[rel="icon"]')).toHaveAttribute('href','/logo.webp');
+ await expect(page.getByRole('heading',{level:1})).toContainText('C로 컴파일하는 Forge');
  await page.getByRole('link',{name:'설치하고 시작하기'}).click();await expect(page.getByText('curl -fsSL',{exact:false})).toBeVisible();
  await page.getByRole('link',{name:'모듈',exact:true}).click();await page.getByRole('searchbox').fill('postgres');
  await page.getByRole('heading',{name:'forge-postgres',exact:true}).click();await expect(page.getByRole('heading',{level:1})).toHaveText('forge-postgres');

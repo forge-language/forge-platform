@@ -39,7 +39,8 @@ command -v getconf >/dev/null || fail 'glibc is required'
 glibc=$(getconf GNU_LIBC_VERSION 2>/dev/null) || fail 'musl is not supported by this release'
 glibc=${glibc#glibc }; major=${glibc%%.*}; minor=${glibc#*.}; minor=${minor%%.*}
 (( major > 2 || (major == 2 && minor >= 35) )) || fail 'glibc 2.35 or newer is required (Ubuntu 22.04+)'
-for tool in curl tar sha256sum cc; do command -v "$tool" >/dev/null || fail "Required command missing: $tool"; done
+# Installation unpacks prebuilt binaries. A host C compiler is only needed to build a program.
+for tool in curl tar sha256sum; do command -v "$tool" >/dev/null || fail "Required command missing: $tool"; done
 case "$BASE_URL" in https://*) ;; http://localhost:*|http://127.0.0.1:*) ;; *) fail 'Download URL must use HTTPS; loopback HTTP is allowed for local hosting' ;; esac
 [[ $BASE_URL =~ ^https?://[a-zA-Z0-9:./_-]+$ ]] || fail 'Invalid download origin'
 BASE_URL=${BASE_URL%/}

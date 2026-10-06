@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import contextlib,http.server,json,os,pathlib,subprocess,tempfile,threading,unittest
+import contextlib,http.server,json,os,pathlib,shutil,subprocess,tempfile,threading,unittest
 ROOT=pathlib.Path(__file__).resolve().parents[1]
 INSTALL=ROOT/'scripts/install.sh'
 class Quiet(http.server.SimpleHTTPRequestHandler):
@@ -25,6 +25,15 @@ class InstallerTest(unittest.TestCase):
   p=pm('add','forge-postgres','0.1.1');self.assertEqual(p.returncode,0,p.stdout+p.stderr);lock=json.loads((project/'forge.lock').read_text());self.assertEqual(len(lock['packages']['forge-postgres']['git_commit']),40)
   self.assertEqual(pm('remove','forge-postgres').returncode,0)
   p=self.run_install('--uninstall');self.assertEqual(p.returncode,0,p.stderr);self.assertFalse(self.dest.exists());self.assertNotIn('forge environment',(self.home/'.bashrc').read_text())
+ def test_install_without_host_c_compiler(self):
+  path=self.home/'bin';path.mkdir()
+  for name in ('awk','bash','cat','chmod','curl','date','dirname','env','getconf','gzip','ln','ls','mkdir','mktemp','mv','realpath','rm','sha256sum','sleep','tar','touch','uname'):
+   executable=shutil.which(name)
+   if executable:(path/name).symlink_to(executable)
+  env={**self.env,'PATH':str(path)}
+  self.assertIsNone(shutil.which('cc',path=env['PATH']))
+  p=self.run_install('--no-modify-path',env=env);self.assertEqual(p.returncode,0,p.stdout+p.stderr)
+  self.assertIn('forge-pm',subprocess.check_output([str(self.dest/'bin/forge-pm'),'--version'],env=env,text=True))
  def test_dependency_cycles_conflicts_preserve_lock(self):
   p=self.run_install('--no-modify-path');self.assertEqual(p.returncode,0,p.stderr)
   base=json.loads((ROOT/'backend/seed.json').read_text())[0]

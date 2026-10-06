@@ -15,7 +15,7 @@ compiler implementation.
 
 ## Install
 
-Linux x86_64, glibc 2.35+ (Ubuntu 22.04+), with `curl`, `tar`, `sha256sum`, `cc`:
+Linux x86_64, glibc 2.35+ (Ubuntu 22.04+), with `curl`, `tar` and `sha256sum`. Installation does not require GCC or another C compiler. A C compiler is needed later to build Forge programs; native modules also need their documented development tools and libraries:
 
 ```sh
 curl -fsSL https://raw.githubusercontent.com/forge-language/forge-platform/main/scripts/install.sh | bash
