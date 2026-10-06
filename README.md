@@ -15,7 +15,7 @@ compiler implementation.
 
 ## Install
 
-GitHub installation requires the requested version’s archive and SHA-256 file in the [Forge compiler releases](https://github.com/forge-language/forge/releases). Until those assets are published, follow the [compiler source build instructions](https://github.com/forge-language/forge#build).
+GitHub installation requires the requested version’s archive and SHA-256 file in the [Forge compiler releases](https://github.com/forge-language/forge/releases). Until those assets are published, follow the [compiler source build instructions](https://github.com/forge-language/forge#build-and-install).
 
 Linux x86_64, glibc 2.35+ (Ubuntu 22.04+), with `curl`, `tar`, `sha256sum`, `cc`:
 
