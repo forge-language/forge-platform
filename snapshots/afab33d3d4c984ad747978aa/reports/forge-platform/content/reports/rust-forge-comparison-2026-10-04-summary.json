@@ -1,0 +1,675 @@
+{
+  "date_utc": "2026-10-04T13:37:18Z",
+  "scope": "Retained Rust release versus retained optimized uninstrumented Forge application; fresh disposable HTTP comparison. Ban checking, SQL/JSON work and libc differ.",
+  "host": {
+    "cpu": "AMD BC-250",
+    "os": "Linux-6.8.0-139-generic-x86_64-with-glibc2.39"
+  },
+  "method": {
+    "trials": 40,
+    "repeats": 5,
+    "warmup_seconds": 1,
+    "request_start_window_seconds": 4,
+    "client_processes": 2,
+    "api_cpu_limit_cores": 2,
+    "api_memory_limit_mib": 512,
+    "db_pool_connections": 5,
+    "fixture": {
+      "published_posts": 100,
+      "comments": 0,
+      "projects": 10
+    },
+    "statistic": "Median of trial-level measurements; percentages are ratios of group medians. Paired ratios are separate."
+  },
+  "requests": 885179,
+  "errors": 0,
+  "api_nr_throttled": 2,
+  "raw_sha256": "ca38c55159bf0d810d22ee9e28f4ee4a77acc25e9af13af001182a5245fe7494",
+  "identifiers": {
+    "rust_image_id": "sha256:06263bc0a2216ddbdc985d1a728983c4d4b95f494cadb53b0f4f3b957918d0da",
+    "rust_binary_sha256": "6cd0cdfa8868840ed0b2fe8645be864b3703a857efea4e77b0e43a16566cfe33",
+    "forge_runtime_image_id": "sha256:f0a497df4f13e616260764e3cfd860fb421e66b98321589fa694365927f02a5a",
+    "forge_binary_sha256": "0f6a4690708d53db5b43b79ad430c7e1a18f98c17920045f5a7d2962b29ccfc8",
+    "candidate_web_sha256": "ff7908bd428bfb19aed12dff9cce15523447ec26e83d011817448164207fb3dc",
+    "load_source_sha256": "56bd71d2fb59f6d0531e813cf07cedc8cf9ce53226568b9e283a91affb1e894d",
+    "postgres_image_id": "sha256:cf78e76683b9ca8c5733cbbdce6c9262b45b6767934dd0a95e671f9a0fc20685"
+  },
+  "cases": [
+    {
+      "endpoint": "/api/health",
+      "concurrency": 1,
+      "rust": {
+        "rps": {
+          "median": 2925.04,
+          "min": 2079.17,
+          "max": 3190.13
+        },
+        "p50_ms": {
+          "median": 0.288,
+          "min": 0.282,
+          "max": 0.476
+        },
+        "p95_ms": {
+          "median": 0.589,
+          "min": 0.473,
+          "max": 0.752
+        },
+        "p99_ms": {
+          "median": 0.78,
+          "min": 0.565,
+          "max": 0.981
+        },
+        "cpu_core_percent": {
+          "median": 21.057883215169102,
+          "min": 20.81285244577646,
+          "max": 28.029937539213634
+        },
+        "db_cpu_core_percent": {
+          "median": 0.009860901889572884,
+          "min": 0.007776444731289824,
+          "max": 0.07103946364779971
+        },
+        "client_cpu_core_percent": {
+          "median": 63.206973438118666,
+          "min": 50.950952950232875,
+          "max": 65.4901952996881
+        },
+        "memory_mib": {
+          "median": 7.5390625,
+          "min": 5.0390625,
+          "max": 7.87890625
+        },
+        "peak_threads": {
+          "median": 4,
+          "min": 4,
+          "max": 7
+        },
+        "seconds": {
+          "median": 4.0,
+          "min": 4.0,
+          "max": 4.001
+        },
+        "cpu_observation_seconds": {
+          "median": 4.158853363012895,
+          "min": 4.152754949871451,
+          "max": 4.166428376920521
+        }
+      },
+      "plain_fixed_connection": {
+        "rps": {
+          "median": 1458.82,
+          "min": 1243.88,
+          "max": 1761.24
+        },
+        "p50_ms": {
+          "median": 0.649,
+          "min": 0.473,
+          "max": 0.707
+        },
+        "p95_ms": {
+          "median": 1.303,
+          "min": 1.05,
+          "max": 1.424
+        },
+        "p99_ms": {
+          "median": 1.463,
+          "min": 1.421,
+          "max": 1.675
+        },
+        "cpu_core_percent": {
+          "median": 18.83501803165257,
+          "min": 18.095906015219242,
+          "max": 20.08562313904416
+        },
+        "db_cpu_core_percent": {
+          "median": 25.583644288506026,
+          "min": 23.784236092695508,
+          "max": 27.357059377620306
+        },
+        "client_cpu_core_percent": {
+          "median": 49.61783871754906,
+          "min": 47.08168777893729,
+          "max": 50.213621800104036
+        },
+        "memory_mib": {
+          "median": 2.3828125,
+          "min": 2.33203125,
+          "max": 3.2890625
+        },
+        "peak_threads": {
+          "median": 3,
+          "min": 3,
+          "max": 3
+        },
+        "seconds": {
+          "median": 4.0,
+          "min": 4.0,
+          "max": 4.001
+        },
+        "cpu_observation_seconds": {
+          "median": 4.162632141029462,
+          "min": 4.151455650106072,
+          "max": 4.170949019957334
+        }
+      },
+      "forge_rps_change_percent": -50.12649399666329,
+      "forge_p95_reduction_percent": -121.22241086587438,
+      "paired_rps_ratio": {
+        "median": 0.5699751114514674,
+        "min": 0.48250656541267833,
+        "max": 0.6372206216903861
+      }
+    },
+    {
+      "endpoint": "/api/health",
+      "concurrency": 16,
+      "rust": {
+        "rps": {
+          "median": 11379.15,
+          "min": 11160.81,
+          "max": 11472.98
+        },
+        "p50_ms": {
+          "median": 1.332,
+          "min": 1.309,
+          "max": 1.358
+        },
+        "p95_ms": {
+          "median": 1.913,
+          "min": 1.892,
+          "max": 1.939
+        },
+        "p99_ms": {
+          "median": 2.981,
+          "min": 2.796,
+          "max": 3.14
+        },
+        "cpu_core_percent": {
+          "median": 80.9896550079439,
+          "min": 79.10402270352905,
+          "max": 88.19201009640088
+        },
+        "db_cpu_core_percent": {
+          "median": 0.3529041974155808,
+          "min": 0.0467151522343821,
+          "max": 0.6742856483702809
+        },
+        "client_cpu_core_percent": {
+          "median": 197.85182359173038,
+          "min": 197.60016961884037,
+          "max": 198.1511952048645
+        },
+        "memory_mib": {
+          "median": 7.6171875,
+          "min": 4.84375,
+          "max": 7.72265625
+        },
+        "peak_threads": {
+          "median": 4,
+          "min": 4,
+          "max": 6
+        },
+        "seconds": {
+          "median": 4.001,
+          "min": 4.001,
+          "max": 4.001
+        },
+        "cpu_observation_seconds": {
+          "median": 4.172136450884864,
+          "min": 4.164852102054283,
+          "max": 4.1977814610581845
+        }
+      },
+      "plain_fixed_connection": {
+        "rps": {
+          "median": 9845.43,
+          "min": 9245.54,
+          "max": 9967.88
+        },
+        "p50_ms": {
+          "median": 1.55,
+          "min": 1.538,
+          "max": 1.642
+        },
+        "p95_ms": {
+          "median": 2.233,
+          "min": 2.156,
+          "max": 2.361
+        },
+        "p99_ms": {
+          "median": 2.853,
+          "min": 2.706,
+          "max": 3.041
+        },
+        "cpu_core_percent": {
+          "median": 95.51858736849883,
+          "min": 90.74479404764114,
+          "max": 95.78105926124164
+        },
+        "db_cpu_core_percent": {
+          "median": 117.19382544721064,
+          "min": 114.79647453949484,
+          "max": 124.18708831583483
+        },
+        "client_cpu_core_percent": {
+          "median": 196.70122246804635,
+          "min": 196.40969992160467,
+          "max": 197.1695925595975
+        },
+        "memory_mib": {
+          "median": 5.24609375,
+          "min": 5.01953125,
+          "max": 5.2578125
+        },
+        "peak_threads": {
+          "median": 18,
+          "min": 18,
+          "max": 18
+        },
+        "seconds": {
+          "median": 4.001,
+          "min": 4.001,
+          "max": 4.001
+        },
+        "cpu_observation_seconds": {
+          "median": 4.169639745960012,
+          "min": 4.161877922946587,
+          "max": 4.178778174798936
+        }
+      },
+      "forge_rps_change_percent": -13.478335376543937,
+      "forge_p95_reduction_percent": -16.727652901202305,
+      "paired_rps_ratio": {
+        "median": 0.8688135079116324,
+        "min": 0.8116730110124735,
+        "max": 0.883759678177548
+      }
+    },
+    {
+      "endpoint": "/api/posts",
+      "concurrency": 16,
+      "rust": {
+        "rps": {
+          "median": 3683.11,
+          "min": 3528.83,
+          "max": 3697.14
+        },
+        "p50_ms": {
+          "median": 4.197,
+          "min": 4.081,
+          "max": 4.348
+        },
+        "p95_ms": {
+          "median": 7.004,
+          "min": 6.883,
+          "max": 7.338
+        },
+        "p99_ms": {
+          "median": 9.943,
+          "min": 9.092,
+          "max": 10.507
+        },
+        "cpu_core_percent": {
+          "median": 143.63401532875767,
+          "min": 140.19185586322885,
+          "max": 145.5488036478171
+        },
+        "db_cpu_core_percent": {
+          "median": 263.76429733224865,
+          "min": 261.11135572891664,
+          "max": 266.14813977255966
+        },
+        "client_cpu_core_percent": {
+          "median": 132.80263813288477,
+          "min": 130.8022595002635,
+          "max": 136.90266292726216
+        },
+        "memory_mib": {
+          "median": 8.83984375,
+          "min": 6.44921875,
+          "max": 9.1796875
+        },
+        "peak_threads": {
+          "median": 4,
+          "min": 4,
+          "max": 7
+        },
+        "seconds": {
+          "median": 4.004,
+          "min": 4.004,
+          "max": 4.006
+        },
+        "cpu_observation_seconds": {
+          "median": 4.167454639915377,
+          "min": 4.1662084890995175,
+          "max": 4.1697998808231205
+        }
+      },
+      "plain_fixed_connection": {
+        "rps": {
+          "median": 5920.86,
+          "min": 5787.33,
+          "max": 5946.04
+        },
+        "p50_ms": {
+          "median": 2.623,
+          "min": 2.613,
+          "max": 2.663
+        },
+        "p95_ms": {
+          "median": 3.909,
+          "min": 3.829,
+          "max": 4.06
+        },
+        "p99_ms": {
+          "median": 4.913,
+          "min": 4.724,
+          "max": 5.155
+        },
+        "cpu_core_percent": {
+          "median": 109.90738792194514,
+          "min": 109.08042554305229,
+          "max": 110.38208307110963
+        },
+        "db_cpu_core_percent": {
+          "median": 417.25576248396794,
+          "min": 409.3720979095236,
+          "max": 419.1534828166592
+        },
+        "client_cpu_core_percent": {
+          "median": 184.03386275570244,
+          "min": 182.15341187953848,
+          "max": 185.20820537444163
+        },
+        "memory_mib": {
+          "median": 5.6328125,
+          "min": 5.41015625,
+          "max": 5.9140625
+        },
+        "peak_threads": {
+          "median": 18,
+          "min": 18,
+          "max": 18
+        },
+        "seconds": {
+          "median": 4.002,
+          "min": 4.002,
+          "max": 4.002
+        },
+        "cpu_observation_seconds": {
+          "median": 4.173977825092152,
+          "min": 4.163701053941622,
+          "max": 4.179405220784247
+        }
+      },
+      "forge_rps_change_percent": 60.757077578459494,
+      "forge_p95_reduction_percent": 44.189034837235866,
+      "paired_rps_ratio": {
+        "median": 1.6144073894073214,
+        "min": 1.6074223893360844,
+        "max": 1.649358720196166
+      }
+    },
+    {
+      "endpoint": "/api/posts",
+      "concurrency": 64,
+      "rust": {
+        "rps": {
+          "median": 3599.13,
+          "min": 3516.84,
+          "max": 3672.16
+        },
+        "p50_ms": {
+          "median": 17.073,
+          "min": 16.822,
+          "max": 17.509
+        },
+        "p95_ms": {
+          "median": 33.379,
+          "min": 32.558,
+          "max": 34.522
+        },
+        "p99_ms": {
+          "median": 47.015,
+          "min": 46.606,
+          "max": 48.114
+        },
+        "cpu_core_percent": {
+          "median": 139.01581185377077,
+          "min": 136.99274097461736,
+          "max": 143.80460772082307
+        },
+        "db_cpu_core_percent": {
+          "median": 263.8929388176663,
+          "min": 261.69180733716036,
+          "max": 267.321678452435
+        },
+        "client_cpu_core_percent": {
+          "median": 133.50200984698114,
+          "min": 131.3227089973625,
+          "max": 134.30649171461008
+        },
+        "memory_mib": {
+          "median": 8.76171875,
+          "min": 8.6875,
+          "max": 9.2421875
+        },
+        "peak_threads": {
+          "median": 4,
+          "min": 4,
+          "max": 7
+        },
+        "seconds": {
+          "median": 4.016,
+          "min": 4.015,
+          "max": 4.017
+        },
+        "cpu_observation_seconds": {
+          "median": 4.184498095884919,
+          "min": 4.171547834994271,
+          "max": 4.19131391402334
+        }
+      },
+      "plain_fixed_connection": {
+        "rps": {
+          "median": 5909.54,
+          "min": 5820.57,
+          "max": 6072.64
+        },
+        "p50_ms": {
+          "median": 10.455,
+          "min": 10.42,
+          "max": 10.653
+        },
+        "p95_ms": {
+          "median": 19.545,
+          "min": 19.197,
+          "max": 20.09
+        },
+        "p99_ms": {
+          "median": 27.759,
+          "min": 26.732,
+          "max": 28.302
+        },
+        "cpu_core_percent": {
+          "median": 107.48234722913739,
+          "min": 105.65844230732571,
+          "max": 109.5793275650867
+        },
+        "db_cpu_core_percent": {
+          "median": 412.28057987073095,
+          "min": 408.70126007158433,
+          "max": 420.8999838399052
+        },
+        "client_cpu_core_percent": {
+          "median": 186.06564778842417,
+          "min": 183.753494089456,
+          "max": 187.37166416513702
+        },
+        "memory_mib": {
+          "median": 14.01953125,
+          "min": 13.97265625,
+          "max": 14.0390625
+        },
+        "peak_threads": {
+          "median": 66,
+          "min": 66,
+          "max": 66
+        },
+        "seconds": {
+          "median": 4.009,
+          "min": 4.007,
+          "max": 4.011
+        },
+        "cpu_observation_seconds": {
+          "median": 4.177134132012725,
+          "min": 4.176740753930062,
+          "max": 4.181565527105704
+        }
+      },
+      "forge_rps_change_percent": 64.19356900139755,
+      "forge_p95_reduction_percent": 41.44522004853351,
+      "paired_rps_ratio": {
+        "median": 1.6585119181579993,
+        "min": 1.5978089190013507,
+        "max": 1.6803550915025989
+      }
+    }
+  ],
+  "same_poll_control": {
+    "raw_sha256": "8285ef8d60799a222df26cf802ba3354b7e6d91da1ec32f8dd2d9ab062f8d2e8",
+    "trials": 20,
+    "requests": 468074,
+    "errors": 0,
+    "cases": [
+      {
+        "concurrency": 16,
+        "rps_change_percent": 3.8863476833552735,
+        "p95_reduction_percent": 32.126308563583315,
+        "pool_wait_handler_percent": 48.734228057482824
+      },
+      {
+        "concurrency": 64,
+        "rps_change_percent": 2.1398637063680948,
+        "p95_reduction_percent": 9.63012014000567,
+        "pool_wait_handler_percent": 90.95440971248408
+      }
+    ]
+  },
+  "sql": {
+    "raw_sha256": "3b4c234a6f8c1c61c179104d015eea9b901b70e9e2a554638e002711bb5ad4bd",
+    "fixture": {
+      "posts": 1000,
+      "published_posts": 20,
+      "comments": 200000
+    },
+    "exclusion": "First of seven executions excluded in each phase",
+    "execution_times_ms": {
+      "missing_index": {
+        "rows": [
+          31.64,
+          45.363,
+          31.701,
+          31.707,
+          32.159,
+          41.052,
+          31.801
+        ],
+        "json": [
+          44.476,
+          31.878,
+          48.024,
+          52.584,
+          35.058,
+          40.918,
+          32.627
+        ],
+        "guarded_json": [
+          51.9,
+          31.659,
+          33.725,
+          35.247,
+          51.511,
+          43.921,
+          31.618
+        ],
+        "comments_for_post": [
+          23.809,
+          24.051,
+          27.026,
+          36.699,
+          23.354,
+          23.588,
+          22.337
+        ],
+        "ban_only": [
+          0.056,
+          0.106,
+          0.098,
+          0.058,
+          0.062,
+          0.057,
+          0.085
+        ]
+      },
+      "restored_index": {
+        "rows": [
+          41.955,
+          38.746,
+          48.489,
+          46.877,
+          35.865,
+          40.278,
+          47.662
+        ],
+        "json": [
+          43.309,
+          32.252,
+          52.678,
+          47.97,
+          57.282,
+          31.796,
+          41.014
+        ],
+        "guarded_json": [
+          49.218,
+          41.596,
+          56.051,
+          32.231,
+          31.908,
+          46.4,
+          37.21
+        ],
+        "comments_for_post": [
+          3.555,
+          2.806,
+          1.77,
+          1.759,
+          2.81,
+          3.258,
+          3.779
+        ],
+        "ban_only": [
+          0.058,
+          0.058,
+          0.06,
+          0.057,
+          0.074,
+          0.094,
+          0.056
+        ]
+      }
+    }
+  },
+  "request_window_seconds": {
+    "median": 4.0015,
+    "min": 4.0,
+    "max": 4.017
+  },
+  "cpu_observation_seconds": {
+    "median": 4.170859695994295,
+    "min": 4.151455650106072,
+    "max": 4.1977814610581845
+  },
+  "maximum_client_start_lateness_ms": 0.8215850684791803
+}

@@ -1,0 +1,105 @@
+{
+  "measured_at": "2026-10-06T12:36:59.622269+00:00",
+  "origin": "http://127.0.0.1:18103",
+  "images": {
+    "before": {
+      "image": "forge-platform-site:rollback-storage-20261006",
+      "files": {
+        "entry_js": {
+          "path": "/assets/index-CWWC605Q.js",
+          "bytes": 261656
+        },
+        "stylesheet": {
+          "path": "/assets/index-CDlWL8Z0.css",
+          "bytes": 189003
+        }
+      }
+    },
+    "after": {
+      "image": "forge-platform-site:storage-test",
+      "files": {
+        "entry_js": {
+          "path": "/assets/index-BnQ0V1-X.js",
+          "bytes": 252609
+        },
+        "stylesheet": {
+          "path": "/assets/index-CjmkFVB6.css",
+          "bytes": 189833
+        }
+      }
+    }
+  },
+  "http": {
+    "/": {
+      "status": 200,
+      "wire_body_bytes": 526,
+      "content_encoding": "gzip",
+      "cache_control": "no-cache",
+      "content_security_policy": "default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; worker-src 'self'; frame-src 'self'; style-src 'self'; connect-src 'self'; img-src 'self' https://avatars.githubusercontent.com; object-src 'none'; base-uri 'self'; frame-ancestors 'none'",
+      "vary": "Accept-Encoding"
+    },
+    "/assets/index-BnQ0V1-X.js": {
+      "status": 200,
+      "wire_body_bytes": 80477,
+      "content_encoding": "gzip",
+      "cache_control": "public,max-age=31536000,immutable",
+      "content_security_policy": "default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; worker-src 'self'; frame-src 'self'; style-src 'self'; connect-src 'self'; img-src 'self' https://avatars.githubusercontent.com; object-src 'none'; base-uri 'self'; frame-ancestors 'none'",
+      "vary": "Accept-Encoding"
+    },
+    "/assets/index-CjmkFVB6.css": {
+      "status": 200,
+      "wire_body_bytes": 57006,
+      "content_encoding": "gzip",
+      "cache_control": "public,max-age=31536000,immutable",
+      "content_security_policy": "default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; worker-src 'self'; frame-src 'self'; style-src 'self'; connect-src 'self'; img-src 'self' https://avatars.githubusercontent.com; object-src 'none'; base-uri 'self'; frame-ancestors 'none'",
+      "vary": "Accept-Encoding"
+    },
+    "/benchmarks.json": {
+      "status": 200,
+      "wire_body_bytes": 1124,
+      "content_encoding": "gzip",
+      "cache_control": "no-cache",
+      "content_security_policy": "default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; worker-src 'self'; frame-src 'self'; style-src 'self'; connect-src 'self'; img-src 'self' https://avatars.githubusercontent.com; object-src 'none'; base-uri 'self'; frame-ancestors 'none'",
+      "vary": "Accept-Encoding"
+    },
+    "/materials/forge-language/forge/docs/refactoring-performance-2026-10-06.md": {
+      "status": 200,
+      "wire_body_bytes": 673,
+      "content_encoding": "gzip",
+      "cache_control": "no-cache",
+      "content_security_policy": "default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; worker-src 'self'; frame-src 'self'; style-src 'self'; connect-src 'self'; img-src 'self' https://avatars.githubusercontent.com; object-src 'none'; base-uri 'self'; frame-ancestors 'none'",
+      "vary": "Accept-Encoding"
+    }
+  },
+  "browser": {
+    "homepage_requests": [
+      "/",
+      "/assets/index-BnQ0V1-X.js",
+      "/assets/index-CjmkFVB6.css",
+      "/logo_named.webp",
+      "/assets/noto-sans-kr-latin-400-normal-CdyDEFPE.woff2",
+      "/assets/noto-sans-kr-98-400-normal-B-6lRJka.woff2",
+      "/assets/noto-sans-kr-118-400-normal-GhYQSaRZ.woff2",
+      "/assets/noto-sans-kr-117-400-normal-D2EToaCF.woff2",
+      "/assets/noto-sans-kr-latin-600-normal-DwQ34Qxa.woff2",
+      "/assets/noto-sans-kr-98-600-normal-DgHMpfGg.woff2",
+      "/assets/noto-sans-kr-110-400-normal-BntDJUXg.woff2",
+      "/assets/noto-sans-kr-116-400-normal-CeE_dkUt.woff2"
+    ],
+    "playground_additional_requests": [
+      "/assets/playground-D6rIu4Ri.js",
+      "/playground/runner.html",
+      "/assets/noto-sans-kr-115-400-normal-CAn-TtFI.woff2",
+      "/assets/noto-sans-kr-119-400-normal-CjSmh1xI.woff2",
+      "/assets/noto-sans-kr-43-400-normal-DG5YJAyS.woff2",
+      "/assets/noto-sans-kr-118-600-normal-CGvRqyMh.woff2",
+      "/assets/noto-sans-kr-117-600-normal-CSgk6FBl.woff2",
+      "/assets/noto-sans-kr-116-600-normal-D8PvuWsC.woff2",
+      "/assets/noto-sans-kr-111-400-normal-BxSHrhhx.woff2",
+      "/assets/noto-sans-kr-105-400-normal-kJRcXOXX.woff2",
+      "/playground/runner.js",
+      "/assets/noto-sans-kr-110-600-normal-DijDdYSd.woff2"
+    ],
+    "homepage_has_playground_asset": false
+  }
+}
