@@ -62,7 +62,7 @@ class InstallerTest(unittest.TestCase):
  def test_site_origin_rewrite_preserves_trailing_slash_normalization(self):
   deployed=self.home/'install.sh';deployed.write_bytes(INSTALL.read_bytes())
   nginx=self.home/'nginx.conf';nginx.write_text((ROOT/'frontend/nginx.conf').read_text())
-  entrypoint=(ROOT/'frontend/40-forge.sh').read_text().replace('/usr/share/nginx/html/install.sh',str(deployed)).replace('/etc/nginx/conf.d/default.conf',str(nginx))
+  entrypoint=(ROOT/'frontend/40-forge.sh').read_text().replace('/usr/share/nginx/html/install.sh',str(deployed)).replace('/etc/nginx/conf.d/default.conf',str(nginx)).replace('/etc/nginx/forge',str(self.home/'nginx-internal')).replace('/srv/releases/artifacts.conf',str(self.home/'releases-artifacts.conf'))
   origin=self.env['FORGE_DOWNLOAD_BASE'].rstrip('/')+'/'
   for _ in range(2):
    p=subprocess.run(['sh','-c',entrypoint],env={**self.env,'FORGE_DOWNLOAD_BASE':origin},text=True,capture_output=True)
@@ -72,6 +72,24 @@ class InstallerTest(unittest.TestCase):
   p=subprocess.run(['bash',str(deployed),'--no-modify-path'],env=env,text=True,capture_output=True,timeout=1050 if origin.startswith('https://') else 180)
   self.assertEqual(p.returncode,0,p.stdout+p.stderr)
   self.assertIn('0.3.0-preview.5',subprocess.check_output([str(self.dest/'bin/forge'),'--version'],text=True))
+ def test_site_release_map_cold_start_and_read_only_source(self):
+  deployed=self.home/'install.sh';deployed.write_bytes(INSTALL.read_bytes())
+  nginx=self.home/'nginx.conf';nginx.write_text((ROOT/'frontend/nginx.conf').read_text())
+  directory=self.home/'nginx-internal';source=self.home/'artifacts.conf'
+  entrypoint=(ROOT/'frontend/40-forge.sh').read_text().replace('/usr/share/nginx/html/install.sh',str(deployed)).replace('/etc/nginx/conf.d/default.conf',str(nginx)).replace('/etc/nginx/forge',str(directory)).replace('/srv/releases/artifacts.conf',str(source))
+  def start():
+   process=subprocess.run(['sh','-c',entrypoint],env=self.env,text=True,capture_output=True)
+   self.assertEqual(process.returncode,0,process.stderr)
+   return (directory/'release-artifacts.conf').read_text()
+  self.assertEqual(start(),'map $uri $forge_release_url { default ""; }\n')
+  self.assertFalse(source.exists())
+  published='map $uri $forge_release_url { default ""; /releases/old.tar.gz "https://example.org/old.tar.gz"; }\n'
+  source.write_text(published);source.chmod(0o444)
+  self.assertEqual(start(),published);self.assertEqual(source.read_text(),published)
+  self.assertEqual(source.stat().st_mode & 0o777,0o444)
+  source.unlink()
+  self.assertEqual(start(),'map $uri $forge_release_url { default ""; }\n')
+  self.assertFalse((directory/'release-artifacts.conf.new').exists())
  def test_preserve_unmanaged_directory(self):
   self.dest.mkdir();(self.dest/'precious.txt').write_text('keep');self.assertNotEqual(self.run_install().returncode,0);self.assertEqual((self.dest/'precious.txt').read_text(),'keep')
  def test_checksum_failure_preserves_current(self):

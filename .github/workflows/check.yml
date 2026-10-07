@@ -14,6 +14,7 @@ jobs:
    - run: python3 tests/repository-inspection.py
    - run: python3 tests/public-refresh.py
    - run: python3 tests/download-origin.py
+   - run: python3 tests/publish-artifacts.py
    - run: docker compose --env-file tests/config.env build
    - run: sh scripts/test.sh
    - run: node frontend/node_modules/@playwright/test/cli.js test --config tests/live-ui.config.ts
