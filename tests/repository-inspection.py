@@ -114,6 +114,18 @@ class InspectionTest(unittest.TestCase):
         Fixture.source['module.json'] = '{"name":"x","name":"y"}'
         with self.assertRaises(m.Rejected): self.inspect()
         with self.assertRaises(m.Rejected): m.strict_json('{"name":"hello\\u0000world"}')
+    def test_literal_source_escapes_allowed_but_decoded_nested_nul_rejected(self):
+        # GitHub commit API patch strings legitimately contain C NUL fixtures.
+        patch = 'assert(!parse("' + chr(92) + 'u0000"));'
+        value = {'files': [{'patch': patch}], 'readme': 'literal ' + chr(92) + 'u0000'}
+        self.assertEqual(m.strict_json(json.dumps(value)), value)
+        for value in ({'items': [{'text': 'bad' + chr(0)}]},
+                      ['bad' + chr(0)], {'key' + chr(0): 'value'}):
+            with self.subTest(value=value), self.assertRaises(m.Rejected):
+                m.strict_json(json.dumps(value))
+        for text in ('{"x":NaN}', '{"x":Infinity}', '{"x":1,"x":2}'):
+            with self.subTest(text=text), self.assertRaises(m.Rejected):
+                m.strict_json(text)
     def test_token_identity_never_returns_provider_token(self):
         profile = m.identity('github-test-secret', client_factory=Fixture)
         self.assertEqual(profile, {'login':'TestUser','github_id':'123'})

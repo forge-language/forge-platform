@@ -46,8 +46,15 @@ def strict_json(data):
         return out
     try:
         result = json.loads(data, object_pairs_hook=pairs, parse_constant=lambda _: (_ for _ in ()).throw(Rejected('Invalid JSON number')))
-        if '\u0000' in json.dumps(result, ensure_ascii=False) or '\\u0000' in json.dumps(result):
-            raise Rejected('NUL bytes are not accepted')
+        pending = [result]
+        while pending:
+            value = pending.pop()
+            if isinstance(value, str) and '\x00' in value:
+                raise Rejected('NUL bytes are not accepted')
+            if isinstance(value, dict):
+                pending.extend(value.values())  # Object keys are checked by pairs.
+            elif isinstance(value, list):
+                pending.extend(value)
         return result
     except (ValueError, UnicodeError):
         raise Rejected('Invalid UTF-8 JSON')
