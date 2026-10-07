@@ -262,6 +262,32 @@ class RefreshTests(unittest.TestCase):
         self.assertIsNone(report['commit'])
         self.assertIn('snapshot', report['provenance'])
 
+    def test_platform_report_inventory_accepts_published_size_and_rejects_overflow(self):
+        class PlatformClient(FakeClient):
+            count = 37
+
+            def api(self, path, **kwargs):
+                result = super().api(path, **kwargs)
+                if path.startswith('/orgs/'):
+                    platform = copy.deepcopy(result[0])
+                    platform.update(name='forge-platform', html_url='https://github.com/forge-language/forge-platform')
+                    result.append(platform)
+                if '/forge-platform/git/trees/' in path:
+                    result = {'tree': [{'type': 'blob', 'path': f'docs/performance-{number}.md'}
+                                       for number in range(self.count)]}
+                return result
+        self.client = PlatformClient()
+        first = self.refresh()
+        reports = [item for item in first['reports'] if item['repository'] == 'forge-platform']
+        self.assertEqual(len(reports), 37)
+        self.assertNotIn('reports:forge-platform', [item['component'] for item in first['errors']])
+        self.client.count, self.client.revision = 65, B
+        second = self.refresh()
+        self.assertIn('reports:forge-platform', [item['component'] for item in second['errors']])
+        self.assertEqual(second['report_source_revisions']['forge-platform'], A)
+        self.assertEqual({item['path']: (item['commit'], item['sha256']) for item in second['reports'] if item['repository'] == 'forge-platform'},
+                         {item['path']: (item['commit'], item['sha256']) for item in reports})
+
     def test_other_repository_reports_survive_benchmark_source_refresh(self):
         class ExtraClient(FakeClient):
             benchmark_revision = A

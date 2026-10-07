@@ -72,3 +72,12 @@ jobs:
             GIT_MASTER=1 git -C /tmp/forge-public-data commit -m "Refresh public evidence snapshot for run ${GITHUB_RUN_ID}"
             GIT_MASTER=1 git -C /tmp/forge-public-data push origin HEAD:public-data
           fi
+      - name: Require complete source refresh
+        run: |
+          python3 - <<'PYTHON'
+          import json
+          from pathlib import Path
+          status = json.loads(Path('public-output/refresh-status.json').read_text())
+          if status['errors']:
+              raise SystemExit('Public source refresh was partial; validated groups and previous data were retained. See refresh-status.json artifact.')
+          PYTHON

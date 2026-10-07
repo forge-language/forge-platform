@@ -405,7 +405,7 @@ def refresh(output, content, client=None, offline=False):
                          and entry['path'].endswith(('.md', '.json'))
                          and re.search(r'(benchmark|performance|(?:^|/)reports?/)', entry['path'], re.I)
                          and not any(part.startswith('.') for part in entry['path'].split('/'))]
-                if len(paths) > 32:
+                if len(paths) > 64:
                     raise ValueError('Additional public report inventory exceeds limit')
                 pending, records = {}, []
                 for source in sorted(paths):

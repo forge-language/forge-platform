@@ -37,7 +37,7 @@ never serialized into public data or logs.
 compiler PRs, fetches documentation at immutable compiler/benchmark commit
 SHAs, and validates measured `benchmark-data/latest.json`. Source documents are
 bounded by file count and byte size. Each content group is updated only after
-all files pass validation; failures retain the complete prior group.
+all files pass validation; failures retain the complete prior group. A partial source refresh still publishes validated groups and retained data, but the workflow fails its final completeness check so a green run means no source refresh errors. The artifact and public status record identify affected groups.
 
 `public-data/current` is atomically switched to an immutable
 `snapshots/<content_id>/` directory. The manifest lists original document/report
