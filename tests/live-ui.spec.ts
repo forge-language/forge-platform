@@ -119,3 +119,23 @@ test('merged language switch, syntax page and immutable document viewer remain u
   await page.getByLabel('Language / 언어').selectOption('en');
   await expect(page.getByRole('alert')).toContainText('path is invalid');
 });
+
+test('package detail shows only matching stored inspection and warns on legacy or forged records', async ({page}) => {
+  const repository = 'https://github.com/fixture-owner/fixture-module';
+  const release = {name: 'fixture-module', version: '1.2.0', description: 'Fixture', repository_url: repository, git_commit: commit, module: 'module.fg', license: 'Apache-2.0', dependencies: {}, native: {library: 'fixture', cmake_target: 'fixture', pkg_config: []}};
+  const report = {policy: 'forge-source-inspection-v1', repository, git_commit: commit, status: 'review_required', checked_at: '2026-10-07T00:00:00Z', scanned_files: 3, findings: [{severity: 'warning', rule: 'native-code', path: 'CMakeLists.txt', message: 'Fixture native review finding'}]};
+  await page.route('**/api/packages/fixture-module', route => route.fulfill({json: {name: release.name, owner: 'fixture-owner', versions: [{...release, security: report}, {...release, version: '1.1.0'}, {...release, version: '1.0.0', security: {...report, git_commit: 'b'.repeat(40), status: 'passed'}}]}}));
+  await page.goto('/packages/fixture-module');
+  const panel = page.getByRole('region', {name: '등록 당시 검사'});
+  await expect(panel).toContainText('소스 수동 검토 필요');
+  await expect(panel.getByRole('listitem')).toContainText('Fixture native review finding');
+  await expect(panel).toContainText('모든 악성 코드나 실행 동작을 탐지했다는 보장이 아닙니다');
+  await page.getByLabel('버전', {exact: true}).selectOption('1');
+  await expect(panel).toContainText('유효한 등록 당시 검사 기록이 없습니다');
+  await expect(panel).not.toContainText('정적 검사 완료');
+  await page.getByLabel('버전', {exact: true}).selectOption('2');
+  await expect(panel).toContainText('유효한 등록 당시 검사 기록이 없습니다');
+  await expect(panel).not.toContainText('정적 검사 완료');
+  await page.getByLabel('Language / 언어').selectOption('en');
+  await expect(page.getByRole('region', {name: 'Inspection recorded at registration'})).toContainText('No valid registration inspection');
+});
