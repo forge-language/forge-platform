@@ -20,7 +20,7 @@ import time
 import urllib.request
 
 ROOT = Path(__file__).resolve().parents[1]
-VERSION = '0.3.0-preview.5'
+VERSION = '0.3.0-preview.6'
 ARCHIVE = ROOT / 'releases' / VERSION / ('forge-' + VERSION + '-linux-x86_64.tar.gz')
 
 
@@ -82,7 +82,7 @@ def main():
 set -euo pipefail
 mkdir -p "$SDK_TEST_ROOT/profile"
 export FORGE_PROFILE_ROOT="$SDK_TEST_ROOT/profile"
-bash /src/scripts/install.sh --version 0.3.0-preview.5 --prefix "$SDK_TEST_ROOT/toolchain" --no-modify-path
+bash /src/scripts/install.sh --version 0.3.0-preview.6 --prefix "$SDK_TEST_ROOT/toolchain" --no-modify-path
 export PATH="$SDK_TEST_ROOT/toolchain/bin:$PATH"
 cd "$SDK_TEST_ROOT"
 forge init storage-app

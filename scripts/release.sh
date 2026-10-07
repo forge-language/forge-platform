@@ -1,7 +1,7 @@
 #!/bin/sh
 set -eu
 ROOT=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
-VERSION=${VERSION:-0.3.0-preview.5}
+VERSION=${VERSION:-0.3.0-preview.6}
 BUILD_DIR=${BUILD_DIR:-"$ROOT/build"}
 STAGE="$BUILD_DIR/release-stage"
 rm -rf "$STAGE"

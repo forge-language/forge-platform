@@ -12,7 +12,7 @@ class InstallerTest(unittest.TestCase):
  def run_install(self,*args,env=None):return subprocess.run(['bash',str(INSTALL),*args],env=env or self.env,text=True,capture_output=True,timeout=1050 if self.env['FORGE_DOWNLOAD_BASE'].startswith('https://') else 180)
  def test_install_update_compile_and_uninstall(self):
   p=self.run_install();self.assertEqual(p.returncode,0,p.stderr)
-  version=subprocess.check_output([str(self.dest/'bin/forge'),'--version'],env=self.env,text=True);self.assertIn('0.3.0-preview.5',version)
+  version=subprocess.check_output([str(self.dest/'bin/forge'),'--version'],env=self.env,text=True);self.assertIn('0.3.0-preview.6',version)
   self.assertIn('forge-pm',subprocess.check_output([str(self.dest/'bin/forge-pm'),'--version'],env=self.env,text=True))
   source=self.home/'hello.fg';source.write_text('native main {println("설치 검증");return 0;}')
   p=subprocess.run([str(self.dest/'bin/forge'),str(source),'-o',str(self.home/'hello')],env=self.env,text=True,capture_output=True);self.assertEqual(p.returncode,0,p.stderr)
@@ -71,7 +71,7 @@ class InstallerTest(unittest.TestCase):
   env={**self.env};env.pop('FORGE_DOWNLOAD_BASE')
   p=subprocess.run(['bash',str(deployed),'--no-modify-path'],env=env,text=True,capture_output=True,timeout=1050 if origin.startswith('https://') else 180)
   self.assertEqual(p.returncode,0,p.stdout+p.stderr)
-  self.assertIn('0.3.0-preview.5',subprocess.check_output([str(self.dest/'bin/forge'),'--version'],text=True))
+  self.assertIn('0.3.0-preview.6',subprocess.check_output([str(self.dest/'bin/forge'),'--version'],text=True))
  def test_site_release_map_cold_start_and_read_only_source(self):
   deployed=self.home/'install.sh';deployed.write_bytes(INSTALL.read_bytes())
   nginx=self.home/'nginx.conf';nginx.write_text((ROOT/'frontend/nginx.conf').read_text())
@@ -94,15 +94,15 @@ class InstallerTest(unittest.TestCase):
   self.dest.mkdir();(self.dest/'precious.txt').write_text('keep');self.assertNotEqual(self.run_install().returncode,0);self.assertEqual((self.dest/'precious.txt').read_text(),'keep')
  def test_checksum_failure_preserves_current(self):
   p=self.run_install('--no-modify-path');self.assertEqual(p.returncode,0,p.stderr);before=os.readlink(self.dest/'current')
-  directory=pathlib.Path(self.temp.name)/'server';release=directory/'releases/0.3.0-preview.5';release.mkdir(parents=True);archive='forge-0.3.0-preview.5-linux-x86_64.tar.gz';(release/archive).write_bytes(b'corrupt');(release/(archive+'.sha256')).write_text('0'*64+'  '+archive)
+  directory=pathlib.Path(self.temp.name)/'server';release=directory/'releases/0.3.0-preview.6';release.mkdir(parents=True);archive='forge-0.3.0-preview.6-linux-x86_64.tar.gz';(release/archive).write_bytes(b'corrupt');(release/(archive+'.sha256')).write_text('0'*64+'  '+archive)
   handler=lambda *a,**kw:Quiet(*a,directory=str(directory),**kw)
   server=http.server.ThreadingHTTPServer(('127.0.0.1',0),handler);worker=threading.Thread(target=server.serve_forever,daemon=True);worker.start()
   try:
    env={**self.env,'FORGE_DOWNLOAD_BASE':f'http://localhost:{server.server_port}'};p=self.run_install(env=env);self.assertNotEqual(p.returncode,0);self.assertIn('SHA-256 mismatch',p.stderr);self.assertEqual(os.readlink(self.dest/'current'),before)
   finally:server.shutdown();server.server_close();worker.join()
  def test_download_retries_resume_and_preserve_current_on_failure(self):
-  archive='forge-0.3.0-preview.5-linux-x86_64.tar.gz'
-  content=(ROOT/'releases/0.3.0-preview.5'/archive).read_bytes()
+  archive='forge-0.3.0-preview.6-linux-x86_64.tar.gz'
+  content=(ROOT/'releases/0.3.0-preview.6'/archive).read_bytes()
   checksum=(hashlib.sha256(content).hexdigest()+'  '+archive+'\n').encode()
   self.dest.mkdir();(self.dest/'.forge-install').write_text('forge-install-v1\n')
   old=self.dest/'old';old.mkdir();current=self.dest/'current';current.symlink_to(old)
@@ -140,7 +140,7 @@ class InstallerTest(unittest.TestCase):
      p=self.run_install('--no-modify-path',env=env)
      if scenario in ['interrupted','no-ranges','transient']:
       self.assertEqual(p.returncode,0,p.stdout+p.stderr);self.assertNotEqual(os.readlink(current),str(old))
-      self.assertIn('0.3.0-preview.5',subprocess.check_output([str(self.dest/'bin/forge'),'--version'],text=True))
+      self.assertIn('0.3.0-preview.6',subprocess.check_output([str(self.dest/'bin/forge'),'--version'],text=True))
      else:
       self.assertNotEqual(p.returncode,0,p.stdout+p.stderr);self.assertEqual(os.readlink(current),str(old))
       self.assertIn('SHA-256 mismatch' if scenario=='changed' else 'Release download failed',p.stderr)
@@ -171,8 +171,8 @@ class InstallerTest(unittest.TestCase):
    with self.subTest(path=path):self.assertNotEqual(self.run_install('--prefix',path,'--uninstall').returncode,0)
  def test_unsafe_archives_preserve_installation(self):
   self.dest.mkdir();(self.dest/'.forge-install').write_text('forge-install-v1\n');old=self.dest/'old';old.mkdir();(self.dest/'current').symlink_to(old)
-  directory=pathlib.Path(self.temp.name)/'bad-archive';release=directory/'releases/0.3.0-preview.5';release.mkdir(parents=True)
-  archive=release/'forge-0.3.0-preview.5-linux-x86_64.tar.gz'
+  directory=pathlib.Path(self.temp.name)/'bad-archive';release=directory/'releases/0.3.0-preview.6';release.mkdir(parents=True)
+  archive=release/'forge-0.3.0-preview.6-linux-x86_64.tar.gz'
   handler=lambda *a,**kw:Quiet(*a,directory=str(directory),**kw)
   server=http.server.ThreadingHTTPServer(('127.0.0.1',0),handler);worker=threading.Thread(target=server.serve_forever,daemon=True);worker.start()
   env={**self.env,'FORGE_DOWNLOAD_BASE':f'http://localhost:{server.server_port}'}

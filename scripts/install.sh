@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
-VERSION=0.3.0-preview.5
+VERSION=0.3.0-preview.6
 BASE_URL=${FORGE_DOWNLOAD_BASE:-https://github.com/forge-language/forge}
 INSTALL_ROOT=${FORGE_HOME:-"$HOME/.forge"}
 PROFILE_ROOT=${FORGE_PROFILE_ROOT:-"$HOME"}

@@ -54,7 +54,7 @@ python3 tests/installed-cache.py --local-release
 
 The frontend container reproducibly builds the real compiler with pinned Emscripten 4.0.15. Checked-in content/ snapshots make documentation and reports available from a clean checkout. To update reports, copy the reviewed compiler documents into content/, then sync/build. Local browser development also requires scripts/build-playground.sh with emcc or the pinned Emscripten container.
 
-Releases use a new version directory. Preserve existing version archives and checksums. The deployed installer selects 0.3.0-preview.5; files are served from the read-only releases mount. GitHub release publication is a separate action.
+Releases use a new version directory. Preserve existing version archives and checksums. The deployed installer selects 0.3.0-preview.6; files are served from the read-only releases mount. GitHub release publication is a separate action.
 
 The installer resumes interrupted archive transfers within three five-minute
 attempts and validates the complete SHA-256 before switching the toolchain. A

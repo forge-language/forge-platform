@@ -25,7 +25,7 @@ class PublishArtifacts(unittest.TestCase):
         self.patch = mock.patch.object(publisher, 'ROOT', self.root)
         self.patch.start()
         self.addCleanup(self.patch.stop)
-        for version in ('0.3.0-preview.4', '0.3.0-preview.5'):
+        for version in ('0.3.0-preview.4', '0.3.0-preview.6'):
             directory = self.releases / version
             directory.mkdir()
             (directory / f'forge-{version}-linux-x86_64.tar.gz').write_bytes(version.encode())
@@ -58,14 +58,14 @@ class PublishArtifacts(unittest.TestCase):
         self.origin = f'http://127.0.0.1:{self.server.server_port}'
 
     def publish(self):
-        return publisher.publish(self.origin, 'https://storage.forge-lang.org', 'fixture-token', '0.3.0-preview.5')
+        return publisher.publish(self.origin, 'https://storage.forge-lang.org', 'fixture-token', '0.3.0-preview.6')
 
     def test_selected_version_preserves_config_and_json_routes(self):
         old = {'sha256': 'a' * 64, 'url': self.old_url, 'size': 123}
         (self.releases / 'artifacts.json').write_text(json.dumps({self.old_path: old}))
         self.assertEqual(self.publish(), 2)
         self.assertEqual(len(self.calls), 2)
-        self.assertEqual(self.calls[0][1], b'0.3.0-preview.5')
+        self.assertEqual(self.calls[0][1], b'0.3.0-preview.6')
         self.assertTrue(all(call[2] == 'Bearer fixture-token' for call in self.calls))
         records = json.loads((self.releases / 'artifacts.json').read_text())
         self.assertEqual(records[self.old_path]['size'], 123)

@@ -35,13 +35,13 @@ class DownloadOriginTest(unittest.TestCase):
             self.assertFalse(list((root / 'sdk').glob('.install.*')))
 
     def test_default_canonical_github(self):
-        self.check_origin(None, 'https://github.com/forge-language/forge/releases/download/v0.3.0-preview.5/forge-0.3.0-preview.5-linux-x86_64.tar.gz')
+        self.check_origin(None, 'https://github.com/forge-language/forge/releases/download/v0.3.0-preview.6/forge-0.3.0-preview.6-linux-x86_64.tar.gz')
 
     def test_explicit_canonical_github_trailing_slash(self):
-        self.check_origin('https://github.com/forge-language/forge/', 'https://github.com/forge-language/forge/releases/download/v0.3.0-preview.5/forge-0.3.0-preview.5-linux-x86_64.tar.gz')
+        self.check_origin('https://github.com/forge-language/forge/', 'https://github.com/forge-language/forge/releases/download/v0.3.0-preview.6/forge-0.3.0-preview.6-linux-x86_64.tar.gz')
 
     def test_custom_loopback_hosting(self):
-        self.check_origin('http://127.0.0.1:18299/', 'http://127.0.0.1:18299/releases/0.3.0-preview.5/forge-0.3.0-preview.5-linux-x86_64.tar.gz')
+        self.check_origin('http://127.0.0.1:18299/', 'http://127.0.0.1:18299/releases/0.3.0-preview.6/forge-0.3.0-preview.6-linux-x86_64.tar.gz')
 
 
 if __name__ == '__main__':

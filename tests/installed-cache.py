@@ -69,7 +69,7 @@ def local_release_origin():
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--origin', default='http://localhost:18101')
-    parser.add_argument('--version', default='0.3.0-preview.5')
+    parser.add_argument('--version', default='0.3.0-preview.6')
     parser.add_argument('--local-release', action='store_true', help='Serve checked-out installer/releases on an isolated loopback port for CI')
     args = parser.parse_args()
     with contextlib.ExitStack() as resources:
