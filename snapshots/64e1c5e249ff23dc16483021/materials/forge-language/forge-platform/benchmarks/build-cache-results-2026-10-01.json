@@ -1,0 +1,95 @@
+{
+  "scope": "Actual compiler, cc and linked executable; unchanged application with one Forge import, no external native modules; toolchain and manager startup/hashing included",
+  "repeats": 7,
+  "medians_seconds": {
+    "before": 0.12794572196435183,
+    "after": 0.03333668108098209
+  },
+  "speedup": 3.837986200652179,
+  "runs": [
+    {
+      "variant": "before",
+      "seconds": 0.14865649899002165,
+      "cache_hit": false,
+      "repeat": 1
+    },
+    {
+      "variant": "after",
+      "seconds": 0.031008810037747025,
+      "cache_hit": true,
+      "repeat": 1
+    },
+    {
+      "variant": "after",
+      "seconds": 0.025353108998388052,
+      "cache_hit": true,
+      "repeat": 2
+    },
+    {
+      "variant": "before",
+      "seconds": 0.13060068106278777,
+      "cache_hit": false,
+      "repeat": 2
+    },
+    {
+      "variant": "before",
+      "seconds": 0.12375002796761692,
+      "cache_hit": false,
+      "repeat": 3
+    },
+    {
+      "variant": "after",
+      "seconds": 0.038751499960199,
+      "cache_hit": true,
+      "repeat": 3
+    },
+    {
+      "variant": "after",
+      "seconds": 0.03333668108098209,
+      "cache_hit": true,
+      "repeat": 4
+    },
+    {
+      "variant": "before",
+      "seconds": 0.09656751004513353,
+      "cache_hit": false,
+      "repeat": 4
+    },
+    {
+      "variant": "before",
+      "seconds": 0.15054053801577538,
+      "cache_hit": false,
+      "repeat": 5
+    },
+    {
+      "variant": "after",
+      "seconds": 0.032573320087976754,
+      "cache_hit": true,
+      "repeat": 5
+    },
+    {
+      "variant": "after",
+      "seconds": 0.04072617809288204,
+      "cache_hit": true,
+      "repeat": 6
+    },
+    {
+      "variant": "before",
+      "seconds": 0.12396025704219937,
+      "cache_hit": false,
+      "repeat": 6
+    },
+    {
+      "variant": "before",
+      "seconds": 0.12794572196435183,
+      "cache_hit": false,
+      "repeat": 7
+    },
+    {
+      "variant": "after",
+      "seconds": 0.03584009897895157,
+      "cache_hit": true,
+      "repeat": 7
+    }
+  ]
+}
