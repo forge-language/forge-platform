@@ -262,6 +262,46 @@ class RefreshTests(unittest.TestCase):
         self.assertIsNone(report['commit'])
         self.assertIn('snapshot', report['provenance'])
 
+    def test_changed_metadata_revalidates_heads_instead_of_freezing_stale_revision(self):
+        class CachedHeadClient(FakeClient):
+            head_requests = None
+
+            def __init__(self):
+                super().__init__()
+                self.head_requests = []
+
+            def api(self, path, **kwargs):
+                if '/commits/' in path:
+                    self.head_requests.append((path, kwargs.get('ttl', 300)))
+                    return {'sha': self.revision if kwargs.get('ttl') == 0 else A}
+                result = super().api(path, **kwargs)
+                if path.startswith('/orgs/'):
+                    for name in ['forge-platform', 'forge-storage']:
+                        record = copy.deepcopy(result[0])
+                        record.update(name=name, html_url='https://github.com/forge-language/' + name)
+                        result.append(record)
+                if any('/' + name + '/git/trees/' in path for name in ['forge-platform', 'forge-storage']):
+                    return {'tree': [{'type': 'blob', 'path': 'docs/performance.md'}]}
+                return result
+        self.client = CachedHeadClient()
+        first = self.refresh()
+        self.assertEqual(first['source_revisions']['forge'], A)
+        self.client.head_requests.clear()
+        self.client.revision = B
+        second = self.refresh()
+        self.assertEqual(second['source_revisions'], {'forge': B, 'forge-benchmarks': B})
+        for name in ['forge', 'forge-platform', 'forge-storage']:
+            self.assertEqual(second['report_source_revisions'][name], B)
+        requests = self.client.head_requests
+        self.assertEqual(len(requests), 4)
+        self.assertTrue(all(ttl == 0 for _, ttl in requests), requests)
+        self.assertEqual({path.split('/')[3] for path, _ in requests},
+                         {'forge', 'forge-benchmarks', 'forge-platform', 'forge-storage'})
+        self.client.head_requests.clear()
+        third = self.refresh()
+        self.assertEqual(third['source_revisions'], second['source_revisions'])
+        self.assertEqual(self.client.head_requests, [])
+
     def test_platform_report_inventory_accepts_published_size_and_rejects_overflow(self):
         class PlatformClient(FakeClient):
             count = 37

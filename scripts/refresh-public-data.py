@@ -324,7 +324,7 @@ def refresh(output, content, client=None, offline=False):
                 branch = present['default_branch']
                 if not re.fullmatch(r'[A-Za-z0-9_.-]+', branch):
                     raise ValueError('Invalid source branch')
-                revision = client.api(f'/repos/{ORG}/{repository}/commits/{branch}')['sha']
+                revision = client.api(f'/repos/{ORG}/{repository}/commits/{branch}', ttl=0)['sha']
                 if not SHA.fullmatch(revision):
                     raise ValueError('Invalid source commit')
                 if revision == result['source_revisions'].get(repository):
@@ -392,7 +392,7 @@ def refresh(output, content, client=None, offline=False):
                 if not re.fullmatch(r'[A-Za-z0-9_.-]+', branch):
                     raise ValueError('Invalid public report source branch')
                 revision = result['source_revisions'].get('forge') if repository == 'forge' else None
-                revision = revision or client.api(f'/repos/{ORG}/{repository}/commits/{branch}')['sha']
+                revision = revision or client.api(f'/repos/{ORG}/{repository}/commits/{branch}', ttl=0)['sha']
                 if not SHA.fullmatch(revision):
                     raise ValueError('Invalid public report source commit')
                 if result['report_source_revisions'].get(repository) == revision:
