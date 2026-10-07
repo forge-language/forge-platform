@@ -27,6 +27,13 @@ FRONTEND_URL=https://forge-lang.org
 BACKEND_BASE_URL=https://forge-lang.org
 CORS_ALLOWED_ORIGINS=https://forge-lang.org
 
+When the separate Forge Storage stack is used, set
+`COMPOSE_FILE=compose.yml:deployment/storage-network.yml` and
+`STORAGE_BASE_URL=http://storage:8090` in the private `.env`. The optional
+override attaches only the API to the existing `forge-storage_default` network
+(configurable with `FORGE_STORAGE_NETWORK`), preserving access after recreation.
+When passing explicit `-f` arguments, include this network override too.
+
 Keep JWT_SECRET and POSTGRES_PASSWORD from the existing registry. Do not replace them when changing domain. Default proxy subnet/IP/gateway are 172.28.241.0/29, 172.28.241.3 and 172.28.241.1; change the trusted real-IP gateway in frontend/nginx.conf as well if overriding the network.
 
 GitHub-token login supports publishing without an OAuth app. Tokens are verified once and never retained; the browser stores only the one-hour registry session token. Configure ADMIN_GITHUB_ID using the immutable numeric GitHub account ID. Optional OAuth settings:
