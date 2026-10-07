@@ -1,5 +1,28 @@
 name: forge-platform
 services:
+ repository-checker:
+  build:
+   context: .
+   dockerfile: repository-checker/Containerfile
+  image: forge-platform-repository-checker:local
+  environment:
+   REPOSITORY_CHECK_TOKEN: ${REPOSITORY_CHECK_TOKEN:-${JWT_SECRET:?Generate a new signing secret}}
+   GITHUB_READ_TOKEN: ${GITHUB_READ_TOKEN:-}
+  read_only: true
+  cap_drop: [ALL]
+  security_opt: [no-new-privileges:true]
+  mem_limit: 128m
+  pids_limit: 32
+  restart: unless-stopped
+ redis:
+  image: redis:7.4-alpine
+  command: ["redis-server", "--maxmemory", "64mb", "--maxmemory-policy", "allkeys-lru", "--save", "", "--appendonly", "no"]
+  healthcheck:
+   test: ["CMD", "redis-cli", "ping"]
+   interval: 5s
+   timeout: 2s
+   retries: 20
+  restart: unless-stopped
  postgres:
   image: postgres:16-alpine
   environment:
@@ -19,16 +42,29 @@ services:
    dockerfile: backend/Containerfile
   image: forge-platform-backend:local
   environment:
+   REDIS_HOST: redis
+   REDIS_PORT: 6379
+   STORAGE_BACKFILL_ON_START: ${STORAGE_BACKFILL_ON_START:-0}
+   STORAGE_BASE_URL: ${STORAGE_BASE_URL:-}
+   STORAGE_PUBLIC_URL: ${STORAGE_PUBLIC_URL:-https://storage.forge-lang.org}
+   STORAGE_TOKEN: ${STORAGE_TOKEN:-}
    DATABASE_URL: postgres://forge:${POSTGRES_PASSWORD}@postgres/forge_registry
    JWT_SECRET: ${JWT_SECRET:?Generate a new signing secret}
    GITHUB_CLIENT_ID: ${GITHUB_CLIENT_ID:-}
    GITHUB_CLIENT_SECRET: ${GITHUB_CLIENT_SECRET:-}
+   ADMIN_GITHUB_ID: ${ADMIN_GITHUB_ID:-}
+   REPOSITORY_CHECK_URL: http://repository-checker:8090
+   REPOSITORY_CHECK_TOKEN: ${REPOSITORY_CHECK_TOKEN:-${JWT_SECRET:?Generate a new signing secret}}
    ADMIN_GITHUB_USERNAME: ${ADMIN_GITHUB_USERNAME:-Helloworld0822}
    FRONTEND_URL: ${FRONTEND_URL:-http://localhost:18101}
    BACKEND_BASE_URL: ${BACKEND_BASE_URL:-http://localhost:18101}
+   FORGE_TRUSTED_PROXIES: ${FORGE_PROXY_IP:-172.28.241.3}/32
    CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS:-http://localhost:18101}
+  networks: [default, proxy]
   depends_on:
+   repository-checker: {condition: service_healthy}
    postgres: {condition: service_healthy}
+   redis: {condition: service_healthy}
   restart: unless-stopped
  site:
   build:
@@ -36,11 +72,22 @@ services:
    dockerfile: frontend/Containerfile
   image: forge-platform-site:local
   environment:
+   FORGE_WRITE_RATE: ${FORGE_WRITE_RATE:-20r/m}
+   FORGE_WRITE_BURST: ${FORGE_WRITE_BURST:-5}
    FORGE_DOWNLOAD_BASE: ${FRONTEND_URL:-http://localhost:18101}
+  networks:
+   proxy:
+    ipv4_address: ${FORGE_PROXY_IP:-172.28.241.3}
   ports: ['127.0.0.1:${SITE_PORT:-18101}:80']
-  volumes: ['./releases:/srv/releases:ro']
+  volumes: ['./releases:/srv/releases:ro', './public-data:/srv/activity:ro']
   depends_on:
    api: {condition: service_healthy}
   restart: unless-stopped
 volumes:
  registry-data:
+
+networks:
+ proxy:
+  ipam:
+   config:
+    - subnet: ${FORGE_PROXY_SUBNET:-172.28.241.0/29}

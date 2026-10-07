@@ -1,4 +1,10 @@
 import web;
+extern fn pm_safe_git_checkout_tree(path: string): int;
+extern fn pm_tree_digest(path: string, excludes: int): string;
+extern fn pm_file_sha256(path: string): string;
+fn safe_git_checkout_tree(path: string): int { return pm_safe_git_checkout_tree(path); }
+extern fn pm_safe_checkout_tree(path: string): int;
+fn safe_checkout_tree(path: string): int { return pm_safe_checkout_tree(path); }
 extern fn pm_run(args: int, directory: string): int;
 extern fn pm_mkdir(path: string): int;
 extern fn pm_mkdir_new(path: string): int;

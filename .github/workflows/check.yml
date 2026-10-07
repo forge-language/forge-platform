@@ -11,9 +11,24 @@ jobs:
      with: {node-version: 22, cache: npm, cache-dependency-path: frontend/package-lock.json}
    - run: npm ci --prefix frontend
    - run: node frontend/node_modules/@playwright/test/cli.js install --with-deps chromium
+   - run: python3 tests/repository-inspection.py
+   - run: python3 tests/public-refresh.py
    - run: python3 tests/download-origin.py
    - run: docker compose --env-file tests/config.env build
    - run: sh scripts/test.sh
+   - run: node frontend/node_modules/@playwright/test/cli.js test --config tests/live-ui.config.ts
    - run: docker build -f Release.Containerfile -t forge-platform-release:local .
    - run: docker run --rm -v "$PWD:/src" -e BUILD_DIR=/src/build/glibc forge-platform-release:local sh -c 'sh scripts/build.sh && sh scripts/release.sh'
+   - run: sh scripts/test-cli-security.sh
    - run: python3 tests/installed-cache.py --local-release
+   - name: Installer and package-manager validation
+     run: |
+       python3 - <<'PY'
+       import importlib.util, os, subprocess
+       from pathlib import Path
+       p=Path('tests/installed-cache.py')
+       spec=importlib.util.spec_from_file_location('cache',p)
+       cache=importlib.util.module_from_spec(spec);spec.loader.exec_module(cache)
+       with cache.local_release_origin() as origin:
+           subprocess.run(['python3','tests/installer.py'],env={**os.environ,'FORGE_TEST_ORIGIN':origin,'FORGE_REGISTRY':'builtin'},check=True)
+       PY

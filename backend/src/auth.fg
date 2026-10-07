@@ -1,5 +1,6 @@
 import web;
 import strings;
+import repository;
 fn claims(request: int): int {
     let header: string = web.header(request, "Authorization");
     if (web.starts(header, "Bearer ") == 0) { return 0; }
@@ -7,9 +8,30 @@ fn claims(request: int): int {
     let user: int = web.jwt_verify(token, web.env("JWT_SECRET", ""));
     let role: string = web.field_text(user, "role");
     if (web.equal(role, "admin") == 0 && web.equal(role, "user") == 0) { return 0; }
+    if (valid_id(web.field_text(user,"github_id")) == 0) { return 0; }
     return user;
 }
-fn admin(user: int): int { return web.equal(web.field_text(user, "role"), "admin"); }
+fn valid_id(value: string): int {
+ if(str_len(value)==0 || str_len(value)>20 || str_char_at(value,0)==48){return 0;}
+ let i: int=0;while(i<str_len(value)){let c: int=str_char_at(value,i);if(c<48 || c>57){return 0;}i=i+1;}return 1;
+}
+fn admin(user: int): int { return web.equal(web.field_text(user,"role"),"admin")!=0 && web.equal(web.field_text(user,"github_id"),web.env("ADMIN_GITHUB_ID",""))!=0; }
+fn session(profile: int): int {
+ let login: string=web.field_text(profile,"login");let id: string=web.field_text(profile,"github_id");
+ if(web.valid(login,"login")==0 || valid_id(id)==0){return 0;}
+ let user: int=web.object();web.set(user,"sub",web.jstring(login));web.set(user,"github_id",web.jstring(id));
+ let role: string="user";if(web.equal(id,web.env("ADMIN_GITHUB_ID",""))!=0){role="admin";}
+ web.set(user,"role",web.jstring(role));web.set(user,"exp",web.number(web.now()+3600));return user;
+}
+fn token_login(request: int): int {
+ if(web.rate(str_concat("github-token:",web.ip(request)),10,600)==0){return web.error(request,429,"rate_limit");}
+ let value: int=web.request_json(request);
+ if(web.kind(value)!=4 || web.required(value,"token",3)==0 || web.chars(web.field_text(value,"token"))>512){return web.validation(request,"GitHub token is required");}
+ let result: int=repository.call("/identity",value);let status: int=web.field_int(result,"status");
+ if(status!=200){return web.error(request,401,"github_authentication_failed");}
+ let user: int=session(web.get(result,"data"));if(web.kind(user)!=4){return web.error(request,401,"unauthorized");}
+ let response: int=web.object();web.set(response,"user",user);web.set(response,"token",web.jstring(web.jwt_sign(user,web.env("JWT_SECRET",""))));return web.respond(request,200,web.dump(response));
+}
 fn frontend(): string {
     let url: string = web.env("FRONTEND_URL", "http://localhost:5173");
     while (str_len(url) > 0 && str_char_at(url, str_len(url) - 1) == 47) { url = str_sub(url, 0, str_len(url) - 1); }
@@ -29,13 +51,16 @@ fn login(request: int): int {
     url = str_concat(url, web.urlencode(str_concat(web.env("BACKEND_BASE_URL", "http://localhost:8080"), "/api/auth/github/callback")));
     url = str_concat(url, "&scope=read:user&state=");
     let state: int = web.object(); let nonce: string = web.uuid();
-    web.set(state, "sub", web.jstring(nonce)); web.set(state, "role", web.jstring("oauth")); web.set(state, "exp", web.number(web.now() + 600)); web.set(state, "path", web.jstring(web.query(request, "state")));
+    let path: string = web.query(request, "state");
+    if (web.chars(path) > 256 || web.valid(path, "return_path") == 0) { path = "/"; }
+    if (web.chars(nonce) == 0) { return failure(request, "unauthorized"); }
+    web.set(state, "sub", web.jstring(nonce)); web.set(state, "role", web.jstring("oauth")); web.set(state, "exp", web.number(web.now() + 600)); web.set(state, "path", web.jstring(path));
     url = str_concat(url, web.urlencode(web.jwt_sign(state, web.env("JWT_SECRET", ""))));
     let result: int = web.redirect(request, url);
     web.set_cookie(request, "forge_oauth_nonce", nonce, 600, web.starts(web.env("BACKEND_BASE_URL", ""), "https://"));
     return result;
 }
-fn callback(conn: int, request: int): int {
+fn callback(request: int): int {
     let state: int = web.jwt_verify(web.query(request, "state"), web.env("JWT_SECRET", ""));
     let nonce: string = web.cookie(request, "forge_oauth_nonce");
     if (web.kind(state) != 4 || web.equal(web.field_text(state, "role"), "oauth") == 0 || web.chars(nonce) == 0 || web.equal(nonce, web.field_text(state, "sub")) == 0) { return failure(request, "unauthorized"); }
@@ -51,11 +76,10 @@ fn callback(conn: int, request: int): int {
     let profile: int = web.fetch(str_concat(web.env("GITHUB_API_BASE_URL", "https://api.github.com"), "/user"), "GET", "", token);
     let login: string = web.field_text(profile, "login");
     if (web.valid(login, "login") == 0) { return failure(request, "unauthorized"); }
-    let role: string = "user";
+    let verified: int=web.object();web.set(verified,"login",web.jstring(login));web.set(verified,"github_id",web.jstring(web.dump(web.get(profile,"id"))));
+    let user: int=session(verified);if(web.kind(user)!=4){return failure(request,"unauthorized");}
     let path: string = web.field_text(state, "path");
     if (web.valid(path, "return_path") == 0) { path = "/"; }
-    if (web.equal(login, web.env("ADMIN_GITHUB_USERNAME", "")) != 0) { role = "admin"; path = "/publish"; }
-    let user: int = web.object(); web.set(user, "sub", web.jstring(login)); web.set(user, "role", web.jstring(role)); web.set(user, "avatar_url", web.get(profile, "avatar_url")); web.set(user, "exp", web.number(web.now() + 604800));
     let jwt: string = web.jwt_sign(user, web.env("JWT_SECRET", ""));
     if (str_len(jwt) == 0) { return failure(request, "unauthorized"); }
     let result: int = web.redirect(request, str_concat(str_concat(str_concat(frontend(), path), "#token="), jwt));

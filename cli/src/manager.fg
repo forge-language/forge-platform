@@ -3,6 +3,58 @@ import manifest;
 import system;
 import strings;
 import os;
+extern fn pm_tree_digest(path: string, excludes: int): string;
+extern fn pm_file_sha256(path: string): string;
+extern fn fs_receive_file(url: string, digest: string, path: string): int;
+extern fn pm_archive_extract(file: string, directory: string): int;
+extern fn pm_remove_tree(path: string): int;
+extern fn pm_file_size(path: string): int;
+fn artifact_url(url: string): int {
+ if (web.starts(url,"https://") != 0) { return str_len(url)>8; }
+ let start: int = 0;
+ if (web.starts(url,"http://localhost") != 0) { start=16; }
+ if (web.starts(url,"http://127.0.0.1") != 0) { start=16; }
+ if (web.starts(url,"http://[::1]") != 0) { start=12; }
+ if (start == 0 || str_len(url)<=start) { return 0; }
+ if (str_char_at(url,start)==47) { return 1; }
+ if (str_char_at(url,start)!=58) { return 0; }
+ let i: int=start+1; while(i<str_len(url) && str_char_at(url,i)>=48 && str_char_at(url,i)<=57){i=i+1;}
+ if(i==start+1 || i>=str_len(url) || str_char_at(url,i)!=47){return 0;}
+ let port: int=web.integer(web.parse(str_sub(url,start+1,i-start-1)));
+ return port>0 && port<=65535;
+}
+fn artifact_valid(artifact: int): int {
+ if(web.kind(artifact)!=4 || web.required(artifact,"sha256",3)==0 || web.required(artifact,"url",3)==0 || web.required(artifact,"size",2)==0){return 0;}
+ let digest: string=web.field_text(artifact,"sha256"); if(str_len(digest)!=64){return 0;}
+ let i: int=0;while(i<64){let c: int=str_char_at(digest,i);if((c<48 || c>57) && (c<97 || c>102)){return 0;}i=i+1;}
+ return web.field_int(artifact,"size")>0 && web.field_int(artifact,"size")<=268435456 && artifact_url(web.field_text(artifact,"url"))!=0;
+}
+fn staging_failure(directory: string, archive: string): int { pm_remove_tree(archive); pm_remove_tree(directory); return 0; }
+fn artifact_exclusions(): int { let values: int=array();add(values,"build");add(values,"node_modules");add(values,".forge-npm-fingerprint");add(values,".forge-artifact");add(values,".forge-source.tar.gz");return values; }
+fn artifact_checkout_valid_at(value: int,directory: string): int {
+ let artifact: int=web.get(value,"artifact");if(artifact_valid(artifact)==0||system.safe_checkout_tree(directory)==0){return 0;}
+ let archive: string=str_concat(directory,"/.forge-source.tar.gz");
+ if(pm_file_size(archive)!=web.field_int(artifact,"size")||web.equal(pm_file_sha256(archive),web.field_text(artifact,"sha256"))==0){return 0;}
+ let temp: string=str_concat(".forge/staging-verify-",web.uuid());
+ if(pm_archive_extract(archive,temp)==0){pm_remove_tree(temp);return 0;}
+ let expected: string=pm_tree_digest(temp,artifact_exclusions());let actual: string=pm_tree_digest(directory,artifact_exclusions());pm_remove_tree(temp);
+ return str_len(expected)>0 && web.equal(expected,actual)!=0 && system.exists(str_concat(str_concat(directory,"/"),web.field_text(value,"module")))!=0;
+}
+fn artifact_download(value: int, dest: string): int {
+ let artifact: int=web.get(value,"artifact"); if(artifact_valid(artifact)==0){return 0;}
+ if(system.exists(dest)!=0){return artifact_checkout_valid_at(value,dest);}
+ let marker: int=0;
+ let temp: string=str_concat(".forge/staging-",web.uuid()); let archive: string=str_concat(temp,".tar.gz");
+ if(fs_receive_file(web.field_text(artifact,"url"),web.field_text(artifact,"sha256"),archive)==0){return staging_failure(temp,archive);}
+ if(pm_file_size(archive)!=web.field_int(artifact,"size")){return staging_failure(temp,archive);}
+ if(pm_archive_extract(archive,temp)==0){return staging_failure(temp,archive);}
+ if(system.exists(str_concat(str_concat(temp,"/"),web.field_text(value,"module")))==0){return staging_failure(temp,archive);}
+ if(system.rename(archive,str_concat(temp,"/.forge-source.tar.gz"))==0){return staging_failure(temp,archive);}
+ marker=web.object();web.set(marker,"sha256",web.get(artifact,"sha256"));web.set(marker,"git_commit",web.get(value,"git_commit"));
+ if(system.write(str_concat(temp,"/.forge-artifact"),web.dump(marker))==0){return staging_failure(temp,archive);}
+ if(system.exists(dest)!=0 && pm_remove_tree(dest)==0){return staging_failure(temp,archive);}
+ if(system.rename(temp,dest)==0){return staging_failure(temp,archive);} return 1;
+}
 fn fail(message: string): int { println(str_concat("forge-pm: ",message));return 1; }
 fn registry(): string { let url: string=web.env("FORGE_REGISTRY","builtin"); while(str_len(url)>0 && str_char_at(url,str_len(url)-1)==47){url=str_sub(url,0,str_len(url)-1);}return url; }
 fn config(): int { return web.parse(web.read("forge.json")); }
@@ -26,17 +78,62 @@ fn release(name: string,version: string): int {
  let r: int=request(str_concat(str_concat(str_concat("/api/packages/",name),"/versions/"),version),"GET",""); if(web.field_int(r,"status")!=200){return 0;}return web.get(r,"data");
 }
 fn cache(value: int): string { return str_concat(str_concat(str_concat(str_concat(".forge/packages/",web.field_text(value,"name")),"/"),web.field_text(value,"git_commit")),""); }
+fn canonical_repo(url: string): string {
+ let value: string=web.lower(url);let n: int=str_len(value);
+ if(n>4 && web.equal(str_sub(value,n-4,4),".git")!=0){value=str_sub(value,0,n-4);}return value;
+}
+fn git_args(): int {
+ let args: int=system.argv("git");system.arg(args,"--no-replace-objects");system.arg(args,"-c");system.arg(args,"core.hooksPath=/dev/null");system.arg(args,"-c");system.arg(args,"core.fsmonitor=false");return args;
+}
+fn checkout_valid_at(value: int,directory: string): int {
+ if(manifest.valid(value)==0){return 0;}if(web.kind(web.get(value,"artifact"))!=0){return artifact_checkout_valid_at(value,directory);}
+ if(system.safe_git_checkout_tree(directory)==0){return 0;}
+ let args: int=git_args();system.arg(args,"config");system.arg(args,"--local");system.arg(args,"--no-includes");system.arg(args,"--list");let r: int=system.run(args,directory);let cfg: string=web.lower(web.field_text(r,"output"));
+ if(web.field_int(r,"status")!=0||web.starts(cfg,"filter.")!=0||str_contains(cfg,"\nfilter.")!=0||web.starts(cfg,"include.")!=0||str_contains(cfg,"\ninclude.")!=0||web.starts(cfg,"includeif.")!=0||str_contains(cfg,"\nincludeif.")!=0||web.starts(cfg,"extensions.")!=0||str_contains(cfg,"\nextensions.")!=0){return 0;}
+ args=git_args();system.arg(args,"rev-parse");system.arg(args,"HEAD");r=system.run(args,directory);
+ if(web.field_int(r,"status")!=0||web.equal(web.trim(web.field_text(r,"output")),web.field_text(value,"git_commit"))==0){return 0;}
+ args=git_args();system.arg(args,"config");system.arg(args,"--local");system.arg(args,"--no-includes");system.arg(args,"--get");system.arg(args,"remote.origin.url");r=system.run(args,directory);
+ if(web.field_int(r,"status")!=0||web.equal(canonical_repo(web.trim(web.field_text(r,"output"))),canonical_repo(web.field_text(value,"repository_url")))==0){return 0;}
+ args=git_args();system.arg(args,"status");system.arg(args,"--porcelain");system.arg(args,"--untracked-files=no");r=system.run(args,directory);
+ if(web.field_int(r,"status")!=0||str_len(web.trim(web.field_text(r,"output")))!=0){return 0;}
+ args=git_args();system.arg(args,"ls-files");system.arg(args,"-v");r=system.run(args,directory);let indexed: string=web.field_text(r,"output");let cursor: int=0;
+ if(web.field_int(r,"status")!=0){return 0;}while(cursor<str_len(indexed)){if(str_char_at(indexed,cursor)!=72){return 0;}while(cursor<str_len(indexed)&&str_char_at(indexed,cursor)!=10){cursor=cursor+1;}cursor=cursor+1;}
+ args=git_args();system.arg(args,"ls-files");system.arg(args,"--others");r=system.run(args,directory);let others: string=web.field_text(r,"output");cursor=0;
+ if(web.field_int(r,"status")!=0){return 0;}while(cursor<str_len(others)){let start: int=cursor;while(cursor<str_len(others)&&str_char_at(others,cursor)!=10){cursor=cursor+1;}let file: string=str_sub(others,start,cursor-start);if(web.starts(file,"build/")==0&&web.starts(file,"node_modules/")==0&&web.equal(file,".forge-npm-fingerprint")==0){return 0;}cursor=cursor+1;}
+ args=git_args();system.arg(args,"ls-tree");system.arg(args,"-r");system.arg(args,"HEAD");r=system.run(args,directory);let tree: string=web.field_text(r,"output");
+ if(web.field_int(r,"status")!=0||web.starts(tree,"120000")!=0||web.starts(tree,"160000")!=0||str_contains(tree,"\n120000")!=0||str_contains(tree,"\n160000")!=0){return 0;}
+ args=git_args();system.arg(args,"ls-files");system.arg(args,"--error-unmatch");system.arg(args,"--");system.arg(args,web.field_text(value,"module"));r=system.run(args,directory);if(web.field_int(r,"status")!=0){return 0;}
+ return system.exists(str_concat(str_concat(directory,"/"),web.field_text(value,"module")));
+}
+fn checkout_valid(value: int): int { return checkout_valid_at(value,cache(value)); }
+fn trusted(project: int,value: int,permission: string): int {
+ let grant: int=web.get(web.get(project,"trust"),web.field_text(value,"name"));
+ return web.kind(grant)==4 && web.equal(web.field_text(grant,"repository_url"),canonical_repo(web.field_text(value,"repository_url")))!=0 && web.equal(web.field_text(grant,"git_commit"),web.field_text(value,"git_commit"))!=0 && web.boolean(web.get(grant,permission))!=0;
+}
+fn trust(project: int): int {
+ let name: string=os_argv(2);let permission: string="native";let flag: string=os_argv(3);
+ if(str_len(flag)>0 && web.equal(flag,"--npm-scripts")==0){return fail("Usage: forge trust <package> [--npm-scripts]");}
+ if(str_len(flag)>0){permission="npm_scripts";}
+ let lock: int=web.parse(web.read("forge.lock"));let value: int=web.get(web.get(lock,"packages"),name);
+ if(manifest.name(name)==0||checkout_valid(value)==0){return fail("Trust requires a verified package in forge.lock; run install first");}
+ let grants: int=web.get(project,"trust");if(web.kind(grants)!=4){grants=web.object();web.set(project,"trust",grants);}
+ let grant: int=web.get(grants,name);if(web.kind(grant)!=4||web.equal(web.field_text(grant,"repository_url"),canonical_repo(web.field_text(value,"repository_url")))==0||web.equal(web.field_text(grant,"git_commit"),web.field_text(value,"git_commit"))==0){grant=web.object();}
+ web.set(grant,"repository_url",web.jstring(canonical_repo(web.field_text(value,"repository_url"))));web.set(grant,"git_commit",web.get(value,"git_commit"));web.set(grant,permission,web.jbool(1));web.set(grants,name,grant);
+ if(system.write("forge.json",web.dump(project))==0){return fail("Cannot write forge.json trust grant");}
+ println(str_concat(str_concat(str_concat(str_concat(str_concat("Trusted ",permission)," execution for "),canonical_repo(web.field_text(value,"repository_url")))," @ "),web.field_text(value,"git_commit")));return 0;
+}
 fn download(value: int): int {
  let dest: string=cache(value);
- if(system.exists(str_concat(dest,"/.git"))!=0){return 1;}
- let temp: string=str_concat(str_concat(".forge/staging-",web.uuid()),"");
  let parent: string=str_concat(".forge/packages/",web.field_text(value,"name")); if(system.mkdir(parent)==0){return 0;}
+ if(web.kind(web.get(value,"artifact"))!=0){return artifact_download(value,dest);}
+ if(system.exists(dest)!=0){return checkout_valid(value);}
+ let temp: string=str_concat(str_concat(".forge/staging-",web.uuid()),"");
  let args: int=system.argv("git");system.arg(args,"-c");system.arg(args,"core.hooksPath=/dev/null");system.arg(args,"-c");system.arg(args,"protocol.file.allow=never");system.arg(args,"clone");system.arg(args,"--template=");system.arg(args,"--no-checkout");system.arg(args,"--");system.arg(args,web.field_text(value,"repository_url"));system.arg(args,temp);
  if(system.success(args,"")==0){return 0;}
  args=system.argv("git");system.arg(args,"-c");system.arg(args,"core.hooksPath=/dev/null");system.arg(args,"checkout");system.arg(args,"--detach");system.arg(args,web.field_text(value,"git_commit"));if(system.success(args,temp)==0){return 0;}
  args=system.argv("git");system.arg(args,"rev-parse");system.arg(args,"HEAD");let result: int=system.run(args,temp);
  if(web.field_int(result,"status")!=0||web.equal(web.trim(web.field_text(result,"output")),web.field_text(value,"git_commit"))==0){return 0;}
- if(system.exists(str_concat(str_concat(temp,"/"),web.field_text(value,"module")))==0){return 0;}
+ if(checkout_valid_at(value,temp)==0){return 0;}
  return system.rename(temp,dest);
 }
 fn resolve(name: string,version: string,selected: int,visiting: int,depth: int): int {
@@ -66,7 +163,7 @@ fn module_dir(value: int): string {
 }
 fn array(): int { return web.array(); }
 fn add(values: int,value: string): int { return web.push(values,web.jstring(value)); }
-fn exclusions(): int { let values: int=array();add(values,".git");add(values,".forge");add(values,"build");add(values,"node_modules");add(values,".forge-npm-fingerprint");return values; }
+fn exclusions(): int { let values: int=array();add(values,".git");add(values,".forge");add(values,"build");add(values,"node_modules");add(values,".forge-npm-fingerprint");add(values,".forge-source.tar.gz");add(values,".forge-artifact");return values; }
 fn hash_paths(paths: int): string { return system.hash(paths,exclusions(),array()); }
 fn tool_version(command: string,argument: string): string { let args: int=system.argv(command);if(str_len(argument)>0){system.arg(args,argument);}let result: int=system.run(args,"");if(web.field_int(result,"status")!=0){return "unavailable";}return web.trim(web.field_text(result,"output")); }
 fn environment(): string {
@@ -96,9 +193,10 @@ fn cmake_input(module: string): string {
  return system.sha256(str_concat(str_concat(str_concat(str_concat(str_concat("format=1\nconfigure-flags=-DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=OFF\nfiles=",files),"\ncmake="),tool_version("cmake","--version")),"\ntarget="),str_concat(target(),str_concat("\nenv=",environment()))));
 }
 fn cmake_outputs(directory: string): int { let outputs: int=array();add(outputs,str_concat(directory,"/CMakeCache.txt"));let ninja: string=str_concat(directory,"/build.ninja");let makefile: string=str_concat(directory,"/Makefile");if(system.exists(ninja)!=0){add(outputs,ninja);}if(system.exists(makefile)!=0){add(outputs,makefile);}return outputs; }
-fn npm_input(module: string,package_file: string): string {
+fn npm_input(module: string,package_file: string,scripts: int): string {
+ let script_policy: string="disabled";if(scripts!=0){script_policy="explicitly-trusted";}
  let paths: int=array();add(paths,package_file);add(paths,str_concat(module,"/package-lock.json"));add(paths,system.executable("node"));add(paths,system.executable("npm"));let files: string=system.hash(paths,array(),array());if(str_len(files)==0){return "";}
- return system.sha256(str_concat(str_concat(str_concat(str_concat(str_concat(str_concat(str_concat("format=1\nnpm-flags=ci --ignore-scripts --no-bin-links\nfiles=",files),"\nnode="),tool_version("node","--version")),"\nnpm="),tool_version("npm","--version")),"\ntarget="),str_concat(target(),str_concat("\nenv=",environment()))));
+ return system.sha256(str_concat(str_concat(str_concat(str_concat(str_concat(str_concat(str_concat(str_concat("format=2\nnpm-flags=ci --no-bin-links\nscripts=",str_concat(script_policy,"\nfiles=")),files),"\nnode="),tool_version("node","--version")),"\nnpm="),tool_version("npm","--version")),"\ntarget="),str_concat(target(),str_concat("\nenv=",environment()))));
 }
 fn build(value: int,run: int): int {
  let lock: int=web.parse(web.read("forge.lock"));let deps: int=web.get(value,"dependencies");if(web.kind(deps)!=4){return fail("Missing dependencies object");}
@@ -107,12 +205,13 @@ fn build(value: int,run: int): int {
  let root: string=web.env("FORGE_ROOT","");if(str_len(root)==0){return fail("FORGE_ROOT is required; use the installed forge wrapper");}
  let javascript: int=web.equal(os_argv(2),"--emit-js");let forge: string=str_concat(root,"/build/bin/forge");
  let modules: int=web.get(lock,"packages");let keys: int=web.keys(modules);let i: int=0;
- while(i<web.count(keys)){let m: int=web.get(modules,web.text(web.at(keys,i)));if(manifest.valid(m)==0||system.exists(cache(m))==0){return fail("Invalid lock or missing module; run install");}i=i+1;}
+ while(i<web.count(keys)){let m: int=web.get(modules,web.text(web.at(keys,i)));if(checkout_valid(m)==0){return fail("Invalid lock or missing module; run install");}i=i+1;}
+ i=0;while(i<web.count(keys)){let m: int=web.get(modules,web.text(web.at(keys,i)));if(javascript==0 && web.kind(web.get(m,"native"))==4 && trusted(value,m,"native")==0){return fail(str_concat(str_concat("Native dependency can execute build commands; review its pinned source then run: forge trust ",web.field_text(m,"name")),""));}i=i+1;}
  let outputs: int=array();if(javascript!=0){add(outputs,"build/main.js");add(outputs,"build/entry.js");add(outputs,"build/app.js");}else{add(outputs,"build/main.c");add(outputs,"build/app");}
  let fingerprint: string=build_input(javascript,root,modules);if(cache_hit("build/.forge-build-fingerprint",fingerprint,outputs)!=0){println("Build cache hit");if(run!=0 && javascript==0){let cached: int=system.argv("./build/app");let cached_result: int=system.run(cached,"");println(web.field_text(cached_result,"output"));return web.field_int(cached_result,"status");}return 0;}
  let args: int=system.argv(forge);system.arg(args,source);if(javascript!=0){system.arg(args,"--emit-js");}else{system.arg(args,"--emit-c");}system.arg(args,"-o");if(javascript!=0){system.arg(args,"build/main.js");}else{system.arg(args,"build/main.c");}system.arg(args,"--forge-root");system.arg(args,root);
  i=0;
- while(i<web.count(keys)){let m: int=web.get(modules,web.text(web.at(keys,i)));if(manifest.valid(m)==0||system.exists(cache(m))==0){return fail("Invalid lock or missing module; run install");}system.arg(args,"-I");system.arg(args,module_dir(m));i=i+1;}
+ while(i<web.count(keys)){let m: int=web.get(modules,web.text(web.at(keys,i)));if(checkout_valid(m)==0){return fail("Invalid lock or missing module; run install");}system.arg(args,"-I");system.arg(args,module_dir(m));i=i+1;}
  if(system.success(args,"")==0){return fail("Forge compilation failed");}
  if(javascript!=0){
   let imports: string="";i=0;
@@ -120,8 +219,8 @@ fn build(value: int,run: int): int {
    let m: int=web.get(modules,web.text(web.at(keys,i)));let bridge: int=web.get(m,"javascript");
    if(web.kind(bridge)==4){
     let package: string=str_concat(str_concat(cache(m),"/"),web.field_text(bridge,"package_file"));if(system.exists(package)==0){return fail("JavaScript module package file missing");}
-     let install_outputs: int=array();add(install_outputs,str_concat(cache(m),"/node_modules"));let install_input: string=npm_input(cache(m),package);
-     if(cache_hit(str_concat(cache(m),"/.forge-npm-fingerprint"),install_input,install_outputs)==0){let npm: int=system.argv("npm");system.arg(npm,"ci");system.arg(npm,"--prefix");system.arg(npm,cache(m));system.arg(npm,"--ignore-scripts");system.arg(npm,"--no-bin-links");if(system.success(npm,"")==0){return fail("JavaScript dependencies require Node.js 22 and npm");}install_input=npm_input(cache(m),package);if(cache_publish(str_concat(cache(m),"/.forge-npm-fingerprint"),install_input,install_outputs)!=0){return fail("Cannot publish npm cache fingerprint");}}
+     let install_outputs: int=array();add(install_outputs,str_concat(cache(m),"/node_modules"));let scripts: int=trusted(value,m,"npm_scripts");let install_input: string=npm_input(cache(m),package,scripts);
+     if(cache_hit(str_concat(cache(m),"/.forge-npm-fingerprint"),install_input,install_outputs)==0){let npm: int=system.argv("npm");system.arg(npm,"ci");system.arg(npm,"--prefix");system.arg(npm,cache(m));if(scripts==0){system.arg(npm,"--ignore-scripts");}else{system.arg(npm,"--ignore-scripts=false");}system.arg(npm,"--no-bin-links");if(system.success(npm,"")==0){return fail("JavaScript dependencies require Node.js 22 and npm");}install_input=npm_input(cache(m),package,scripts);if(cache_publish(str_concat(cache(m),"/.forge-npm-fingerprint"),install_input,install_outputs)!=0){return fail("Cannot publish npm cache fingerprint");}}
     let entry: string=str_concat(str_concat(str_concat(str_concat(system.cwd(),"/"),cache(m)),"/"),web.field_text(bridge,"entry"));imports=str_concat(str_concat(str_concat(imports,"import "),web.dump(web.jstring(entry))),";\n");
    }i=i+1;
   }
@@ -130,6 +229,7 @@ fn build(value: int,run: int): int {
    if(system.success(bundler,"")==0){return fail("Browser bundling failed");}fingerprint=build_input(javascript,root,modules);if(cache_publish("build/.forge-build-fingerprint",fingerprint,outputs)!=0){return fail("Cannot publish build cache fingerprint");}println("Built build/app.js; load it in an HTML page with <div id=app></div>");return 0;
  }
  let cc: int=system.argv(web.env("CC","cc"));system.arg(cc,"-std=gnu11");system.arg(cc,"-O2");system.arg(cc,"build/main.c");system.arg(cc,"-o");system.arg(cc,"build/app");system.arg(cc,"-I");system.arg(cc,str_concat(root,"/include"));
+ system.arg(cc,"-Wl,--start-group");
  let pkg: int=system.argv("pkg-config");system.arg(pkg,"--cflags");system.arg(pkg,"--libs");let pkg_count: int=0;i=0;
  while(i<web.count(keys)){
   let m: int=web.get(modules,web.text(web.at(keys,i)));let native_info: int=web.get(m,"native");
@@ -138,7 +238,7 @@ fn build(value: int,run: int): int {
    system.arg(cc,str_concat(str_concat(str_concat(dir,"/lib"),web.field_text(native_info,"library")),".a"));let packages: int=web.get(native_info,"pkg_config");let j: int=0;while(j<web.count(packages)){system.arg(pkg,web.text(web.at(packages,j)));pkg_count=pkg_count+1;j=j+1;}
   }i=i+1;
  }
- system.arg(cc,str_concat(root,"/build/lib/libforge_runtime.a"));system.arg(cc,str_concat(root,"/build/lib/libforge_std.a"));
+ system.arg(cc,str_concat(root,"/build/lib/libforge_runtime.a"));system.arg(cc,str_concat(root,"/build/lib/libforge_std.a"));system.arg(cc,"-Wl,--end-group");
  if(pkg_count>0){let result: int=system.run(pkg,"");if(web.field_int(result,"status")!=0){return fail("Install development libraries listed by pkg-config");}let flags: string=web.trim(web.field_text(result,"output"));let start: int=0;i=0;while(i<=str_len(flags)){if(i==str_len(flags)||str_char_at(flags,i)==32||str_char_at(flags,i)==10){if(i>start){system.arg(cc,str_sub(flags,start,i-start));}start=i+1;}i=i+1;}}
   system.arg(cc,"-lpthread");system.arg(cc,"-lm");if(system.success(cc,"")==0){return fail("C compiler/linker failed");}fingerprint=build_input(javascript,root,modules);if(cache_publish("build/.forge-build-fingerprint",fingerprint,outputs)!=0){return fail("Cannot publish build cache fingerprint");}println("Built build/app");
  if(run!=0){args=system.argv("./build/app");let result: int=system.run(args,"");println(web.field_text(result,"output"));return web.field_int(result,"status");}return 0;
@@ -174,12 +274,13 @@ fn run(): int {
  if(web.equal(command,"--version")!=0){println("forge-pm 0.1.1");return 0;}
  if(web.equal(command,"init")!=0){return init();}
  if(web.equal(command,"search")!=0){if(web.equal(registry(),"builtin")!=0){let out: int=web.array();let items: int=catalog();let i: int=0;let query: string=web.lower(os_argv(2));while(i<web.count(items)){let m: int=web.at(items,i);if(str_contains(web.lower(web.field_text(m,"name")),query)!=0||str_contains(web.lower(web.field_text(m,"description")),query)!=0){web.push(out,m);}i=i+1;}println(web.dump(out));return 0;}let r: int=request(str_concat("/api/packages?q=",web.urlencode(os_argv(2))),"GET","");if(web.field_int(r,"status")!=200){return fail("Registry unavailable");}println(web.dump(web.get(r,"data")));return 0;}
- if(web.equal(command,"publish")!=0){if(web.equal(registry(),"builtin")!=0){return fail("Set FORGE_REGISTRY to your Forge registry website before publishing");}let file: string=os_argv(2);if(str_len(file)==0){file="module.json";}let value: int=web.parse(web.read(file));if(manifest.valid(value)==0){return fail("Invalid module.json release manifest");}if(str_len(web.env("FORGE_TOKEN",""))==0){return fail("Set FORGE_TOKEN using your website login token");}let r: int=request("/api/packages","POST",web.dump(value));if(web.field_int(r,"status")!=201){println(web.dump(web.get(r,"data")));return 1;}println("Release published");return 0;}
- let value: int=config();if(web.kind(value)!=4){return fail("Run forge-pm init first. Commands: init, search, add, remove, install, list, publish, build, run");}
+ if(web.equal(command,"publish")!=0){if(web.equal(registry(),"builtin")!=0){return fail("Set FORGE_REGISTRY to your Forge registry website before publishing");}let file: string=os_argv(2);if(str_len(file)==0){file="module.json";}let value: int=web.parse(web.read(file));if(manifest.valid(value)==0){return fail("Invalid module.json release manifest");}let review: string=os_argv(3);if(os_argc()>4||(str_len(review)>0&&web.equal(review,"--acknowledge-review")==0)){return fail("Usage: forge publish [module.json] [--acknowledge-review]");}if(str_len(review)>0){web.set(value,"acknowledge_review",web.jbool(1));}if(str_len(web.env("FORGE_TOKEN",""))==0){return fail("Set FORGE_TOKEN using your website login token");}let r: int=request("/api/packages","POST",web.dump(value));if(web.field_int(r,"status")!=201){println(web.dump(web.get(r,"data")));return 1;}println("Release published");return 0;}
+ let value: int=config();if(web.kind(value)!=4){return fail("Run forge-pm init first. Commands: init, search, add, remove, install, list, trust, publish, build, run");}
+ if(web.equal(command,"trust")!=0){return trust(value);}
  if(web.equal(command,"add")!=0){let name: string=os_argv(2);let version: string=os_argv(3);if(str_len(version)==0){version="latest";}let m: int=release(name,version);if(manifest.valid(m)==0){return fail("Package release not found");}web.set(web.get(value,"dependencies"),name,web.get(m,"version"));if(install(value)!=0){return 1;}return system.write("forge.json",web.dump(value))==0;}
  if(web.equal(command,"remove")!=0){let deps: int=web.get(value,"dependencies");let updated: int=web.object();let keys: int=web.keys(deps);let i: int=0;while(i<web.count(keys)){let name: string=web.text(web.at(keys,i));if(web.equal(name,os_argv(2))==0){web.set(updated,name,web.get(deps,name));}i=i+1;}web.set(value,"dependencies",updated);if(install(value)!=0){return 1;}return system.write("forge.json",web.dump(value))==0;}
  if(web.equal(command,"install")!=0){return install(value);}
  if(web.equal(command,"list")!=0){println(web.read("forge.lock"));return 0;}
  if(web.equal(command,"build")!=0){return build(value,0);}if(web.equal(command,"run")!=0){return build(value,1);}
- return fail("Unknown command. Commands: init, search, add, remove, install, list, publish, build, run");
+ return fail("Unknown command. Commands: init, search, add, remove, install, list, trust, publish, build, run");
 }

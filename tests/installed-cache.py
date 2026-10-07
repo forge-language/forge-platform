@@ -16,7 +16,6 @@ import sys
 import tempfile
 import threading
 import urllib.parse
-import urllib.request
 
 
 def require(condition, message):
@@ -70,7 +69,7 @@ def local_release_origin():
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--origin', default='http://localhost:18101')
-    parser.add_argument('--version', default='0.3.0-preview.2')
+    parser.add_argument('--version', default='0.3.0-preview.5')
     parser.add_argument('--local-release', action='store_true', help='Serve checked-out installer/releases on an isolated loopback port for CI')
     args = parser.parse_args()
     with contextlib.ExitStack() as resources:
@@ -85,8 +84,14 @@ def main():
         npm_global = root / 'npm-global.config'
         npm_user.write_text('')
         npm_global.write_text('')
-        with urllib.request.urlopen(origin + '/install.sh', timeout=30) as response:
-            installer.write_bytes(response.read())
+        # Exercise the documented curl installation path; public gateways can
+        # handle Python urllib differently from real installer clients.
+        subprocess.run(['curl', '--fail', '--silent', '--show-error', '--location',
+                        '--proto', '=https,http', '--proto-redir', '=https',
+                        '--connect-timeout', '10', '--max-time', '30',
+                        '--retry', '2', '--retry-delay', '1',
+                        origin + '/install.sh', '-o', str(installer)],
+                       check=True, timeout=120)
         env = {**os.environ, 'FORGE_PROFILE_ROOT': str(profiles), 'FORGE_HOME': str(prefix),
                'FORGE_DOWNLOAD_BASE': origin, 'FORGE_REGISTRY': 'builtin',
                'GIT_MASTER': '1', 'npm_config_cache': str(root / 'npm-cache'),
@@ -111,7 +116,8 @@ def main():
             (project / 'forge.json').write_text(json.dumps(
                 {'name': name, 'entry': 'main.fg', 'dependencies': dependencies or {}}))
 
-        execute(['bash', installer, '--version', args.version, '--prefix', prefix, '--no-modify-path'])
+        execute(['bash', installer, '--version', args.version, '--prefix', prefix, '--no-modify-path'],
+                timeout=1050 if origin.startswith('https://') else 180)
         require(args.version in execute([forge, '--version']), 'Wrong installed release version')
         try:
             env['FORGE_PM'] = str(forge)

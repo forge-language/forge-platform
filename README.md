@@ -2,6 +2,15 @@
 
 Forge language website, module registry, package manager and verified installer.
 
+Official site: [forge-lang.org](https://forge-lang.org).
+**Safe ownership. Massive concurrency. Native speed.** are experimental design
+goals, not current safety guarantees. The site provides Learn / Try / Watch /
+Contribute paths, a real compiler Playground, reproducible benchmark evidence and
+public GitHub development snapshots. AI builds/tests/reviews; humans decide.
+
+Production domain, Cloudflare Tunnel, updates and rollback:
+[deployment guide](deployment/README.md).
+
 - `frontend/`: React 19, TypeScript, Tailwind 4 and Vite.
 - `backend/src/`: Forge HTTP routes, package validation, ownership, OAuth and SQL.
 - `cli/src/`: Forge dependency resolution, Git pinning and native/browser build policy.
@@ -15,12 +24,10 @@ compiler implementation.
 
 ## Install
 
-GitHub installation requires the requested version’s archive and SHA-256 file in the [Forge compiler releases](https://github.com/forge-language/forge/releases). Until those assets are published, follow the [compiler source build instructions](https://github.com/forge-language/forge#build-and-install).
-
-Linux x86_64, glibc 2.35+ (Ubuntu 22.04+), with `curl`, `tar`, `sha256sum`, `cc`:
+Linux x86_64, glibc 2.35+ (Ubuntu 22.04+), with `curl`, `tar` and `sha256sum`. Installation does not require GCC or another C compiler. A C compiler is needed later to build Forge programs; native modules also need their documented development tools and libraries:
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/forge-language/forge-platform/main/scripts/install.sh | bash
+curl -fsSL https://forge-lang.org/install.sh | bash
 source "$HOME/.forge/env"
 forge --version
 forge init hello-app
@@ -34,6 +41,10 @@ Downloads compiler + package manager, checks SHA-256, installs without sudo into
 `~/.forge`, and adds a managed PATH block. `--prefix`, `--version`,
 `--no-modify-path` and `--uninstall` are supported. Failed checksum validation
 preserves the current toolchain. Updates switch a symlink to a fresh version.
+Archive downloads allow three attempts of up to five minutes each. Interrupted
+transfers resume from the received bytes when the release host supports ranges;
+hosts without range support restart the download. Permanent HTTP errors stop
+immediately, and exhausted retries leave the current toolchain in place.
 Checksums are downloaded through HTTPS from the release host; they are integrity
 checks, not independent signed attestations.
 
@@ -48,7 +59,10 @@ install the official modules before a public registry domain is configured:
 ```sh
 forge pkg search postgres
 forge pkg add forge-postgres 0.1.1
-forge pkg add forge-web 0.1.2
+forge pkg add forge-web 0.1.4
+# Review the pinned dependency sources before allowing native builds.
+forge trust forge-postgres
+forge trust forge-web
 forge build
 forge pkg list
 ```
@@ -90,6 +104,10 @@ symlinks) and trees beyond the hashing limits build without caching.
 
 ## Hosting
 
+The active public origin is https://forge-lang.org. Public registry configuration:
+`FORGE_REGISTRY=https://forge-lang.org`. GitHub-token login supports publishing
+without an OAuth app; OAuth remains optional.
+
 ```sh
 GIT_MASTER=1 git clone --recurse-submodules https://github.com/forge-language/forge-platform.git
 cd forge-platform
@@ -109,8 +127,8 @@ production databases, DNS and TLS configurations are not modified by this stack.
 GitHub OAuth requires a separate OAuth application's ID/secret and callback
 `<BACKEND_BASE_URL>/api/auth/github/callback`. Public registry reads and downloads
 work without OAuth. Authenticated publishing binds package ownership to the
-verified GitHub login; only admins may publish on behalf of another repository
-owner. Releases are immutable. Registry manifests reference GitHub HTTPS commits;
+verified immutable GitHub account ID. The configured numeric administrator
+may register official forge-language organization repositories. Releases are immutable. Registry manifests reference GitHub HTTPS commits;
 the client verifies checkout SHA and module presence when installing.
 
 ## Validation
@@ -125,7 +143,7 @@ python3 tests/installed-cache.py --local-release
 ```
 
 Tests use disposable PostgreSQL, an isolated Compose project and port 18103.
-18 API tests cover validation, ownership, immutable concurrent publishing, exact
+API tests cover validation, ownership, immutable concurrent publishing, exact
 versions, numeric sorting, errors and parallel reads. Browser tests cover real
 registry navigation/search/details and responsive anonymous publishing. Installer
 tests cover repeated installation, compiling/running Forge, package pinning,
@@ -144,3 +162,62 @@ hits, input/output invalidation, BigInt, UTF-8 and conservative symlink fallback
 [Browser](https://github.com/forge-language/forge-browser),
 [portfolio migration](https://github.com/Helloworld0822/portfolio-platform/pull/1).
 Performance conditions/raw results are in portfolio-platform/docs/forge-performance.md.
+
+## Security and resource bounds
+
+The HTTP bridge rejects decoded NUL characters, duplicate JSON keys (including
+escaped equivalents), out-of-range int64 values and non-finite numbers. JWT
+verification authenticates the bounded signed bytes before parsing JSON, uses
+constant-time HS256 verification and enforces integer `exp`/optional `nbf`.
+
+`X-Real-IP` is ignored unless the socket peer matches `FORGE_TRUSTED_PROXIES`.
+Compose trusts only the site container's fixed IP on a dedicated network, using
+`FORGE_PROXY_SUBNET=172.28.241.0/29` and `FORGE_PROXY_IP=172.28.241.3` defaults.
+Override both together for network conflicts. Direct clients cannot select
+their identity through this header. OAuth return paths are validated before
+signing and capped at 256 characters.
+
+Stateless health, preflight and authentication routes do not acquire PostgreSQL
+leases. Registry SQL uses the bounded per-connection prepared-plan cache; release
+ownership, transaction locks and immutable versions are still checked against
+database state. Bounded public registry GET responses use a private Redis cache
+with a 30-second TTL and a namespace rotation after committed publication;
+authentication and errors are never cached. Redis failure falls back to PostgreSQL.
+
+The installer checks archive names and types before extraction and accepts only
+regular files/directories, without setuid/sticky permissions, within 1 GiB and
+100,000 entries. Unsafe or invalid archives preserve the active toolchain. A
+checksum fetched from the same release origin detects transfer corruption; it
+is not an independent publisher signature. Released binaries must be rebuilt
+to include native bridge fixes; editing the installer cannot patch an existing
+SDK by itself.
+
+## GitHub repository registration and security
+
+Open `/publish` and verify a GitHub personal access token once. The token is sent
+only for server-side GitHub identity verification, is not logged or stored, and is
+replaced in the browser with a one-hour Forge session. OAuth login remains optional.
+Personal repositories must belong to the same immutable GitHub account ID.
+The configured numeric `ADMIN_GITHUB_ID` may register official forge-language
+organization repositories. Other organizations are not implicitly trusted.
+
+Enter a canonical public repository URL, ref and manifest path (`module.json`,
+with `forge.json` as the default fallback). README content is verified at the same commit. The service
+resolves the ref to an immutable commit, verifies Git blob hashes, reads the
+manifest and module from that commit, and checks bounded source files without
+executing repository code. High-risk patterns, symlinks, submodules, unavailable
+source or incomplete checks cannot silently register a release. Native/JavaScript
+bridges and build scripts require source-review acknowledgement. The resulting
+source SHA and inspection report are stored with the immutable version.
+Static inspection is not a malware-free guarantee.
+
+`POST /api/packages/inspect` previews a checked repository;
+`POST /api/packages/register` repeats verification at the confirmed SHA and
+registers the source manifest. The existing manifest publication endpoint also
+verifies repository source and rejects mismatched client metadata. Ownership and
+administrator privileges use GitHub numeric IDs, never reused usernames. Legacy
+package ownership with no numeric ID is locked to an explicit administrator
+migration; existing release contents remain immutable.
+
+See [package execution trust](docs/package-security.md) and
+[live data cadence and deployment](deployment/LIVE_REFRESH.md).

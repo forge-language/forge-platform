@@ -4,7 +4,9 @@ set -eu
 ROOT=$(mktemp -d /tmp/forge-client-check.XXXXXX)
 trap 'rm -rf "$ROOT"' EXIT
 mkdir -p "$ROOT/home" "$ROOT/project"
-export FORGE_DOWNLOAD_BASE=http://localhost:18101
+export FORGE_DOWNLOAD_BASE=${FORGE_DOWNLOAD_BASE:-http://localhost:18101}
+export FORGE_REGISTRY=${FORGE_REGISTRY:-builtin}
+export FORGE_PROFILE_ROOT="$ROOT/home"
 bash /src/scripts/install.sh --prefix "$ROOT/toolchain" --no-modify-path >/dev/null
 export PATH="$ROOT/toolchain/bin:$PATH"
 cd "$ROOT/project"
@@ -12,6 +14,8 @@ forge init module-app
 cd module-app
 forge pkg add forge-postgres 0.1.1
 forge pkg add forge-web 0.1.2
+forge trust forge-postgres
+forge trust forge-web
 cat > main.fg <<'PROGRAM'
 import postgres;
 import web;

@@ -1,0 +1,74 @@
+name: Public repository and evidence snapshot
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/refresh-public-data.py'
+      - 'scripts/update-activity.py'
+      - 'content/**'
+      - '.github/workflows/public-data.yml'
+  workflow_dispatch:
+  schedule:
+    - cron: '*/5 * * * *'
+permissions:
+  contents: read
+concurrency:
+  group: public-data-snapshot
+  cancel-in-progress: false
+jobs:
+  snapshot:
+    if: github.repository == 'forge-language/forge-platform' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Preserve last successful public data
+        run: |
+          if GIT_MASTER=1 git fetch origin public-data; then
+            GIT_MASTER=1 git worktree add /tmp/forge-public-previous origin/public-data
+            mkdir -p public-output
+            cp -a /tmp/forge-public-previous/snapshots public-output/ 2>/dev/null || true
+            cp -a /tmp/forge-public-previous/current public-output/ 2>/dev/null || true
+          fi
+      - name: Validate refresh isolation
+        run: python3 tests/public-refresh.py
+      - name: Refresh public source snapshots
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 scripts/refresh-public-data.py --output public-output
+      - uses: actions/upload-artifact@v4
+        with:
+          name: public-data-${{ github.run_id }}
+          path: |
+            public-output/snapshots
+            public-output/current
+            public-output/refresh-status.json
+          retention-days: 30
+      - name: Publish data without changing source branch
+        run: |
+          GIT_MASTER=1 git config user.name 'github-actions[bot]'
+          GIT_MASTER=1 git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          if GIT_MASTER=1 git rev-parse --verify origin/public-data >/dev/null 2>&1; then
+            GIT_MASTER=1 git worktree remove /tmp/forge-public-previous
+            GIT_MASTER=1 git worktree add /tmp/forge-public-data origin/public-data
+          else
+            GIT_MASTER=1 git worktree add --detach /tmp/forge-public-data
+            GIT_MASTER=1 git -C /tmp/forge-public-data checkout --orphan public-data
+            GIT_MASTER=1 git -C /tmp/forge-public-data rm -rf .
+          fi
+          rm -rf /tmp/forge-public-data/snapshots
+          cp -a public-output/snapshots /tmp/forge-public-data/
+          rm -f /tmp/forge-public-data/current
+          cp -a public-output/current /tmp/forge-public-data/current
+          cp public-output/current/manifest.json /tmp/forge-public-data/latest.json
+          cp public-output/refresh-status.json /tmp/forge-public-data/refresh-status.json
+          cp public-output/benchmarks.json /tmp/forge-public-data/benchmarks.json
+          rm -f /tmp/forge-public-data/materials
+          cp -a public-output/materials /tmp/forge-public-data/materials
+          GIT_MASTER=1 git -C /tmp/forge-public-data add snapshots current latest.json refresh-status.json benchmarks.json materials
+          if ! GIT_MASTER=1 git -C /tmp/forge-public-data diff --cached --quiet; then
+            GIT_MASTER=1 git -C /tmp/forge-public-data commit -m "Refresh public evidence snapshot for run ${GITHUB_RUN_ID}"
+            GIT_MASTER=1 git -C /tmp/forge-public-data push origin HEAD:public-data
+          fi

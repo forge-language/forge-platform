@@ -12,3 +12,15 @@ releases/*
 .omc/
 frontend/test-results/
 frontend/*.tsbuildinfo
+frontend/public/playground/compiler.mjs
+frontend/public/playground/compiler.wasm
+frontend/public/reports/
+frontend/public/project/
+public-data/*.tmp
+.deployment/
+
+public-data/
+
+frontend/public/materials/
+frontend/public/content-manifest.json
+frontend/public/benchmarks.json

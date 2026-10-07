@@ -1,0 +1,54 @@
+import web;
+import manifest;
+import strings;
+extern fn platform_redis_open(host: string, port: int, password: string): int;
+extern fn platform_redis_close(client: int): int;
+extern fn platform_redis_get(client: int, key: string): string;
+extern fn platform_redis_set(client: int, key: string, body: string, seconds: int, only_missing: int): int;
+// Only bounded, public registry GETs participate. Auth and errors never enter Redis.
+fn eligible(request: int): int {
+ if (web.equal(web.method(request),"GET") == 0) { return 0; }
+ let path: string = web.path(request);
+ if (web.equal(path,"/api/stats") != 0) { return 1; }
+ if (web.equal(path,"/api/packages") != 0) { return web.chars(web.query(request,"q")) <= 100; }
+ if (web.equal(web.segment(request,0),"api") != 0 && web.equal(web.segment(request,1),"packages") != 0 && manifest.name(web.segment(request,2)) != 0) {
+  if (web.segments(request) == 3) { return 1; }
+  if (web.segments(request) == 5 && web.equal(web.segment(request,3),"versions") != 0 && manifest.version(web.segment(request,4)) != 0) { return 1; }
+ }
+ return 0;
+}
+fn open(): int {
+ let host: string = web.env("REDIS_HOST",""); if (web.chars(host) == 0) { return 0; }
+ return platform_redis_open(host,web.integer(web.parse(web.env("REDIS_PORT","6379"))),web.env("REDIS_PASSWORD",""));
+}
+fn close(client: int): int { return platform_redis_close(client); }
+fn key(client: int, request: int): string {
+ if (client == 0 || eligible(request) == 0) { return ""; }
+ let generation: string = platform_redis_get(client,"forge:registry:generation:v1");
+ if (web.chars(generation) == 0) {
+  platform_redis_set(client,"forge:registry:generation:v1",web.uuid(),0,1);
+  generation = platform_redis_get(client,"forge:registry:generation:v1");
+ }
+ if (web.chars(generation) == 0 || web.chars(generation) > 64) { return ""; }
+ let identity: int = web.array(); web.push(identity,web.jstring(web.path(request)));
+ if (web.equal(web.path(request),"/api/packages") != 0) { web.push(identity,web.jstring(web.query(request,"q"))); }
+ return str_concat(str_concat("forge:registry:v1:",generation),str_concat(":",web.dump(identity)));
+}
+fn get(client: int, key: string): string {
+ if (client == 0 || web.chars(key) == 0) { return ""; }
+ let body: string = platform_redis_get(client,key);
+ let kind: int = web.kind(web.parse(body)); if (kind != 4 && kind != 5) { return ""; }
+ return body;
+}
+fn put(client: int, key: string, body: string): int {
+ if (client == 0 || web.chars(key) == 0 || web.chars(body) > 262144) { return 0; }
+ return platform_redis_set(client,key,body,30,0);
+}
+// Rotate the namespace after COMMIT. Late readers can only populate old keys,
+// which expire after 30 seconds and cannot be seen by subsequent new readers.
+// Redis failures fall back to PostgreSQL; failed invalidation is bounded by TTL.
+fn invalidate(): int {
+ let client: int = open(); if (client == 0) { return 0; }
+ let result: int = platform_redis_set(client,"forge:registry:generation:v1",web.uuid(),0,0);
+ close(client); return result;
+}

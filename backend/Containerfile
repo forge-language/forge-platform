@@ -1,17 +1,18 @@
-FROM alpine:3.20 AS builder
-RUN apk add --no-cache build-base cmake pkgconf postgresql-dev json-c-dev libmicrohttpd-dev curl-dev openssl-dev
+FROM alpine:3.23 AS builder
+RUN apk add --no-cache build-base cmake pkgconf postgresql-dev json-c-dev libmicrohttpd-dev curl-dev openssl-dev hiredis-dev libarchive-dev
 WORKDIR /src
 COPY vendor vendor
 COPY backend backend
 COPY cli cli
 COPY scripts/build.sh scripts/build.sh
 RUN sh scripts/build.sh
-FROM alpine:3.20
-RUN apk add --no-cache libpq json-c libmicrohttpd libcurl openssl ca-certificates curl
+FROM alpine:3.23
+RUN apk add --no-cache libpq json-c libmicrohttpd libcurl openssl ca-certificates curl hiredis libarchive
 WORKDIR /app
 COPY --from=builder /src/build/forge-backend /app/forge-backend
+COPY --from=builder /src/build/forge-cli /app/forge-pm
 COPY backend/migrations backend/migrations
 USER 65534:65534
 EXPOSE 8080
-HEALTHCHECK --interval=10s --timeout=3s --start-period=10s CMD curl -fsS http://127.0.0.1:8080/api/health || exit 1
+HEALTHCHECK --interval=10s --timeout=3s --start-period=300s CMD curl -fsS http://127.0.0.1:8080/api/health || exit 1
 CMD ["/app/forge-backend"]
