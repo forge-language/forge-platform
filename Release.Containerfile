@@ -17,4 +17,5 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-ins
 ENV PKG_CONFIG_PATH=/opt/forge-archive/lib/pkgconfig
 ENV LIBRARY_PATH=/opt/forge-archive/lib
 ENV LD_LIBRARY_PATH=/opt/forge-archive/lib
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends python3 && rm -rf /var/lib/apt/lists/*
 WORKDIR /src

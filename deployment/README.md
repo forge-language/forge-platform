@@ -95,8 +95,8 @@ The deployed site image is `forge-platform-site:learning-20261008`. API, checker
 and database services were retained. Host-only rollback configuration and backups
 are under the ignored `.deployment/learning-20261008/` directory.
 
-The existing public preview.6 SDK predates explicit dependency trust. To test
-that historical archive deliberately, use `tests/installed-cache.py --local-release
+Some historical SDK builds predate explicit dependency trust. To test
+one of those archives deliberately, use `tests/installed-cache.py --local-release
 --allow-legacy-trust`. Freshly built SDKs and CI require the trust command;
 legacy compatibility is never silently inferred. Existing published archives
 and checksums were preserved during this website update.
