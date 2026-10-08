@@ -1,0 +1,652 @@
+{
+  "date_utc": "2026-10-01",
+  "baseline_commit": "9a6109c",
+  "conditions": "Shared AMD BC-250 host; C native/Release builds; alternating repeated comparisons; API microbenchmarks are not portfolio request throughput",
+  "results": {
+    "strings": {
+      "runs": 7,
+      "clock": "CLOCK_MONOTONIC",
+      "cc": "cc -O2",
+      "scope": "legacy and new string APIs in same binary; excludes compiling; builder finish copy included; view creation included",
+      "rows": [
+        {
+          "operation": "scan",
+          "implementation": "legacy",
+          "bytes": "4096",
+          "checksum": "491520",
+          "seconds": [
+            0.000132584,
+            0.000619786,
+            0.000614185,
+            0.000596009,
+            0.000555487,
+            0.000143649,
+            0.000596233
+          ],
+          "median_seconds": 0.000596009
+        },
+        {
+          "operation": "scan",
+          "implementation": "view",
+          "bytes": "4096",
+          "checksum": "491520",
+          "seconds": [
+            1.5247e-05,
+            6.1625e-05,
+            6.1383e-05,
+            6.1837e-05,
+            5.6749e-05,
+            1.5379e-05,
+            6.1264e-05
+          ],
+          "median_seconds": 6.1264e-05
+        },
+        {
+          "operation": "append",
+          "implementation": "legacy",
+          "bytes": "4096",
+          "checksum": "4096",
+          "seconds": [
+            0.005233634,
+            0.015544303,
+            0.017173226,
+            0.014848826,
+            0.016779078,
+            0.00463717,
+            0.014653367
+          ],
+          "median_seconds": 0.014848826
+        },
+        {
+          "operation": "append",
+          "implementation": "builder",
+          "bytes": "4096",
+          "checksum": "4096",
+          "seconds": [
+            1.7345e-05,
+            4.5813e-05,
+            4.5883e-05,
+            4.5373e-05,
+            4.5322e-05,
+            1.7628e-05,
+            4.5475e-05
+          ],
+          "median_seconds": 4.5373e-05
+        },
+        {
+          "operation": "scan",
+          "implementation": "legacy",
+          "bytes": "16384",
+          "checksum": "1966080",
+          "seconds": [
+            0.002193666,
+            0.006157562,
+            0.006116555,
+            0.00554739,
+            0.006123799,
+            0.002205877,
+            0.005323569
+          ],
+          "median_seconds": 0.00554739
+        },
+        {
+          "operation": "scan",
+          "implementation": "view",
+          "bytes": "16384",
+          "checksum": "1966080",
+          "seconds": [
+            2.3675e-05,
+            7.8428e-05,
+            6.517e-05,
+            5.1868e-05,
+            6.5272e-05,
+            2.3656e-05,
+            5.1837e-05
+          ],
+          "median_seconds": 5.1868e-05
+        },
+        {
+          "operation": "append",
+          "implementation": "legacy",
+          "bytes": "16384",
+          "checksum": "16384",
+          "seconds": [
+            0.073698467,
+            0.087364482,
+            0.08447363,
+            0.089422147,
+            0.083028513,
+            0.06788273,
+            0.080338973
+          ],
+          "median_seconds": 0.083028513
+        },
+        {
+          "operation": "append",
+          "implementation": "builder",
+          "bytes": "16384",
+          "checksum": "16384",
+          "seconds": [
+            6.6673e-05,
+            6.6413e-05,
+            6.6653e-05,
+            6.6357e-05,
+            6.5804e-05,
+            7.2385e-05,
+            6.6377e-05
+          ],
+          "median_seconds": 6.6413e-05
+        },
+        {
+          "operation": "scan",
+          "implementation": "legacy",
+          "bytes": "65536",
+          "checksum": "7864320",
+          "seconds": [
+            0.039992562,
+            0.040212833,
+            0.040037278,
+            0.040092606,
+            0.040004684,
+            0.040101837,
+            0.041286703
+          ],
+          "median_seconds": 0.040092606
+        },
+        {
+          "operation": "scan",
+          "implementation": "view",
+          "bytes": "65536",
+          "checksum": "7864320",
+          "seconds": [
+            9.4759e-05,
+            9.4805e-05,
+            9.4735e-05,
+            9.4804e-05,
+            9.473e-05,
+            9.4635e-05,
+            9.4796e-05
+          ],
+          "median_seconds": 9.4759e-05
+        }
+      ]
+    },
+    "bootstrap": {
+      "source": "/tmp/forge-opt-baseline.Tw8Mw9/bootstrap/compiler.fg",
+      "source_bytes": 36440,
+      "scope": "stage2 bootstrap transpiles same baseline compiler.fg to byte-identical C; subprocess startup and output IO included; C compile excluded",
+      "runs": 7,
+      "warmups": 2,
+      "seconds": {
+        "before": [
+          0.17831450910307467,
+          0.1783789279870689,
+          0.23039813002105802,
+          0.17865429702214897,
+          0.17862218199297786,
+          0.21629045205190778,
+          0.20569871796760708
+        ],
+        "after": [
+          0.030695890076458454,
+          0.030705345910973847,
+          0.03333762299735099,
+          0.031143527943640947,
+          0.03073747199960053,
+          0.08034466009121388,
+          0.06391985190566629
+        ]
+      },
+      "median_seconds": {
+        "before": 0.17865429702214897,
+        "after": 0.031143527943640947
+      }
+    },
+    "scheduler": {
+      "baseline": "9a6109c",
+      "workload": "Two scheduler workers, one coroutine awaiting a pipe, writer wakes after500ms; alternating5samples; identical benchmark source -O2, native library Release -O3 for both; shared host",
+      "samples": [
+        {
+          "sample": 0,
+          "variant": "before",
+          "wait_ms": 500.0,
+          "wall_ms": 501.447,
+          "process_cpu_ms": 1007.25
+        },
+        {
+          "sample": 0,
+          "variant": "after",
+          "wait_ms": 500.0,
+          "wall_ms": 500.751,
+          "process_cpu_ms": 3.293
+        },
+        {
+          "sample": 1,
+          "variant": "after",
+          "wait_ms": 500.0,
+          "wall_ms": 500.948,
+          "process_cpu_ms": 3.698
+        },
+        {
+          "sample": 1,
+          "variant": "before",
+          "wait_ms": 500.0,
+          "wall_ms": 501.608,
+          "process_cpu_ms": 1005.979
+        },
+        {
+          "sample": 2,
+          "variant": "before",
+          "wait_ms": 500.0,
+          "wall_ms": 501.334,
+          "process_cpu_ms": 1005.656
+        },
+        {
+          "sample": 2,
+          "variant": "after",
+          "wait_ms": 500.0,
+          "wall_ms": 500.525,
+          "process_cpu_ms": 2.934
+        },
+        {
+          "sample": 3,
+          "variant": "after",
+          "wait_ms": 500.0,
+          "wall_ms": 500.584,
+          "process_cpu_ms": 3.101
+        },
+        {
+          "sample": 3,
+          "variant": "before",
+          "wait_ms": 500.0,
+          "wall_ms": 501.402,
+          "process_cpu_ms": 1005.31
+        },
+        {
+          "sample": 4,
+          "variant": "before",
+          "wait_ms": 500.0,
+          "wall_ms": 501.451,
+          "process_cpu_ms": 1004.838
+        },
+        {
+          "sample": 4,
+          "variant": "after",
+          "wait_ms": 500.0,
+          "wall_ms": 500.688,
+          "process_cpu_ms": 2.837
+        }
+      ],
+      "median": {
+        "before": {
+          "wall_ms": 501.447,
+          "process_cpu_ms": 1005.656
+        },
+        "after": {
+          "wall_ms": 500.688,
+          "process_cpu_ms": 3.101
+        }
+      }
+    },
+    "queues": {
+      "baseline": "9a6109c",
+      "conditions": "Single-thread warm push/pop cycle versus preloaded backlog tail steal; identical benchmark source -O2; native library Release -O3 for both; best of5repetitions each process,3alternating samples; shared host",
+      "samples": [
+        {
+          "sample": 0,
+          "variant": "before",
+          "operation": "run",
+          "size": 1000,
+          "ns_per_operation": 59.52
+        },
+        {
+          "sample": 0,
+          "variant": "before",
+          "operation": "native",
+          "size": 1000,
+          "ns_per_operation": 64.64
+        },
+        {
+          "sample": 0,
+          "variant": "before",
+          "operation": "run",
+          "size": 10000,
+          "ns_per_operation": 37.5
+        },
+        {
+          "sample": 0,
+          "variant": "before",
+          "operation": "native",
+          "size": 10000,
+          "ns_per_operation": 39.86
+        },
+        {
+          "sample": 0,
+          "variant": "before",
+          "operation": "run",
+          "size": 1000000,
+          "ns_per_operation": 13.4
+        },
+        {
+          "sample": 0,
+          "variant": "before",
+          "operation": "native",
+          "size": 1000000,
+          "ns_per_operation": 14.01
+        },
+        {
+          "sample": 0,
+          "variant": "before",
+          "operation": "run_push_pop",
+          "size": 1000000,
+          "ns_per_operation": 22.65
+        },
+        {
+          "sample": 0,
+          "variant": "before",
+          "operation": "native_push_pop",
+          "size": 1000000,
+          "ns_per_operation": 22.87
+        },
+        {
+          "sample": 0,
+          "variant": "after",
+          "operation": "run",
+          "size": 1000,
+          "ns_per_operation": 12.49
+        },
+        {
+          "sample": 0,
+          "variant": "after",
+          "operation": "native",
+          "size": 1000,
+          "ns_per_operation": 12.64
+        },
+        {
+          "sample": 0,
+          "variant": "after",
+          "operation": "run",
+          "size": 10000,
+          "ns_per_operation": 13.49
+        },
+        {
+          "sample": 0,
+          "variant": "after",
+          "operation": "native",
+          "size": 10000,
+          "ns_per_operation": 13.96
+        },
+        {
+          "sample": 0,
+          "variant": "after",
+          "operation": "run",
+          "size": 1000000,
+          "ns_per_operation": 14.12
+        },
+        {
+          "sample": 0,
+          "variant": "after",
+          "operation": "native",
+          "size": 1000000,
+          "ns_per_operation": 14.01
+        },
+        {
+          "sample": 0,
+          "variant": "after",
+          "operation": "run_push_pop",
+          "size": 1000000,
+          "ns_per_operation": 15.56
+        },
+        {
+          "sample": 0,
+          "variant": "after",
+          "operation": "native_push_pop",
+          "size": 1000000,
+          "ns_per_operation": 17.03
+        },
+        {
+          "sample": 1,
+          "variant": "after",
+          "operation": "run",
+          "size": 1000,
+          "ns_per_operation": 28.0
+        },
+        {
+          "sample": 1,
+          "variant": "after",
+          "operation": "native",
+          "size": 1000,
+          "ns_per_operation": 28.4
+        },
+        {
+          "sample": 1,
+          "variant": "after",
+          "operation": "run",
+          "size": 10000,
+          "ns_per_operation": 32.6
+        },
+        {
+          "sample": 1,
+          "variant": "after",
+          "operation": "native",
+          "size": 10000,
+          "ns_per_operation": 32.39
+        },
+        {
+          "sample": 1,
+          "variant": "after",
+          "operation": "run",
+          "size": 1000000,
+          "ns_per_operation": 14.17
+        },
+        {
+          "sample": 1,
+          "variant": "after",
+          "operation": "native",
+          "size": 1000000,
+          "ns_per_operation": 14.29
+        },
+        {
+          "sample": 1,
+          "variant": "after",
+          "operation": "run_push_pop",
+          "size": 1000000,
+          "ns_per_operation": 15.62
+        },
+        {
+          "sample": 1,
+          "variant": "after",
+          "operation": "native_push_pop",
+          "size": 1000000,
+          "ns_per_operation": 15.83
+        },
+        {
+          "sample": 1,
+          "variant": "before",
+          "operation": "run",
+          "size": 1000,
+          "ns_per_operation": 29.76
+        },
+        {
+          "sample": 1,
+          "variant": "before",
+          "operation": "native",
+          "size": 1000,
+          "ns_per_operation": 31.57
+        },
+        {
+          "sample": 1,
+          "variant": "before",
+          "operation": "run",
+          "size": 10000,
+          "ns_per_operation": 29.91
+        },
+        {
+          "sample": 1,
+          "variant": "before",
+          "operation": "native",
+          "size": 10000,
+          "ns_per_operation": 45.12
+        },
+        {
+          "sample": 1,
+          "variant": "before",
+          "operation": "run",
+          "size": 1000000,
+          "ns_per_operation": 13.33
+        },
+        {
+          "sample": 1,
+          "variant": "before",
+          "operation": "native",
+          "size": 1000000,
+          "ns_per_operation": 13.99
+        },
+        {
+          "sample": 1,
+          "variant": "before",
+          "operation": "run_push_pop",
+          "size": 1000000,
+          "ns_per_operation": 22.57
+        },
+        {
+          "sample": 1,
+          "variant": "before",
+          "operation": "native_push_pop",
+          "size": 1000000,
+          "ns_per_operation": 23.03
+        },
+        {
+          "sample": 2,
+          "variant": "before",
+          "operation": "run",
+          "size": 1000,
+          "ns_per_operation": 58.89
+        },
+        {
+          "sample": 2,
+          "variant": "before",
+          "operation": "native",
+          "size": 1000,
+          "ns_per_operation": 62.07
+        },
+        {
+          "sample": 2,
+          "variant": "before",
+          "operation": "run",
+          "size": 10000,
+          "ns_per_operation": 58.65
+        },
+        {
+          "sample": 2,
+          "variant": "before",
+          "operation": "native",
+          "size": 10000,
+          "ns_per_operation": 61.44
+        },
+        {
+          "sample": 2,
+          "variant": "before",
+          "operation": "run",
+          "size": 1000000,
+          "ns_per_operation": 13.42
+        },
+        {
+          "sample": 2,
+          "variant": "before",
+          "operation": "native",
+          "size": 1000000,
+          "ns_per_operation": 13.97
+        },
+        {
+          "sample": 2,
+          "variant": "before",
+          "operation": "run_push_pop",
+          "size": 1000000,
+          "ns_per_operation": 22.63
+        },
+        {
+          "sample": 2,
+          "variant": "before",
+          "operation": "native_push_pop",
+          "size": 1000000,
+          "ns_per_operation": 23.28
+        },
+        {
+          "sample": 2,
+          "variant": "after",
+          "operation": "run",
+          "size": 1000,
+          "ns_per_operation": 12.3
+        },
+        {
+          "sample": 2,
+          "variant": "after",
+          "operation": "native",
+          "size": 1000,
+          "ns_per_operation": 12.67
+        },
+        {
+          "sample": 2,
+          "variant": "after",
+          "operation": "run",
+          "size": 10000,
+          "ns_per_operation": 13.47
+        },
+        {
+          "sample": 2,
+          "variant": "after",
+          "operation": "native",
+          "size": 10000,
+          "ns_per_operation": 15.05
+        },
+        {
+          "sample": 2,
+          "variant": "after",
+          "operation": "run",
+          "size": 1000000,
+          "ns_per_operation": 13.84
+        },
+        {
+          "sample": 2,
+          "variant": "after",
+          "operation": "native",
+          "size": 1000000,
+          "ns_per_operation": 14.37
+        },
+        {
+          "sample": 2,
+          "variant": "after",
+          "operation": "run_push_pop",
+          "size": 1000000,
+          "ns_per_operation": 15.57
+        },
+        {
+          "sample": 2,
+          "variant": "after",
+          "operation": "native_push_pop",
+          "size": 1000000,
+          "ns_per_operation": 15.97
+        }
+      ],
+      "median": {
+        "run": {
+          "before": 13.4,
+          "after": 14.12
+        },
+        "native": {
+          "before": 13.99,
+          "after": 14.29
+        },
+        "run_push_pop": {
+          "before": 22.63,
+          "after": 15.57
+        },
+        "native_push_pop": {
+          "before": 23.03,
+          "after": 15.97
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,370 @@
+{
+  "measured_at_utc": "2026-10-04T14:37:42Z",
+  "report_finalized_utc": "2026-10-05",
+  "trials": 40,
+  "requests": 957861,
+  "errors": 0,
+  "groups": {
+    "rust:1": {
+      "rps": {
+        "median": 2456.89,
+        "min": 1738.69,
+        "max": 2987.57
+      },
+      "p95_ms": {
+        "median": 0.655,
+        "min": 0.552,
+        "max": 0.82
+      },
+      "cpu_core_percent": {
+        "median": 23.06509019390513,
+        "min": 20.306600706214695,
+        "max": 26.131878032102662
+      },
+      "db_cpu_core_percent": {
+        "median": 0.05966753013088702,
+        "min": 0.014678356474809112,
+        "max": 0.5231135208810088
+      },
+      "client_cpu_core_percent": {
+        "median": 59.50306526084825,
+        "min": 53.215168841033076,
+        "max": 66.23540514574475
+      },
+      "memory_mib": {
+        "median": 5.484375,
+        "min": 5.484375,
+        "max": 5.78125
+      },
+      "peak_threads": {
+        "median": 4,
+        "min": 4,
+        "max": 7
+      }
+    },
+    "plain_baseline_connection:1": {
+      "rps": {
+        "median": 1374.82,
+        "min": 1101.29,
+        "max": 1732.02
+      },
+      "p95_ms": {
+        "median": 1.363,
+        "min": 1.033,
+        "max": 1.501
+      },
+      "cpu_core_percent": {
+        "median": 19.247577895514134,
+        "min": 17.356417770368882,
+        "max": 19.617373504910425
+      },
+      "db_cpu_core_percent": {
+        "median": 28.452891062150865,
+        "min": 24.387908461862917,
+        "max": 30.04715517098551
+      },
+      "client_cpu_core_percent": {
+        "median": 46.50174335662278,
+        "min": 43.68941357550555,
+        "max": 51.679555818054155
+      },
+      "memory_mib": {
+        "median": 2.38671875,
+        "min": 2.34375,
+        "max": 4.1328125
+      },
+      "peak_threads": {
+        "median": 3,
+        "min": 3,
+        "max": 3
+      }
+    },
+    "plain_fixed_connection:1": {
+      "rps": {
+        "median": 1245.09,
+        "min": 1020.68,
+        "max": 1486.63
+      },
+      "p95_ms": {
+        "median": 1.375,
+        "min": 1.346,
+        "max": 1.471
+      },
+      "cpu_core_percent": {
+        "median": 19.063459813626814,
+        "min": 17.956479697461656,
+        "max": 20.308808640712158
+      },
+      "db_cpu_core_percent": {
+        "median": 23.10877691972944,
+        "min": 22.086226473947132,
+        "max": 26.303433974609284
+      },
+      "client_cpu_core_percent": {
+        "median": 51.24622431220091,
+        "min": 48.96088531247699,
+        "max": 52.80347686288969
+      },
+      "memory_mib": {
+        "median": 2.34765625,
+        "min": 2.328125,
+        "max": 3.03515625
+      },
+      "peak_threads": {
+        "median": 3,
+        "min": 3,
+        "max": 3
+      }
+    },
+    "profile_fixed_connection:1": {
+      "rps": {
+        "median": 1677.43,
+        "min": 1252.59,
+        "max": 1890.36
+      },
+      "p95_ms": {
+        "median": 1.08,
+        "min": 0.938,
+        "max": 1.321
+      },
+      "cpu_core_percent": {
+        "median": 19.5911407757023,
+        "min": 18.86316920989177,
+        "max": 22.894983301168924
+      },
+      "db_cpu_core_percent": {
+        "median": 23.25986141563559,
+        "min": 21.716879810164443,
+        "max": 24.99666438510427
+      },
+      "client_cpu_core_percent": {
+        "median": 48.49513425296555,
+        "min": 46.07700775530541,
+        "max": 51.05389557300302
+      },
+      "memory_mib": {
+        "median": 2.359375,
+        "min": 2.3359375,
+        "max": 2.59765625
+      },
+      "peak_threads": {
+        "median": 3,
+        "min": 3,
+        "max": 3
+      }
+    },
+    "rust:16": {
+      "rps": {
+        "median": 11511.45,
+        "min": 11031.27,
+        "max": 12561.37
+      },
+      "p95_ms": {
+        "median": 1.949,
+        "min": 1.682,
+        "max": 1.963
+      },
+      "cpu_core_percent": {
+        "median": 82.84718583127652,
+        "min": 74.99436822644859,
+        "max": 89.31916716872426
+      },
+      "db_cpu_core_percent": {
+        "median": 0.02605541874629411,
+        "min": 0.012155006687956224,
+        "max": 0.2615118094963263
+      },
+      "client_cpu_core_percent": {
+        "median": 197.6259742018674,
+        "min": 197.52148117496793,
+        "max": 197.85429091968828
+      },
+      "memory_mib": {
+        "median": 5.56640625,
+        "min": 5.5625,
+        "max": 5.80859375
+      },
+      "peak_threads": {
+        "median": 4,
+        "min": 4,
+        "max": 6
+      }
+    },
+    "plain_baseline_connection:16": {
+      "rps": {
+        "median": 9632.44,
+        "min": 9124.19,
+        "max": 9937.42
+      },
+      "p95_ms": {
+        "median": 2.249,
+        "min": 2.157,
+        "max": 2.339
+      },
+      "cpu_core_percent": {
+        "median": 91.14030524408861,
+        "min": 90.26470067277822,
+        "max": 96.80685456685529
+      },
+      "db_cpu_core_percent": {
+        "median": 115.32316193113182,
+        "min": 112.6137634908986,
+        "max": 119.22320414694745
+      },
+      "client_cpu_core_percent": {
+        "median": 196.92774515782884,
+        "min": 195.94388754075166,
+        "max": 197.42178140120677
+      },
+      "memory_mib": {
+        "median": 5.26171875,
+        "min": 5.25390625,
+        "max": 5.265625
+      },
+      "peak_threads": {
+        "median": 18,
+        "min": 18,
+        "max": 18
+      }
+    },
+    "plain_fixed_connection:16": {
+      "rps": {
+        "median": 10175.16,
+        "min": 9389.85,
+        "max": 10433.77
+      },
+      "p95_ms": {
+        "median": 2.143,
+        "min": 2.12,
+        "max": 2.263
+      },
+      "cpu_core_percent": {
+        "median": 98.85681537784001,
+        "min": 95.48082564668744,
+        "max": 100.46492843406735
+      },
+      "db_cpu_core_percent": {
+        "median": 59.56246035261828,
+        "min": 56.65802482081558,
+        "max": 60.601786084743544
+      },
+      "client_cpu_core_percent": {
+        "median": 197.54904976054726,
+        "min": 197.25787142056325,
+        "max": 197.80138869783244
+      },
+      "memory_mib": {
+        "median": 5.6171875,
+        "min": 5.58984375,
+        "max": 6.08984375
+      },
+      "peak_threads": {
+        "median": 18,
+        "min": 18,
+        "max": 18
+      }
+    },
+    "profile_fixed_connection:16": {
+      "rps": {
+        "median": 9799.06,
+        "min": 9439.85,
+        "max": 10354.61
+      },
+      "p95_ms": {
+        "median": 2.252,
+        "min": 2.061,
+        "max": 2.27
+      },
+      "cpu_core_percent": {
+        "median": 103.42580882181299,
+        "min": 97.126223785838,
+        "max": 105.80056321677536
+      },
+      "db_cpu_core_percent": {
+        "median": 59.33083701680659,
+        "min": 55.902414217900635,
+        "max": 61.54159426301916
+      },
+      "client_cpu_core_percent": {
+        "median": 197.1887544098973,
+        "min": 196.89301165664185,
+        "max": 198.0615273455353
+      },
+      "memory_mib": {
+        "median": 5.7578125,
+        "min": 5.5,
+        "max": 6.0078125
+      },
+      "peak_threads": {
+        "median": 18,
+        "min": 18,
+        "max": 18
+      }
+    }
+  },
+  "changes": {
+    "1": {
+      "rps_change_percent": -9.436144367989996,
+      "p95_reduction_percent": -0.8804108584005821,
+      "db_cpu_reduction_percent": 18.782323844519166,
+      "rps_vs_rust_percent": -49.3225174916256
+    },
+    "16": {
+      "rps_change_percent": 5.634294114471516,
+      "p95_reduction_percent": 4.713205869275249,
+      "db_cpu_reduction_percent": 48.351693315357124,
+      "rps_vs_rust_percent": -11.60835515942823
+    }
+  },
+  "profile": {
+    "1": {
+      "requests_per_query_median": 1.0,
+      "client_request_deltas": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    "16": {
+      "requests_per_query_median": 1.782460943031104,
+      "client_request_deltas": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  "binary_sha256": {
+    "portfolio-fixed-profile": "cb1891ab12fa51a96a57201c618f7dac4dbf89b700c1b38589418a2a5be3df23",
+    "portfolio-fixed": "cd99f8b1c598993284e53f5ddfb108db7b85757b736fcb3f140f8e4505d264e1",
+    "portfolio-baseline": "0f6a4690708d53db5b43b79ad430c7e1a18f98c17920045f5a7d2962b29ccfc8"
+  },
+  "source_sha256": {
+    "backend-forge/native/adapter.c": "dcb2713ca82a5746429e1e761b0fa0b2db6bc4cc92ad91aa97cfd71cd10c3442",
+    "backend-forge/src/routes.fg": "44cd02a8eeac35ec317253cc83f892d686c1b3c3604ca13731bcabfb2e0c06e0"
+  },
+  "runtime_image_id": "sha256:b1ca3fd38a5652a5a09a55c2f41a8fa56025651a0decea11ff159c6a500544c4",
+  "raw_sha256": "fbdd1bf00aadbcf7fa3d631859f9ce52fda98d57f5c464ead82affd1b02b53c4",
+  "validation": {
+    "checks_binary_sha256": "cd99f8b1c598993284e53f5ddfb108db7b85757b736fcb3f140f8e4505d264e1",
+    "checks_image_id": "sha256:b1ca3fd38a5652a5a09a55c2f41a8fa56025651a0decea11ff159c6a500544c4",
+    "native_tests": 3,
+    "api_integration_tests": 28,
+    "proxy_assertions": 12,
+    "lifecycle_scenarios": 4,
+    "log_sha256": {
+      "build": "445be4607df40694ca28917ae67e41215ac587e4e6849a5f4e2ed6488fc75c77",
+      "integration": "6f2e51554a70f904945e86b7f61b690ad5a6b23a290c6a2693009dcc9273be2d",
+      "proxy": "c10082b697a7c42a0c624c52673c38fb37dab7a8a47e176eecc6c0e62cd22146",
+      "lifecycle": "c4e29c470c81407071c40d4ea32491080fee68f702b445f65c2562445b64330f"
+    },
+    "integration_log": "DEPRECATED: The legacy builder is deprecated and will be removed in a future release.\n            Install the buildx component to build images with BuildKit:\n            https://docs.docker.com/go/buildx/\n\nSending build context to Docker daemon  136.2kB\n\nStep 1/3 : FROM forge-continuation-after-release:20261003-053000\n ---> 9338d9ed9194\nStep 2/3 : COPY portfolio-api /app/portfolio-api\n ---> ec29dd8a78f8\nStep 3/3 : COPY 0011.sql /app/backend/migrations/0011_restore_comment_post_index.sql\n ---> b1ca3fd38a56\nSuccessfully built b1ca3fd38a56\nSuccessfully tagged forge-portfolio-improved:1791124204160237120\ntest_admin_jwt_validation (__main__.PortfolioTests.test_admin_jwt_validation) ... ok\ntest_bans_and_admin_bypass (__main__.PortfolioTests.test_bans_and_admin_bypass) ... ok\ntest_comment_auth_ownership_counts_and_moderation (__main__.PortfolioTests.test_comment_auth_ownership_counts_and_moderation) ... ok\ntest_comment_post_index_restored (__main__.PortfolioTests.test_comment_post_index_restored) ... ok\ntest_contact_concurrent_duplicate (__main__.PortfolioTests.test_contact_concurrent_duplicate) ... ok\ntest_contact_duplicate_rate_and_admin (__main__.PortfolioTests.test_contact_duplicate_rate_and_admin) ... ok\ntest_contact_length_and_ip_budget (__main__.PortfolioTests.test_contact_length_and_ip_budget) ... ok\ntest_github_error_metadata_and_outbound_path_validation (__main__.PortfolioTests.test_github_error_metadata_and_outbound_path_validation) ... ok\ntest_github_repository_importer (__main__.PortfolioTests.test_github_repository_importer) ... ok\ntest_health_authorization_and_error_cors (__main__.PortfolioTests.test_health_authorization_and_error_cors) ... ok\ntest_health_concurrent_ip_results (__main__.PortfolioTests.test_health_concurrent_ip_results) ... ok\ntest_health_cors_and_not_found (__main__.PortfolioTests.test_health_cors_and_not_found) ... ok\ntest_ipv6_normalization (__main__.PortfolioTests.test_ipv6_normalization) ... ok\ntest_json_and_typed_validation (__main__.PortfolioTests.test_json_and_typed_validation) ... ok\ntest_oauth_login_callback_and_safe_return (__main__.PortfolioTests.test_oauth_login_callback_and_safe_return) ... ok\ntest_oauth_return_paths_are_bounded_before_signing (__main__.PortfolioTests.test_oauth_return_paths_are_bounded_before_signing) ... ok\ntest_openapi_and_docs (__main__.PortfolioTests.test_openapi_and_docs) ... ok\ntest_pool_concurrency_and_error_recovery (__main__.PortfolioTests.test_pool_concurrency_and_error_recovery) ... ok\ntest_post_crud_and_draft_visibility (__main__.PortfolioTests.test_post_crud_and_draft_visibility) ... ok\ntest_project_account_and_private_metadata (__main__.PortfolioTests.test_project_account_and_private_metadata) ... ok\ntest_project_crud_metadata_and_url_validation (__main__.PortfolioTests.test_project_crud_metadata_and_url_validation) ... ok\ntest_public_read_ban_changes_are_immediate (__main__.PortfolioTests.test_public_read_ban_changes_are_immediate) ... ok\ntest_public_read_concurrent_authoritative_bans (__main__.PortfolioTests.test_public_read_concurrent_authoritative_bans) ... ok\ntest_public_read_expired_ban_and_database_failure (__main__.PortfolioTests.test_public_read_expired_ban_and_database_failure) ... ok\ntest_slow_github_does_not_hold_database_pool (__main__.PortfolioTests.test_slow_github_does_not_hold_database_pool) ... ok\ntest_timeline_crud_and_reorder (__main__.PortfolioTests.test_timeline_crud_and_reorder) ... ok\ntest_upload_authorization_and_file_serving (__main__.PortfolioTests.test_upload_authorization_and_file_serving) ... ok\ntest_upload_size_limit (__main__.PortfolioTests.test_upload_size_limit) ... ok\n\n----------------------------------------------------------------------\nRan 28 tests in 1.989s\n\nOK\nNOTICE:  relation \"comments_post_id_created_at_idx\" already exists, skipping\n{\"image\": \"forge-portfolio-improved:1791124204160237120\", \"output\": \"/tmp/forge-health-final-checks-20261004.json\", \"integration\": \"passed\", \"sql\": \"passed\"}\n",
+    "proxy_log": "curl: (7) Failed to connect to 127.0.0.1 port 8080 after 0 ms: Could not connect to server\nreact nginx: spoofed headers ignored, peer bans immediate, admin bypass valid\nforge nginx: spoofed headers ignored, peer bans immediate, admin bypass valid\nBoth nginx configurations: 12 security assertions passed\n",
+    "lifecycle_log": "Queued health: 80 requests returned 503 at the 10-second deadline\nDisconnected active leader: DB resume and fresh health recovered\nTerminated DB session: singleton and concurrent health recovered\nSIGTERM with active query, queued callbacks and disconnect: clean exit\n"
+  },
+  "profile_count_caveat": "Docker image health probes were enabled. Every concurrency-1 profile trial has one more server request than load-client requests; concurrency-16 counts match. Requests/query uses server counts."
+}
