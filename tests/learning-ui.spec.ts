@@ -27,3 +27,11 @@ test('deep links, source download and bounded execution remain usable on mobile'
  await page.getByLabel('Forge source').fill('native main { while (true) {} return 0; }');await run.click();await expect(page.getByRole('status',{name:'Program output'})).toContainText('2-second limit');await expect(run).toBeEnabled();
  const widths=await page.evaluate(()=>[document.documentElement.scrollWidth,innerWidth]);expect(widths[0]).toBeLessThanOrEqual(widths[1]);
 });
+
+test('an unknown lesson link allows a normal example to run',async({page})=>{
+ await page.goto('/play?lesson=unknown-lesson');
+ await expect(page.getByRole('alert')).toContainText('This lesson was not found.');
+ await page.getByLabel('Example',{exact:true}).selectOption('Functions');
+ const run=page.getByRole('button',{name:'Run',exact:true});await expect(run).toBeEnabled();await run.click();
+ await expect(page.getByRole('status',{name:'Program output'})).toHaveText('144');
+});
