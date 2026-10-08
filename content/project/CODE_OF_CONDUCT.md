@@ -11,3 +11,4 @@ Maintainers may edit/remove disruptive content, close discussions, request corre
 Report a conduct problem privately to a repository maintainer through the contact channel on their public GitHub profile. Do not publish personal details in an issue. A dedicated moderation contact and appeal route must be established before opening a separate Discord community.
 
 This document applies to Forge repositories, discussions and project-run events.
+

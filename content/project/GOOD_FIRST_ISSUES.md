@@ -18,3 +18,4 @@ These are ready-to-triage drafts, not claims that live GitHub issues exist. Main
 | Check internal documentation links | scripts, docs | Detect broken local Markdown targets without accessing secrets/build trees |
 
 Small tasks should not require implementing a borrow checker, changing scheduler synchronization or redesigning the compiler. AI-assisted work is welcome; contributors must understand changes and record verification.
+

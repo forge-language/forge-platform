@@ -62,3 +62,4 @@ bootstrap/compiler.fg supports integer/string/void functions, typed initialized 
 ## Compatibility
 
 This preview may change syntax, ABI and module APIs. Pin exact module versions and Git commits in forge.lock. A grammar/type-system stabilization RFC is a roadmap task; the parser and regression examples are authoritative when prose is incomplete.
+

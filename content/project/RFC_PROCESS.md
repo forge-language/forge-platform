@@ -13,3 +13,4 @@ Use an RFC for changes to syntax, types, ownership, scheduling, safety guarantee
 Suggested status text: Draft → Discussing → Accepted / Rejected / Deferred → Implemented. These are documentation conventions, not claimed repository automation.
 
 An RFC should name an owner, unanswered questions and evidence needed for acceptance. Record failed experiments as well as successful ones.
+

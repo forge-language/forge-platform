@@ -25,3 +25,4 @@ The website links real GitHub activity and CI. Live agent execution telemetry an
 The 12 first issues are concrete drafts for maintainer triage, not silently posted GitHub issues. Discord, founding-contributor recognition and Foundry dates require real community setup/consent. OAuth credentials are not yet configured. External launch announcements and repository merges remain human decisions.
 
 The local source changes and document snapshots are reviewable in the two workspaces; deploying the website does not automatically publish GitHub commits, PRs, releases or community messages.
+

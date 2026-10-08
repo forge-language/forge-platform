@@ -187,7 +187,7 @@ curl http://127.0.0.1:19083/
 
 ## HTTP Benchmark (Forge vs Python vs Phoenix vs Rust Axum)
 
-Both servers return `Hello, World` (13 bytes) with `Connection: close`.
+Both servers return `Hello, World` (13 bytes) with `Connection: close`.  
 Benchmark uses **1,000,000 requests** at **1,000 concurrent** connections on Linux.
 
 | Implementation | Port | Requests/sec | Notes |
@@ -199,7 +199,7 @@ Benchmark uses **1,000,000 requests** at **1,000 concurrent** connections on Lin
 
 Measured on: Linux 7.1.2-arch3-1 x86_64 (2026-07-20). Results vary ±5% run-to-run.
 
-Forge exceeds raw Python socket performance in this micro-benchmark.
+Forge exceeds raw Python socket performance in this micro-benchmark.  
 The benchmark uses prebuilt responses, per-core epoll workers with `SO_REUSEPORT`, and a fast accept→respond→close path (no per-client epoll registration).
 
 ### Why Forge was slower (and what we fixed)
