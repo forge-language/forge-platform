@@ -12,10 +12,10 @@ import json
 import os
 from pathlib import Path
 import subprocess
+import sys
 import tempfile
 import threading
 import urllib.parse
-import urllib.request
 
 
 def require(condition, message):
@@ -66,10 +66,39 @@ def local_release_origin():
         worker.join()
 
 
+def grant_test_dependency(forge, project, name, env, allow_legacy=False):
+    """Trust only the already resolved official test pin; never grant npm scripts."""
+    lock = json.loads((project / 'forge.lock').read_text())
+    dependency = lock['packages'][name]
+    require(dependency['repository_url'].startswith('https://github.com/forge-language/'),
+            'Refusing to grant execution to a non-official test dependency')
+    result = subprocess.run([str(forge), 'trust', name], cwd=project, env=env,
+                            text=True, capture_output=True, timeout=30)
+    output = result.stdout + result.stderr
+    if result.returncode != 0:
+        # An explicit opt-in preserves published preview.6 checks. Integrity,
+        # network and other failures must never be mistaken for an old CLI.
+        legacy = output.strip().startswith('forge-pm: Unknown command. Commands:') and 'trust' not in output
+        require(allow_legacy and legacy,
+                f'Pinned dependency trust failed: {output}\n'
+                'Use --allow-legacy-trust only when testing the old published SDK without this command.')
+        print(f'Legacy SDK: trust command unavailable for {name}; execution-trust checks are not covered')
+        return False
+    grant = json.loads((project / 'forge.json').read_text())['trust'][name]
+    require(grant['repository_url'] == dependency['repository_url'].removesuffix('.git')
+            and grant['git_commit'] == dependency['git_commit'] and grant.get('native') is True,
+            'Trust grant does not match the resolved repository and Git commit')
+    require(not grant.get('npm_scripts', False), 'Test unexpectedly enabled npm lifecycle scripts')
+    print(f'Explicit native test trust verified: {name} @ {dependency["git_commit"]}')
+    return True
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--origin', default='http://localhost:18101')
-    parser.add_argument('--version', default='0.3.0-preview.2')
+    parser.add_argument('--version', default='0.3.0-preview.6')
+    parser.add_argument('--allow-legacy-trust', action='store_true',
+                        help='Explicitly permit the old published SDK lacking forge trust; CI must omit this flag')
     parser.add_argument('--local-release', action='store_true', help='Serve checked-out installer/releases on an isolated loopback port for CI')
     args = parser.parse_args()
     with contextlib.ExitStack() as resources:
@@ -84,8 +113,14 @@ def main():
         npm_global = root / 'npm-global.config'
         npm_user.write_text('')
         npm_global.write_text('')
-        with urllib.request.urlopen(origin + '/install.sh', timeout=30) as response:
-            installer.write_bytes(response.read())
+        # Exercise the documented curl installation path; public gateways can
+        # handle Python urllib differently from real installer clients.
+        subprocess.run(['curl', '--fail', '--silent', '--show-error', '--location',
+                        '--proto', '=https,http', '--proto-redir', '=https',
+                        '--connect-timeout', '10', '--max-time', '30',
+                        '--retry', '2', '--retry-delay', '1',
+                        origin + '/install.sh', '-o', str(installer)],
+                       check=True, timeout=120)
         env = {**os.environ, 'FORGE_PROFILE_ROOT': str(profiles), 'FORGE_HOME': str(prefix),
                'FORGE_DOWNLOAD_BASE': origin, 'FORGE_REGISTRY': 'builtin',
                'GIT_MASTER': '1', 'npm_config_cache': str(root / 'npm-cache'),
@@ -110,9 +145,13 @@ def main():
             (project / 'forge.json').write_text(json.dumps(
                 {'name': name, 'entry': 'main.fg', 'dependencies': dependencies or {}}))
 
-        execute(['bash', installer, '--version', args.version, '--prefix', prefix, '--no-modify-path'])
+        execute(['bash', installer, '--version', args.version, '--prefix', prefix, '--no-modify-path'],
+                timeout=1050 if origin.startswith('https://') else 180)
         require(args.version in execute([forge, '--version']), 'Wrong installed release version')
         try:
+            env['FORGE_PM'] = str(forge)
+            execute([sys.executable, Path(__file__).with_name('project-init.py')])
+            env.pop('FORGE_PM', None)
             native = root / 'native'
             manifest(native, 'installed-native-cache')
             (native / 'helper.fg').write_text('fn message(): string { return "native-v1"; }\n')
@@ -186,6 +225,7 @@ native main {
             require(lock['packages']['forge-web']['version'] == '0.1.2', 'Wrong transitive web module version')
             require(all(value['repository_url'].startswith('https://github.com/forge-language/')
                         for value in lock['packages'].values()), 'Installed module points outside organization')
+            grant_test_dependency(forge, browser, 'forge-web', env, args.allow_legacy_trust)
             require('Build cache hit' not in pm(browser, 'build', '--emit-js'), 'Fresh browser build incorrectly hit cache')
             browser_app = browser / 'build/app.js'
             expected = ['browser-v1', '9007199254740993', '한', 'utf8-ok']

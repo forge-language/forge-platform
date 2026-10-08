@@ -4,28 +4,39 @@ import auth;
 import packages;
 import manifest;
 import database;
+import repository;
+import cache;
 extern fn platform_pool(): int;
-fn handle(conn: int, request: int): int {
+fn handle(conn: int, request: int, client: int, key: string): int {
  let path: string = web.path(request); let method: string = web.method(request); let count: int = web.segments(request);
- if (web.equal(method,"OPTIONS") != 0) { return web.respond(request,204,""); }
  if (web.equal(method,"GET") != 0) {
-  if (web.equal(path,"/api/health") != 0) { return web.respond(request,200,"{\"status\":\"ok\",\"language\":\"Forge\"}"); }
-  if (web.equal(path,"/api/stats") != 0) { return database.response(conn,request,"SELECT jsonb_build_object('packages',(SELECT count(*) FROM packages),'releases',(SELECT count(*) FROM releases))::text",web.array(),200); }
-  if (web.equal(path,"/api/auth/github/login") != 0) { return auth.login(request); }
-  if (web.equal(path,"/api/auth/github/callback") != 0) { return auth.callback(conn,request); }
-  if (web.equal(path,"/api/me") != 0) { let user: int = auth.claims(request); if (web.kind(user) == 0) { return web.error(request,401,"unauthorized"); } return web.respond(request,200,web.dump(user)); }
-  if (web.equal(path,"/api/packages") != 0) { return packages.list(conn,request); }
+  if (web.equal(path,"/api/stats") != 0) { return database.cached_response(conn,request,"SELECT jsonb_build_object('packages',(SELECT count(*) FROM packages),'releases',(SELECT count(*) FROM releases))::text",web.array(),200,client,key); }
+  if (web.equal(path,"/api/packages") != 0) { return packages.list(conn,request,client,key); }
   if (web.equal(web.segment(request,0),"api") != 0 && web.equal(web.segment(request,1),"packages") != 0 && manifest.name(web.segment(request,2)) != 0) {
-   if (count == 3) { return packages.detail(conn,request,web.segment(request,2)); }
-   if (count == 5 && web.equal(web.segment(request,3),"versions") != 0 && manifest.version(web.segment(request,4)) != 0) { return packages.release(conn,request,web.segment(request,2),web.segment(request,4)); }
+   if (count == 3) { return packages.detail(conn,request,web.segment(request,2),client,key); }
+   if (count == 5 && web.equal(web.segment(request,3),"versions") != 0 && manifest.version(web.segment(request,4)) != 0) { return packages.release(conn,request,web.segment(request,2),web.segment(request,4),client,key); }
   }
  }
- if (web.equal(method,"POST") != 0 && web.equal(path,"/api/packages") != 0) { return packages.publish(conn,request,auth.claims(request)); }
  return web.error(request,404,"not_found");
 }
 fn dispatch(request: int): int {
  web.cors(request,web.env("CORS_ALLOWED_ORIGINS",""));
+ let method: string = web.method(request); let path: string = web.path(request);
+ if (web.equal(method,"OPTIONS") != 0) { return web.respond(request,204,""); }
+ if (web.equal(method,"GET") != 0) {
+  if (web.equal(path,"/api/health") != 0) { return web.respond(request,200,"{\"status\":\"ok\",\"language\":\"Forge\"}"); }
+  if (web.equal(path,"/api/auth/github/login") != 0) { return auth.login(request); }
+  if (web.equal(path,"/api/auth/github/callback") != 0 || web.equal(path,"/github/callback") != 0) { return auth.callback(request); }
+  if (web.equal(path,"/api/me") != 0) { let user: int = auth.claims(request); if (web.kind(user) == 0) { return web.error(request,401,"unauthorized"); } return web.respond(request,200,web.dump(user)); }
+ }
+ if(web.equal(method,"POST")!=0){
+  if(web.equal(path,"/api/auth/github/token")!=0){return auth.token_login(request);}
+  if(web.equal(path,"/api/packages")!=0 || web.equal(path,"/api/packages/register")!=0){return packages.publish(request,auth.claims(request));}
+  if(web.equal(path,"/api/packages/inspect")!=0){return repository.preview(request,auth.claims(request));}
+ }
+ let client: int=0;let key: string="";
+ if(cache.eligible(request)!=0){client=cache.open();key=cache.key(client,request);let body: string=cache.get(client,key);if(web.chars(body)!=0){cache.close(client);return web.respond(request,200,body);}}
  let pool: int = platform_pool(); let conn: int = postgres.acquire(pool);
- if (conn == 0) { return web.error(request,503,"unavailable"); }
- let result: int = handle(conn,request); postgres.release(pool,conn); return result;
+ if (conn == 0) { cache.close(client);return web.error(request,503,"unavailable"); }
+ let result: int = handle(conn,request,client,key); postgres.release(pool,conn);cache.close(client); return result;
 }

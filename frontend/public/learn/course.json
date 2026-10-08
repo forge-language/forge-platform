@@ -1,0 +1,173 @@
+{
+  "schema_version": 1,
+  "lessons": [
+    {
+      "id": "hello",
+      "title": {
+        "en": "Say hello",
+        "ko": "첫 인사"
+      },
+      "summary": {
+        "en": "Run your first program.",
+        "ko": "첫 프로그램을 실행합니다."
+      },
+      "explanation": {
+        "en": "A native main block is the entry point. println prints a value and a newline. Statements end with a semicolon. The browser exercises use the JavaScript backend of the same Forge compiler.",
+        "ko": "native main 블록에서 실행이 시작됩니다. println은 값과 줄바꿈을 출력합니다. 문장 끝에는 세미콜론을 씁니다. 브라우저 연습은 같은 컴파일러의 JavaScript 백엔드를 사용합니다."
+      },
+      "source": "native main {\n  println(\"Hello, Forge!\");\n}\n",
+      "expected_output": "Hello, Forge!\n",
+      "challenge": {
+        "en": "Replace the greeting with Hello, learner! The output must be exactly that line.",
+        "ko": "인사를 Hello, learner!로 바꾸세요. 출력은 그 한 줄이어야 합니다."
+      }
+    },
+    {
+      "id": "variables",
+      "title": {
+        "en": "Store and update values",
+        "ko": "값 저장과 변경"
+      },
+      "summary": {
+        "en": "Name a value, then update it.",
+        "ko": "값에 이름을 붙이고 변경합니다."
+      },
+      "explanation": {
+        "en": "let introduces a local variable. Here int stores a signed integer. A type annotation names the intended type; this experimental compiler does not yet enforce a complete type or ownership system. Updating a variable does not need another let.",
+        "ko": "let은 지역 변수를 만듭니다. int는 부호 있는 정수입니다. 타입 표기는 의도한 타입을 나타내지만 현재 컴파일러가 완전한 타입·소유권 검사를 보장하지는 않습니다. 변경할 때 let을 다시 쓰지 않습니다."
+      },
+      "source": "native main {\n  let apples: int = 3;\n  apples = apples + 2;\n  println(apples);\n}\n",
+      "expected_output": "5\n",
+      "challenge": {
+        "en": "Start with 10 apples and give away 4. Print 6.",
+        "ko": "사과 10개에서 4개를 빼서 6을 출력하세요."
+      }
+    },
+    {
+      "id": "conditions",
+      "title": {
+        "en": "Choose a branch",
+        "ko": "조건에 따라 선택"
+      },
+      "summary": {
+        "en": "Use if and else to make a decision.",
+        "ko": "if와 else로 실행할 내용을 선택합니다."
+      },
+      "explanation": {
+        "en": "The expression inside parentheses is tested before a branch runs. >= means greater than or equal to. Braces group the statements in each branch. Change score and predict the output before running.",
+        "ko": "괄호 안의 조건을 검사한 뒤 해당 분기를 실행합니다. >=는 크거나 같음을 뜻합니다. 중괄호는 분기 안의 문장을 묶습니다. score를 바꾸고 출력을 예상해 보세요."
+      },
+      "source": "native main {\n  let score: int = 72;\n  if (score >= 60) {\n    println(\"pass\");\n  } else {\n    println(\"try again\");\n  }\n}\n",
+      "expected_output": "pass\n",
+      "challenge": {
+        "en": "Change score to 45 so the program prints try again.",
+        "ko": "score를 45로 바꿔 try again을 출력하세요."
+      }
+    },
+    {
+      "id": "loops",
+      "title": {
+        "en": "Repeat and accumulate",
+        "ko": "반복과 누적"
+      },
+      "summary": {
+        "en": "Add numbers with a while loop.",
+        "ko": "while 반복으로 숫자를 더합니다."
+      },
+      "explanation": {
+        "en": "while checks its condition before every iteration. This loop adds 1, 2 and 3. Updating number makes the loop stop; forgetting that update can create an infinite loop. The terminal runner stops executions that exceed its time limit.",
+        "ko": "while은 매 반복 전에 조건을 검사합니다. 이 예제는 1, 2, 3을 더합니다. number를 변경해야 반복이 끝납니다. 변경을 잊으면 무한 반복이 생길 수 있습니다. 터미널 실행기는 제한 시간을 넘긴 실행을 중단합니다."
+      },
+      "source": "native main {\n  let number: int = 1;\n  let total: int = 0;\n  while (number <= 3) {\n    total = total + number;\n    number = number + 1;\n  }\n  println(total);\n}\n",
+      "expected_output": "6\n",
+      "challenge": {
+        "en": "Add the numbers from 1 through 5 instead. Print 15.",
+        "ko": "1부터 5까지 더하도록 바꿔 15를 출력하세요."
+      }
+    },
+    {
+      "id": "functions",
+      "title": {
+        "en": "Reuse a function",
+        "ko": "함수 재사용"
+      },
+      "summary": {
+        "en": "Pass an argument and return a result.",
+        "ko": "인수를 전달하고 결과를 돌려받습니다."
+      },
+      "explanation": {
+        "en": "fn defines a function. value is a parameter, and the type after the closing parenthesis describes the result. return sends the calculated value to the caller. main calls the same function twice.",
+        "ko": "fn으로 함수를 정의합니다. value는 매개변수이고 닫는 괄호 뒤의 타입은 결과를 나타냅니다. return은 계산한 값을 호출한 곳으로 돌려줍니다. main은 같은 함수를 두 번 호출합니다."
+      },
+      "source": "fn twice(value: int): int {\n  return value * 2;\n}\n\nnative main {\n  println(twice(4));\n  println(twice(7));\n}\n",
+      "expected_output": "8\n14\n",
+      "challenge": {
+        "en": "Change twice into a function named triple that multiplies by 3. The two calls should print 12 and 21.",
+        "ko": "3을 곱하는 triple 함수로 바꾸세요. 두 호출의 출력은 12와 21이어야 합니다."
+      }
+    },
+    {
+      "id": "strings",
+      "title": {
+        "en": "Combine strings",
+        "ko": "문자열 합치기"
+      },
+      "summary": {
+        "en": "Import the strings module.",
+        "ko": "strings 모듈을 가져옵니다."
+      },
+      "explanation": {
+        "en": "import strings enables its standard-library functions. str_concat combines two strings, and str_len measures UTF-8 bytes. With ASCII text, each character occupies one byte; non-ASCII characters can occupy more. These examples use the browser-supported string functions.",
+        "ko": "import strings로 표준 문자열 함수를 사용합니다. str_concat은 문자열 두 개를 합치고 str_len은 UTF-8 바이트 수를 셉니다. ASCII 문자는 한 바이트지만 다른 문자는 여러 바이트일 수 있습니다. 예제는 브라우저에서 지원되는 문자열 함수를 사용합니다."
+      },
+      "source": "import strings;\n\nnative main {\n  let name: string = \"Forge\";\n  println(str_concat(\"Hello, \", name));\n  println(str_len(name));\n}\n",
+      "expected_output": "Hello, Forge\n5\n",
+      "challenge": {
+        "en": "Use the name Ada instead. Print Hello, Ada and then 3.",
+        "ko": "이름을 Ada로 바꿔 Hello, Ada와 3을 차례로 출력하세요."
+      }
+    },
+    {
+      "id": "int64",
+      "title": {
+        "en": "Keep large integers exact",
+        "ko": "큰 정수를 정확하게 유지"
+      },
+      "summary": {
+        "en": "Work beyond JavaScript Number precision.",
+        "ko": "JavaScript Number의 정밀도 범위를 넘는 수를 다룹니다."
+      },
+      "explanation": {
+        "en": "Forge int values in these backends use signed 64-bit integer semantics. The JavaScript backend represents them using BigInt rather than Number. This example stays inside the signed 64-bit range; it does not teach integer overflow. Native platform APIs and floating-point calculations are outside this browser exercise.",
+        "ko": "이 백엔드에서 Forge int는 부호 있는 64비트 정수 의미를 사용합니다. JavaScript 백엔드는 Number 대신 BigInt로 표현합니다. 예제는 64비트 범위 안의 계산이며 정수 오버플로를 다루지는 않습니다. 네이티브 플랫폼 API와 부동소수점 계산은 이 연습의 범위 밖입니다."
+      },
+      "source": "native main {\n  let value: int = 9007199254740993;\n  println(value);\n  println(value + 1);\n}\n",
+      "expected_output": "9007199254740993\n9007199254740994\n",
+      "challenge": {
+        "en": "Keep the first output unchanged and add 2 instead of 1. The second line should be 9007199254740995.",
+        "ko": "첫 출력을 유지하고 1 대신 2를 더하세요. 두 번째 줄은 9007199254740995여야 합니다."
+      }
+    },
+    {
+      "id": "mini-project",
+      "title": {
+        "en": "Build a ticket total",
+        "ko": "입장권 합계 만들기"
+      },
+      "summary": {
+        "en": "Combine functions, loops and a decision.",
+        "ko": "함수·반복·조건을 함께 사용합니다."
+      },
+      "explanation": {
+        "en": "ticket_total multiplies a price by a count. The loop records three customers buying two tickets each. The final if compares revenue to a target. This is a small calculation, not a production payment system. Try changing one input at a time and explain the new output.",
+        "ko": "ticket_total은 가격과 개수를 곱합니다. 반복문은 손님 세 명이 각자 표 두 장을 사는 상황을 계산합니다. 마지막 if는 매출과 목표를 비교합니다. 실제 결제 시스템이 아니라 작은 계산 예제입니다. 입력 하나씩 바꾸며 출력이 달라지는 이유를 설명해 보세요."
+      },
+      "source": "fn ticket_total(price: int, count: int): int {\n  return price * count;\n}\n\nnative main {\n  let customer: int = 0;\n  let revenue: int = 0;\n  while (customer < 3) {\n    revenue = revenue + ticket_total(5, 2);\n    customer = customer + 1;\n  }\n  println(revenue);\n  if (revenue >= 25) {\n    println(\"target reached\");\n  } else {\n    println(\"keep going\");\n  }\n}\n",
+      "expected_output": "30\ntarget reached\n",
+      "challenge": {
+        "en": "Change the number of customers to 2. Print 20 followed by keep going.",
+        "ko": "손님 수를 2명으로 바꿔 20과 keep going을 출력하세요."
+      }
+    }
+  ]
+}

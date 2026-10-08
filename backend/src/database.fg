@@ -1,5 +1,6 @@
 import postgres;
 import web;
+import cache;
 fn args1(value: string): int { let values: int = web.array(); web.push(values, web.jstring(value)); return values; }
 fn args2(a: string, b: string): int { let values: int = args1(a); web.push(values, web.jstring(b)); return values; }
 fn query(conn: int, sql: string, values: int): int {
@@ -11,7 +12,7 @@ fn query(conn: int, sql: string, values: int): int {
         else { if (web.kind(value) == 3) { postgres.push(params, web.text(value)); } else { postgres.push(params, web.dump(value)); } }
         index = index + 1;
     }
-    let result: int = postgres.query(conn, sql, params);
+    let result: int = postgres.query_prepared(conn, sql, params);
     postgres.params_close(params);
     return result;
 }
@@ -22,7 +23,7 @@ fn fetch(conn: int, sql: string, values: int): int {
     postgres.clear(result);
     return value;
 }
-fn response(conn: int, request: int, sql: string, values: int, status: int): int {
+fn cached_response(conn: int, request: int, sql: string, values: int, status: int, client: int, key: string): int {
     let result: int = query(conn, sql, values);
     let success: int = 0;
     if (postgres.ok(result) == 0) {
@@ -35,7 +36,7 @@ fn response(conn: int, request: int, sql: string, values: int, status: int): int
             else { success = web.respond(request, 204, ""); }
         } else {
             if (postgres.rows(result) == 0) { success = web.error(request, 404, "not_found"); }
-            else { success = web.respond(request, status, postgres.value(result, 0, 0)); }
+            else { let body: string = postgres.value(result, 0, 0); if (status == 200) { cache.put(client,key,body); } success = web.respond(request, status, body); }
         }
     }
     postgres.clear(result);
@@ -48,3 +49,5 @@ fn exists(conn: int, sql: string, values: int): int {
     postgres.clear(result);
     return value;
 }
+
+fn response(conn: int, request: int, sql: string, values: int, status: int): int { return cached_response(conn,request,sql,values,status,0,""); }

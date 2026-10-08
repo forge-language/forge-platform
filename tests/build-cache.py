@@ -183,20 +183,27 @@ class BuildCacheTest(unittest.TestCase):
         module = self.add_module("native-module", {"native": {"library": "native", "cmake_target": "native", "pkg_config": []}})
         (module / "CMakeLists.txt").write_text("add_library(native STATIC native.c)\n")
         (module / "native.c").write_text("int native(void) { return 1; }\n")
+        module = self.pin_module(module, trust_native=True)
         self.assert_success(self.run_manager("build"))
-        (module / "native.c").write_text("int native(void) { return 2; }\n")
         self.assert_success(self.run_manager("build"))
         self.assertEqual(sum("cmake -S" in line for line in self.log.read_text().splitlines()), 1)
-        self.assertEqual(sum("cmake --build" in line for line in self.log.read_text().splitlines()), 2)
-        (module / "CMakeLists.txt").write_text("add_library(native STATIC changed.c)\n")
+        (module / "native.c").write_text("int native(void) { return 2; }\n")
+        self.assertNotEqual(self.run_manager("build").returncode, 0)
+        module = self.pin_module(module, trust_native=True)
         self.assert_success(self.run_manager("build"))
         self.assertEqual(sum("cmake -S" in line for line in self.log.read_text().splitlines()), 2)
+        self.assertEqual(sum("cmake --build" in line for line in self.log.read_text().splitlines()), 3)
+        (module / "CMakeLists.txt").write_text("add_library(native STATIC changed.c)\n")
+        module = self.pin_module(module, trust_native=True)
+        self.assert_success(self.run_manager("build"))
+        self.assertEqual(sum("cmake -S" in line for line in self.log.read_text().splitlines()), 3)
 
     def test_browser_npm_cache_tracks_lock_and_install_state(self) -> None:
         module = self.add_module("browser-module", {"javascript": {"entry": "index.js", "package_file": "package.json"}})
         (module / "index.js").write_text("export const value = 1;\n")
         (module / "package.json").write_text('{"name":"browser-module"}\n')
         (module / "package-lock.json").write_text('{"lockfileVersion":3}\n')
+        module = self.pin_module(module)
         self.assert_success(self.run_manager("build", "--emit-js"))
         self.assert_success(self.run_manager("build", "--emit-js"))
         self.assertEqual(sum("npm ci" in line for line in self.log.read_text().splitlines()), 1)
@@ -204,6 +211,7 @@ class BuildCacheTest(unittest.TestCase):
         self.assert_success(self.run_manager("build", "--emit-js"))
         self.assertEqual(sum("npm ci" in line for line in self.log.read_text().splitlines()), 1)
         (module / "package-lock.json").write_text('{"lockfileVersion":3,"changed":true}\n')
+        module = self.pin_module(module)
         self.assert_success(self.run_manager("build", "--emit-js"))
         (module / "node_modules/state").write_text("tampered\n")
         self.assert_success(self.run_manager("build", "--emit-js"))
@@ -228,6 +236,29 @@ class BuildCacheTest(unittest.TestCase):
         result = self.run_manager("run", "--emit-js")
         self.assert_success(result)
         self.assertIn("Build cache hit", result.stdout)
+
+    def pin_module(self, module: pathlib.Path, trust_native: bool = False) -> pathlib.Path:
+        env = {**os.environ, "GIT_MASTER": "1"}
+        def git(*args):
+            return subprocess.check_output(["git", "-c", "core.hooksPath=/dev/null", *args], cwd=module, env=env, text=True).strip()
+        if not (module / ".git").is_dir():
+            git("init", "-q")
+            git("config", "user.email", "fixture@example.invalid")
+            git("config", "user.name", "Security fixture")
+            git("remote", "add", "origin", f"https://github.com/forge-language/{module.parent.name}")
+            (module / ".gitignore").write_text("build/\nnode_modules/\n.forge-npm-fingerprint\n")
+        git("add", "--all")
+        git("commit", "-qm", "Pin fixture source")
+        commit = git("rev-parse", "HEAD")
+        dest = module.parent / commit
+        module.rename(dest)
+        lock = json.loads((self.project / "forge.lock").read_text())
+        release = lock["packages"][module.parent.name]
+        release["git_commit"] = commit
+        (self.project / "forge.lock").write_text(json.dumps(lock))
+        if trust_native:
+            self.assert_success(self.run_manager("trust", module.parent.name))
+        return dest
 
     def add_module(self, name: str, bridge: dict[str, dict[str, str | list[str]]]) -> pathlib.Path:
         commit = "a" * 40

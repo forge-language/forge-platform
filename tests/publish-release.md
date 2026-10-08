@@ -1,8 +1,8 @@
-Forge 0.3.0-preview.2 for Linux x86_64 / glibc 2.35+ (Ubuntu 22.04+).
+Forge 0.3.0-preview.3 for Linux x86_64 / glibc 2.35+ (Ubuntu 22.04+).
 
 Includes the Forge C backend, experimental JavaScript output, standard runtime,
 Forge package manager and browser bundler. OS/protocol/crypto operations use native
-bridges. A C compiler is required; module builds also need Git/CMake/pkg-config and
+bridges. Installing does not require a host C compiler. Building programs needs one; module builds also need Git/CMake/pkg-config and
 the module's development libraries. Browser builds need Node 22/npm.
 
 Install:
@@ -12,6 +12,7 @@ curl -fsSL https://raw.githubusercontent.com/forge-language/forge-platform/main/
 source "$HOME/.forge/env"
 forge --version
 forge init hello-app
+cd hello-app
 forge run
 ```
 

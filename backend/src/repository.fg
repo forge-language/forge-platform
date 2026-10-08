@@ -1,0 +1,20 @@
+import web;
+import strings;
+import manifest;
+fn call(path: string,value: int): int {
+ return web.request(str_concat(web.env("REPOSITORY_CHECK_URL","http://repository-checker:8090"),path),"POST",web.dump(value),web.env("REPOSITORY_CHECK_TOKEN",web.env("JWT_SECRET","")));
+}
+fn inspect(value: int): int { return call("/inspect",value); }
+fn authorized(result: int,user: int): int {
+ if(web.equal(web.field_text(result,"owner_type"),"User")!=0 && web.equal(web.field_text(result,"owner_id"),web.field_text(user,"github_id"))!=0){return 1;}
+ return web.equal(web.field_text(user,"role"),"admin")!=0 && web.equal(web.field_text(user,"github_id"),web.env("ADMIN_GITHUB_ID",""))!=0 && web.equal(web.field_text(result,"owner_type"),"Organization")!=0 && web.equal(web.lower(web.field_text(result,"owner_login")),"forge-language")!=0;
+}
+fn preview(request: int,user: int): int {
+ if(web.kind(user)!=4){return web.error(request,401,"unauthorized");}
+ if(web.rate(str_concat("inspect:",web.field_text(user,"github_id")),10,600)==0){return web.error(request,429,"rate_limit");}
+ let result: int=inspect(web.request_json(request));let status: int=web.field_int(result,"status");
+ if(status<200 || status>=300){if(status<400){status=503;}return web.respond(request,status,web.dump(web.get(result,"data")));}
+ let data: int=web.get(result,"data");
+ if(authorized(data,user)==0){return web.error(request,403,"repository_owner_mismatch");}
+ return web.respond(request,200,web.dump(data));
+}

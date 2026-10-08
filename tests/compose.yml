@@ -7,3 +7,9 @@ services:
   restart: "no"
  site:
   restart: "no"
+ repository-checker:
+  command: [python, /app/tests/github-fixture.py]
+  volumes:
+   - ./tests:/app/tests:ro
+   - ./backend/seed.json:/app/backend/seed.json:ro
+  restart: "no"
