@@ -1,0 +1,1200 @@
+{
+  "date_utc": "2026-10-05T03:49:07Z",
+  "host": "Linux-6.8.0-139-generic-x86_64-with-glibc2.39",
+  "repeats": 31,
+  "order": "alternating forward and reverse compiler order",
+  "scope": "Process startup, Forge validation/parsing and C file emission; excludes downstream C compilation. Child user+system CPU. Shared host.",
+  "compilers": {
+    "historical_stage0": {
+      "stage": "stage0",
+      "path": "/tmp/forge-continuation-20261003/baseline-build/bin/forge",
+      "sha256": "6207563a74005fb91b42aeda4cba0ee263aceff344d2d931bea7438a9107485a"
+    },
+    "current_stage0": {
+      "stage": "stage0",
+      "path": "/dev/shm/forge-compiler-cpu-20261005/current-build/bin/forge",
+      "sha256": "b87c67f6fb654527115a1a054ed0e0b4d1b40af0c3c2a798ca3b19b1b0c89708"
+    },
+    "historical_stage2": {
+      "stage": "stage2",
+      "path": "/tmp/forge-continuation-20261003/baseline-build/bin/forge-stage2",
+      "sha256": "1c0d5663e20eef5e8a5b50956827b7a75b73e0e7f6adef5766720a85622c3c91"
+    },
+    "current_stage2": {
+      "stage": "stage2",
+      "path": "/dev/shm/forge-compiler-cpu-20261005/current-stage2",
+      "sha256": "c6e1871c4e12bfb7a169e1ef8a8ba0e6b3a1036bbe6b95304be1529b57cfb8e2"
+    },
+    "optimized_stage2": {
+      "stage": "stage2",
+      "path": "/dev/shm/forge-compiler-cpu-20261005/dispatch-stage2",
+      "sha256": "6252a91d9160b6603ca99b46e313a69ecc34c7b87045f736aecb1eb580b8dff6"
+    }
+  },
+  "inputs": {
+    "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg": {
+      "bytes": 39699,
+      "sha256": "7eea51a3bcccc0ecb3ce741bf7b9df39a4df77cd01aca552ef9b9b2d2807404d"
+    }
+  },
+  "output_sha256": {
+    "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg": {
+      "historical_stage0": "9fb6ed05b3fb9048a2d43fe8c574e8580aa7fa67b3a855c8dc04fc48e337efd5",
+      "current_stage0": "9fb6ed05b3fb9048a2d43fe8c574e8580aa7fa67b3a855c8dc04fc48e337efd5",
+      "historical_stage2": "c7e8f451f528f040ca71947e81a352cd85bec58e4581636176c99f107fccfe57",
+      "current_stage2": "c7e8f451f528f040ca71947e81a352cd85bec58e4581636176c99f107fccfe57",
+      "optimized_stage2": "c7e8f451f528f040ca71947e81a352cd85bec58e4581636176c99f107fccfe57"
+    }
+  },
+  "summary": {
+    "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg": {
+      "historical_stage0": {
+        "wall_ms": {
+          "median": 9.695122018456459,
+          "min": 3.4801249857991934,
+          "max": 13.439039001241326
+        },
+        "cpu_ms": {
+          "median": 9.396,
+          "min": 3.0990000000000046,
+          "max": 12.971000000000178
+        }
+      },
+      "current_stage0": {
+        "wall_ms": {
+          "median": 9.349897038191557,
+          "min": 3.23252915404737,
+          "max": 13.916172087192535
+        },
+        "cpu_ms": {
+          "median": 8.840999999999877,
+          "min": 2.928000000000028,
+          "max": 13.400999999999442
+        }
+      },
+      "historical_stage2": {
+        "wall_ms": {
+          "median": 63.59616690315306,
+          "min": 35.06566910073161,
+          "max": 85.55051288567483
+        },
+        "cpu_ms": {
+          "median": 63.19399999999992,
+          "min": 34.716999999999885,
+          "max": 85.04199999999992
+        }
+      },
+      "current_stage2": {
+        "wall_ms": {
+          "median": 14.618305955082178,
+          "min": 5.64852892421186,
+          "max": 21.424442995339632
+        },
+        "cpu_ms": {
+          "median": 14.11399999999996,
+          "min": 5.384,
+          "max": 20.99600000000004
+        }
+      },
+      "optimized_stage2": {
+        "wall_ms": {
+          "median": 12.504674959927797,
+          "min": 4.677333170548081,
+          "max": 19.626628141850233
+        },
+        "cpu_ms": {
+          "median": 12.001999999999956,
+          "min": 4.461999999999799,
+          "max": 19.098999999999975
+        }
+      }
+    }
+  },
+  "runs": [
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "historical_stage0",
+      "repeat": 1,
+      "wall_ms": 8.80113197490573,
+      "cpu_ms": 8.484
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "current_stage0",
+      "repeat": 1,
+      "wall_ms": 12.732877861708403,
+      "cpu_ms": 12.312
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "historical_stage2",
+      "repeat": 1,
+      "wall_ms": 67.26683489978313,
+      "cpu_ms": 66.92300000000002
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "current_stage2",
+      "repeat": 1,
+      "wall_ms": 17.594538861885667,
+      "cpu_ms": 17.218
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "optimized_stage2",
+      "repeat": 1,
+      "wall_ms": 12.301790062338114,
+      "cpu_ms": 11.87899999999999
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "optimized_stage2",
+      "repeat": 2,
+      "wall_ms": 12.180464807897806,
+      "cpu_ms": 11.697
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "current_stage2",
+      "repeat": 2,
+      "wall_ms": 14.426036039367318,
+      "cpu_ms": 13.92100000000001
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "historical_stage2",
+      "repeat": 2,
+      "wall_ms": 70.29145094566047,
+      "cpu_ms": 69.882
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "current_stage0",
+      "repeat": 2,
+      "wall_ms": 8.935241028666496,
+      "cpu_ms": 8.554999999999993
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "historical_stage0",
+      "repeat": 2,
+      "wall_ms": 3.519429126754403,
+      "cpu_ms": 3.0990000000000046
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "historical_stage0",
+      "repeat": 3,
+      "wall_ms": 9.695122018456459,
+      "cpu_ms": 9.396
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "current_stage0",
+      "repeat": 3,
+      "wall_ms": 3.388201119378209,
+      "cpu_ms": 3.1019999999999937
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "historical_stage2",
+      "repeat": 3,
+      "wall_ms": 63.849952071905136,
+      "cpu_ms": 63.547999999999966
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "current_stage2",
+      "repeat": 3,
+      "wall_ms": 18.30677012912929,
+      "cpu_ms": 17.83399999999999
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "optimized_stage2",
+      "repeat": 3,
+      "wall_ms": 18.78979103639722,
+      "cpu_ms": 18.168000000000024
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "optimized_stage2",
+      "repeat": 4,
+      "wall_ms": 17.51976297236979,
+      "cpu_ms": 16.92699999999997
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "current_stage2",
+      "repeat": 4,
+      "wall_ms": 14.576767105609179,
+      "cpu_ms": 13.998000000000053
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "historical_stage2",
+      "repeat": 4,
+      "wall_ms": 59.44252898916602,
+      "cpu_ms": 58.918999999999954
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "current_stage0",
+      "repeat": 4,
+      "wall_ms": 3.258479991927743,
+      "cpu_ms": 2.928000000000028
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "historical_stage0",
+      "repeat": 4,
+      "wall_ms": 12.569620972499251,
+      "cpu_ms": 12.265999999999957
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "historical_stage0",
+      "repeat": 5,
+      "wall_ms": 12.503606034442782,
+      "cpu_ms": 12.077999999999964
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "current_stage0",
+      "repeat": 5,
+      "wall_ms": 12.426794040948153,
+      "cpu_ms": 11.897999999999993
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "historical_stage2",
+      "repeat": 5,
+      "wall_ms": 63.71052796021104,
+      "cpu_ms": 63.23400000000005
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "current_stage2",
+      "repeat": 5,
+      "wall_ms": 15.407272148877382,
+      "cpu_ms": 15.011999999999956
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "optimized_stage2",
+      "repeat": 5,
+      "wall_ms": 18.6819180380553,
+      "cpu_ms": 18.192999999999973
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "optimized_stage2",
+      "repeat": 6,
+      "wall_ms": 12.234115041792393,
+      "cpu_ms": 11.652999999999983
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "current_stage2",
+      "repeat": 6,
+      "wall_ms": 11.42026111483574,
+      "cpu_ms": 10.753000000000027
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "historical_stage2",
+      "repeat": 6,
+      "wall_ms": 50.74490210972726,
+      "cpu_ms": 50.17000000000007
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "current_stage0",
+      "repeat": 6,
+      "wall_ms": 9.827502071857452,
+      "cpu_ms": 9.424999999999919
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "historical_stage0",
+      "repeat": 6,
+      "wall_ms": 10.47880994156003,
+      "cpu_ms": 9.976999999999972
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "historical_stage0",
+      "repeat": 7,
+      "wall_ms": 10.351428063586354,
+      "cpu_ms": 9.88799999999998
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "current_stage0",
+      "repeat": 7,
+      "wall_ms": 12.696421006694436,
+      "cpu_ms": 12.243000000000032
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "historical_stage2",
+      "repeat": 7,
+      "wall_ms": 69.26118908450007,
+      "cpu_ms": 68.86800000000007
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "current_stage2",
+      "repeat": 7,
+      "wall_ms": 20.735851023346186,
+      "cpu_ms": 20.35099999999998
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "optimized_stage2",
+      "repeat": 7,
+      "wall_ms": 12.96428800560534,
+      "cpu_ms": 12.415999999999983
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "optimized_stage2",
+      "repeat": 8,
+      "wall_ms": 12.504674959927797,
+      "cpu_ms": 12.001999999999956
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "current_stage2",
+      "repeat": 8,
+      "wall_ms": 16.50670589879155,
+      "cpu_ms": 14.825000000000005
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "historical_stage2",
+      "repeat": 8,
+      "wall_ms": 67.58756306953728,
+      "cpu_ms": 67.1750000000001
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "current_stage0",
+      "repeat": 8,
+      "wall_ms": 12.814179062843323,
+      "cpu_ms": 12.372999999999884
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "historical_stage0",
+      "repeat": 8,
+      "wall_ms": 12.15660898014903,
+      "cpu_ms": 11.69700000000004
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "historical_stage0",
+      "repeat": 9,
+      "wall_ms": 8.54557380080223,
+      "cpu_ms": 8.094000000000046
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "current_stage0",
+      "repeat": 9,
+      "wall_ms": 8.073910139501095,
+      "cpu_ms": 7.607999999999948
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "historical_stage2",
+      "repeat": 9,
+      "wall_ms": 68.61268589273095,
+      "cpu_ms": 68.23600000000008
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "current_stage2",
+      "repeat": 9,
+      "wall_ms": 16.596294939517975,
+      "cpu_ms": 16.235999999999944
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "optimized_stage2",
+      "repeat": 9,
+      "wall_ms": 18.7541451305151,
+      "cpu_ms": 18.308000000000018
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "optimized_stage2",
+      "repeat": 10,
+      "wall_ms": 12.584100011736155,
+      "cpu_ms": 12.066000000000049
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "current_stage2",
+      "repeat": 10,
+      "wall_ms": 14.814151916652918,
+      "cpu_ms": 14.227000000000045
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "historical_stage2",
+      "repeat": 10,
+      "wall_ms": 65.05881296470761,
+      "cpu_ms": 64.53099999999995
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "current_stage0",
+      "repeat": 10,
+      "wall_ms": 3.23252915404737,
+      "cpu_ms": 2.9289999999999594
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "historical_stage0",
+      "repeat": 10,
+      "wall_ms": 8.753147907555103,
+      "cpu_ms": 8.36500000000015
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "historical_stage0",
+      "repeat": 11,
+      "wall_ms": 6.9203609600663185,
+      "cpu_ms": 6.370999999999988
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "current_stage0",
+      "repeat": 11,
+      "wall_ms": 6.496425019577146,
+      "cpu_ms": 5.911999999999972
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "historical_stage2",
+      "repeat": 11,
+      "wall_ms": 43.50635479204357,
+      "cpu_ms": 42.96599999999995
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "current_stage2",
+      "repeat": 11,
+      "wall_ms": 21.424442995339632,
+      "cpu_ms": 20.99600000000004
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "optimized_stage2",
+      "repeat": 11,
+      "wall_ms": 12.536590918898582,
+      "cpu_ms": 12.036999999999882
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "optimized_stage2",
+      "repeat": 12,
+      "wall_ms": 12.286292854696512,
+      "cpu_ms": 11.734000000000023
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "current_stage2",
+      "repeat": 12,
+      "wall_ms": 11.853964999318123,
+      "cpu_ms": 11.249999999999982
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "historical_stage2",
+      "repeat": 12,
+      "wall_ms": 50.7871659938246,
+      "cpu_ms": 50.31700000000014
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "current_stage0",
+      "repeat": 12,
+      "wall_ms": 9.349897038191557,
+      "cpu_ms": 8.840999999999877
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "historical_stage0",
+      "repeat": 12,
+      "wall_ms": 12.371221091598272,
+      "cpu_ms": 11.941000000000034
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "historical_stage0",
+      "repeat": 13,
+      "wall_ms": 12.336714891716838,
+      "cpu_ms": 11.823000000000167
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "current_stage0",
+      "repeat": 13,
+      "wall_ms": 12.385959969833493,
+      "cpu_ms": 11.778000000000066
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "historical_stage2",
+      "repeat": 13,
+      "wall_ms": 85.55051288567483,
+      "cpu_ms": 85.04199999999992
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "current_stage2",
+      "repeat": 13,
+      "wall_ms": 18.391466001048684,
+      "cpu_ms": 18.00600000000008
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "optimized_stage2",
+      "repeat": 13,
+      "wall_ms": 18.269398948177695,
+      "cpu_ms": 17.770999999999926
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "optimized_stage2",
+      "repeat": 14,
+      "wall_ms": 12.357452884316444,
+      "cpu_ms": 11.873000000000022
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "current_stage2",
+      "repeat": 14,
+      "wall_ms": 14.618305955082178,
+      "cpu_ms": 14.11399999999996
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "historical_stage2",
+      "repeat": 14,
+      "wall_ms": 57.49385803937912,
+      "cpu_ms": 55.82300000000018
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "current_stage0",
+      "repeat": 14,
+      "wall_ms": 8.759632939472795,
+      "cpu_ms": 8.374999999999854
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "historical_stage0",
+      "repeat": 14,
+      "wall_ms": 12.531609972938895,
+      "cpu_ms": 12.037999999999993
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "historical_stage0",
+      "repeat": 15,
+      "wall_ms": 12.415662873536348,
+      "cpu_ms": 11.880000000000168
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "current_stage0",
+      "repeat": 15,
+      "wall_ms": 12.606263160705566,
+      "cpu_ms": 11.960999999999888
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "historical_stage2",
+      "repeat": 15,
+      "wall_ms": 68.91764001920819,
+      "cpu_ms": 68.41900000000017
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "current_stage2",
+      "repeat": 15,
+      "wall_ms": 6.025823997333646,
+      "cpu_ms": 5.629999999999857
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "optimized_stage2",
+      "repeat": 15,
+      "wall_ms": 18.548314925283194,
+      "cpu_ms": 18.170999999999882
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "optimized_stage2",
+      "repeat": 16,
+      "wall_ms": 12.711938004940748,
+      "cpu_ms": 12.26499999999997
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "current_stage2",
+      "repeat": 16,
+      "wall_ms": 14.531002147123218,
+      "cpu_ms": 13.968000000000147
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "historical_stage2",
+      "repeat": 16,
+      "wall_ms": 69.95086884126067,
+      "cpu_ms": 69.66100000000009
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "current_stage0",
+      "repeat": 16,
+      "wall_ms": 3.386883996427059,
+      "cpu_ms": 3.1019999999999937
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "historical_stage0",
+      "repeat": 16,
+      "wall_ms": 3.8885169196873903,
+      "cpu_ms": 3.6069999999999713
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "historical_stage0",
+      "repeat": 17,
+      "wall_ms": 4.2642580810934305,
+      "cpu_ms": 3.9629999999998833
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "current_stage0",
+      "repeat": 17,
+      "wall_ms": 3.7883420009166002,
+      "cpu_ms": 3.493000000000135
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "historical_stage2",
+      "repeat": 17,
+      "wall_ms": 35.56077415123582,
+      "cpu_ms": 35.26499999999988
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "current_stage2",
+      "repeat": 17,
+      "wall_ms": 5.756299011409283,
+      "cpu_ms": 5.53400000000015
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "optimized_stage2",
+      "repeat": 17,
+      "wall_ms": 4.677333170548081,
+      "cpu_ms": 4.476999999999787
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "optimized_stage2",
+      "repeat": 18,
+      "wall_ms": 4.763402976095676,
+      "cpu_ms": 4.482000000000042
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "current_stage2",
+      "repeat": 18,
+      "wall_ms": 5.64852892421186,
+      "cpu_ms": 5.384
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "historical_stage2",
+      "repeat": 18,
+      "wall_ms": 35.56103399023414,
+      "cpu_ms": 35.16299999999989
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "current_stage0",
+      "repeat": 18,
+      "wall_ms": 8.363569853827357,
+      "cpu_ms": 7.946999999999871
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "historical_stage0",
+      "repeat": 18,
+      "wall_ms": 13.439039001241326,
+      "cpu_ms": 12.971000000000178
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "historical_stage0",
+      "repeat": 19,
+      "wall_ms": 13.031847076490521,
+      "cpu_ms": 12.311999999999879
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "current_stage0",
+      "repeat": 19,
+      "wall_ms": 10.708664078265429,
+      "cpu_ms": 10.078999999999949
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "historical_stage2",
+      "repeat": 19,
+      "wall_ms": 66.76730280742049,
+      "cpu_ms": 66.25499999999995
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "current_stage2",
+      "repeat": 19,
+      "wall_ms": 5.9373448602855206,
+      "cpu_ms": 5.5800000000001955
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "optimized_stage2",
+      "repeat": 19,
+      "wall_ms": 11.809459887444973,
+      "cpu_ms": 11.415999999999816
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "optimized_stage2",
+      "repeat": 20,
+      "wall_ms": 12.226316146552563,
+      "cpu_ms": 11.778000000000121
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "current_stage2",
+      "repeat": 20,
+      "wall_ms": 14.848326100036502,
+      "cpu_ms": 14.35700000000012
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "historical_stage2",
+      "repeat": 20,
+      "wall_ms": 63.59616690315306,
+      "cpu_ms": 63.19399999999992
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "current_stage0",
+      "repeat": 20,
+      "wall_ms": 5.8413289953023195,
+      "cpu_ms": 5.407999999999968
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "historical_stage0",
+      "repeat": 20,
+      "wall_ms": 8.150983834639192,
+      "cpu_ms": 7.703999999999933
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "historical_stage0",
+      "repeat": 21,
+      "wall_ms": 10.046409908682108,
+      "cpu_ms": 9.635000000000227
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "current_stage0",
+      "repeat": 21,
+      "wall_ms": 10.06593881174922,
+      "cpu_ms": 9.529000000000288
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "historical_stage2",
+      "repeat": 21,
+      "wall_ms": 62.59139790199697,
+      "cpu_ms": 62.13599999999997
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "current_stage2",
+      "repeat": 21,
+      "wall_ms": 5.747115006670356,
+      "cpu_ms": 5.4360000000000515
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "optimized_stage2",
+      "repeat": 21,
+      "wall_ms": 4.743962083011866,
+      "cpu_ms": 4.461999999999799
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "optimized_stage2",
+      "repeat": 22,
+      "wall_ms": 5.066921003162861,
+      "cpu_ms": 4.774999999999752
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "current_stage2",
+      "repeat": 22,
+      "wall_ms": 6.26068701967597,
+      "cpu_ms": 5.927000000000127
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "historical_stage2",
+      "repeat": 22,
+      "wall_ms": 39.33021007105708,
+      "cpu_ms": 38.968999999999866
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "current_stage0",
+      "repeat": 22,
+      "wall_ms": 9.849721100181341,
+      "cpu_ms": 9.431000000000022
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "historical_stage0",
+      "repeat": 22,
+      "wall_ms": 3.4801249857991934,
+      "cpu_ms": 3.1300000000001327
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "historical_stage0",
+      "repeat": 23,
+      "wall_ms": 6.672214949503541,
+      "cpu_ms": 6.3670000000000115
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "current_stage0",
+      "repeat": 23,
+      "wall_ms": 3.365672193467617,
+      "cpu_ms": 3.0189999999996053
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "historical_stage2",
+      "repeat": 23,
+      "wall_ms": 48.72688208706677,
+      "cpu_ms": 48.397000000000304
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "current_stage2",
+      "repeat": 23,
+      "wall_ms": 17.77295907959342,
+      "cpu_ms": 17.252999999999908
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "optimized_stage2",
+      "repeat": 23,
+      "wall_ms": 12.303835013881326,
+      "cpu_ms": 11.637999999999982
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "optimized_stage2",
+      "repeat": 24,
+      "wall_ms": 10.09061187505722,
+      "cpu_ms": 9.44199999999984
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "current_stage2",
+      "repeat": 24,
+      "wall_ms": 19.06577101908624,
+      "cpu_ms": 18.510000000000083
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "historical_stage2",
+      "repeat": 24,
+      "wall_ms": 61.107613146305084,
+      "cpu_ms": 60.693000000000055
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "current_stage0",
+      "repeat": 24,
+      "wall_ms": 13.916172087192535,
+      "cpu_ms": 13.400999999999442
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "historical_stage0",
+      "repeat": 24,
+      "wall_ms": 12.58340897038579,
+      "cpu_ms": 11.989000000000472
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "historical_stage0",
+      "repeat": 25,
+      "wall_ms": 12.534442124888301,
+      "cpu_ms": 11.978999999999518
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "current_stage0",
+      "repeat": 25,
+      "wall_ms": 12.726023094728589,
+      "cpu_ms": 12.075000000000113
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "historical_stage2",
+      "repeat": 25,
+      "wall_ms": 66.682661883533,
+      "cpu_ms": 66.21500000000002
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "current_stage2",
+      "repeat": 25,
+      "wall_ms": 15.030219219624996,
+      "cpu_ms": 14.614000000000015
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "optimized_stage2",
+      "repeat": 25,
+      "wall_ms": 4.804351832717657,
+      "cpu_ms": 4.472999999999894
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "optimized_stage2",
+      "repeat": 26,
+      "wall_ms": 11.748115997761488,
+      "cpu_ms": 11.378000000000055
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "current_stage2",
+      "repeat": 26,
+      "wall_ms": 5.944974021986127,
+      "cpu_ms": 5.553000000000086
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "historical_stage2",
+      "repeat": 26,
+      "wall_ms": 43.32304117269814,
+      "cpu_ms": 43.02000000000034
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "current_stage0",
+      "repeat": 26,
+      "wall_ms": 12.351410929113626,
+      "cpu_ms": 12.002999999999986
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "historical_stage0",
+      "repeat": 26,
+      "wall_ms": 8.45995801500976,
+      "cpu_ms": 8.0379999999996
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "historical_stage0",
+      "repeat": 27,
+      "wall_ms": 8.222360163927078,
+      "cpu_ms": 7.814000000000099
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "current_stage0",
+      "repeat": 27,
+      "wall_ms": 8.112320909276605,
+      "cpu_ms": 7.636999999999672
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "historical_stage2",
+      "repeat": 27,
+      "wall_ms": 58.898699935525656,
+      "cpu_ms": 58.500000000000384
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "current_stage2",
+      "repeat": 27,
+      "wall_ms": 17.772886902093887,
+      "cpu_ms": 17.328000000000177
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "optimized_stage2",
+      "repeat": 27,
+      "wall_ms": 15.201676171272993,
+      "cpu_ms": 14.883999999999508
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "optimized_stage2",
+      "repeat": 28,
+      "wall_ms": 16.147543909028172,
+      "cpu_ms": 15.691000000000177
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "current_stage2",
+      "repeat": 28,
+      "wall_ms": 6.887527881190181,
+      "cpu_ms": 6.5310000000000095
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "historical_stage2",
+      "repeat": 28,
+      "wall_ms": 35.06566910073161,
+      "cpu_ms": 34.716999999999885
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "current_stage0",
+      "repeat": 28,
+      "wall_ms": 12.125829933211207,
+      "cpu_ms": 11.735999999999859
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "historical_stage0",
+      "repeat": 28,
+      "wall_ms": 13.208942022174597,
+      "cpu_ms": 12.804999999999566
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "historical_stage0",
+      "repeat": 29,
+      "wall_ms": 3.9472091011703014,
+      "cpu_ms": 3.611000000000142
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "current_stage0",
+      "repeat": 29,
+      "wall_ms": 6.590099073946476,
+      "cpu_ms": 6.274000000000335
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "historical_stage2",
+      "repeat": 29,
+      "wall_ms": 35.70988797582686,
+      "cpu_ms": 35.323000000000214
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "current_stage2",
+      "repeat": 29,
+      "wall_ms": 19.368312088772655,
+      "cpu_ms": 18.915000000000013
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "optimized_stage2",
+      "repeat": 29,
+      "wall_ms": 16.020872863009572,
+      "cpu_ms": 15.482999999999691
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "optimized_stage2",
+      "repeat": 30,
+      "wall_ms": 19.626628141850233,
+      "cpu_ms": 19.098999999999975
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "current_stage2",
+      "repeat": 30,
+      "wall_ms": 14.426547102630138,
+      "cpu_ms": 13.878999999999643
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "historical_stage2",
+      "repeat": 30,
+      "wall_ms": 64.67814184725285,
+      "cpu_ms": 64.1259999999999
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "current_stage0",
+      "repeat": 30,
+      "wall_ms": 10.260360082611442,
+      "cpu_ms": 9.93799999999978
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "historical_stage0",
+      "repeat": 30,
+      "wall_ms": 4.6520228497684,
+      "cpu_ms": 4.311000000000287
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "historical_stage0",
+      "repeat": 31,
+      "wall_ms": 7.366555975750089,
+      "cpu_ms": 7.029000000000396
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "current_stage0",
+      "repeat": 31,
+      "wall_ms": 9.00889583863318,
+      "cpu_ms": 8.56100000000004
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "historical_stage2",
+      "repeat": 31,
+      "wall_ms": 63.80565790459514,
+      "cpu_ms": 63.4859999999996
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "current_stage2",
+      "repeat": 31,
+      "wall_ms": 5.887686973437667,
+      "cpu_ms": 5.594999999999795
+    },
+    {
+      "source": "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg",
+      "variant": "optimized_stage2",
+      "repeat": 31,
+      "wall_ms": 19.37758084386587,
+      "cpu_ms": 19.043000000000255
+    }
+  ]
+}
