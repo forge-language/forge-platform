@@ -1,0 +1,1910 @@
+{
+  "date_utc": "2026-10-05T08:18:12Z",
+  "prepared": {
+    "snapshot_directory": "/tmp/forge-portfolio-snapshot-_8ronqk6",
+    "images": {
+      "before": "forge-continuation-before:20261003-051223",
+      "after": "forge-continuation-after-release:20261003-053000",
+      "rust": "forge-continuation-rust:20261003-051223"
+    },
+    "provenance": {
+      "before": {
+        "application": "f64380effce895fa68823f83c513b51d76220cbc197343f057b30fc5542fc784",
+        "native_adapter": "a12e2b869e14a163e63838a2dc101f5fd8c12b896a2288f7cf549c309ef83807",
+        "toolchain": "db749d0412e0aaf83f3b951df29af26d8f52ab17205e3ba01d366376ca56e8be",
+        "postgres": "a84d4bfa9171704d34d9aa0025fe13be5b3550bb23c770ca9207eed5cc501348",
+        "web": "9c9a5bc45b2ca984f2f02712e50e15ecb0ed7d435fb2d15b888e1b51ae12edd9",
+        "rust": "070e558d24e94fa526186b975670ad3b5343a55109478ee3e5a9a98d953de131"
+      },
+      "after": {
+        "application": "f64380effce895fa68823f83c513b51d76220cbc197343f057b30fc5542fc784",
+        "native_adapter": "a12e2b869e14a163e63838a2dc101f5fd8c12b896a2288f7cf549c309ef83807",
+        "toolchain": "93acb869e6e9badd8075323fcc24e54234e9acaf00f230ca55adcc821b6cd994",
+        "postgres": "a84d4bfa9171704d34d9aa0025fe13be5b3550bb23c770ca9207eed5cc501348",
+        "web": "9c9a5bc45b2ca984f2f02712e50e15ecb0ed7d435fb2d15b888e1b51ae12edd9",
+        "rust": "070e558d24e94fa526186b975670ad3b5343a55109478ee3e5a9a98d953de131"
+      }
+    },
+    "image_ids": {
+      "before": "sha256:084935a2867860e7bd04eacc421502766f5969286d4a2c0bbe66f98b7519bb08",
+      "after": "sha256:9338d9ed9194f4d57c7d9513e3bb292a0875e69282eed877f81fabc74e60005f",
+      "rust": "sha256:06263bc0a2216ddbdc985d1a728983c4d4b95f494cadb53b0f4f3b957918d0da"
+    },
+    "build_note": "All images built successfully. Initial metadata write failed ENOSPC; metadata recovered from exact retained contexts and image IDs. Unused own builder images removed. Final source matches common.h=0.3.0 freeze."
+  },
+  "configs": [
+    {
+      "name": "rust"
+    },
+    {
+      "name": "plain_fixed_connection",
+      "binary": "portfolio-fixed",
+      "workers": 8,
+      "pool": 5,
+      "threads": "connection"
+    },
+    {
+      "name": "plain_baseline_connection",
+      "binary": "portfolio-baseline",
+      "workers": 8,
+      "pool": 5,
+      "threads": "connection"
+    }
+  ],
+  "cases": [
+    [
+      "/api/health",
+      1
+    ],
+    [
+      "/api/health",
+      16
+    ],
+    [
+      "/api/posts",
+      16
+    ],
+    [
+      "/api/posts",
+      64
+    ]
+  ],
+  "repeats": 3,
+  "profile_source_sha256": "eda61ace8c07690b36a22670fe83f722e8eeeef2c49b5cb88b1ad47773ab7e4d",
+  "binary_sha256": {
+    "portfolio-fixed": "db432033c1fc58cd75c48a6ccb8f397934a874ad720bf0677b8eb45d8a5d1b75",
+    "portfolio-baseline": "cd99f8b1c598993284e53f5ddfb108db7b85757b736fcb3f140f8e4505d264e1"
+  },
+  "candidate_web_source_sha256": "ff7908bd428bfb19aed12dff9cce15523447ec26e83d011817448164207fb3dc",
+  "client_processes": 2,
+  "target_rps": null,
+  "image_healthchecks_disabled": true,
+  "runtime_image": "forge-portfolio-improved:1791188026654457042",
+  "runtime_image_id": "sha256:9c68165c795e72dd7320ca727b9c81683d8428b85414651ac77275566c3ef392",
+  "load_source_sha256": "87dbe5e3862467f47970734ed85bfedb2c38505a1a3cde36588426a878094b93",
+  "threads": {
+    "rust": [
+      "portfolio-blog-",
+      "actix-rt|system",
+      "actix-rt|system",
+      "actix-server ac"
+    ],
+    "plain_fixed_connection": [
+      "portfolio-fixed",
+      "portfolio-fixed"
+    ],
+    "plain_baseline_connection": [
+      "portfolio-basel",
+      "portfolio-basel"
+    ]
+  },
+  "results": [
+    {
+      "language": "rust",
+      "endpoint": "/api/health",
+      "concurrency": 1,
+      "seconds": 4.0,
+      "requests": 13226,
+      "errors": 0,
+      "rps": 3306.46,
+      "mean_ms": 0.302,
+      "p50_ms": 0.28,
+      "p95_ms": 0.45,
+      "p99_ms": 0.686,
+      "cpu_core_percent": 21.46060339315071,
+      "db_cpu_core_percent": 0.03530749555638406,
+      "cpu_observation_seconds": 4.154925114009529,
+      "client_start_lateness_ms": [
+        0.4555119667202234
+      ],
+      "client_cpu_core_percent": 63.58221887273237,
+      "client_process_cpu_core_percent": [
+        63.58221887273237
+      ],
+      "client_processes": 1,
+      "peak_threads": 7,
+      "memory_mib": 4.78515625,
+      "server_cpu_usec": 891672,
+      "db_cpu_usec": 1467,
+      "server_cpu_usec_per_request": 67.41811583245124,
+      "db_cpu_usec_per_request": 0.11091788900650235,
+      "server_cpu_delta": {
+        "usage_usec": 891672,
+        "user_usec": 451371,
+        "system_usec": 440301,
+        "core_sched.force_idle_usec": 0,
+        "nr_periods": 40,
+        "nr_throttled": 0,
+        "throttled_usec": 0,
+        "nr_bursts": 0,
+        "burst_usec": 0,
+        "pressure_some_us": 14198
+      },
+      "repeat": 1,
+      "config": {
+        "name": "rust"
+      }
+    },
+    {
+      "language": "rust",
+      "endpoint": "/api/health",
+      "concurrency": 16,
+      "seconds": 4.001,
+      "requests": 47197,
+      "errors": 0,
+      "rps": 11797.65,
+      "mean_ms": 1.354,
+      "p50_ms": 1.279,
+      "p95_ms": 1.835,
+      "p99_ms": 2.888,
+      "cpu_core_percent": 83.88229694332722,
+      "db_cpu_core_percent": 0.015057554310075005,
+      "cpu_observation_seconds": 4.16402283590287,
+      "client_start_lateness_ms": [
+        0.4606950096786022,
+        0.4608060698956251
+      ],
+      "client_cpu_core_percent": 198.19961722430745,
+      "client_process_cpu_core_percent": [
+        99.13481635946738,
+        99.06480086484005
+      ],
+      "client_processes": 2,
+      "peak_threads": 6,
+      "memory_mib": 4.83984375,
+      "server_cpu_usec": 3492878,
+      "db_cpu_usec": 627,
+      "server_cpu_usec_per_request": 74.00635633620782,
+      "db_cpu_usec_per_request": 0.01328474267432252,
+      "server_cpu_delta": {
+        "usage_usec": 3492878,
+        "user_usec": 1782152,
+        "system_usec": 1710725,
+        "core_sched.force_idle_usec": 0,
+        "nr_periods": 41,
+        "nr_throttled": 0,
+        "throttled_usec": 0,
+        "nr_bursts": 0,
+        "burst_usec": 0,
+        "pressure_some_us": 19060
+      },
+      "repeat": 1,
+      "config": {
+        "name": "rust"
+      }
+    },
+    {
+      "language": "rust",
+      "endpoint": "/api/posts",
+      "concurrency": 16,
+      "seconds": 4.004,
+      "requests": 14555,
+      "errors": 0,
+      "rps": 3635.45,
+      "mean_ms": 4.395,
+      "p50_ms": 4.21,
+      "p95_ms": 7.027,
+      "p99_ms": 9.529,
+      "cpu_core_percent": 142.93273394956248,
+      "db_cpu_core_percent": 265.11462845154796,
+      "cpu_observation_seconds": 4.170472246129066,
+      "client_start_lateness_ms": [
+        0.5633949767798185,
+        0.5575020331889391
+      ],
+      "client_cpu_core_percent": 133.19949854530086,
+      "client_process_cpu_core_percent": [
+        66.72750821352209,
+        66.47199033177877
+      ],
+      "client_processes": 2,
+      "peak_threads": 7,
+      "memory_mib": 6.15234375,
+      "server_cpu_usec": 5960970,
+      "db_cpu_usec": 11056532,
+      "server_cpu_usec_per_request": 409.5479216763999,
+      "db_cpu_usec_per_request": 759.6380625214703,
+      "server_cpu_delta": {
+        "usage_usec": 5960970,
+        "user_usec": 3472369,
+        "system_usec": 2488601,
+        "core_sched.force_idle_usec": 0,
+        "nr_periods": 40,
+        "nr_throttled": 0,
+        "throttled_usec": 0,
+        "nr_bursts": 0,
+        "burst_usec": 0,
+        "pressure_some_us": 40631
+      },
+      "repeat": 1,
+      "config": {
+        "name": "rust"
+      }
+    },
+    {
+      "language": "rust",
+      "endpoint": "/api/posts",
+      "concurrency": 64,
+      "seconds": 4.015,
+      "requests": 14291,
+      "errors": 0,
+      "rps": 3559.31,
+      "mean_ms": 17.897,
+      "p50_ms": 17.3,
+      "p95_ms": 33.859,
+      "p99_ms": 48.737,
+      "cpu_core_percent": 138.68340532295753,
+      "db_cpu_core_percent": 263.7395418728271,
+      "cpu_observation_seconds": 4.1805809328798205,
+      "client_start_lateness_ms": [
+        0.6276760250329971,
+        0.6386260502040386
+      ],
+      "client_cpu_core_percent": 134.2450805327276,
+      "client_process_cpu_core_percent": [
+        66.6934606628591,
+        67.55161986986849
+      ],
+      "client_processes": 2,
+      "peak_threads": 7,
+      "memory_mib": 8.6015625,
+      "server_cpu_usec": 5797772,
+      "db_cpu_usec": 11025845,
+      "server_cpu_usec_per_request": 405.69393324469945,
+      "db_cpu_usec_per_request": 771.5236862360927,
+      "server_cpu_delta": {
+        "usage_usec": 5797772,
+        "user_usec": 3449245,
+        "system_usec": 2348528,
+        "core_sched.force_idle_usec": 0,
+        "nr_periods": 41,
+        "nr_throttled": 0,
+        "throttled_usec": 0,
+        "nr_bursts": 0,
+        "burst_usec": 0,
+        "pressure_some_us": 47449
+      },
+      "repeat": 1,
+      "config": {
+        "name": "rust"
+      }
+    },
+    {
+      "language": "plain_fixed_connection",
+      "endpoint": "/api/health",
+      "concurrency": 1,
+      "seconds": 4.001,
+      "requests": 6345,
+      "errors": 0,
+      "rps": 1585.78,
+      "mean_ms": 0.629,
+      "p50_ms": 0.513,
+      "p95_ms": 1.146,
+      "p99_ms": 1.508,
+      "cpu_core_percent": 18.66939353139993,
+      "db_cpu_core_percent": 23.709213676203767,
+      "cpu_observation_seconds": 4.1719941180199385,
+      "client_start_lateness_ms": [
+        0.7300470024347305
+      ],
+      "client_cpu_core_percent": 50.3061945014876,
+      "client_process_cpu_core_percent": [
+        50.3061945014876
+      ],
+      "client_processes": 1,
+      "peak_threads": 3,
+      "memory_mib": 2.3515625,
+      "server_cpu_usec": 778886,
+      "db_cpu_usec": 989147,
+      "server_cpu_usec_per_request": 122.7558707643814,
+      "db_cpu_usec_per_request": 155.89393223010245,
+      "server_cpu_delta": {
+        "usage_usec": 778886,
+        "user_usec": 304045,
+        "system_usec": 474842,
+        "core_sched.force_idle_usec": 0,
+        "nr_periods": 41,
+        "nr_throttled": 0,
+        "throttled_usec": 0,
+        "nr_bursts": 0,
+        "burst_usec": 0,
+        "pressure_some_us": 16305
+      },
+      "repeat": 1,
+      "config": {
+        "name": "plain_fixed_connection",
+        "binary": "portfolio-fixed",
+        "workers": 8,
+        "pool": 5,
+        "threads": "connection"
+      }
+    },
+    {
+      "language": "plain_fixed_connection",
+      "endpoint": "/api/health",
+      "concurrency": 16,
+      "seconds": 4.001,
+      "requests": 40943,
+      "errors": 0,
+      "rps": 10233.72,
+      "mean_ms": 1.561,
+      "p50_ms": 1.486,
+      "p95_ms": 2.138,
+      "p99_ms": 2.584,
+      "cpu_core_percent": 97.27758611034866,
+      "db_cpu_core_percent": 63.29235979091634,
+      "cpu_observation_seconds": 4.165992560097948,
+      "client_start_lateness_ms": [
+        0.4991448950022459,
+        0.4144578706473112
+      ],
+      "client_cpu_core_percent": 197.26531203443355,
+      "client_process_cpu_core_percent": [
+        98.66892382158738,
+        98.59638821284618
+      ],
+      "client_processes": 2,
+      "peak_threads": 18,
+      "memory_mib": 5.375,
+      "server_cpu_usec": 4052577,
+      "db_cpu_usec": 2636755,
+      "server_cpu_usec_per_request": 98.98094912439245,
+      "db_cpu_usec_per_request": 64.40063014434702,
+      "server_cpu_delta": {
+        "usage_usec": 4052577,
+        "user_usec": 1719313,
+        "system_usec": 2333264,
+        "core_sched.force_idle_usec": 0,
+        "nr_periods": 41,
+        "nr_throttled": 0,
+        "throttled_usec": 0,
+        "nr_bursts": 0,
+        "burst_usec": 0,
+        "pressure_some_us": 58094
+      },
+      "repeat": 1,
+      "config": {
+        "name": "plain_fixed_connection",
+        "binary": "portfolio-fixed",
+        "workers": 8,
+        "pool": 5,
+        "threads": "connection"
+      }
+    },
+    {
+      "language": "plain_fixed_connection",
+      "endpoint": "/api/posts",
+      "concurrency": 16,
+      "seconds": 4.002,
+      "requests": 25239,
+      "errors": 0,
+      "rps": 6307.23,
+      "mean_ms": 2.533,
+      "p50_ms": 2.438,
+      "p95_ms": 3.648,
+      "p99_ms": 4.702,
+      "cpu_core_percent": 181.9309378493727,
+      "db_cpu_core_percent": 343.905530489122,
+      "cpu_observation_seconds": 4.176766793942079,
+      "client_start_lateness_ms": [
+        0.7508029229938984,
+        0.7505819667130709
+      ],
+      "client_cpu_core_percent": 187.6865718813984,
+      "client_process_cpu_core_percent": [
+        93.94505777074312,
+        93.74151411065529
+      ],
+      "client_processes": 2,
+      "peak_threads": 18,
+      "memory_mib": 6.46875,
+      "server_cpu_usec": 7598831,
+      "db_cpu_usec": 14364132,
+      "server_cpu_usec_per_request": 301.07496335037047,
+      "db_cpu_usec_per_request": 569.1244502555569,
+      "server_cpu_delta": {
+        "usage_usec": 7598831,
+        "user_usec": 3294844,
+        "system_usec": 4303988,
+        "core_sched.force_idle_usec": 0,
+        "nr_periods": 41,
+        "nr_throttled": 0,
+        "throttled_usec": 0,
+        "nr_bursts": 0,
+        "burst_usec": 0,
+        "pressure_some_us": 270553
+      },
+      "repeat": 1,
+      "config": {
+        "name": "plain_fixed_connection",
+        "binary": "portfolio-fixed",
+        "workers": 8,
+        "pool": 5,
+        "threads": "connection"
+      }
+    },
+    {
+      "language": "plain_fixed_connection",
+      "endpoint": "/api/posts",
+      "concurrency": 64,
+      "seconds": 4.008,
+      "requests": 25375,
+      "errors": 0,
+      "rps": 6330.44,
+      "mean_ms": 10.074,
+      "p50_ms": 9.808,
+      "p95_ms": 18.662,
+      "p99_ms": 26.715,
+      "cpu_core_percent": 181.85578400402366,
+      "db_cpu_core_percent": 342.9610042860386,
+      "cpu_observation_seconds": 4.180749070830643,
+      "client_start_lateness_ms": [
+        0.5076280795037746,
+        0.6283049006015062
+      ],
+      "client_cpu_core_percent": 188.49073802355466,
+      "client_process_cpu_core_percent": [
+        93.98420558737065,
+        94.50653243618402
+      ],
+      "client_processes": 2,
+      "peak_threads": 66,
+      "memory_mib": 14.0625,
+      "server_cpu_usec": 7602934,
+      "db_cpu_usec": 14338339,
+      "server_cpu_usec_per_request": 299.6230147783251,
+      "db_cpu_usec_per_request": 565.0576945812808,
+      "server_cpu_delta": {
+        "usage_usec": 7602934,
+        "user_usec": 3252222,
+        "system_usec": 4350711,
+        "core_sched.force_idle_usec": 0,
+        "nr_periods": 41,
+        "nr_throttled": 1,
+        "throttled_usec": 446,
+        "nr_bursts": 0,
+        "burst_usec": 0,
+        "pressure_some_us": 290783
+      },
+      "repeat": 1,
+      "config": {
+        "name": "plain_fixed_connection",
+        "binary": "portfolio-fixed",
+        "workers": 8,
+        "pool": 5,
+        "threads": "connection"
+      }
+    },
+    {
+      "language": "plain_baseline_connection",
+      "endpoint": "/api/health",
+      "concurrency": 1,
+      "seconds": 4.0,
+      "requests": 6081,
+      "errors": 0,
+      "rps": 1520.09,
+      "mean_ms": 0.657,
+      "p50_ms": 0.608,
+      "p95_ms": 1.092,
+      "p99_ms": 1.6,
+      "cpu_core_percent": 28.239710597144104,
+      "db_cpu_core_percent": 20.270924482099687,
+      "cpu_observation_seconds": 4.173697162885219,
+      "client_start_lateness_ms": [
+        0.3637818153947592
+      ],
+      "client_cpu_core_percent": 36.72284812492545,
+      "client_process_cpu_core_percent": [
+        36.72284812492545
+      ],
+      "client_processes": 1,
+      "peak_threads": 3,
+      "memory_mib": 2.5703125,
+      "server_cpu_usec": 1178640,
+      "db_cpu_usec": 846047,
+      "server_cpu_usec_per_request": 193.82338431179082,
+      "db_cpu_usec_per_request": 139.12958395000823,
+      "server_cpu_delta": {
+        "usage_usec": 1178640,
+        "user_usec": 410488,
+        "system_usec": 768152,
+        "core_sched.force_idle_usec": 0,
+        "nr_periods": 41,
+        "nr_throttled": 0,
+        "throttled_usec": 0,
+        "nr_bursts": 0,
+        "burst_usec": 0,
+        "pressure_some_us": 51770
+      },
+      "repeat": 1,
+      "config": {
+        "name": "plain_baseline_connection",
+        "binary": "portfolio-baseline",
+        "workers": 8,
+        "pool": 5,
+        "threads": "connection"
+      }
+    },
+    {
+      "language": "plain_baseline_connection",
+      "endpoint": "/api/health",
+      "concurrency": 16,
+      "seconds": 4.001,
+      "requests": 38401,
+      "errors": 0,
+      "rps": 9598.73,
+      "mean_ms": 1.665,
+      "p50_ms": 1.587,
+      "p95_ms": 2.312,
+      "p99_ms": 3.422,
+      "cpu_core_percent": 95.37660614483153,
+      "db_cpu_core_percent": 57.67461254145427,
+      "cpu_observation_seconds": 4.173063145019114,
+      "client_start_lateness_ms": [
+        0.40271272882819176,
+        0.5967298056930304
+      ],
+      "client_cpu_core_percent": 197.265650569312,
+      "client_process_cpu_core_percent": [
+        98.65619658826301,
+        98.60945398104899
+      ],
+      "client_processes": 2,
+      "peak_threads": 18,
+      "memory_mib": 5.34375,
+      "server_cpu_usec": 3980126,
+      "db_cpu_usec": 2406798,
+      "server_cpu_usec_per_request": 103.64641545793079,
+      "db_cpu_usec_per_request": 62.675399078149006,
+      "server_cpu_delta": {
+        "usage_usec": 3980126,
+        "user_usec": 1665595,
+        "system_usec": 2314530,
+        "core_sched.force_idle_usec": 0,
+        "nr_periods": 41,
+        "nr_throttled": 0,
+        "throttled_usec": 0,
+        "nr_bursts": 0,
+        "burst_usec": 0,
+        "pressure_some_us": 59552
+      },
+      "repeat": 1,
+      "config": {
+        "name": "plain_baseline_connection",
+        "binary": "portfolio-baseline",
+        "workers": 8,
+        "pool": 5,
+        "threads": "connection"
+      }
+    },
+    {
+      "language": "plain_baseline_connection",
+      "endpoint": "/api/posts",
+      "concurrency": 16,
+      "seconds": 4.002,
+      "requests": 23464,
+      "errors": 0,
+      "rps": 5863.23,
+      "mean_ms": 2.724,
+      "p50_ms": 2.648,
+      "p95_ms": 3.877,
+      "p99_ms": 4.805,
+      "cpu_core_percent": 109.88113878369548,
+      "db_cpu_core_percent": 414.8265993776865,
+      "cpu_observation_seconds": 4.159409021958709,
+      "client_start_lateness_ms": [
+        0.6207418628036976,
+        0.45739393681287766
+      ],
+      "client_cpu_core_percent": 185.46992934979872,
+      "client_process_cpu_core_percent": [
+        92.59235700789596,
+        92.87757234190276
+      ],
+      "client_processes": 2,
+      "peak_threads": 18,
+      "memory_mib": 5.3359375,
+      "server_cpu_usec": 4570406,
+      "db_cpu_usec": 17254335,
+      "server_cpu_usec_per_request": 194.78375383566313,
+      "db_cpu_usec_per_request": 735.3535202863961,
+      "server_cpu_delta": {
+        "usage_usec": 4570406,
+        "user_usec": 1632491,
+        "system_usec": 2937915,
+        "core_sched.force_idle_usec": 0,
+        "nr_periods": 41,
+        "nr_throttled": 0,
+        "throttled_usec": 0,
+        "nr_bursts": 0,
+        "burst_usec": 0,
+        "pressure_some_us": 205458
+      },
+      "repeat": 1,
+      "config": {
+        "name": "plain_baseline_connection",
+        "binary": "portfolio-baseline",
+        "workers": 8,
+        "pool": 5,
+        "threads": "connection"
+      }
+    },
+    {
+      "language": "plain_baseline_connection",
+      "endpoint": "/api/posts",
+      "concurrency": 64,
+      "seconds": 4.009,
+      "requests": 23214,
+      "errors": 0,
+      "rps": 5790.6,
+      "mean_ms": 11.018,
+      "p50_ms": 10.728,
+      "p95_ms": 20.461,
+      "p99_ms": 29.812,
+      "cpu_core_percent": 106.88126827263628,
+      "db_cpu_core_percent": 405.84798123572455,
+      "cpu_observation_seconds": 4.17646428802982,
+      "client_start_lateness_ms": [
+        0.3462678287178278,
+        0.5814258474856615
+      ],
+      "client_cpu_core_percent": 181.99391955720486,
+      "client_process_cpu_core_percent": [
+        91.0044680543725,
+        90.98945150283237
+      ],
+      "client_processes": 2,
+      "peak_threads": 66,
+      "memory_mib": 14.0859375,
+      "server_cpu_usec": 4463858,
+      "db_cpu_usec": 16950096,
+      "server_cpu_usec_per_request": 192.29163435857672,
+      "db_cpu_usec_per_request": 730.1669682088395,
+      "server_cpu_delta": {
+        "usage_usec": 4463858,
+        "user_usec": 1439328,
+        "system_usec": 3024531,
+        "core_sched.force_idle_usec": 0,
+        "nr_periods": 41,
+        "nr_throttled": 0,
+        "throttled_usec": 0,
+        "nr_bursts": 0,
+        "burst_usec": 0,
+        "pressure_some_us": 221120
+      },
+      "repeat": 1,
+      "config": {
+        "name": "plain_baseline_connection",
+        "binary": "portfolio-baseline",
+        "workers": 8,
+        "pool": 5,
+        "threads": "connection"
+      }
+    },
+    {
+      "language": "plain_fixed_connection",
+      "endpoint": "/api/health",
+      "concurrency": 1,
+      "seconds": 4.001,
+      "requests": 5281,
+      "errors": 0,
+      "rps": 1319.84,
+      "mean_ms": 0.756,
+      "p50_ms": 0.676,
+      "p95_ms": 1.268,
+      "p99_ms": 1.415,
+      "cpu_core_percent": 19.159634539592503,
+      "db_cpu_core_percent": 28.4947836558289,
+      "cpu_observation_seconds": 4.171159937046468,
+      "client_start_lateness_ms": [
+        0.32770493999123573
+      ],
+      "client_cpu_core_percent": 44.25424616918186,
+      "client_process_cpu_core_percent": [
+        44.25424616918186
+      ],
+      "client_processes": 1,
+      "peak_threads": 3,
+      "memory_mib": 2.35546875,
+      "server_cpu_usec": 799179,
+      "db_cpu_usec": 1188563,
+      "server_cpu_usec_per_request": 151.33099791706115,
+      "db_cpu_usec_per_request": 225.0640030297292,
+      "server_cpu_delta": {
+        "usage_usec": 799179,
+        "user_usec": 290901,
+        "system_usec": 508278,
+        "core_sched.force_idle_usec": 0,
+        "nr_periods": 40,
+        "nr_throttled": 0,
+        "throttled_usec": 0,
+        "nr_bursts": 0,
+        "burst_usec": 0,
+        "pressure_some_us": 31231
+      },
+      "repeat": 2,
+      "config": {
+        "name": "plain_fixed_connection",
+        "binary": "portfolio-fixed",
+        "workers": 8,
+        "pool": 5,
+        "threads": "connection"
+      }
+    },
+    {
+      "language": "plain_fixed_connection",
+      "endpoint": "/api/health",
+      "concurrency": 16,
+      "seconds": 4.001,
+      "requests": 37128,
+      "errors": 0,
+      "rps": 9280.58,
+      "mean_ms": 1.722,
+      "p50_ms": 1.67,
+      "p95_ms": 2.313,
+      "p99_ms": 3.019,
+      "cpu_core_percent": 96.65822546877808,
+      "db_cpu_core_percent": 58.942859742634404,
+      "cpu_observation_seconds": 4.17830761987716,
+      "client_start_lateness_ms": [
+        0.45255781151354313,
+        0.5403829272836447
+      ],
+      "client_cpu_core_percent": 197.27866978164712,
+      "client_process_cpu_core_percent": [
+        98.75567963632444,
+        98.52299014532268
+      ],
+      "client_processes": 2,
+      "peak_threads": 18,
+      "memory_mib": 5.64453125,
+      "server_cpu_usec": 4038678,
+      "db_cpu_usec": 2462814,
+      "server_cpu_usec_per_request": 108.77714932126698,
+      "db_cpu_usec_per_request": 66.3330639948287,
+      "server_cpu_delta": {
+        "usage_usec": 4038678,
+        "user_usec": 1712162,
+        "system_usec": 2326515,
+        "core_sched.force_idle_usec": 0,
+        "nr_periods": 41,
+        "nr_throttled": 0,
+        "throttled_usec": 0,
+        "nr_bursts": 0,
+        "burst_usec": 0,
+        "pressure_some_us": 66928
+      },
+      "repeat": 2,
+      "config": {
+        "name": "plain_fixed_connection",
+        "binary": "portfolio-fixed",
+        "workers": 8,
+        "pool": 5,
+        "threads": "connection"
+      }
+    },
+    {
+      "language": "plain_fixed_connection",
+      "endpoint": "/api/posts",
+      "concurrency": 16,
+      "seconds": 4.002,
+      "requests": 25466,
+      "errors": 0,
+      "rps": 6363.37,
+      "mean_ms": 2.511,
+      "p50_ms": 2.434,
+      "p95_ms": 3.529,
+      "p99_ms": 4.547,
+      "cpu_core_percent": 183.98360123028758,
+      "db_cpu_core_percent": 346.94904020995136,
+      "cpu_observation_seconds": 4.159997384995222,
+      "client_start_lateness_ms": [
+        0.5137529224157333,
+        0.5241828039288521
+      ],
+      "client_cpu_core_percent": 188.02257178547896,
+      "client_process_cpu_core_percent": [
+        93.87711433101211,
+        94.14545745446684
+      ],
+      "client_processes": 2,
+      "peak_threads": 18,
+      "memory_mib": 6.5234375,
+      "server_cpu_usec": 7653713,
+      "db_cpu_usec": 14433071,
+      "server_cpu_usec_per_request": 300.54633629152596,
+      "db_cpu_usec_per_request": 566.75846226341,
+      "server_cpu_delta": {
+        "usage_usec": 7653713,
+        "user_usec": 3267243,
+        "system_usec": 4386470,
+        "core_sched.force_idle_usec": 0,
+        "nr_periods": 41,
+        "nr_throttled": 0,
+        "throttled_usec": 0,
+        "nr_bursts": 0,
+        "burst_usec": 0,
+        "pressure_some_us": 253176
+      },
+      "repeat": 2,
+      "config": {
+        "name": "plain_fixed_connection",
+        "binary": "portfolio-fixed",
+        "workers": 8,
+        "pool": 5,
+        "threads": "connection"
+      }
+    },
+    {
+      "language": "plain_fixed_connection",
+      "endpoint": "/api/posts",
+      "concurrency": 64,
+      "seconds": 4.011,
+      "requests": 25631,
+      "errors": 0,
+      "rps": 6390.77,
+      "mean_ms": 9.981,
+      "p50_ms": 9.723,
+      "p95_ms": 18.802,
+      "p99_ms": 26.83,
+      "cpu_core_percent": 183.23938947274718,
+      "db_cpu_core_percent": 343.7432486769334,
+      "cpu_observation_seconds": 4.188105528010055,
+      "client_start_lateness_ms": [
+        0.37890090607106686,
+        0.5542098078876734
+      ],
+      "client_cpu_core_percent": 187.61845747172424,
+      "client_process_cpu_core_percent": [
+        93.96586256787958,
+        93.65259490384467
+      ],
+      "client_processes": 2,
+      "peak_threads": 66,
+      "memory_mib": 14.05078125,
+      "server_cpu_usec": 7674259,
+      "db_cpu_usec": 14396330,
+      "server_cpu_usec_per_request": 299.4131715500761,
+      "db_cpu_usec_per_request": 561.6764855058328,
+      "server_cpu_delta": {
+        "usage_usec": 7674259,
+        "user_usec": 3271220,
+        "system_usec": 4403039,
+        "core_sched.force_idle_usec": 0,
+        "nr_periods": 40,
+        "nr_throttled": 7,
+        "throttled_usec": 18501,
+        "nr_bursts": 0,
+        "burst_usec": 0,
+        "pressure_some_us": 297752
+      },
+      "repeat": 2,
+      "config": {
+        "name": "plain_fixed_connection",
+        "binary": "portfolio-fixed",
+        "workers": 8,
+        "pool": 5,
+        "threads": "connection"
+      }
+    },
+    {
+      "language": "plain_baseline_connection",
+      "endpoint": "/api/health",
+      "concurrency": 1,
+      "seconds": 4.0,
+      "requests": 6204,
+      "errors": 0,
+      "rps": 1550.89,
+      "mean_ms": 0.643,
+      "p50_ms": 0.464,
+      "p95_ms": 1.525,
+      "p99_ms": 1.677,
+      "cpu_core_percent": 19.90843960504786,
+      "db_cpu_core_percent": 21.806765381430868,
+      "cpu_observation_seconds": 4.172044703038409,
+      "client_start_lateness_ms": [
+        0.5017609801143408
+      ],
+      "client_cpu_core_percent": 50.105278158930865,
+      "client_process_cpu_core_percent": [
+        50.105278158930865
+      ],
+      "client_processes": 1,
+      "peak_threads": 3,
+      "memory_mib": 2.56640625,
+      "server_cpu_usec": 830589,
+      "db_cpu_usec": 909788,
+      "server_cpu_usec_per_request": 133.87959381044487,
+      "db_cpu_usec_per_request": 146.645390070922,
+      "server_cpu_delta": {
+        "usage_usec": 830589,
+        "user_usec": 335514,
+        "system_usec": 495075,
+        "core_sched.force_idle_usec": 0,
+        "nr_periods": 42,
+        "nr_throttled": 0,
+        "throttled_usec": 0,
+        "nr_bursts": 0,
+        "burst_usec": 0,
+        "pressure_some_us": 24254
+      },
+      "repeat": 2,
+      "config": {
+        "name": "plain_baseline_connection",
+        "binary": "portfolio-baseline",
+        "workers": 8,
+        "pool": 5,
+        "threads": "connection"
+      }
+    },
+    {
+      "language": "plain_baseline_connection",
+      "endpoint": "/api/health",
+      "concurrency": 16,
+      "seconds": 4.001,
+      "requests": 39210,
+      "errors": 0,
+      "rps": 9800.76,
+      "mean_ms": 1.63,
+      "p50_ms": 1.545,
+      "p95_ms": 2.227,
+      "p99_ms": 2.833,
+      "cpu_core_percent": 94.39991393554969,
+      "db_cpu_core_percent": 59.56931381605985,
+      "cpu_observation_seconds": 4.161283454857767,
+      "client_start_lateness_ms": [
+        0.37758005782961845,
+        0.6137420423328876
+      ],
+      "client_cpu_core_percent": 197.32711555582455,
+      "client_process_cpu_core_percent": [
+        98.69195273652915,
+        98.6351628192954
+      ],
+      "client_processes": 2,
+      "peak_threads": 18,
+      "memory_mib": 5.83984375,
+      "server_cpu_usec": 3928248,
+      "db_cpu_usec": 2478848,
+      "server_cpu_usec_per_request": 100.18485080336649,
+      "db_cpu_usec_per_request": 63.2197908696761,
+      "server_cpu_delta": {
+        "usage_usec": 3928248,
+        "user_usec": 1623774,
+        "system_usec": 2304473,
+        "core_sched.force_idle_usec": 0,
+        "nr_periods": 40,
+        "nr_throttled": 0,
+        "throttled_usec": 0,
+        "nr_bursts": 0,
+        "burst_usec": 0,
+        "pressure_some_us": 54510
+      },
+      "repeat": 2,
+      "config": {
+        "name": "plain_baseline_connection",
+        "binary": "portfolio-baseline",
+        "workers": 8,
+        "pool": 5,
+        "threads": "connection"
+      }
+    },
+    {
+      "language": "plain_baseline_connection",
+      "endpoint": "/api/posts",
+      "concurrency": 16,
+      "seconds": 4.002,
+      "requests": 23803,
+      "errors": 0,
+      "rps": 5947.16,
+      "mean_ms": 2.686,
+      "p50_ms": 2.609,
+      "p95_ms": 3.881,
+      "p99_ms": 4.917,
+      "cpu_core_percent": 110.1386042939322,
+      "db_cpu_core_percent": 417.32726971724145,
+      "cpu_observation_seconds": 4.167407994158566,
+      "client_start_lateness_ms": [
+        0.538109801709652,
+        0.5361067596822977
+      ],
+      "client_cpu_core_percent": 183.43542583849083,
+      "client_process_cpu_core_percent": [
+        91.4147584106462,
+        92.02066742784464
+      ],
+      "client_processes": 2,
+      "peak_threads": 18,
+      "memory_mib": 5.625,
+      "server_cpu_usec": 4589925,
+      "db_cpu_usec": 17391730,
+      "server_cpu_usec_per_request": 192.82968533378147,
+      "db_cpu_usec_per_request": 730.652858883334,
+      "server_cpu_delta": {
+        "usage_usec": 4589925,
+        "user_usec": 1602625,
+        "system_usec": 2987300,
+        "core_sched.force_idle_usec": 0,
+        "nr_periods": 40,
+        "nr_throttled": 0,
+        "throttled_usec": 0,
+        "nr_bursts": 0,
+        "burst_usec": 0,
+        "pressure_some_us": 196096
+      },
+      "repeat": 2,
+      "config": {
+        "name": "plain_baseline_connection",
+        "binary": "portfolio-baseline",
+        "workers": 8,
+        "pool": 5,
+        "threads": "connection"
+      }
+    },
+    {
+      "language": "plain_baseline_connection",
+      "endpoint": "/api/posts",
+      "concurrency": 64,
+      "seconds": 4.009,
+      "requests": 23609,
+      "errors": 0,
+      "rps": 5889.05,
+      "mean_ms": 10.831,
+      "p50_ms": 10.521,
+      "p95_ms": 19.734,
+      "p99_ms": 28.116,
+      "cpu_core_percent": 107.19403502071681,
+      "db_cpu_core_percent": 410.21112266662,
+      "cpu_observation_seconds": 4.17371544893831,
+      "client_start_lateness_ms": [
+        0.6427539046853781,
+        0.5566708277910948
+      ],
+      "client_cpu_core_percent": 184.11361704477812,
+      "client_process_cpu_core_percent": [
+        91.89251434782115,
+        92.221102696957
+      ],
+      "client_processes": 2,
+      "peak_threads": 66,
+      "memory_mib": 14.77734375,
+      "server_cpu_usec": 4473974,
+      "db_cpu_usec": 17121045,
+      "server_cpu_usec_per_request": 189.50290143589308,
+      "db_cpu_usec_per_request": 725.1914524122157,
+      "server_cpu_delta": {
+        "usage_usec": 4473974,
+        "user_usec": 1513447,
+        "system_usec": 2960526,
+        "core_sched.force_idle_usec": 0,
+        "nr_periods": 41,
+        "nr_throttled": 0,
+        "throttled_usec": 0,
+        "nr_bursts": 0,
+        "burst_usec": 0,
+        "pressure_some_us": 202169
+      },
+      "repeat": 2,
+      "config": {
+        "name": "plain_baseline_connection",
+        "binary": "portfolio-baseline",
+        "workers": 8,
+        "pool": 5,
+        "threads": "connection"
+      }
+    },
+    {
+      "language": "rust",
+      "endpoint": "/api/health",
+      "concurrency": 1,
+      "seconds": 4.0,
+      "requests": 10673,
+      "errors": 0,
+      "rps": 2668.15,
+      "mean_ms": 0.374,
+      "p50_ms": 0.352,
+      "p95_ms": 0.619,
+      "p99_ms": 0.817,
+      "cpu_core_percent": 19.314027425353544,
+      "db_cpu_core_percent": 0.023475967297415194,
+      "cpu_observation_seconds": 4.1531834988854825,
+      "client_start_lateness_ms": [
+        0.48533082008361816
+      ],
+      "client_cpu_core_percent": 57.54974150577776,
+      "client_process_cpu_core_percent": [
+        57.54974150577776
+      ],
+      "client_processes": 1,
+      "peak_threads": 4,
+      "memory_mib": 7.23046875,
+      "server_cpu_usec": 802147,
+      "db_cpu_usec": 975,
+      "server_cpu_usec_per_request": 75.1566569849152,
+      "db_cpu_usec_per_request": 0.09135200974421437,
+      "server_cpu_delta": {
+        "usage_usec": 802147,
+        "user_usec": 441542,
+        "system_usec": 360605,
+        "core_sched.force_idle_usec": 0,
+        "nr_periods": 40,
+        "nr_throttled": 0,
+        "throttled_usec": 0,
+        "nr_bursts": 0,
+        "burst_usec": 0,
+        "pressure_some_us": 12427
+      },
+      "repeat": 2,
+      "config": {
+        "name": "rust"
+      }
+    },
+    {
+      "language": "rust",
+      "endpoint": "/api/health",
+      "concurrency": 16,
+      "seconds": 4.0,
+      "requests": 46012,
+      "errors": 0,
+      "rps": 11501.73,
+      "mean_ms": 1.389,
+      "p50_ms": 1.323,
+      "p95_ms": 1.843,
+      "p99_ms": 2.714,
+      "cpu_core_percent": 87.71064205862139,
+      "db_cpu_core_percent": 0.014120171972985417,
+      "cpu_observation_seconds": 4.164255230920389,
+      "client_start_lateness_ms": [
+        0.6387198809534311,
+        0.5293518770486116
+      ],
+      "client_cpu_core_percent": 197.45779842725142,
+      "client_process_cpu_core_percent": [
+        98.56969183223434,
+        98.88810659501705
+      ],
+      "client_processes": 2,
+      "peak_threads": 4,
+      "memory_mib": 7.3125,
+      "server_cpu_usec": 3652495,
+      "db_cpu_usec": 588,
+      "server_cpu_usec_per_request": 79.38135703729462,
+      "db_cpu_usec_per_request": 0.012779274971746501,
+      "server_cpu_delta": {
+        "usage_usec": 3652495,
+        "user_usec": 1899404,
+        "system_usec": 1753092,
+        "core_sched.force_idle_usec": 0,
+        "nr_periods": 41,
+        "nr_throttled": 0,
+        "throttled_usec": 0,
+        "nr_bursts": 0,
+        "burst_usec": 0,
+        "pressure_some_us": 23577
+      },
+      "repeat": 2,
+      "config": {
+        "name": "rust"
+      }
+    },
+    {
+      "language": "rust",
+      "endpoint": "/api/posts",
+      "concurrency": 16,
+      "seconds": 4.004,
+      "requests": 14561,
+      "errors": 0,
+      "rps": 3636.9,
+      "mean_ms": 4.392,
+      "p50_ms": 4.243,
+      "p95_ms": 6.94,
+      "p99_ms": 9.281,
+      "cpu_core_percent": 141.8988345167912,
+      "db_cpu_core_percent": 263.15774933848377,
+      "cpu_observation_seconds": 4.1572448569349945,
+      "client_start_lateness_ms": [
+        0.46952185221016407,
+        0.464258948341012
+      ],
+      "client_cpu_core_percent": 134.93342162554322,
+      "client_process_cpu_core_percent": [
+        67.60370968281268,
+        67.32971194273054
+      ],
+      "client_processes": 2,
+      "peak_threads": 4,
+      "memory_mib": 8.53515625,
+      "server_cpu_usec": 5899082,
+      "db_cpu_usec": 10940112,
+      "server_cpu_usec_per_request": 405.12890598173203,
+      "db_cpu_usec_per_request": 751.3297163656342,
+      "server_cpu_delta": {
+        "usage_usec": 5899082,
+        "user_usec": 3490016,
+        "system_usec": 2409066,
+        "core_sched.force_idle_usec": 0,
+        "nr_periods": 40,
+        "nr_throttled": 0,
+        "throttled_usec": 0,
+        "nr_bursts": 0,
+        "burst_usec": 0,
+        "pressure_some_us": 49319
+      },
+      "repeat": 2,
+      "config": {
+        "name": "rust"
+      }
+    },
+    {
+      "language": "rust",
+      "endpoint": "/api/posts",
+      "concurrency": 64,
+      "seconds": 4.017,
+      "requests": 14641,
+      "errors": 0,
+      "rps": 3645.14,
+      "mean_ms": 17.484,
+      "p50_ms": 16.873,
+      "p95_ms": 32.769,
+      "p99_ms": 46.529,
+      "cpu_core_percent": 142.8806776654664,
+      "db_cpu_core_percent": 267.1436307856781,
+      "cpu_observation_seconds": 4.181703290902078,
+      "client_start_lateness_ms": [
+        0.5393079482018948,
+        0.46707596629858017
+      ],
+      "client_cpu_core_percent": 131.81653250439754,
+      "client_process_cpu_core_percent": [
+        66.1782467978489,
+        65.63828570654864
+      ],
+      "client_processes": 2,
+      "peak_threads": 4,
+      "memory_mib": 8.7109375,
+      "server_cpu_usec": 5974846,
+      "db_cpu_usec": 11171154,
+      "server_cpu_usec_per_request": 408.09002117341714,
+      "db_cpu_usec_per_request": 763.0048493955331,
+      "server_cpu_delta": {
+        "usage_usec": 5974846,
+        "user_usec": 3547682,
+        "system_usec": 2427165,
+        "core_sched.force_idle_usec": 0,
+        "nr_periods": 41,
+        "nr_throttled": 0,
+        "throttled_usec": 0,
+        "nr_bursts": 0,
+        "burst_usec": 0,
+        "pressure_some_us": 34403
+      },
+      "repeat": 2,
+      "config": {
+        "name": "rust"
+      }
+    },
+    {
+      "language": "plain_baseline_connection",
+      "endpoint": "/api/health",
+      "concurrency": 1,
+      "seconds": 4.0,
+      "requests": 7068,
+      "errors": 0,
+      "rps": 1766.9,
+      "mean_ms": 0.565,
+      "p50_ms": 0.529,
+      "p95_ms": 1.024,
+      "p99_ms": 1.306,
+      "cpu_core_percent": 19.09117765173114,
+      "db_cpu_core_percent": 26.94879253794842,
+      "cpu_observation_seconds": 4.150330662960187,
+      "client_start_lateness_ms": [
+        0.4258349072188139
+      ],
+      "client_cpu_core_percent": 46.25394873536368,
+      "client_process_cpu_core_percent": [
+        46.25394873536368
+      ],
+      "client_processes": 1,
+      "peak_threads": 3,
+      "memory_mib": 2.32421875,
+      "server_cpu_usec": 792347,
+      "db_cpu_usec": 1118464,
+      "server_cpu_usec_per_request": 112.10342388228636,
+      "db_cpu_usec_per_request": 158.24335031126202,
+      "server_cpu_delta": {
+        "usage_usec": 792347,
+        "user_usec": 297979,
+        "system_usec": 494368,
+        "core_sched.force_idle_usec": 0,
+        "nr_periods": 41,
+        "nr_throttled": 0,
+        "throttled_usec": 0,
+        "nr_bursts": 0,
+        "burst_usec": 0,
+        "pressure_some_us": 35672
+      },
+      "repeat": 3,
+      "config": {
+        "name": "plain_baseline_connection",
+        "binary": "portfolio-baseline",
+        "workers": 8,
+        "pool": 5,
+        "threads": "connection"
+      }
+    },
+    {
+      "language": "plain_baseline_connection",
+      "endpoint": "/api/health",
+      "concurrency": 16,
+      "seconds": 4.001,
+      "requests": 38477,
+      "errors": 0,
+      "rps": 9617.85,
+      "mean_ms": 1.661,
+      "p50_ms": 1.588,
+      "p95_ms": 2.251,
+      "p99_ms": 2.921,
+      "cpu_core_percent": 101.04737030617763,
+      "db_cpu_core_percent": 56.81376561691123,
+      "cpu_observation_seconds": 4.162450727075338,
+      "client_start_lateness_ms": [
+        0.46236789785325527,
+        0.7003408391028643
+      ],
+      "client_cpu_core_percent": 197.4964035338212,
+      "client_process_cpu_core_percent": [
+        98.79926930794896,
+        98.69713422587222
+      ],
+      "client_processes": 2,
+      "peak_threads": 18,
+      "memory_mib": 5.3828125,
+      "server_cpu_usec": 4206047,
+      "db_cpu_usec": 2364845,
+      "server_cpu_usec_per_request": 109.31327806221898,
+      "db_cpu_usec_per_request": 61.461262572445875,
+      "server_cpu_delta": {
+        "usage_usec": 4206047,
+        "user_usec": 1764355,
+        "system_usec": 2441692,
+        "core_sched.force_idle_usec": 0,
+        "nr_periods": 40,
+        "nr_throttled": 0,
+        "throttled_usec": 0,
+        "nr_bursts": 0,
+        "burst_usec": 0,
+        "pressure_some_us": 66910
+      },
+      "repeat": 3,
+      "config": {
+        "name": "plain_baseline_connection",
+        "binary": "portfolio-baseline",
+        "workers": 8,
+        "pool": 5,
+        "threads": "connection"
+      }
+    },
+    {
+      "language": "plain_baseline_connection",
+      "endpoint": "/api/posts",
+      "concurrency": 16,
+      "seconds": 4.003,
+      "requests": 22958,
+      "errors": 0,
+      "rps": 5735.35,
+      "mean_ms": 2.785,
+      "p50_ms": 2.688,
+      "p95_ms": 4.111,
+      "p99_ms": 5.362,
+      "cpu_core_percent": 108.81455668823266,
+      "db_cpu_core_percent": 407.97245438555234,
+      "cpu_observation_seconds": 4.164881186792627,
+      "client_start_lateness_ms": [
+        0.6161248311400414,
+        0.4585888236761093
+      ],
+      "client_cpu_core_percent": 180.86792944811498,
+      "client_process_cpu_core_percent": [
+        90.36665092098093,
+        90.50127852713405
+      ],
+      "client_processes": 2,
+      "peak_threads": 18,
+      "memory_mib": 5.625,
+      "server_cpu_usec": 4531997,
+      "db_cpu_usec": 16991568,
+      "server_cpu_usec_per_request": 197.40382437494554,
+      "db_cpu_usec_per_request": 740.1153410575835,
+      "server_cpu_delta": {
+        "usage_usec": 4531997,
+        "user_usec": 1610468,
+        "system_usec": 2921529,
+        "core_sched.force_idle_usec": 0,
+        "nr_periods": 41,
+        "nr_throttled": 0,
+        "throttled_usec": 0,
+        "nr_bursts": 0,
+        "burst_usec": 0,
+        "pressure_some_us": 227214
+      },
+      "repeat": 3,
+      "config": {
+        "name": "plain_baseline_connection",
+        "binary": "portfolio-baseline",
+        "workers": 8,
+        "pool": 5,
+        "threads": "connection"
+      }
+    },
+    {
+      "language": "plain_baseline_connection",
+      "endpoint": "/api/posts",
+      "concurrency": 64,
+      "seconds": 4.008,
+      "requests": 24570,
+      "errors": 0,
+      "rps": 6130.24,
+      "mean_ms": 10.404,
+      "p50_ms": 10.317,
+      "p95_ms": 19.162,
+      "p99_ms": 26.923,
+      "cpu_core_percent": 110.84162660666588,
+      "db_cpu_core_percent": 418.61209935350104,
+      "cpu_observation_seconds": 4.17584633291699,
+      "client_start_lateness_ms": [
+        0.571252079680562,
+        0.4740410950034857
+      ],
+      "client_cpu_core_percent": 186.91152111756097,
+      "client_process_cpu_core_percent": [
+        93.71010207192093,
+        93.20141904564004
+      ],
+      "client_processes": 2,
+      "peak_threads": 66,
+      "memory_mib": 14.23828125,
+      "server_cpu_usec": 4628576,
+      "db_cpu_usec": 17480598,
+      "server_cpu_usec_per_request": 188.38323158323158,
+      "db_cpu_usec_per_request": 711.4610500610501,
+      "server_cpu_delta": {
+        "usage_usec": 4628576,
+        "user_usec": 1571699,
+        "system_usec": 3056876,
+        "core_sched.force_idle_usec": 0,
+        "nr_periods": 41,
+        "nr_throttled": 0,
+        "throttled_usec": 0,
+        "nr_bursts": 0,
+        "burst_usec": 0,
+        "pressure_some_us": 175767
+      },
+      "repeat": 3,
+      "config": {
+        "name": "plain_baseline_connection",
+        "binary": "portfolio-baseline",
+        "workers": 8,
+        "pool": 5,
+        "threads": "connection"
+      }
+    },
+    {
+      "language": "rust",
+      "endpoint": "/api/health",
+      "concurrency": 1,
+      "seconds": 4.0,
+      "requests": 11856,
+      "errors": 0,
+      "rps": 2963.81,
+      "mean_ms": 0.336,
+      "p50_ms": 0.292,
+      "p95_ms": 0.555,
+      "p99_ms": 0.756,
+      "cpu_core_percent": 20.383159166941752,
+      "db_cpu_core_percent": 0.009387137964306588,
+      "cpu_observation_seconds": 4.1546209449879825,
+      "client_start_lateness_ms": [
+        0.5149648059159517
+      ],
+      "client_cpu_core_percent": 66.93744544313375,
+      "client_process_cpu_core_percent": [
+        66.93744544313375
+      ],
+      "client_processes": 1,
+      "peak_threads": 4,
+      "memory_mib": 7.34765625,
+      "server_cpu_usec": 846843,
+      "db_cpu_usec": 390,
+      "server_cpu_usec_per_request": 71.42737854251013,
+      "db_cpu_usec_per_request": 0.03289473684210526,
+      "server_cpu_delta": {
+        "usage_usec": 846843,
+        "user_usec": 449149,
+        "system_usec": 397695,
+        "core_sched.force_idle_usec": 0,
+        "nr_periods": 40,
+        "nr_throttled": 0,
+        "throttled_usec": 0,
+        "nr_bursts": 0,
+        "burst_usec": 0,
+        "pressure_some_us": 12579
+      },
+      "repeat": 3,
+      "config": {
+        "name": "rust"
+      }
+    },
+    {
+      "language": "rust",
+      "endpoint": "/api/health",
+      "concurrency": 16,
+      "seconds": 4.0,
+      "requests": 43684,
+      "errors": 0,
+      "rps": 10919.75,
+      "mean_ms": 1.463,
+      "p50_ms": 1.421,
+      "p95_ms": 1.992,
+      "p99_ms": 3.185,
+      "cpu_core_percent": 80.26578748663246,
+      "db_cpu_core_percent": 0.010976864483149192,
+      "cpu_observation_seconds": 4.163301830878481,
+      "client_start_lateness_ms": [
+        0.7649229373782873,
+        0.7639129180461168
+      ],
+      "client_cpu_core_percent": 197.58087135512488,
+      "client_process_cpu_core_percent": [
+        98.69962107842413,
+        98.88125027670075
+      ],
+      "client_processes": 2,
+      "peak_threads": 4,
+      "memory_mib": 7.4296875,
+      "server_cpu_usec": 3341707,
+      "db_cpu_usec": 457,
+      "server_cpu_usec_per_request": 76.49727589048622,
+      "db_cpu_usec_per_request": 0.010461496199981686,
+      "server_cpu_delta": {
+        "usage_usec": 3341707,
+        "user_usec": 1732531,
+        "system_usec": 1609176,
+        "core_sched.force_idle_usec": 0,
+        "nr_periods": 41,
+        "nr_throttled": 0,
+        "throttled_usec": 0,
+        "nr_bursts": 0,
+        "burst_usec": 0,
+        "pressure_some_us": 19699
+      },
+      "repeat": 3,
+      "config": {
+        "name": "rust"
+      }
+    },
+    {
+      "language": "rust",
+      "endpoint": "/api/posts",
+      "concurrency": 16,
+      "seconds": 4.005,
+      "requests": 14185,
+      "errors": 0,
+      "rps": 3542.01,
+      "mean_ms": 4.51,
+      "p50_ms": 4.316,
+      "p95_ms": 7.258,
+      "p99_ms": 9.763,
+      "cpu_core_percent": 142.518995963835,
+      "db_cpu_core_percent": 262.8321548571844,
+      "cpu_observation_seconds": 4.169120024889708,
+      "client_start_lateness_ms": [
+        0.38454378955066204,
+        0.6393687799572945
+      ],
+      "client_cpu_core_percent": 131.40777664380144,
+      "client_process_cpu_core_percent": [
+        66.27580448575779,
+        65.13197215804362
+      ],
+      "client_processes": 2,
+      "peak_threads": 4,
+      "memory_mib": 8.640625,
+      "server_cpu_usec": 5941788,
+      "db_cpu_usec": 10957788,
+      "server_cpu_usec_per_request": 418.87825167430384,
+      "db_cpu_usec_per_request": 772.4912231230172,
+      "server_cpu_delta": {
+        "usage_usec": 5941788,
+        "user_usec": 3489875,
+        "system_usec": 2451913,
+        "core_sched.force_idle_usec": 0,
+        "nr_periods": 41,
+        "nr_throttled": 0,
+        "throttled_usec": 0,
+        "nr_bursts": 0,
+        "burst_usec": 0,
+        "pressure_some_us": 50768
+      },
+      "repeat": 3,
+      "config": {
+        "name": "rust"
+      }
+    },
+    {
+      "language": "rust",
+      "endpoint": "/api/posts",
+      "concurrency": 64,
+      "seconds": 4.015,
+      "requests": 14247,
+      "errors": 0,
+      "rps": 3548.41,
+      "mean_ms": 17.966,
+      "p50_ms": 17.332,
+      "p95_ms": 33.471,
+      "p99_ms": 48.092,
+      "cpu_core_percent": 141.06877525881174,
+      "db_cpu_core_percent": 264.6677862679106,
+      "cpu_observation_seconds": 4.1788829520810395,
+      "client_start_lateness_ms": [
+        0.47199707478284836,
+        0.47194608487188816
+      ],
+      "client_cpu_core_percent": 128.9715219729973,
+      "client_process_cpu_core_percent": [
+        64.47552446353089,
+        64.49599750946642
+      ],
+      "client_processes": 2,
+      "peak_threads": 4,
+      "memory_mib": 9.10546875,
+      "server_cpu_usec": 5895099,
+      "db_cpu_usec": 11060157,
+      "server_cpu_usec_per_request": 413.77826910928616,
+      "db_cpu_usec_per_request": 776.3148031164455,
+      "server_cpu_delta": {
+        "usage_usec": 5895099,
+        "user_usec": 3472488,
+        "system_usec": 2422612,
+        "core_sched.force_idle_usec": 0,
+        "nr_periods": 41,
+        "nr_throttled": 0,
+        "throttled_usec": 0,
+        "nr_bursts": 0,
+        "burst_usec": 0,
+        "pressure_some_us": 47199
+      },
+      "repeat": 3,
+      "config": {
+        "name": "rust"
+      }
+    },
+    {
+      "language": "plain_fixed_connection",
+      "endpoint": "/api/health",
+      "concurrency": 1,
+      "seconds": 4.0,
+      "requests": 6418,
+      "errors": 0,
+      "rps": 1604.41,
+      "mean_ms": 0.622,
+      "p50_ms": 0.482,
+      "p95_ms": 1.174,
+      "p99_ms": 1.486,
+      "cpu_core_percent": 19.411515022349956,
+      "db_cpu_core_percent": 22.124249899047555,
+      "cpu_observation_seconds": 4.160561393946409,
+      "client_start_lateness_ms": [
+        0.44096680358052254
+      ],
+      "client_cpu_core_percent": 51.628189110036814,
+      "client_process_cpu_core_percent": [
+        51.628189110036814
+      ],
+      "client_processes": 1,
+      "peak_threads": 3,
+      "memory_mib": 2.5,
+      "server_cpu_usec": 807628,
+      "db_cpu_usec": 920493,
+      "server_cpu_usec_per_request": 125.83795574945466,
+      "db_cpu_usec_per_request": 143.42365222810844,
+      "server_cpu_delta": {
+        "usage_usec": 807628,
+        "user_usec": 289868,
+        "system_usec": 517759,
+        "core_sched.force_idle_usec": 0,
+        "nr_periods": 41,
+        "nr_throttled": 0,
+        "throttled_usec": 0,
+        "nr_bursts": 0,
+        "burst_usec": 0,
+        "pressure_some_us": 14027
+      },
+      "repeat": 3,
+      "config": {
+        "name": "plain_fixed_connection",
+        "binary": "portfolio-fixed",
+        "workers": 8,
+        "pool": 5,
+        "threads": "connection"
+      }
+    },
+    {
+      "language": "plain_fixed_connection",
+      "endpoint": "/api/health",
+      "concurrency": 16,
+      "seconds": 4.001,
+      "requests": 39015,
+      "errors": 0,
+      "rps": 9751.84,
+      "mean_ms": 1.638,
+      "p50_ms": 1.532,
+      "p95_ms": 2.289,
+      "p99_ms": 3.277,
+      "cpu_core_percent": 101.77403993559376,
+      "db_cpu_core_percent": 59.700026567091626,
+      "cpu_observation_seconds": 4.181626279838383,
+      "client_start_lateness_ms": [
+        0.6284387782216072,
+        0.4710429348051548
+      ],
+      "client_cpu_core_percent": 197.61287973083634,
+      "client_process_cpu_core_percent": [
+        98.77684564913328,
+        98.83603408170305
+      ],
+      "client_processes": 2,
+      "peak_threads": 18,
+      "memory_mib": 5.78125,
+      "server_cpu_usec": 4255810,
+      "db_cpu_usec": 2496432,
+      "server_cpu_usec_per_request": 109.08137895681148,
+      "db_cpu_usec_per_request": 63.98646674356017,
+      "server_cpu_delta": {
+        "usage_usec": 4255810,
+        "user_usec": 1783276,
+        "system_usec": 2472534,
+        "core_sched.force_idle_usec": 0,
+        "nr_periods": 41,
+        "nr_throttled": 0,
+        "throttled_usec": 0,
+        "nr_bursts": 0,
+        "burst_usec": 0,
+        "pressure_some_us": 62118
+      },
+      "repeat": 3,
+      "config": {
+        "name": "plain_fixed_connection",
+        "binary": "portfolio-fixed",
+        "workers": 8,
+        "pool": 5,
+        "threads": "connection"
+      }
+    },
+    {
+      "language": "plain_fixed_connection",
+      "endpoint": "/api/posts",
+      "concurrency": 16,
+      "seconds": 4.001,
+      "requests": 25019,
+      "errors": 0,
+      "rps": 6252.56,
+      "mean_ms": 2.555,
+      "p50_ms": 2.459,
+      "p95_ms": 3.664,
+      "p99_ms": 4.724,
+      "cpu_core_percent": 182.21652630731538,
+      "db_cpu_core_percent": 342.28408932011405,
+      "cpu_observation_seconds": 4.167472706176341,
+      "client_start_lateness_ms": [
+        0.4851620178669691,
+        0.4559860099107027
+      ],
+      "client_cpu_core_percent": 187.285366543745,
+      "client_process_cpu_core_percent": [
+        93.7136333697926,
+        93.57173317395238
+      ],
+      "client_processes": 2,
+      "peak_threads": 18,
+      "memory_mib": 5.921875,
+      "server_cpu_usec": 7593824,
+      "db_cpu_usec": 14264596,
+      "server_cpu_usec_per_request": 303.5222830648707,
+      "db_cpu_usec_per_request": 570.1505256005436,
+      "server_cpu_delta": {
+        "usage_usec": 7593824,
+        "user_usec": 3302168,
+        "system_usec": 4291655,
+        "core_sched.force_idle_usec": 0,
+        "nr_periods": 41,
+        "nr_throttled": 1,
+        "throttled_usec": 50,
+        "nr_bursts": 0,
+        "burst_usec": 0,
+        "pressure_some_us": 277561
+      },
+      "repeat": 3,
+      "config": {
+        "name": "plain_fixed_connection",
+        "binary": "portfolio-fixed",
+        "workers": 8,
+        "pool": 5,
+        "threads": "connection"
+      }
+    },
+    {
+      "language": "plain_fixed_connection",
+      "endpoint": "/api/posts",
+      "concurrency": 64,
+      "seconds": 4.009,
+      "requests": 25675,
+      "errors": 0,
+      "rps": 6403.87,
+      "mean_ms": 9.965,
+      "p50_ms": 9.707,
+      "p95_ms": 18.38,
+      "p99_ms": 26.33,
+      "cpu_core_percent": 186.93141119976818,
+      "db_cpu_core_percent": 342.4424733939268,
+      "cpu_observation_seconds": 4.177136924117804,
+      "client_start_lateness_ms": [
+        0.4377108998596668,
+        0.4723637830466032
+      ],
+      "client_cpu_core_percent": 189.47579458197274,
+      "client_process_cpu_core_percent": [
+        94.88500551731335,
+        94.59078906465942
+      ],
+      "client_processes": 2,
+      "peak_threads": 66,
+      "memory_mib": 13.9765625,
+      "server_cpu_usec": 7808381,
+      "db_cpu_usec": 14304291,
+      "server_cpu_usec_per_request": 304.1238948393379,
+      "db_cpu_usec_per_request": 557.129152872444,
+      "server_cpu_delta": {
+        "usage_usec": 7808381,
+        "user_usec": 3356921,
+        "system_usec": 4451460,
+        "core_sched.force_idle_usec": 0,
+        "nr_periods": 40,
+        "nr_throttled": 20,
+        "throttled_usec": 73952,
+        "nr_bursts": 0,
+        "burst_usec": 0,
+        "pressure_some_us": 291443
+      },
+      "repeat": 3,
+      "config": {
+        "name": "plain_fixed_connection",
+        "binary": "portfolio-fixed",
+        "workers": 8,
+        "pool": 5,
+        "threads": "connection"
+      }
+    }
+  ],
+  "scope": "Shared host; identical fixtures. Rust checks cached bans; Forge checks PostgreSQL. Health may batch multiple IP checks into one SQL query. Instrumented handler intervals include pool wait and synchronous libpq calls; exclude MHD queueing and response transmission. Compiler/packaging/instrumentation controls included. Client and DB CPU sampled; the aiohttp load generator can constrain throughput."
+}
