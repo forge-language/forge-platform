@@ -88,6 +88,8 @@ cd "$SDK_TEST_ROOT"
 forge init storage-app
 cd storage-app
 forge pkg add forge-storage 0.1.1
+forge trust forge-web
+forge trust forge-storage
 cp "$SDK_TEST_ROOT/main.fg" main.fg
 printf 'Forge SDK storage integration fixture\\n' > artifact.tar.gz
 printf 'Different digest regression fixture\\n' > different-payload.bin
@@ -123,6 +125,11 @@ printf 'Installed SDK Forge Storage library integration passed\\n'
             lock = json.loads((project / 'forge.lock').read_text())
             if lock['registry'] != 'builtin' or lock['packages']['forge-storage']['version'] != '0.1.1' or lock['packages']['forge-web']['version'] != '0.1.3':
                 raise AssertionError('Installed library and dependency did not match the builtin source pins')
+            trust = json.loads((project / 'forge.json').read_text())['trust']
+            for name, value in lock['packages'].items():
+                grant = trust[name]
+                if grant['repository_url'] != value['repository_url'].removesuffix('.git') or grant['git_commit'] != value['git_commit'] or grant['native'] is not True:
+                    raise AssertionError('Native fixture trust did not match the reviewed source pin')
             markers = {}
             for name, value in lock['packages'].items():
                 cached = project / '.forge/packages' / name / value['git_commit']

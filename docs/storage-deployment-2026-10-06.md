@@ -60,3 +60,7 @@ Page components and the Playground are loaded on demand. Gzip and explicit cache
 GitHub OAuth client credentials remain unset. One-time GitHub-token login supports publishing without an OAuth application; the identity token is verified and discarded, and the browser retains only a one-hour registry session. Official package ownership uses the immutable numeric administrator ID.
 
 Rollback images are `forge-platform-backend:rollback-storage-20261006` and `forge-platform-site:rollback-storage-20261006`; private configuration/database backups are in `.deployment/20261006-storage/`. The backend's prior image metadata was unavailable, so its running filesystem was exported/imported without copying container environment secrets; Compose restores runtime configuration for rollback.
+
+## Resumed verification — 2026-10-09
+
+The current preview.6 SDK, public installer, native storage library, live refresh and public learning UI passed renewed checks. See [the verification record](resume-validation-2026-10-09.md). The newer `forge-public-refresh.timer` replaces the original activity timer.
