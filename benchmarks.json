@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-10-09T00:42:25.874145+00:00",
+  "checked_at": "2026-10-09T06:43:02.817647+00:00",
   "errors": [],
   "poll_interval_seconds": 60,
   "reports": [
@@ -444,40 +444,7 @@
       "title": "selfhosting performance 2026 10 05"
     },
     {
-      "file": "/materials/forge-language/forge-storage/vendor-web/benchmarks/README.md",
-      "format": "md",
-      "id": "forge-language/forge-storage/vendor-web/benchmarks/README.md",
-      "kind": "repository",
-      "path": "vendor-web/benchmarks/README.md",
-      "repository": "forge-language/forge-storage",
-      "sha256": "58b4909f3555af4fec7eeb5dc15b88262333f1b70c1caac8807b68282bc251cd",
-      "source": "https://github.com/forge-language/forge-storage/blob/911058d661ae7e5c70a11c75cce2c9a13d45b964/vendor-web/benchmarks/README.md",
-      "title": "README"
-    },
-    {
-      "file": "/materials/forge-language/forge-storage/vendor-web/benchmarks/results-2026-10-01.json",
-      "format": "json",
-      "id": "forge-language/forge-storage/vendor-web/benchmarks/results-2026-10-01.json",
-      "kind": "repository",
-      "path": "vendor-web/benchmarks/results-2026-10-01.json",
-      "repository": "forge-language/forge-storage",
-      "sha256": "764920cf78233124d0b42980bb37fd3b60c11fb35a68ad858fdd01397bdc7c91",
-      "source": "https://github.com/forge-language/forge-storage/blob/911058d661ae7e5c70a11c75cce2c9a13d45b964/vendor-web/benchmarks/results-2026-10-01.json",
-      "title": "results 2026 10 01"
-    },
-    {
-      "file": "/materials/forge-language/forge-storage/vendor-web/benchmarks/security-results-2026-10-02.json",
-      "format": "json",
-      "id": "forge-language/forge-storage/vendor-web/benchmarks/security-results-2026-10-02.json",
-      "kind": "repository",
-      "path": "vendor-web/benchmarks/security-results-2026-10-02.json",
-      "repository": "forge-language/forge-storage",
-      "sha256": "01262bd8a9a0849da9c5fa291376edfe63c1eb261add613c606f9b32d0edcf9f",
-      "source": "https://github.com/forge-language/forge-storage/blob/911058d661ae7e5c70a11c75cce2c9a13d45b964/vendor-web/benchmarks/security-results-2026-10-02.json",
-      "title": "security results 2026 10 02"
-    },
-    {
-      "file": "/live/snapshots/36886dff92dc3817ca81f89a/reports/compiler-and-selfhosting.md",
+      "file": "/live/snapshots/d6bcc64b8529c0e1a5c56795/reports/compiler-and-selfhosting.md",
       "format": "md",
       "id": "reports/compiler-and-selfhosting.md",
       "kind": "local_snapshot",
@@ -488,7 +455,7 @@
       "title": "compiler and selfhosting"
     },
     {
-      "file": "/live/snapshots/36886dff92dc3817ca81f89a/reports/redis-cache-2026-10-06.json",
+      "file": "/live/snapshots/d6bcc64b8529c0e1a5c56795/reports/redis-cache-2026-10-06.json",
       "format": "json",
       "id": "reports/redis-cache-2026-10-06.json",
       "kind": "local_snapshot",
@@ -499,7 +466,7 @@
       "title": "redis cache 2026 10 06"
     },
     {
-      "file": "/live/snapshots/36886dff92dc3817ca81f89a/reports/redis-cache-performance-2026-10-06.md",
+      "file": "/live/snapshots/d6bcc64b8529c0e1a5c56795/reports/redis-cache-performance-2026-10-06.md",
       "format": "md",
       "id": "reports/redis-cache-performance-2026-10-06.md",
       "kind": "local_snapshot",
@@ -510,7 +477,7 @@
       "title": "redis cache performance 2026 10 06"
     },
     {
-      "file": "/live/snapshots/36886dff92dc3817ca81f89a/reports/site-performance-2026-10-06.json",
+      "file": "/live/snapshots/d6bcc64b8529c0e1a5c56795/reports/site-performance-2026-10-06.json",
       "format": "json",
       "id": "reports/site-performance-2026-10-06.json",
       "kind": "local_snapshot",
@@ -521,7 +488,7 @@
       "title": "site performance 2026 10 06"
     },
     {
-      "file": "/live/snapshots/36886dff92dc3817ca81f89a/reports/site-performance-2026-10-06.md",
+      "file": "/live/snapshots/d6bcc64b8529c0e1a5c56795/reports/site-performance-2026-10-06.md",
       "format": "md",
       "id": "reports/site-performance-2026-10-06.md",
       "kind": "local_snapshot",
@@ -532,7 +499,7 @@
       "title": "site performance 2026 10 06"
     },
     {
-      "file": "/live/snapshots/36886dff92dc3817ca81f89a/reports/storage-deployment-2026-10-06.md",
+      "file": "/live/snapshots/d6bcc64b8529c0e1a5c56795/reports/storage-deployment-2026-10-06.md",
       "format": "md",
       "id": "reports/storage-deployment-2026-10-06.md",
       "kind": "local_snapshot",
@@ -543,7 +510,7 @@
       "title": "storage deployment 2026 10 06"
     },
     {
-      "file": "/live/snapshots/36886dff92dc3817ca81f89a/reports/storage-sdk-validation-2026-10-06.md",
+      "file": "/live/snapshots/d6bcc64b8529c0e1a5c56795/reports/storage-sdk-validation-2026-10-06.md",
       "format": "md",
       "id": "reports/storage-sdk-validation-2026-10-06.md",
       "kind": "local_snapshot",
@@ -1003,7 +970,40 @@
       "sha256": "f1a18e3221761dd6c957cc9542175166118e71a498e990a9a90a3aee99798a45",
       "source": "https://github.com/forge-language/forge/blob/f308497bdc99398206f6c9739213df54d30647e8/docs/refactoring-performance-2026-10-06.md",
       "title": "refactoring performance 2026 10 06"
+    },
+    {
+      "file": "/materials/forge-language/forge-storage/vendor-web/benchmarks/README.md",
+      "format": "md",
+      "id": "forge-language/forge-storage/vendor-web/benchmarks/README.md",
+      "kind": "repository",
+      "path": "vendor-web/benchmarks/README.md",
+      "repository": "forge-language/forge-storage",
+      "sha256": "58b4909f3555af4fec7eeb5dc15b88262333f1b70c1caac8807b68282bc251cd",
+      "source": "https://github.com/forge-language/forge-storage/blob/c135817142a53ee0b515a95bf2ef511ab58c02e5/vendor-web/benchmarks/README.md",
+      "title": "README"
+    },
+    {
+      "file": "/materials/forge-language/forge-storage/vendor-web/benchmarks/results-2026-10-01.json",
+      "format": "json",
+      "id": "forge-language/forge-storage/vendor-web/benchmarks/results-2026-10-01.json",
+      "kind": "repository",
+      "path": "vendor-web/benchmarks/results-2026-10-01.json",
+      "repository": "forge-language/forge-storage",
+      "sha256": "764920cf78233124d0b42980bb37fd3b60c11fb35a68ad858fdd01397bdc7c91",
+      "source": "https://github.com/forge-language/forge-storage/blob/c135817142a53ee0b515a95bf2ef511ab58c02e5/vendor-web/benchmarks/results-2026-10-01.json",
+      "title": "results 2026 10 01"
+    },
+    {
+      "file": "/materials/forge-language/forge-storage/vendor-web/benchmarks/security-results-2026-10-02.json",
+      "format": "json",
+      "id": "forge-language/forge-storage/vendor-web/benchmarks/security-results-2026-10-02.json",
+      "kind": "repository",
+      "path": "vendor-web/benchmarks/security-results-2026-10-02.json",
+      "repository": "forge-language/forge-storage",
+      "sha256": "01262bd8a9a0849da9c5fa291376edfe63c1eb261add613c606f9b32d0edcf9f",
+      "source": "https://github.com/forge-language/forge-storage/blob/c135817142a53ee0b515a95bf2ef511ab58c02e5/vendor-web/benchmarks/security-results-2026-10-02.json",
+      "title": "security results 2026 10 02"
     }
   ],
-  "updated_at": "2026-10-09T00:42:25.849305+00:00"
+  "updated_at": "2026-10-09T06:43:02.788950+00:00"
 }
