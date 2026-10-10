@@ -1,0 +1,2543 @@
+{
+  "recorded_at_utc": "2026-10-10T07:39:11.791776+00:00",
+  "build": {
+    "commands": [
+      [
+        "/home/helloworld0822/coding/forge-benchmarks/build-thread-comparison-20261010/snapshot/forge",
+        "/home/helloworld0822/coding/forge-benchmarks/build-thread-comparison-20261010/snapshot/thread_kernels.fg",
+        "--emit-c",
+        "-o",
+        "/home/helloworld0822/coding/forge-benchmarks/build-thread-comparison-20261010/snapshot/thread_kernels.c",
+        "--forge-root",
+        "/home/helloworld0822/coding/forge-benchmarks/build-thread-comparison-20261010/snapshot"
+      ],
+      [
+        "cc",
+        "-std=gnu11",
+        "-O3",
+        "-DNDEBUG",
+        "-march=native",
+        "-flto",
+        "-I",
+        "/home/helloworld0822/coding/forge-benchmarks/build-thread-comparison-20261010/snapshot/include",
+        "/home/helloworld0822/coding/forge-benchmarks/build-thread-comparison-20261010/snapshot/thread_kernels.c",
+        "/home/helloworld0822/coding/forge-benchmarks/build-thread-comparison-20261010/snapshot/thread_observer.c",
+        "/home/helloworld0822/coding/forge-benchmarks/build-thread-comparison-20261010/snapshot/thread_clock.c",
+        "-Wl,--start-group",
+        "/home/helloworld0822/coding/forge-benchmarks/build-thread-comparison-20261010/snapshot/libforge_std.a",
+        "/home/helloworld0822/coding/forge-benchmarks/build-thread-comparison-20261010/snapshot/libforge_runtime.a",
+        "-Wl,--end-group",
+        "-lpthread",
+        "-lm",
+        "-o",
+        "/home/helloworld0822/coding/forge-benchmarks/build-thread-comparison-20261010/forge-thread"
+      ],
+      [
+        "cc",
+        "-std=gnu11",
+        "-O3",
+        "-march=native",
+        "-c",
+        "/home/helloworld0822/coding/forge-benchmarks/build-thread-comparison-20261010/snapshot/thread_observer.c",
+        "-o",
+        "/home/helloworld0822/coding/forge-benchmarks/build-thread-comparison-20261010/snapshot/thread_observer.o"
+      ],
+      [
+        "cc",
+        "-std=gnu11",
+        "-O3",
+        "-march=native",
+        "-c",
+        "/home/helloworld0822/coding/forge-benchmarks/build-thread-comparison-20261010/snapshot/thread_clock.c",
+        "-o",
+        "/home/helloworld0822/coding/forge-benchmarks/build-thread-comparison-20261010/snapshot/thread_clock.o"
+      ],
+      [
+        "rustc",
+        "-C",
+        "opt-level=3",
+        "-C",
+        "target-cpu=native",
+        "-C",
+        "lto=thin",
+        "-C",
+        "codegen-units=1",
+        "-C",
+        "overflow-checks=off",
+        "-C",
+        "link-arg=/home/helloworld0822/coding/forge-benchmarks/build-thread-comparison-20261010/snapshot/thread_observer.o",
+        "-C",
+        "link-arg=/home/helloworld0822/coding/forge-benchmarks/build-thread-comparison-20261010/snapshot/thread_clock.o",
+        "/home/helloworld0822/coding/forge-benchmarks/build-thread-comparison-20261010/snapshot/thread_kernels.rs",
+        "-o",
+        "/home/helloworld0822/coding/forge-benchmarks/build-thread-comparison-20261010/rust-thread"
+      ]
+    ],
+    "cc_version": "cc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\nCopyright (C) 2023 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n",
+    "rust_version": "rustc 1.98.1 (48a229cea 2026-09-01)\nbinary: rustc\ncommit-hash: 48a229ceaefd4985c50990b14116b6d856af0985\ncommit-date: 2026-09-01\nhost: x86_64-unknown-linux-gnu\nrelease: 1.98.1\nLLVM version: 22.1.8\n",
+    "snapshot_sha256": {
+      "thread_clock.o": "39e33a27fbb6b45b48e8883e00d5a1da84a8334952b43b1e2049024d41464241",
+      "kernels.c": "96bfc720ae54f8747593bfb4d8b479c6081b98008cbe9fc95f2f88b81c4447c7",
+      "clock.o": "09551cb65adc4badb820fa3625c095e7756ed4a0659f15253379cdd74d738916",
+      "forge": "7a6c9119816b67bbb718420ded69fc2f26aae41c55b991246a454fa8791aa6d6",
+      "clock.c": "e186278a041ec53b5e919b39d944c1f07ecb9f6bb662a4afbbf748f93e96d5c9",
+      "thread_kernels.c": "c6a288bfa020240d2bd36aab2132ff9465900c27692c0d3dcf8cbd19c1e1822e",
+      "thread_clock.c": "e186278a041ec53b5e919b39d944c1f07ecb9f6bb662a4afbbf748f93e96d5c9",
+      "thread_kernels.fg": "2794f819470a88e39729b9ee134ef20f7255acf2c827608380a217ad3ed11c62",
+      "thread_observer.o": "863bcb4c10b959081db15e1680d87922ff8c81d72b47ba816eb95cb385e2e5c7",
+      "libforge_std.a": "2fc505be14c3057cc8a08c0b57e58a0bea479f42acc72bf6b2e972d6e77bb2b3",
+      "kernels.fg": "c48e700768e5400a00f2d4687926bedf7dd4fcfeb3074a549b1dee074002e11e",
+      "thread_kernels.rs": "482e9419c9212187bae9c0776bc74d606ea9ff2995d77020d2b741ff96dfdaca",
+      "libforge_runtime.a": "ebb50ef977ceed65c43042344638fa587473ae724644e3b4b79be017a07527d9",
+      "kernels.rs": "5bac54dc22fa662586b93c66bd4c8147aa854275c0555846656ebacafc7c054f",
+      "thread_observer.c": "2aac1650f3e5d4f8f9cdb26abdaf7c665d725a73df5248bef98be2c6c83dcee4",
+      "include/forge_runtime.h": "7d6d451bb00781319c73bdca28e15b29468bba0c6d8ca33cbfccfefa6e3c0120",
+      "include/forge/lsprpc.h": "bdc6180242d1dff6e6a34beb70c41c18766bd0df69936118dacb5b3ce8dc53ac",
+      "include/forge/string.h": "941f1766d0ecb7944cc66c347cdfd05a941610e03736b9ee35d374cef20f4bdb",
+      "include/forge/tcp.h": "b679ee6384bfb3d2320e7cb740c28bee6e78ae9c3cc78dd53a423a1d952249c8",
+      "include/forge/os.h": "2f1dc0d75c610c84b632d5eccf82c4eaae0a818a88b531499e66818955736e55",
+      "include/forge/event.h": "1119aefdf932501f2b6cfba4ecff4c3070ec0c69e7e94cb51dbbd1841d708b98",
+      "include/forge/json.h": "72c57c2dce63cfddc324eb3aa5fe1b90e1169114c5569f56ca9248c5d11471e1",
+      "include/forge/platform.h": "bc33c437853f7bbc33b9a1a764b71409aac2d56e713777251f0bac702dee281a",
+      "include/forge/docstore.h": "e3bacc7717edf89787c36ddb57757697c76d1ad828dd7aaefebde04d13acf06c",
+      "include/forge/thread.h": "5e5c549a83ecb60f4b8e0ac5809f8818517c7b0adb9274865374b787937b89ea",
+      "include/forge/udp.h": "3f8262ab20db38fa5e6757f166af66a37c0d0ed450fa77fbabffe5dc5bae918c",
+      "include/forge/math.h": "ce124a9b22a1e7a5d817904b00db73f650ef977349c20ad9471eae69650335ab",
+      "include/forge/time.h": "db4db220dc78d87af66e2c6ea6ff45be47d628a429447778e39b024928ef5ebb",
+      "include/forge/gpu.h": "cdb0b130608224dd17c05370fe6227cb58c5c6c0f4b71a24ae3d36acf18cfcf2",
+      "include/forge/fs.h": "97e28cb3f6a2a690e3c95343cc94eb862434f5808b34604c2b9186519ee63780",
+      "include/forge/process.h": "7cae69f0fb2abd615bac679ba4e8920412593a0a0021eb0679d461a6bb4393e7",
+      "include/forge/arena.h": "36671291cd1be0e524ae544d080ad700c590f20ba1a93883399afff8f7125881",
+      "include/forge/http.h": "c1628fe49dce6511e16c607eefd0c2034a4492f9fa79efee0aaafc46fc0cf27f",
+      "include/forge/io.h": "fada64929c52e3e4145d8ceec1ffaf5641360db53f5c3a6e34fcee353c1a847c",
+      "include/forge/threading.h": "bc8624bb08d5e7180fd77c924a02ccd0141f6975cd728d41c7a57c4f35b86554",
+      "include/forge/ownership.h": "bb457900bd73993bfc2d3ed2f45c2a0fc7d26c53829397d624ce99063f8a6cf2"
+    },
+    "binary_sha256": {
+      "forge": "884273a78b93dd1b9781a011b42a05688bcaad9e4810207298d06c0b7c3e753e",
+      "rust": "11bd7604951f50a0f9f7e1584305eb8dd426ca36c6c03b8116a0d0c5bb0de75c"
+    }
+  },
+  "method": {
+    "n_total_per_round": 16000000,
+    "rounds": 4,
+    "pairs": 16,
+    "physical_cpu_candidates": [
+      0,
+      2,
+      4,
+      6,
+      8,
+      10
+    ],
+    "prewarm": "identical input before each sample",
+    "scope": "native OS threads, startup/join and worker argument parsing inside timer; no coroutine/queue/HTTP comparison"
+  },
+  "correctness_checks": [
+    {
+      "language": "forge",
+      "workers": 1,
+      "n": 1,
+      "checksum": 1494723732,
+      "kernel_ns": 377496,
+      "process_wall_ns": 7141794,
+      "process_user_seconds": 0.0010479999999999999,
+      "process_system_seconds": 0.004195,
+      "process_peak_rss_kib": 11672
+    },
+    {
+      "language": "rust",
+      "workers": 1,
+      "n": 1,
+      "checksum": 1494723732,
+      "kernel_ns": 922487,
+      "process_wall_ns": 8511760,
+      "process_user_seconds": 0.0,
+      "process_system_seconds": 0.005948,
+      "process_peak_rss_kib": 11684
+    },
+    {
+      "language": "forge",
+      "workers": 1,
+      "n": 2,
+      "checksum": 1004966082,
+      "kernel_ns": 294622,
+      "process_wall_ns": 6012455,
+      "process_user_seconds": 0.0,
+      "process_system_seconds": 0.00437,
+      "process_peak_rss_kib": 11688
+    },
+    {
+      "language": "rust",
+      "workers": 1,
+      "n": 2,
+      "checksum": 1004966082,
+      "kernel_ns": 418366,
+      "process_wall_ns": 6394950,
+      "process_user_seconds": 0.0,
+      "process_system_seconds": 0.004959,
+      "process_peak_rss_kib": 11688
+    },
+    {
+      "language": "forge",
+      "workers": 1,
+      "n": 137,
+      "checksum": 353257041,
+      "kernel_ns": 274472,
+      "process_wall_ns": 5685065,
+      "process_user_seconds": 0.0,
+      "process_system_seconds": 0.004102,
+      "process_peak_rss_kib": 11688
+    },
+    {
+      "language": "rust",
+      "workers": 1,
+      "n": 137,
+      "checksum": 353257041,
+      "kernel_ns": 673288,
+      "process_wall_ns": 6013655,
+      "process_user_seconds": 0.000905,
+      "process_system_seconds": 0.00362,
+      "process_peak_rss_kib": 11688
+    },
+    {
+      "language": "forge",
+      "workers": 2,
+      "n": 1,
+      "checksum": 1494723804,
+      "kernel_ns": 348551,
+      "process_wall_ns": 5616202,
+      "process_user_seconds": 0.0,
+      "process_system_seconds": 0.004402,
+      "process_peak_rss_kib": 11688
+    },
+    {
+      "language": "rust",
+      "workers": 2,
+      "n": 1,
+      "checksum": 1494723804,
+      "kernel_ns": 396744,
+      "process_wall_ns": 5325591,
+      "process_user_seconds": 0.0,
+      "process_system_seconds": 0.004184,
+      "process_peak_rss_kib": 11688
+    },
+    {
+      "language": "forge",
+      "workers": 2,
+      "n": 3,
+      "checksum": 1643601053,
+      "kernel_ns": 393817,
+      "process_wall_ns": 6290597,
+      "process_user_seconds": 0.001095,
+      "process_system_seconds": 0.0043809999999999995,
+      "process_peak_rss_kib": 11688
+    },
+    {
+      "language": "rust",
+      "workers": 2,
+      "n": 3,
+      "checksum": 1643601053,
+      "kernel_ns": 301505,
+      "process_wall_ns": 5191157,
+      "process_user_seconds": 0.0,
+      "process_system_seconds": 0.0038429999999999996,
+      "process_peak_rss_kib": 11688
+    },
+    {
+      "language": "forge",
+      "workers": 2,
+      "n": 137,
+      "checksum": 1399377436,
+      "kernel_ns": 281518,
+      "process_wall_ns": 4905437,
+      "process_user_seconds": 0.0,
+      "process_system_seconds": 0.00326,
+      "process_peak_rss_kib": 11688
+    },
+    {
+      "language": "rust",
+      "workers": 2,
+      "n": 137,
+      "checksum": 1399377436,
+      "kernel_ns": 360355,
+      "process_wall_ns": 6240175,
+      "process_user_seconds": 0.0,
+      "process_system_seconds": 0.005542,
+      "process_peak_rss_kib": 11688
+    },
+    {
+      "language": "forge",
+      "workers": 4,
+      "n": 1,
+      "checksum": 1494723951,
+      "kernel_ns": 403514,
+      "process_wall_ns": 5339373,
+      "process_user_seconds": 0.0,
+      "process_system_seconds": 0.004073,
+      "process_peak_rss_kib": 11688
+    },
+    {
+      "language": "rust",
+      "workers": 4,
+      "n": 1,
+      "checksum": 1494723951,
+      "kernel_ns": 448087,
+      "process_wall_ns": 6077176,
+      "process_user_seconds": 0.0,
+      "process_system_seconds": 0.005581,
+      "process_peak_rss_kib": 11688
+    },
+    {
+      "language": "forge",
+      "workers": 4,
+      "n": 5,
+      "checksum": 4647572006,
+      "kernel_ns": 358973,
+      "process_wall_ns": 4408842,
+      "process_user_seconds": 0.0009699999999999999,
+      "process_system_seconds": 0.001941,
+      "process_peak_rss_kib": 11688
+    },
+    {
+      "language": "rust",
+      "workers": 4,
+      "n": 5,
+      "checksum": 4647572006,
+      "kernel_ns": 441337,
+      "process_wall_ns": 8414531,
+      "process_user_seconds": 0.0,
+      "process_system_seconds": 0.006104,
+      "process_peak_rss_kib": 11688
+    },
+    {
+      "language": "forge",
+      "workers": 4,
+      "n": 137,
+      "checksum": 3251076226,
+      "kernel_ns": 365371,
+      "process_wall_ns": 5073890,
+      "process_user_seconds": 0.0006619999999999999,
+      "process_system_seconds": 0.0026479999999999997,
+      "process_peak_rss_kib": 11688
+    },
+    {
+      "language": "rust",
+      "workers": 4,
+      "n": 137,
+      "checksum": 3251076226,
+      "kernel_ns": 468716,
+      "process_wall_ns": 6274556,
+      "process_user_seconds": 0.0,
+      "process_system_seconds": 0.00548,
+      "process_peak_rss_kib": 11688
+    }
+  ],
+  "measurements": [
+    {
+      "pair": 0,
+      "workers": 1,
+      "cpus": [
+        0
+      ],
+      "seed": 73,
+      "order": [
+        "rust",
+        "forge"
+      ],
+      "rust_prewarm": {
+        "checksum": 1427959326,
+        "kernel_ns": 244183708,
+        "process_wall_ns": 250412796,
+        "process_user_seconds": 0.24198499999999998,
+        "process_system_seconds": 0.002999,
+        "process_peak_rss_kib": 11688
+      },
+      "rust_measured": {
+        "checksum": 1427959326,
+        "kernel_ns": 243529833,
+        "process_wall_ns": 249688601,
+        "process_user_seconds": 0.242579,
+        "process_system_seconds": 0.0029939999999999997,
+        "process_peak_rss_kib": 11696
+      },
+      "forge_prewarm": {
+        "checksum": 1427959326,
+        "kernel_ns": 244439014,
+        "process_wall_ns": 249124716,
+        "process_user_seconds": 0.23979299999999998,
+        "process_system_seconds": 0.004013,
+        "process_peak_rss_kib": 11696
+      },
+      "forge_measured": {
+        "checksum": 1427959326,
+        "kernel_ns": 244319369,
+        "process_wall_ns": 249412260,
+        "process_user_seconds": 0.241555,
+        "process_system_seconds": 0.003992,
+        "process_peak_rss_kib": 11708
+      }
+    },
+    {
+      "pair": 0,
+      "workers": 4,
+      "cpus": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "seed": 73,
+      "order": [
+        "forge",
+        "rust"
+      ],
+      "forge_prewarm": {
+        "checksum": 5197940866,
+        "kernel_ns": 91784013,
+        "process_wall_ns": 97122439,
+        "process_user_seconds": 0.312193,
+        "process_system_seconds": 0.003021,
+        "process_peak_rss_kib": 11716
+      },
+      "forge_measured": {
+        "checksum": 5197940866,
+        "kernel_ns": 101006474,
+        "process_wall_ns": 110075195,
+        "process_user_seconds": 0.32797899999999997,
+        "process_system_seconds": 0.004024,
+        "process_peak_rss_kib": 11716
+      },
+      "rust_prewarm": {
+        "checksum": 5197940866,
+        "kernel_ns": 93894043,
+        "process_wall_ns": 100743341,
+        "process_user_seconds": 0.30469599999999997,
+        "process_system_seconds": 0.0020109999999999998,
+        "process_peak_rss_kib": 11716
+      },
+      "rust_measured": {
+        "checksum": 5197940866,
+        "kernel_ns": 111864374,
+        "process_wall_ns": 118326525,
+        "process_user_seconds": 0.318013,
+        "process_system_seconds": 0.004,
+        "process_peak_rss_kib": 11716
+      }
+    },
+    {
+      "pair": 0,
+      "workers": 2,
+      "cpus": [
+        0,
+        2
+      ],
+      "seed": 73,
+      "order": [
+        "rust",
+        "forge"
+      ],
+      "rust_prewarm": {
+        "checksum": 2670207347,
+        "kernel_ns": 153956398,
+        "process_wall_ns": 163554386,
+        "process_user_seconds": 0.290839,
+        "process_system_seconds": 0.007995,
+        "process_peak_rss_kib": 11720
+      },
+      "rust_measured": {
+        "checksum": 2670207347,
+        "kernel_ns": 145704411,
+        "process_wall_ns": 151623911,
+        "process_user_seconds": 0.262482,
+        "process_system_seconds": 0.005987999999999999,
+        "process_peak_rss_kib": 11720
+      },
+      "forge_prewarm": {
+        "checksum": 2670207347,
+        "kernel_ns": 149950823,
+        "process_wall_ns": 155807600,
+        "process_user_seconds": 0.270115,
+        "process_system_seconds": 0.00299,
+        "process_peak_rss_kib": 11724
+      },
+      "forge_measured": {
+        "checksum": 2670207347,
+        "kernel_ns": 140085681,
+        "process_wall_ns": 149088299,
+        "process_user_seconds": 0.259625,
+        "process_system_seconds": 0.007988,
+        "process_peak_rss_kib": 11724
+      }
+    },
+    {
+      "pair": 1,
+      "workers": 2,
+      "cpus": [
+        0,
+        2
+      ],
+      "seed": 74,
+      "order": [
+        "rust",
+        "forge"
+      ],
+      "rust_prewarm": {
+        "checksum": 2823406557,
+        "kernel_ns": 167353399,
+        "process_wall_ns": 178037972,
+        "process_user_seconds": 0.302487,
+        "process_system_seconds": 0.007011,
+        "process_peak_rss_kib": 11724
+      },
+      "rust_measured": {
+        "checksum": 2823406557,
+        "kernel_ns": 130015730,
+        "process_wall_ns": 137226923,
+        "process_user_seconds": 0.25099499999999997,
+        "process_system_seconds": 0.003999,
+        "process_peak_rss_kib": 11724
+      },
+      "forge_prewarm": {
+        "checksum": 2823406557,
+        "kernel_ns": 121407087,
+        "process_wall_ns": 128647421,
+        "process_user_seconds": 0.23976699999999998,
+        "process_system_seconds": 0.003979,
+        "process_peak_rss_kib": 11728
+      },
+      "forge_measured": {
+        "checksum": 2823406557,
+        "kernel_ns": 123440750,
+        "process_wall_ns": 128278840,
+        "process_user_seconds": 0.23746099999999998,
+        "process_system_seconds": 0.005986,
+        "process_peak_rss_kib": 11728
+      }
+    },
+    {
+      "pair": 1,
+      "workers": 1,
+      "cpus": [
+        0
+      ],
+      "seed": 74,
+      "order": [
+        "forge",
+        "rust"
+      ],
+      "forge_prewarm": {
+        "checksum": 64893955,
+        "kernel_ns": 244066946,
+        "process_wall_ns": 250387967,
+        "process_user_seconds": 0.239974,
+        "process_system_seconds": 0.003999,
+        "process_peak_rss_kib": 11728
+      },
+      "forge_measured": {
+        "checksum": 64893955,
+        "kernel_ns": 243047345,
+        "process_wall_ns": 250389752,
+        "process_user_seconds": 0.240192,
+        "process_system_seconds": 0.00397,
+        "process_peak_rss_kib": 11728
+      },
+      "rust_prewarm": {
+        "checksum": 64893955,
+        "kernel_ns": 244728794,
+        "process_wall_ns": 250818954,
+        "process_user_seconds": 0.240836,
+        "process_system_seconds": 0.00403,
+        "process_peak_rss_kib": 11728
+      },
+      "rust_measured": {
+        "checksum": 64893955,
+        "kernel_ns": 243918481,
+        "process_wall_ns": 249555867,
+        "process_user_seconds": 0.240608,
+        "process_system_seconds": 0.005012,
+        "process_peak_rss_kib": 11728
+      }
+    },
+    {
+      "pair": 1,
+      "workers": 4,
+      "cpus": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "seed": 74,
+      "order": [
+        "rust",
+        "forge"
+      ],
+      "rust_prewarm": {
+        "checksum": 5137998107,
+        "kernel_ns": 98551391,
+        "process_wall_ns": 103994285,
+        "process_user_seconds": 0.32670299999999997,
+        "process_system_seconds": 0.006031,
+        "process_peak_rss_kib": 11732
+      },
+      "rust_measured": {
+        "checksum": 5137998107,
+        "kernel_ns": 102107279,
+        "process_wall_ns": 109947601,
+        "process_user_seconds": 0.3121,
+        "process_system_seconds": 0.005017,
+        "process_peak_rss_kib": 11732
+      },
+      "forge_prewarm": {
+        "checksum": 5137998107,
+        "kernel_ns": 104854136,
+        "process_wall_ns": 112414691,
+        "process_user_seconds": 0.32977799999999996,
+        "process_system_seconds": 0.006013999999999999,
+        "process_peak_rss_kib": 11732
+      },
+      "forge_measured": {
+        "checksum": 5137998107,
+        "kernel_ns": 125010207,
+        "process_wall_ns": 133074580,
+        "process_user_seconds": 0.287056,
+        "process_system_seconds": 0.008938999999999999,
+        "process_peak_rss_kib": 11732
+      }
+    },
+    {
+      "pair": 2,
+      "workers": 4,
+      "cpus": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "seed": 75,
+      "order": [
+        "rust",
+        "forge"
+      ],
+      "rust_prewarm": {
+        "checksum": 5078055348,
+        "kernel_ns": 102075784,
+        "process_wall_ns": 109116731,
+        "process_user_seconds": 0.32920299999999997,
+        "process_system_seconds": 0.004014,
+        "process_peak_rss_kib": 11736
+      },
+      "rust_measured": {
+        "checksum": 5078055348,
+        "kernel_ns": 103757249,
+        "process_wall_ns": 109992028,
+        "process_user_seconds": 0.291393,
+        "process_system_seconds": 0.007009,
+        "process_peak_rss_kib": 11736
+      },
+      "forge_prewarm": {
+        "checksum": 5078055348,
+        "kernel_ns": 111775702,
+        "process_wall_ns": 117283618,
+        "process_user_seconds": 0.347516,
+        "process_system_seconds": 0.004993,
+        "process_peak_rss_kib": 11736
+      },
+      "forge_measured": {
+        "checksum": 5078055348,
+        "kernel_ns": 91982404,
+        "process_wall_ns": 96570563,
+        "process_user_seconds": 0.290587,
+        "process_system_seconds": 0.0020039999999999997,
+        "process_peak_rss_kib": 11736
+      }
+    },
+    {
+      "pair": 2,
+      "workers": 1,
+      "cpus": [
+        0
+      ],
+      "seed": 75,
+      "order": [
+        "rust",
+        "forge"
+      ],
+      "rust_prewarm": {
+        "checksum": 849312231,
+        "kernel_ns": 243903022,
+        "process_wall_ns": 248485805,
+        "process_user_seconds": 0.241667,
+        "process_system_seconds": 0.002983,
+        "process_peak_rss_kib": 11740
+      },
+      "rust_measured": {
+        "checksum": 849312231,
+        "kernel_ns": 244092989,
+        "process_wall_ns": 250958767,
+        "process_user_seconds": 0.242855,
+        "process_system_seconds": 0.0030099999999999997,
+        "process_peak_rss_kib": 11740
+      },
+      "forge_prewarm": {
+        "checksum": 849312231,
+        "kernel_ns": 242874149,
+        "process_wall_ns": 250383058,
+        "process_user_seconds": 0.241502,
+        "process_system_seconds": 0.003991,
+        "process_peak_rss_kib": 11740
+      },
+      "forge_measured": {
+        "checksum": 849312231,
+        "kernel_ns": 242893834,
+        "process_wall_ns": 249250012,
+        "process_user_seconds": 0.238641,
+        "process_system_seconds": 0.004992,
+        "process_peak_rss_kib": 11740
+      }
+    },
+    {
+      "pair": 2,
+      "workers": 2,
+      "cpus": [
+        0,
+        2
+      ],
+      "seed": 75,
+      "order": [
+        "rust",
+        "forge"
+      ],
+      "rust_prewarm": {
+        "checksum": 2976605767,
+        "kernel_ns": 167077933,
+        "process_wall_ns": 175020783,
+        "process_user_seconds": 0.258635,
+        "process_system_seconds": 0.003019,
+        "process_peak_rss_kib": 11740
+      },
+      "rust_measured": {
+        "checksum": 2976605767,
+        "kernel_ns": 138934701,
+        "process_wall_ns": 148588075,
+        "process_user_seconds": 0.263521,
+        "process_system_seconds": 0.00499,
+        "process_peak_rss_kib": 11740
+      },
+      "forge_prewarm": {
+        "checksum": 2976605767,
+        "kernel_ns": 128690109,
+        "process_wall_ns": 135825991,
+        "process_user_seconds": 0.248475,
+        "process_system_seconds": 0.004007,
+        "process_peak_rss_kib": 11740
+      },
+      "forge_measured": {
+        "checksum": 2976605767,
+        "kernel_ns": 121504288,
+        "process_wall_ns": 127324633,
+        "process_user_seconds": 0.24104299999999998,
+        "process_system_seconds": 0.002008,
+        "process_peak_rss_kib": 11740
+      }
+    },
+    {
+      "pair": 3,
+      "workers": 4,
+      "cpus": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "seed": 76,
+      "order": [
+        "forge",
+        "rust"
+      ],
+      "forge_prewarm": {
+        "checksum": 5018112589,
+        "kernel_ns": 98493220,
+        "process_wall_ns": 106002362,
+        "process_user_seconds": 0.298825,
+        "process_system_seconds": 0.00498,
+        "process_peak_rss_kib": 11740
+      },
+      "forge_measured": {
+        "checksum": 5018112589,
+        "kernel_ns": 102182258,
+        "process_wall_ns": 110909769,
+        "process_user_seconds": 0.317339,
+        "process_system_seconds": 0.007029,
+        "process_peak_rss_kib": 11744
+      },
+      "rust_prewarm": {
+        "checksum": 5018112589,
+        "kernel_ns": 98367585,
+        "process_wall_ns": 107312035,
+        "process_user_seconds": 0.35869599999999996,
+        "process_system_seconds": 0.006011,
+        "process_peak_rss_kib": 11744
+      },
+      "rust_measured": {
+        "checksum": 5018112589,
+        "kernel_ns": 94117388,
+        "process_wall_ns": 99729737,
+        "process_user_seconds": 0.27711199999999997,
+        "process_system_seconds": 0.001979,
+        "process_peak_rss_kib": 11744
+      }
+    },
+    {
+      "pair": 3,
+      "workers": 2,
+      "cpus": [
+        0,
+        2
+      ],
+      "seed": 76,
+      "order": [
+        "forge",
+        "rust"
+      ],
+      "forge_prewarm": {
+        "checksum": 3129804977,
+        "kernel_ns": 146695925,
+        "process_wall_ns": 151119441,
+        "process_user_seconds": 0.265252,
+        "process_system_seconds": 0.003002,
+        "process_peak_rss_kib": 11744
+      },
+      "forge_measured": {
+        "checksum": 3129804977,
+        "kernel_ns": 145736665,
+        "process_wall_ns": 151062788,
+        "process_user_seconds": 0.264225,
+        "process_system_seconds": 0.005004,
+        "process_peak_rss_kib": 11744
+      },
+      "rust_prewarm": {
+        "checksum": 3129804977,
+        "kernel_ns": 165306811,
+        "process_wall_ns": 172546299,
+        "process_user_seconds": 0.281601,
+        "process_system_seconds": 0.00597,
+        "process_peak_rss_kib": 11744
+      },
+      "rust_measured": {
+        "checksum": 3129804977,
+        "kernel_ns": 149387853,
+        "process_wall_ns": 156479328,
+        "process_user_seconds": 0.26872999999999997,
+        "process_system_seconds": 0.004994,
+        "process_peak_rss_kib": 11744
+      }
+    },
+    {
+      "pair": 3,
+      "workers": 1,
+      "cpus": [
+        0
+      ],
+      "seed": 76,
+      "order": [
+        "forge",
+        "rust"
+      ],
+      "forge_prewarm": {
+        "checksum": 1633730507,
+        "kernel_ns": 259867019,
+        "process_wall_ns": 267911132,
+        "process_user_seconds": 0.25683,
+        "process_system_seconds": 0.004996,
+        "process_peak_rss_kib": 11744
+      },
+      "forge_measured": {
+        "checksum": 1633730507,
+        "kernel_ns": 242458580,
+        "process_wall_ns": 249317259,
+        "process_user_seconds": 0.24004699999999998,
+        "process_system_seconds": 0.005,
+        "process_peak_rss_kib": 11748
+      },
+      "rust_prewarm": {
+        "checksum": 1633730507,
+        "kernel_ns": 246654799,
+        "process_wall_ns": 252988641,
+        "process_user_seconds": 0.24193299999999998,
+        "process_system_seconds": 0.005019,
+        "process_peak_rss_kib": 11748
+      },
+      "rust_measured": {
+        "checksum": 1633730507,
+        "kernel_ns": 245641270,
+        "process_wall_ns": 250717288,
+        "process_user_seconds": 0.24112599999999998,
+        "process_system_seconds": 0.004961,
+        "process_peak_rss_kib": 11748
+      }
+    },
+    {
+      "pair": 4,
+      "workers": 2,
+      "cpus": [
+        0,
+        2
+      ],
+      "seed": 77,
+      "order": [
+        "rust",
+        "forge"
+      ],
+      "rust_prewarm": {
+        "checksum": 3283004187,
+        "kernel_ns": 159815764,
+        "process_wall_ns": 169013014,
+        "process_user_seconds": 0.29167899999999997,
+        "process_system_seconds": 0.006013999999999999,
+        "process_peak_rss_kib": 11752
+      },
+      "rust_measured": {
+        "checksum": 3283004187,
+        "kernel_ns": 121811924,
+        "process_wall_ns": 127533244,
+        "process_user_seconds": 0.24223,
+        "process_system_seconds": 0.003015,
+        "process_peak_rss_kib": 11752
+      },
+      "forge_prewarm": {
+        "checksum": 3283004187,
+        "kernel_ns": 121199874,
+        "process_wall_ns": 125588281,
+        "process_user_seconds": 0.23879899999999998,
+        "process_system_seconds": 0.0039959999999999996,
+        "process_peak_rss_kib": 11752
+      },
+      "forge_measured": {
+        "checksum": 3283004187,
+        "kernel_ns": 121472423,
+        "process_wall_ns": 125752478,
+        "process_user_seconds": 0.24110099999999998,
+        "process_system_seconds": 0.002,
+        "process_peak_rss_kib": 11752
+      }
+    },
+    {
+      "pair": 4,
+      "workers": 1,
+      "cpus": [
+        0
+      ],
+      "seed": 77,
+      "order": [
+        "rust",
+        "forge"
+      ],
+      "rust_prewarm": {
+        "checksum": 270665136,
+        "kernel_ns": 243284116,
+        "process_wall_ns": 248646324,
+        "process_user_seconds": 0.24171099999999998,
+        "process_system_seconds": 0.003021,
+        "process_peak_rss_kib": 11752
+      },
+      "rust_measured": {
+        "checksum": 270665136,
+        "kernel_ns": 244342869,
+        "process_wall_ns": 248960220,
+        "process_user_seconds": 0.24159999999999998,
+        "process_system_seconds": 0.0039759999999999995,
+        "process_peak_rss_kib": 11756
+      },
+      "forge_prewarm": {
+        "checksum": 270665136,
+        "kernel_ns": 243467589,
+        "process_wall_ns": 248279611,
+        "process_user_seconds": 0.241189,
+        "process_system_seconds": 0.003002,
+        "process_peak_rss_kib": 11756
+      },
+      "forge_measured": {
+        "checksum": 270665136,
+        "kernel_ns": 242542089,
+        "process_wall_ns": 248363014,
+        "process_user_seconds": 0.23957399999999998,
+        "process_system_seconds": 0.0039759999999999995,
+        "process_peak_rss_kib": 11756
+      }
+    },
+    {
+      "pair": 4,
+      "workers": 4,
+      "cpus": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "seed": 77,
+      "order": [
+        "forge",
+        "rust"
+      ],
+      "forge_prewarm": {
+        "checksum": 4958169830,
+        "kernel_ns": 125787101,
+        "process_wall_ns": 133471441,
+        "process_user_seconds": 0.30629999999999996,
+        "process_system_seconds": 0.005986,
+        "process_peak_rss_kib": 11756
+      },
+      "forge_measured": {
+        "checksum": 4958169830,
+        "kernel_ns": 107767751,
+        "process_wall_ns": 112555195,
+        "process_user_seconds": 0.296373,
+        "process_system_seconds": 0.005006,
+        "process_peak_rss_kib": 11756
+      },
+      "rust_prewarm": {
+        "checksum": 4958169830,
+        "kernel_ns": 100310820,
+        "process_wall_ns": 104503092,
+        "process_user_seconds": 0.26338,
+        "process_system_seconds": 0.003015,
+        "process_peak_rss_kib": 11756
+      },
+      "rust_measured": {
+        "checksum": 4958169830,
+        "kernel_ns": 94651939,
+        "process_wall_ns": 103354895,
+        "process_user_seconds": 0.322397,
+        "process_system_seconds": 0.009039,
+        "process_peak_rss_kib": 11756
+      }
+    },
+    {
+      "pair": 5,
+      "workers": 1,
+      "cpus": [
+        0
+      ],
+      "seed": 73,
+      "order": [
+        "rust",
+        "forge"
+      ],
+      "rust_prewarm": {
+        "checksum": 1427959326,
+        "kernel_ns": 244310294,
+        "process_wall_ns": 249176376,
+        "process_user_seconds": 0.24070799999999998,
+        "process_system_seconds": 0.003994999999999999,
+        "process_peak_rss_kib": 11756
+      },
+      "rust_measured": {
+        "checksum": 1427959326,
+        "kernel_ns": 246306858,
+        "process_wall_ns": 251042734,
+        "process_user_seconds": 0.24140399999999998,
+        "process_system_seconds": 0.003973,
+        "process_peak_rss_kib": 11756
+      },
+      "forge_prewarm": {
+        "checksum": 1427959326,
+        "kernel_ns": 243309951,
+        "process_wall_ns": 247318316,
+        "process_user_seconds": 0.241138,
+        "process_system_seconds": 0.0030009999999999998,
+        "process_peak_rss_kib": 11756
+      },
+      "forge_measured": {
+        "checksum": 1427959326,
+        "kernel_ns": 242838669,
+        "process_wall_ns": 248983285,
+        "process_user_seconds": 0.240202,
+        "process_system_seconds": 0.00397,
+        "process_peak_rss_kib": 11756
+      }
+    },
+    {
+      "pair": 5,
+      "workers": 4,
+      "cpus": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "seed": 73,
+      "order": [
+        "rust",
+        "forge"
+      ],
+      "rust_prewarm": {
+        "checksum": 5197940866,
+        "kernel_ns": 110539911,
+        "process_wall_ns": 117299776,
+        "process_user_seconds": 0.323202,
+        "process_system_seconds": 0.006022,
+        "process_peak_rss_kib": 11756
+      },
+      "rust_measured": {
+        "checksum": 5197940866,
+        "kernel_ns": 104157432,
+        "process_wall_ns": 114126740,
+        "process_user_seconds": 0.342707,
+        "process_system_seconds": 0.006012,
+        "process_peak_rss_kib": 11756
+      },
+      "forge_prewarm": {
+        "checksum": 5197940866,
+        "kernel_ns": 102600335,
+        "process_wall_ns": 109943677,
+        "process_user_seconds": 0.25653899999999996,
+        "process_system_seconds": 0.006986999999999999,
+        "process_peak_rss_kib": 11760
+      },
+      "forge_measured": {
+        "checksum": 5197940866,
+        "kernel_ns": 102817159,
+        "process_wall_ns": 108433200,
+        "process_user_seconds": 0.30538499999999996,
+        "process_system_seconds": 0.003013,
+        "process_peak_rss_kib": 11764
+      }
+    },
+    {
+      "pair": 5,
+      "workers": 2,
+      "cpus": [
+        0,
+        2
+      ],
+      "seed": 73,
+      "order": [
+        "forge",
+        "rust"
+      ],
+      "forge_prewarm": {
+        "checksum": 2670207347,
+        "kernel_ns": 152884932,
+        "process_wall_ns": 161091111,
+        "process_user_seconds": 0.288099,
+        "process_system_seconds": 0.005980999999999999,
+        "process_peak_rss_kib": 11768
+      },
+      "forge_measured": {
+        "checksum": 2670207347,
+        "kernel_ns": 124758866,
+        "process_wall_ns": 130988888,
+        "process_user_seconds": 0.24162999999999998,
+        "process_system_seconds": 0.001996,
+        "process_peak_rss_kib": 11768
+      },
+      "rust_prewarm": {
+        "checksum": 2670207347,
+        "kernel_ns": 122332389,
+        "process_wall_ns": 128153077,
+        "process_user_seconds": 0.23996699999999999,
+        "process_system_seconds": 0.004999,
+        "process_peak_rss_kib": 11768
+      },
+      "rust_measured": {
+        "checksum": 2670207347,
+        "kernel_ns": 122360793,
+        "process_wall_ns": 129465848,
+        "process_user_seconds": 0.24281,
+        "process_system_seconds": 0.00398,
+        "process_peak_rss_kib": 11768
+      }
+    },
+    {
+      "pair": 6,
+      "workers": 2,
+      "cpus": [
+        0,
+        2
+      ],
+      "seed": 74,
+      "order": [
+        "forge",
+        "rust"
+      ],
+      "forge_prewarm": {
+        "checksum": 2823406557,
+        "kernel_ns": 124199721,
+        "process_wall_ns": 131339141,
+        "process_user_seconds": 0.239276,
+        "process_system_seconds": 0.006006,
+        "process_peak_rss_kib": 11768
+      },
+      "forge_measured": {
+        "checksum": 2823406557,
+        "kernel_ns": 122701065,
+        "process_wall_ns": 129569937,
+        "process_user_seconds": 0.240698,
+        "process_system_seconds": 0.004973,
+        "process_peak_rss_kib": 11768
+      },
+      "rust_prewarm": {
+        "checksum": 2823406557,
+        "kernel_ns": 121761103,
+        "process_wall_ns": 129029262,
+        "process_user_seconds": 0.239817,
+        "process_system_seconds": 0.006019999999999999,
+        "process_peak_rss_kib": 11768
+      },
+      "rust_measured": {
+        "checksum": 2823406557,
+        "kernel_ns": 121652597,
+        "process_wall_ns": 127977778,
+        "process_user_seconds": 0.242501,
+        "process_system_seconds": 0.001987,
+        "process_peak_rss_kib": 11768
+      }
+    },
+    {
+      "pair": 6,
+      "workers": 1,
+      "cpus": [
+        0
+      ],
+      "seed": 74,
+      "order": [
+        "forge",
+        "rust"
+      ],
+      "forge_prewarm": {
+        "checksum": 64893955,
+        "kernel_ns": 244174127,
+        "process_wall_ns": 249372553,
+        "process_user_seconds": 0.240812,
+        "process_system_seconds": 0.002985,
+        "process_peak_rss_kib": 11768
+      },
+      "forge_measured": {
+        "checksum": 64893955,
+        "kernel_ns": 246873515,
+        "process_wall_ns": 251049295,
+        "process_user_seconds": 0.24006899999999998,
+        "process_system_seconds": 0.003984,
+        "process_peak_rss_kib": 11896
+      },
+      "rust_prewarm": {
+        "checksum": 64893955,
+        "kernel_ns": 244119536,
+        "process_wall_ns": 250988367,
+        "process_user_seconds": 0.24084799999999998,
+        "process_system_seconds": 0.005946,
+        "process_peak_rss_kib": 11768
+      },
+      "rust_measured": {
+        "checksum": 64893955,
+        "kernel_ns": 243724510,
+        "process_wall_ns": 250743788,
+        "process_user_seconds": 0.239455,
+        "process_system_seconds": 0.005986,
+        "process_peak_rss_kib": 11768
+      }
+    },
+    {
+      "pair": 6,
+      "workers": 4,
+      "cpus": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "seed": 74,
+      "order": [
+        "rust",
+        "forge"
+      ],
+      "rust_prewarm": {
+        "checksum": 5137998107,
+        "kernel_ns": 121057123,
+        "process_wall_ns": 127805758,
+        "process_user_seconds": 0.304464,
+        "process_system_seconds": 0.005007,
+        "process_peak_rss_kib": 11768
+      },
+      "rust_measured": {
+        "checksum": 5137998107,
+        "kernel_ns": 139335191,
+        "process_wall_ns": 147954498,
+        "process_user_seconds": 0.30733,
+        "process_system_seconds": 0.004017,
+        "process_peak_rss_kib": 11768
+      },
+      "forge_prewarm": {
+        "checksum": 5137998107,
+        "kernel_ns": 108937998,
+        "process_wall_ns": 118530716,
+        "process_user_seconds": 0.31931699999999996,
+        "process_system_seconds": 0.006985,
+        "process_peak_rss_kib": 11768
+      },
+      "forge_measured": {
+        "checksum": 5137998107,
+        "kernel_ns": 104428381,
+        "process_wall_ns": 110852939,
+        "process_user_seconds": 0.33403099999999997,
+        "process_system_seconds": 0.004985,
+        "process_peak_rss_kib": 11768
+      }
+    },
+    {
+      "pair": 7,
+      "workers": 4,
+      "cpus": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "seed": 75,
+      "order": [
+        "rust",
+        "forge"
+      ],
+      "rust_prewarm": {
+        "checksum": 5078055348,
+        "kernel_ns": 129186437,
+        "process_wall_ns": 135199351,
+        "process_user_seconds": 0.25668399999999997,
+        "process_system_seconds": 0.0029839999999999997,
+        "process_peak_rss_kib": 11772
+      },
+      "rust_measured": {
+        "checksum": 5078055348,
+        "kernel_ns": 116886110,
+        "process_wall_ns": 128107780,
+        "process_user_seconds": 0.322457,
+        "process_system_seconds": 0.008010999999999999,
+        "process_peak_rss_kib": 11772
+      },
+      "forge_prewarm": {
+        "checksum": 5078055348,
+        "kernel_ns": 106518720,
+        "process_wall_ns": 111757761,
+        "process_user_seconds": 0.287072,
+        "process_system_seconds": 0.006000999999999999,
+        "process_peak_rss_kib": 11780
+      },
+      "forge_measured": {
+        "checksum": 5078055348,
+        "kernel_ns": 145077800,
+        "process_wall_ns": 151512205,
+        "process_user_seconds": 0.297111,
+        "process_system_seconds": 0.00705,
+        "process_peak_rss_kib": 11780
+      }
+    },
+    {
+      "pair": 7,
+      "workers": 2,
+      "cpus": [
+        0,
+        2
+      ],
+      "seed": 75,
+      "order": [
+        "forge",
+        "rust"
+      ],
+      "forge_prewarm": {
+        "checksum": 2976605767,
+        "kernel_ns": 138173660,
+        "process_wall_ns": 146563868,
+        "process_user_seconds": 0.25404,
+        "process_system_seconds": 0.008032,
+        "process_peak_rss_kib": 11780
+      },
+      "forge_measured": {
+        "checksum": 2976605767,
+        "kernel_ns": 121800621,
+        "process_wall_ns": 128658832,
+        "process_user_seconds": 0.24281499999999998,
+        "process_system_seconds": 0.003022,
+        "process_peak_rss_kib": 11780
+      },
+      "rust_prewarm": {
+        "checksum": 2976605767,
+        "kernel_ns": 151630645,
+        "process_wall_ns": 158187489,
+        "process_user_seconds": 0.268762,
+        "process_system_seconds": 0.005013999999999999,
+        "process_peak_rss_kib": 11780
+      },
+      "rust_measured": {
+        "checksum": 2976605767,
+        "kernel_ns": 136477773,
+        "process_wall_ns": 144179042,
+        "process_user_seconds": 0.258118,
+        "process_system_seconds": 0.0049819999999999994,
+        "process_peak_rss_kib": 11780
+      }
+    },
+    {
+      "pair": 7,
+      "workers": 1,
+      "cpus": [
+        0
+      ],
+      "seed": 75,
+      "order": [
+        "rust",
+        "forge"
+      ],
+      "rust_prewarm": {
+        "checksum": 849312231,
+        "kernel_ns": 243799669,
+        "process_wall_ns": 250618836,
+        "process_user_seconds": 0.241969,
+        "process_system_seconds": 0.0030369999999999998,
+        "process_peak_rss_kib": 11780
+      },
+      "rust_measured": {
+        "checksum": 849312231,
+        "kernel_ns": 245411445,
+        "process_wall_ns": 252136319,
+        "process_user_seconds": 0.240562,
+        "process_system_seconds": 0.006013999999999999,
+        "process_peak_rss_kib": 11780
+      },
+      "forge_prewarm": {
+        "checksum": 849312231,
+        "kernel_ns": 242448303,
+        "process_wall_ns": 247843928,
+        "process_user_seconds": 0.240723,
+        "process_system_seconds": 0.0029839999999999997,
+        "process_peak_rss_kib": 11780
+      },
+      "forge_measured": {
+        "checksum": 849312231,
+        "kernel_ns": 242864218,
+        "process_wall_ns": 249257104,
+        "process_user_seconds": 0.239637,
+        "process_system_seconds": 0.004027,
+        "process_peak_rss_kib": 11780
+      }
+    },
+    {
+      "pair": 8,
+      "workers": 1,
+      "cpus": [
+        0
+      ],
+      "seed": 76,
+      "order": [
+        "rust",
+        "forge"
+      ],
+      "rust_prewarm": {
+        "checksum": 1633730507,
+        "kernel_ns": 244804492,
+        "process_wall_ns": 251087273,
+        "process_user_seconds": 0.240635,
+        "process_system_seconds": 0.004992,
+        "process_peak_rss_kib": 11780
+      },
+      "rust_measured": {
+        "checksum": 1633730507,
+        "kernel_ns": 244009322,
+        "process_wall_ns": 249938810,
+        "process_user_seconds": 0.241977,
+        "process_system_seconds": 0.002987,
+        "process_peak_rss_kib": 11780
+      },
+      "forge_prewarm": {
+        "checksum": 1633730507,
+        "kernel_ns": 242414613,
+        "process_wall_ns": 248864142,
+        "process_user_seconds": 0.241565,
+        "process_system_seconds": 0.0020039999999999997,
+        "process_peak_rss_kib": 11780
+      },
+      "forge_measured": {
+        "checksum": 1633730507,
+        "kernel_ns": 243586220,
+        "process_wall_ns": 250454445,
+        "process_user_seconds": 0.237456,
+        "process_system_seconds": 0.008118,
+        "process_peak_rss_kib": 11780
+      }
+    },
+    {
+      "pair": 8,
+      "workers": 2,
+      "cpus": [
+        0,
+        2
+      ],
+      "seed": 76,
+      "order": [
+        "rust",
+        "forge"
+      ],
+      "rust_prewarm": {
+        "checksum": 3129804977,
+        "kernel_ns": 150230005,
+        "process_wall_ns": 161255737,
+        "process_user_seconds": 0.286135,
+        "process_system_seconds": 0.00806,
+        "process_peak_rss_kib": 11784
+      },
+      "rust_measured": {
+        "checksum": 3129804977,
+        "kernel_ns": 122550608,
+        "process_wall_ns": 130710830,
+        "process_user_seconds": 0.23971299999999998,
+        "process_system_seconds": 0.006043,
+        "process_peak_rss_kib": 11784
+      },
+      "forge_prewarm": {
+        "checksum": 3129804977,
+        "kernel_ns": 121258711,
+        "process_wall_ns": 127618187,
+        "process_user_seconds": 0.240088,
+        "process_system_seconds": 0.0030009999999999998,
+        "process_peak_rss_kib": 11784
+      },
+      "forge_measured": {
+        "checksum": 3129804977,
+        "kernel_ns": 121497870,
+        "process_wall_ns": 127487550,
+        "process_user_seconds": 0.24081899999999998,
+        "process_system_seconds": 0.0029969999999999997,
+        "process_peak_rss_kib": 11784
+      }
+    },
+    {
+      "pair": 8,
+      "workers": 4,
+      "cpus": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "seed": 76,
+      "order": [
+        "rust",
+        "forge"
+      ],
+      "rust_prewarm": {
+        "checksum": 5018112589,
+        "kernel_ns": 112169319,
+        "process_wall_ns": 121431064,
+        "process_user_seconds": 0.292651,
+        "process_system_seconds": 0.007038999999999999,
+        "process_peak_rss_kib": 11784
+      },
+      "rust_measured": {
+        "checksum": 5018112589,
+        "kernel_ns": 72386835,
+        "process_wall_ns": 77448183,
+        "process_user_seconds": 0.24801299999999998,
+        "process_system_seconds": 0.002,
+        "process_peak_rss_kib": 11784
+      },
+      "forge_prewarm": {
+        "checksum": 5018112589,
+        "kernel_ns": 106367253,
+        "process_wall_ns": 110517140,
+        "process_user_seconds": 0.301412,
+        "process_system_seconds": 0.0030239999999999998,
+        "process_peak_rss_kib": 11784
+      },
+      "forge_measured": {
+        "checksum": 5018112589,
+        "kernel_ns": 126542933,
+        "process_wall_ns": 132530965,
+        "process_user_seconds": 0.292943,
+        "process_system_seconds": 0.002006,
+        "process_peak_rss_kib": 11788
+      }
+    },
+    {
+      "pair": 9,
+      "workers": 4,
+      "cpus": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "seed": 77,
+      "order": [
+        "forge",
+        "rust"
+      ],
+      "forge_prewarm": {
+        "checksum": 4958169830,
+        "kernel_ns": 112346055,
+        "process_wall_ns": 121428855,
+        "process_user_seconds": 0.310591,
+        "process_system_seconds": 0.00699,
+        "process_peak_rss_kib": 11788
+      },
+      "forge_measured": {
+        "checksum": 4958169830,
+        "kernel_ns": 121924597,
+        "process_wall_ns": 130085072,
+        "process_user_seconds": 0.285182,
+        "process_system_seconds": 0.0060669999999999995,
+        "process_peak_rss_kib": 11792
+      },
+      "rust_prewarm": {
+        "checksum": 4958169830,
+        "kernel_ns": 132181163,
+        "process_wall_ns": 141650025,
+        "process_user_seconds": 0.324436,
+        "process_system_seconds": 0.006026,
+        "process_peak_rss_kib": 11792
+      },
+      "rust_measured": {
+        "checksum": 4958169830,
+        "kernel_ns": 90442494,
+        "process_wall_ns": 96526010,
+        "process_user_seconds": 0.29162099999999996,
+        "process_system_seconds": 0.003006,
+        "process_peak_rss_kib": 11792
+      }
+    },
+    {
+      "pair": 9,
+      "workers": 2,
+      "cpus": [
+        0,
+        2
+      ],
+      "seed": 77,
+      "order": [
+        "forge",
+        "rust"
+      ],
+      "forge_prewarm": {
+        "checksum": 3283004187,
+        "kernel_ns": 162755430,
+        "process_wall_ns": 170058893,
+        "process_user_seconds": 0.274254,
+        "process_system_seconds": 0.003013,
+        "process_peak_rss_kib": 11792
+      },
+      "forge_measured": {
+        "checksum": 3283004187,
+        "kernel_ns": 149869977,
+        "process_wall_ns": 155917301,
+        "process_user_seconds": 0.285538,
+        "process_system_seconds": 0.003005,
+        "process_peak_rss_kib": 11792
+      },
+      "rust_prewarm": {
+        "checksum": 3283004187,
+        "kernel_ns": 121621600,
+        "process_wall_ns": 127848993,
+        "process_user_seconds": 0.23998699999999998,
+        "process_system_seconds": 0.004999,
+        "process_peak_rss_kib": 11792
+      },
+      "rust_measured": {
+        "checksum": 3283004187,
+        "kernel_ns": 122140048,
+        "process_wall_ns": 127769687,
+        "process_user_seconds": 0.24311,
+        "process_system_seconds": 0.001992,
+        "process_peak_rss_kib": 11792
+      }
+    },
+    {
+      "pair": 9,
+      "workers": 1,
+      "cpus": [
+        0
+      ],
+      "seed": 77,
+      "order": [
+        "forge",
+        "rust"
+      ],
+      "forge_prewarm": {
+        "checksum": 270665136,
+        "kernel_ns": 243227072,
+        "process_wall_ns": 249816217,
+        "process_user_seconds": 0.24057099999999998,
+        "process_system_seconds": 0.004991,
+        "process_peak_rss_kib": 11796
+      },
+      "forge_measured": {
+        "checksum": 270665136,
+        "kernel_ns": 243591356,
+        "process_wall_ns": 249481167,
+        "process_user_seconds": 0.238426,
+        "process_system_seconds": 0.00601,
+        "process_peak_rss_kib": 11796
+      },
+      "rust_prewarm": {
+        "checksum": 270665136,
+        "kernel_ns": 244958209,
+        "process_wall_ns": 250729312,
+        "process_user_seconds": 0.241612,
+        "process_system_seconds": 0.00396,
+        "process_peak_rss_kib": 11796
+      },
+      "rust_measured": {
+        "checksum": 270665136,
+        "kernel_ns": 245351466,
+        "process_wall_ns": 250946224,
+        "process_user_seconds": 0.23893899999999998,
+        "process_system_seconds": 0.00694,
+        "process_peak_rss_kib": 11796
+      }
+    },
+    {
+      "pair": 10,
+      "workers": 2,
+      "cpus": [
+        0,
+        2
+      ],
+      "seed": 73,
+      "order": [
+        "forge",
+        "rust"
+      ],
+      "forge_prewarm": {
+        "checksum": 2670207347,
+        "kernel_ns": 147927439,
+        "process_wall_ns": 153613712,
+        "process_user_seconds": 0.266397,
+        "process_system_seconds": 0.004987999999999999,
+        "process_peak_rss_kib": 11796
+      },
+      "forge_measured": {
+        "checksum": 2670207347,
+        "kernel_ns": 149882438,
+        "process_wall_ns": 158200892,
+        "process_user_seconds": 0.285881,
+        "process_system_seconds": 0.008933,
+        "process_peak_rss_kib": 11796
+      },
+      "rust_prewarm": {
+        "checksum": 2670207347,
+        "kernel_ns": 121587447,
+        "process_wall_ns": 128534918,
+        "process_user_seconds": 0.242391,
+        "process_system_seconds": 0.002992,
+        "process_peak_rss_kib": 11796
+      },
+      "rust_measured": {
+        "checksum": 2670207347,
+        "kernel_ns": 122939907,
+        "process_wall_ns": 129283021,
+        "process_user_seconds": 0.239088,
+        "process_system_seconds": 0.005952,
+        "process_peak_rss_kib": 11796
+      }
+    },
+    {
+      "pair": 10,
+      "workers": 1,
+      "cpus": [
+        0
+      ],
+      "seed": 73,
+      "order": [
+        "forge",
+        "rust"
+      ],
+      "forge_prewarm": {
+        "checksum": 1427959326,
+        "kernel_ns": 242815199,
+        "process_wall_ns": 249305361,
+        "process_user_seconds": 0.241306,
+        "process_system_seconds": 0.00201,
+        "process_peak_rss_kib": 11796
+      },
+      "forge_measured": {
+        "checksum": 1427959326,
+        "kernel_ns": 242805635,
+        "process_wall_ns": 248195209,
+        "process_user_seconds": 0.24049099999999998,
+        "process_system_seconds": 0.002993,
+        "process_peak_rss_kib": 11796
+      },
+      "rust_prewarm": {
+        "checksum": 1427959326,
+        "kernel_ns": 244953172,
+        "process_wall_ns": 251077242,
+        "process_user_seconds": 0.24087699999999998,
+        "process_system_seconds": 0.004997,
+        "process_peak_rss_kib": 11796
+      },
+      "rust_measured": {
+        "checksum": 1427959326,
+        "kernel_ns": 243749949,
+        "process_wall_ns": 248904235,
+        "process_user_seconds": 0.242034,
+        "process_system_seconds": 0.0029879999999999998,
+        "process_peak_rss_kib": 11796
+      }
+    },
+    {
+      "pair": 10,
+      "workers": 4,
+      "cpus": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "seed": 73,
+      "order": [
+        "forge",
+        "rust"
+      ],
+      "forge_prewarm": {
+        "checksum": 5197940866,
+        "kernel_ns": 93752547,
+        "process_wall_ns": 100431817,
+        "process_user_seconds": 0.332903,
+        "process_system_seconds": 0.001993,
+        "process_peak_rss_kib": 11796
+      },
+      "forge_measured": {
+        "checksum": 5197940866,
+        "kernel_ns": 62600433,
+        "process_wall_ns": 67276859,
+        "process_user_seconds": 0.234703,
+        "process_system_seconds": 0.008912,
+        "process_peak_rss_kib": 11800
+      },
+      "rust_prewarm": {
+        "checksum": 5197940866,
+        "kernel_ns": 69834341,
+        "process_wall_ns": 73852844,
+        "process_user_seconds": 0.24301099999999998,
+        "process_system_seconds": 0.003025,
+        "process_peak_rss_kib": 11800
+      },
+      "rust_measured": {
+        "checksum": 5197940866,
+        "kernel_ns": 96582168,
+        "process_wall_ns": 100897093,
+        "process_user_seconds": 0.259362,
+        "process_system_seconds": 0.0030039999999999997,
+        "process_peak_rss_kib": 11808
+      }
+    },
+    {
+      "pair": 11,
+      "workers": 4,
+      "cpus": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "seed": 74,
+      "order": [
+        "forge",
+        "rust"
+      ],
+      "forge_prewarm": {
+        "checksum": 5137998107,
+        "kernel_ns": 103331941,
+        "process_wall_ns": 112304185,
+        "process_user_seconds": 0.328789,
+        "process_system_seconds": 0.004996,
+        "process_peak_rss_kib": 11808
+      },
+      "forge_measured": {
+        "checksum": 5137998107,
+        "kernel_ns": 95525298,
+        "process_wall_ns": 100910445,
+        "process_user_seconds": 0.293564,
+        "process_system_seconds": 0.004992,
+        "process_peak_rss_kib": 11808
+      },
+      "rust_prewarm": {
+        "checksum": 5137998107,
+        "kernel_ns": 107481361,
+        "process_wall_ns": 112729083,
+        "process_user_seconds": 0.343733,
+        "process_system_seconds": 0.004996,
+        "process_peak_rss_kib": 11808
+      },
+      "rust_measured": {
+        "checksum": 5137998107,
+        "kernel_ns": 108325303,
+        "process_wall_ns": 113131440,
+        "process_user_seconds": 0.317216,
+        "process_system_seconds": 0.0040019999999999995,
+        "process_peak_rss_kib": 11808
+      }
+    },
+    {
+      "pair": 11,
+      "workers": 1,
+      "cpus": [
+        0
+      ],
+      "seed": 74,
+      "order": [
+        "forge",
+        "rust"
+      ],
+      "forge_prewarm": {
+        "checksum": 64893955,
+        "kernel_ns": 259430126,
+        "process_wall_ns": 265758065,
+        "process_user_seconds": 0.254073,
+        "process_system_seconds": 0.006000999999999999,
+        "process_peak_rss_kib": 11808
+      },
+      "forge_measured": {
+        "checksum": 64893955,
+        "kernel_ns": 244446239,
+        "process_wall_ns": 249688413,
+        "process_user_seconds": 0.240834,
+        "process_system_seconds": 0.00403,
+        "process_peak_rss_kib": 11808
+      },
+      "rust_prewarm": {
+        "checksum": 64893955,
+        "kernel_ns": 244263960,
+        "process_wall_ns": 251414500,
+        "process_user_seconds": 0.240719,
+        "process_system_seconds": 0.005967999999999999,
+        "process_peak_rss_kib": 11808
+      },
+      "rust_measured": {
+        "checksum": 64893955,
+        "kernel_ns": 244913004,
+        "process_wall_ns": 250719645,
+        "process_user_seconds": 0.243024,
+        "process_system_seconds": 0.001992,
+        "process_peak_rss_kib": 11808
+      }
+    },
+    {
+      "pair": 11,
+      "workers": 2,
+      "cpus": [
+        0,
+        2
+      ],
+      "seed": 74,
+      "order": [
+        "rust",
+        "forge"
+      ],
+      "rust_prewarm": {
+        "checksum": 2823406557,
+        "kernel_ns": 136032676,
+        "process_wall_ns": 143607790,
+        "process_user_seconds": 0.25837499999999997,
+        "process_system_seconds": 0.004987,
+        "process_peak_rss_kib": 11808
+      },
+      "rust_measured": {
+        "checksum": 2823406557,
+        "kernel_ns": 148630938,
+        "process_wall_ns": 155336720,
+        "process_user_seconds": 0.268922,
+        "process_system_seconds": 0.003998,
+        "process_peak_rss_kib": 11808
+      },
+      "forge_prewarm": {
+        "checksum": 2823406557,
+        "kernel_ns": 136696436,
+        "process_wall_ns": 143851411,
+        "process_user_seconds": 0.258945,
+        "process_system_seconds": 0.003999,
+        "process_peak_rss_kib": 11808
+      },
+      "forge_measured": {
+        "checksum": 2823406557,
+        "kernel_ns": 121757076,
+        "process_wall_ns": 126480016,
+        "process_user_seconds": 0.238589,
+        "process_system_seconds": 0.006013999999999999,
+        "process_peak_rss_kib": 11808
+      }
+    },
+    {
+      "pair": 12,
+      "workers": 4,
+      "cpus": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "seed": 75,
+      "order": [
+        "forge",
+        "rust"
+      ],
+      "forge_prewarm": {
+        "checksum": 5078055348,
+        "kernel_ns": 81306255,
+        "process_wall_ns": 86500881,
+        "process_user_seconds": 0.278524,
+        "process_system_seconds": 0.0040219999999999995,
+        "process_peak_rss_kib": 11808
+      },
+      "forge_measured": {
+        "checksum": 5078055348,
+        "kernel_ns": 77751761,
+        "process_wall_ns": 84170102,
+        "process_user_seconds": 0.25608,
+        "process_system_seconds": 0.0049819999999999994,
+        "process_peak_rss_kib": 11808
+      },
+      "rust_prewarm": {
+        "checksum": 5078055348,
+        "kernel_ns": 105530639,
+        "process_wall_ns": 109705020,
+        "process_user_seconds": 0.289945,
+        "process_system_seconds": 0.003009,
+        "process_peak_rss_kib": 11808
+      },
+      "rust_measured": {
+        "checksum": 5078055348,
+        "kernel_ns": 98228808,
+        "process_wall_ns": 103819636,
+        "process_user_seconds": 0.29955699999999996,
+        "process_system_seconds": 0.00402,
+        "process_peak_rss_kib": 11812
+      }
+    },
+    {
+      "pair": 12,
+      "workers": 2,
+      "cpus": [
+        0,
+        2
+      ],
+      "seed": 75,
+      "order": [
+        "forge",
+        "rust"
+      ],
+      "forge_prewarm": {
+        "checksum": 2976605767,
+        "kernel_ns": 121908914,
+        "process_wall_ns": 127034693,
+        "process_user_seconds": 0.23693699999999998,
+        "process_system_seconds": 0.005973,
+        "process_peak_rss_kib": 11812
+      },
+      "forge_measured": {
+        "checksum": 2976605767,
+        "kernel_ns": 122105134,
+        "process_wall_ns": 127539799,
+        "process_user_seconds": 0.24143799999999999,
+        "process_system_seconds": 0.001987,
+        "process_peak_rss_kib": 11816
+      },
+      "rust_prewarm": {
+        "checksum": 2976605767,
+        "kernel_ns": 122800304,
+        "process_wall_ns": 128831937,
+        "process_user_seconds": 0.243382,
+        "process_system_seconds": 0.001994,
+        "process_peak_rss_kib": 11816
+      },
+      "rust_measured": {
+        "checksum": 2976605767,
+        "kernel_ns": 123594350,
+        "process_wall_ns": 129861611,
+        "process_user_seconds": 0.24046599999999999,
+        "process_system_seconds": 0.004968,
+        "process_peak_rss_kib": 11816
+      }
+    },
+    {
+      "pair": 12,
+      "workers": 1,
+      "cpus": [
+        0
+      ],
+      "seed": 75,
+      "order": [
+        "rust",
+        "forge"
+      ],
+      "rust_prewarm": {
+        "checksum": 849312231,
+        "kernel_ns": 244790686,
+        "process_wall_ns": 251384306,
+        "process_user_seconds": 0.241356,
+        "process_system_seconds": 0.004986,
+        "process_peak_rss_kib": 11816
+      },
+      "rust_measured": {
+        "checksum": 849312231,
+        "kernel_ns": 248894792,
+        "process_wall_ns": 253451006,
+        "process_user_seconds": 0.24432199999999998,
+        "process_system_seconds": 0.003988,
+        "process_peak_rss_kib": 11820
+      },
+      "forge_prewarm": {
+        "checksum": 849312231,
+        "kernel_ns": 244520229,
+        "process_wall_ns": 251049474,
+        "process_user_seconds": 0.237625,
+        "process_system_seconds": 0.008021,
+        "process_peak_rss_kib": 11820
+      },
+      "forge_measured": {
+        "checksum": 849312231,
+        "kernel_ns": 243458647,
+        "process_wall_ns": 250214958,
+        "process_user_seconds": 0.24423999999999998,
+        "process_system_seconds": 0.0020009999999999997,
+        "process_peak_rss_kib": 11820
+      }
+    },
+    {
+      "pair": 13,
+      "workers": 4,
+      "cpus": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "seed": 76,
+      "order": [
+        "rust",
+        "forge"
+      ],
+      "rust_prewarm": {
+        "checksum": 5018112589,
+        "kernel_ns": 121518758,
+        "process_wall_ns": 130174480,
+        "process_user_seconds": 0.30288499999999996,
+        "process_system_seconds": 0.010029,
+        "process_peak_rss_kib": 11820
+      },
+      "rust_measured": {
+        "checksum": 5018112589,
+        "kernel_ns": 116868823,
+        "process_wall_ns": 121025747,
+        "process_user_seconds": 0.277536,
+        "process_system_seconds": 0.004007,
+        "process_peak_rss_kib": 11820
+      },
+      "forge_prewarm": {
+        "checksum": 5018112589,
+        "kernel_ns": 111283103,
+        "process_wall_ns": 117453335,
+        "process_user_seconds": 0.267998,
+        "process_system_seconds": 0.005977,
+        "process_peak_rss_kib": 11820
+      },
+      "forge_measured": {
+        "checksum": 5018112589,
+        "kernel_ns": 114341414,
+        "process_wall_ns": 118905760,
+        "process_user_seconds": 0.29497,
+        "process_system_seconds": 0.003972,
+        "process_peak_rss_kib": 11820
+      }
+    },
+    {
+      "pair": 13,
+      "workers": 1,
+      "cpus": [
+        0
+      ],
+      "seed": 76,
+      "order": [
+        "forge",
+        "rust"
+      ],
+      "forge_prewarm": {
+        "checksum": 1633730507,
+        "kernel_ns": 242004638,
+        "process_wall_ns": 246514892,
+        "process_user_seconds": 0.240498,
+        "process_system_seconds": 0.002993,
+        "process_peak_rss_kib": 11820
+      },
+      "forge_measured": {
+        "checksum": 1633730507,
+        "kernel_ns": 242854543,
+        "process_wall_ns": 248378192,
+        "process_user_seconds": 0.24012999999999998,
+        "process_system_seconds": 0.004981,
+        "process_peak_rss_kib": 11820
+      },
+      "rust_prewarm": {
+        "checksum": 1633730507,
+        "kernel_ns": 243220021,
+        "process_wall_ns": 249442074,
+        "process_user_seconds": 0.242673,
+        "process_system_seconds": 0.004011,
+        "process_peak_rss_kib": 11824
+      },
+      "rust_measured": {
+        "checksum": 1633730507,
+        "kernel_ns": 244279097,
+        "process_wall_ns": 250402089,
+        "process_user_seconds": 0.24226299999999998,
+        "process_system_seconds": 0.004004,
+        "process_peak_rss_kib": 11824
+      }
+    },
+    {
+      "pair": 13,
+      "workers": 2,
+      "cpus": [
+        0,
+        2
+      ],
+      "seed": 76,
+      "order": [
+        "rust",
+        "forge"
+      ],
+      "rust_prewarm": {
+        "checksum": 3129804977,
+        "kernel_ns": 165066787,
+        "process_wall_ns": 170242325,
+        "process_user_seconds": 0.282735,
+        "process_system_seconds": 0.0049949999999999994,
+        "process_peak_rss_kib": 11824
+      },
+      "rust_measured": {
+        "checksum": 3129804977,
+        "kernel_ns": 147902724,
+        "process_wall_ns": 152288827,
+        "process_user_seconds": 0.26667199999999996,
+        "process_system_seconds": 0.002996,
+        "process_peak_rss_kib": 11824
+      },
+      "forge_prewarm": {
+        "checksum": 3129804977,
+        "kernel_ns": 127091780,
+        "process_wall_ns": 132968593,
+        "process_user_seconds": 0.24329399999999998,
+        "process_system_seconds": 0.002002,
+        "process_peak_rss_kib": 11824
+      },
+      "forge_measured": {
+        "checksum": 3129804977,
+        "kernel_ns": 121896617,
+        "process_wall_ns": 128526616,
+        "process_user_seconds": 0.23948799999999998,
+        "process_system_seconds": 0.0049889999999999995,
+        "process_peak_rss_kib": 11824
+      }
+    },
+    {
+      "pair": 14,
+      "workers": 4,
+      "cpus": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "seed": 77,
+      "order": [
+        "forge",
+        "rust"
+      ],
+      "forge_prewarm": {
+        "checksum": 4958169830,
+        "kernel_ns": 133104720,
+        "process_wall_ns": 139452402,
+        "process_user_seconds": 0.27802099999999996,
+        "process_system_seconds": 0.003011,
+        "process_peak_rss_kib": 11824
+      },
+      "forge_measured": {
+        "checksum": 4958169830,
+        "kernel_ns": 109128051,
+        "process_wall_ns": 114181225,
+        "process_user_seconds": 0.309488,
+        "process_system_seconds": 0.004006,
+        "process_peak_rss_kib": 11824
+      },
+      "rust_prewarm": {
+        "checksum": 4958169830,
+        "kernel_ns": 100711330,
+        "process_wall_ns": 106386826,
+        "process_user_seconds": 0.26927799999999996,
+        "process_system_seconds": 0.007949,
+        "process_peak_rss_kib": 11828
+      },
+      "rust_measured": {
+        "checksum": 4958169830,
+        "kernel_ns": 134828506,
+        "process_wall_ns": 141838669,
+        "process_user_seconds": 0.312094,
+        "process_system_seconds": 0.0070019999999999995,
+        "process_peak_rss_kib": 11828
+      }
+    },
+    {
+      "pair": 14,
+      "workers": 2,
+      "cpus": [
+        0,
+        2
+      ],
+      "seed": 77,
+      "order": [
+        "forge",
+        "rust"
+      ],
+      "forge_prewarm": {
+        "checksum": 3283004187,
+        "kernel_ns": 137905628,
+        "process_wall_ns": 145860892,
+        "process_user_seconds": 0.256978,
+        "process_system_seconds": 0.005019,
+        "process_peak_rss_kib": 11828
+      },
+      "forge_measured": {
+        "checksum": 3283004187,
+        "kernel_ns": 121783691,
+        "process_wall_ns": 129299018,
+        "process_user_seconds": 0.241471,
+        "process_system_seconds": 0.0049889999999999995,
+        "process_peak_rss_kib": 11828
+      },
+      "rust_prewarm": {
+        "checksum": 3283004187,
+        "kernel_ns": 121736907,
+        "process_wall_ns": 127842345,
+        "process_user_seconds": 0.240474,
+        "process_system_seconds": 0.004968,
+        "process_peak_rss_kib": 11828
+      },
+      "rust_measured": {
+        "checksum": 3283004187,
+        "kernel_ns": 122490155,
+        "process_wall_ns": 128338244,
+        "process_user_seconds": 0.23985599999999999,
+        "process_system_seconds": 0.005971,
+        "process_peak_rss_kib": 11828
+      }
+    },
+    {
+      "pair": 14,
+      "workers": 1,
+      "cpus": [
+        0
+      ],
+      "seed": 77,
+      "order": [
+        "forge",
+        "rust"
+      ],
+      "forge_prewarm": {
+        "checksum": 270665136,
+        "kernel_ns": 242531461,
+        "process_wall_ns": 249186351,
+        "process_user_seconds": 0.239329,
+        "process_system_seconds": 0.0060079999999999995,
+        "process_peak_rss_kib": 11832
+      },
+      "forge_measured": {
+        "checksum": 270665136,
+        "kernel_ns": 243185783,
+        "process_wall_ns": 246949173,
+        "process_user_seconds": 0.240871,
+        "process_system_seconds": 0.0019979999999999998,
+        "process_peak_rss_kib": 11832
+      },
+      "rust_prewarm": {
+        "checksum": 270665136,
+        "kernel_ns": 244436892,
+        "process_wall_ns": 250912367,
+        "process_user_seconds": 0.24323299999999998,
+        "process_system_seconds": 0.00402,
+        "process_peak_rss_kib": 11836
+      },
+      "rust_measured": {
+        "checksum": 270665136,
+        "kernel_ns": 244433534,
+        "process_wall_ns": 249311271,
+        "process_user_seconds": 0.24171199999999998,
+        "process_system_seconds": 0.002996,
+        "process_peak_rss_kib": 11836
+      }
+    },
+    {
+      "pair": 15,
+      "workers": 2,
+      "cpus": [
+        0,
+        2
+      ],
+      "seed": 73,
+      "order": [
+        "rust",
+        "forge"
+      ],
+      "rust_prewarm": {
+        "checksum": 2670207347,
+        "kernel_ns": 137125878,
+        "process_wall_ns": 145217093,
+        "process_user_seconds": 0.259127,
+        "process_system_seconds": 0.0050019999999999995,
+        "process_peak_rss_kib": 11836
+      },
+      "rust_measured": {
+        "checksum": 2670207347,
+        "kernel_ns": 146314443,
+        "process_wall_ns": 152581356,
+        "process_user_seconds": 0.265159,
+        "process_system_seconds": 0.004032,
+        "process_peak_rss_kib": 11836
+      },
+      "forge_prewarm": {
+        "checksum": 2670207347,
+        "kernel_ns": 149154668,
+        "process_wall_ns": 155595035,
+        "process_user_seconds": 0.269239,
+        "process_system_seconds": 0.004985,
+        "process_peak_rss_kib": 11836
+      },
+      "forge_measured": {
+        "checksum": 2670207347,
+        "kernel_ns": 153327401,
+        "process_wall_ns": 158483915,
+        "process_user_seconds": 0.287074,
+        "process_system_seconds": 0.006977,
+        "process_peak_rss_kib": 11836
+      }
+    },
+    {
+      "pair": 15,
+      "workers": 1,
+      "cpus": [
+        0
+      ],
+      "seed": 73,
+      "order": [
+        "rust",
+        "forge"
+      ],
+      "rust_prewarm": {
+        "checksum": 1427959326,
+        "kernel_ns": 261609703,
+        "process_wall_ns": 270533430,
+        "process_user_seconds": 0.258027,
+        "process_system_seconds": 0.006999999999999999,
+        "process_peak_rss_kib": 11836
+      },
+      "rust_measured": {
+        "checksum": 1427959326,
+        "kernel_ns": 246240876,
+        "process_wall_ns": 253445042,
+        "process_user_seconds": 0.241952,
+        "process_system_seconds": 0.005019,
+        "process_peak_rss_kib": 11836
+      },
+      "forge_prewarm": {
+        "checksum": 1427959326,
+        "kernel_ns": 242928016,
+        "process_wall_ns": 248917803,
+        "process_user_seconds": 0.24021299999999998,
+        "process_system_seconds": 0.004983,
+        "process_peak_rss_kib": 11836
+      },
+      "forge_measured": {
+        "checksum": 1427959326,
+        "kernel_ns": 243301981,
+        "process_wall_ns": 250942468,
+        "process_user_seconds": 0.239137,
+        "process_system_seconds": 0.006003,
+        "process_peak_rss_kib": 11836
+      }
+    },
+    {
+      "pair": 15,
+      "workers": 4,
+      "cpus": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "seed": 73,
+      "order": [
+        "rust",
+        "forge"
+      ],
+      "rust_prewarm": {
+        "checksum": 5197940866,
+        "kernel_ns": 102187042,
+        "process_wall_ns": 107707057,
+        "process_user_seconds": 0.28828899999999996,
+        "process_system_seconds": 0.006006,
+        "process_peak_rss_kib": 11836
+      },
+      "rust_measured": {
+        "checksum": 5197940866,
+        "kernel_ns": 104285065,
+        "process_wall_ns": 110371155,
+        "process_user_seconds": 0.300769,
+        "process_system_seconds": 0.005012,
+        "process_peak_rss_kib": 11836
+      },
+      "forge_prewarm": {
+        "checksum": 5197940866,
+        "kernel_ns": 124560568,
+        "process_wall_ns": 133183257,
+        "process_user_seconds": 0.299017,
+        "process_system_seconds": 0.006999999999999999,
+        "process_peak_rss_kib": 11836
+      },
+      "forge_measured": {
+        "checksum": 5197940866,
+        "kernel_ns": 100398875,
+        "process_wall_ns": 105151208,
+        "process_user_seconds": 0.29257099999999997,
+        "process_system_seconds": 0.003016,
+        "process_peak_rss_kib": 11840
+      }
+    }
+  ],
+  "summary": {
+    "1": {
+      "paired_ratio_median": 1.0054983642113235,
+      "bootstrap_95": [
+        1.0035842234771173,
+        1.010488276210372
+      ],
+      "forge_median_ns": 243116564.0,
+      "rust_median_ns": 244388201.5
+    },
+    "2": {
+      "paired_ratio_median": 1.010430420302468,
+      "bootstrap_95": [
+        0.9914551026920589,
+        1.0532642583587672
+      ],
+      "forge_median_ns": 122403099.5,
+      "rust_median_ns": 126805040.0
+    },
+    "4": {
+      "paired_ratio_median": 1.0304057806393652,
+      "bootstrap_95": [
+        0.8782955765681701,
+        1.1715021957589733
+      ],
+      "forge_median_ns": 103622770.0,
+      "rust_median_ns": 103957340.5
+    }
+  }
+}
