@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-10-10T14:39:46.783532+00:00",
+  "checked_at": "2026-10-10T18:49:55.463115+00:00",
   "errors": [],
   "poll_interval_seconds": 60,
   "reports": [
@@ -1093,40 +1093,7 @@
       "title": "site performance 2026 10 06"
     },
     {
-      "file": "/materials/forge-language/forge/docs/benchmarks/selfhost-refactor-2026-10-06.json",
-      "format": "json",
-      "id": "forge-language/forge/docs/benchmarks/selfhost-refactor-2026-10-06.json",
-      "kind": "repository",
-      "path": "docs/benchmarks/selfhost-refactor-2026-10-06.json",
-      "repository": "forge-language/forge",
-      "sha256": "92a818f2229773ef11b8da764017a78e42f76ccc4d6bc559c16a1a92e2164e34",
-      "source": "https://github.com/forge-language/forge/blob/49984a554594db479523ad1fbccf4026d2971a9a/docs/benchmarks/selfhost-refactor-2026-10-06.json",
-      "title": "selfhost refactor 2026 10 06"
-    },
-    {
-      "file": "/materials/forge-language/forge/docs/benchmarks/selfhost-refactor-2026-10-06.md",
-      "format": "md",
-      "id": "forge-language/forge/docs/benchmarks/selfhost-refactor-2026-10-06.md",
-      "kind": "repository",
-      "path": "docs/benchmarks/selfhost-refactor-2026-10-06.md",
-      "repository": "forge-language/forge",
-      "sha256": "57931fdafc206842f6e1411a1f53f89ba851fce22ffabad25957a1f2a2ddd69e",
-      "source": "https://github.com/forge-language/forge/blob/49984a554594db479523ad1fbccf4026d2971a9a/docs/benchmarks/selfhost-refactor-2026-10-06.md",
-      "title": "selfhost refactor 2026 10 06"
-    },
-    {
-      "file": "/materials/forge-language/forge/docs/refactoring-performance-2026-10-06.md",
-      "format": "md",
-      "id": "forge-language/forge/docs/refactoring-performance-2026-10-06.md",
-      "kind": "repository",
-      "path": "docs/refactoring-performance-2026-10-06.md",
-      "repository": "forge-language/forge",
-      "sha256": "f1a18e3221761dd6c957cc9542175166118e71a498e990a9a90a3aee99798a45",
-      "source": "https://github.com/forge-language/forge/blob/49984a554594db479523ad1fbccf4026d2971a9a/docs/refactoring-performance-2026-10-06.md",
-      "title": "refactoring performance 2026 10 06"
-    },
-    {
-      "file": "/live/snapshots/5860917dfc8d2713ca7bbf6a/reports/compiler-and-selfhosting.md",
+      "file": "/live/snapshots/2f6b665d3610eeb01f4a8c64/reports/compiler-and-selfhosting.md",
       "format": "md",
       "id": "reports/compiler-and-selfhosting.md",
       "kind": "local_snapshot",
@@ -1137,7 +1104,7 @@
       "title": "compiler and selfhosting"
     },
     {
-      "file": "/live/snapshots/5860917dfc8d2713ca7bbf6a/reports/redis-cache-2026-10-06.json",
+      "file": "/live/snapshots/2f6b665d3610eeb01f4a8c64/reports/redis-cache-2026-10-06.json",
       "format": "json",
       "id": "reports/redis-cache-2026-10-06.json",
       "kind": "local_snapshot",
@@ -1148,7 +1115,7 @@
       "title": "redis cache 2026 10 06"
     },
     {
-      "file": "/live/snapshots/5860917dfc8d2713ca7bbf6a/reports/redis-cache-performance-2026-10-06.md",
+      "file": "/live/snapshots/2f6b665d3610eeb01f4a8c64/reports/redis-cache-performance-2026-10-06.md",
       "format": "md",
       "id": "reports/redis-cache-performance-2026-10-06.md",
       "kind": "local_snapshot",
@@ -1159,7 +1126,7 @@
       "title": "redis cache performance 2026 10 06"
     },
     {
-      "file": "/live/snapshots/5860917dfc8d2713ca7bbf6a/reports/site-performance-2026-10-06.json",
+      "file": "/live/snapshots/2f6b665d3610eeb01f4a8c64/reports/site-performance-2026-10-06.json",
       "format": "json",
       "id": "reports/site-performance-2026-10-06.json",
       "kind": "local_snapshot",
@@ -1170,7 +1137,7 @@
       "title": "site performance 2026 10 06"
     },
     {
-      "file": "/live/snapshots/5860917dfc8d2713ca7bbf6a/reports/site-performance-2026-10-06.md",
+      "file": "/live/snapshots/2f6b665d3610eeb01f4a8c64/reports/site-performance-2026-10-06.md",
       "format": "md",
       "id": "reports/site-performance-2026-10-06.md",
       "kind": "local_snapshot",
@@ -1181,7 +1148,7 @@
       "title": "site performance 2026 10 06"
     },
     {
-      "file": "/live/snapshots/5860917dfc8d2713ca7bbf6a/reports/storage-deployment-2026-10-06.md",
+      "file": "/live/snapshots/2f6b665d3610eeb01f4a8c64/reports/storage-deployment-2026-10-06.md",
       "format": "md",
       "id": "reports/storage-deployment-2026-10-06.md",
       "kind": "local_snapshot",
@@ -1192,7 +1159,7 @@
       "title": "storage deployment 2026 10 06"
     },
     {
-      "file": "/live/snapshots/5860917dfc8d2713ca7bbf6a/reports/storage-sdk-validation-2026-10-06.md",
+      "file": "/live/snapshots/2f6b665d3610eeb01f4a8c64/reports/storage-sdk-validation-2026-10-06.md",
       "format": "md",
       "id": "reports/storage-sdk-validation-2026-10-06.md",
       "kind": "local_snapshot",
@@ -1201,7 +1168,40 @@
       "sha256": "3a64d399f84028051a1329c96dbc6676c673087213e0f0046cd688efacbc37b4",
       "source": null,
       "title": "storage sdk validation 2026 10 06"
+    },
+    {
+      "file": "/materials/forge-language/forge/docs/benchmarks/selfhost-refactor-2026-10-06.json",
+      "format": "json",
+      "id": "forge-language/forge/docs/benchmarks/selfhost-refactor-2026-10-06.json",
+      "kind": "repository",
+      "path": "docs/benchmarks/selfhost-refactor-2026-10-06.json",
+      "repository": "forge-language/forge",
+      "sha256": "92a818f2229773ef11b8da764017a78e42f76ccc4d6bc559c16a1a92e2164e34",
+      "source": "https://github.com/forge-language/forge/blob/e01b2060eca4bc11ea0af930dfb2455fb20930cf/docs/benchmarks/selfhost-refactor-2026-10-06.json",
+      "title": "selfhost refactor 2026 10 06"
+    },
+    {
+      "file": "/materials/forge-language/forge/docs/benchmarks/selfhost-refactor-2026-10-06.md",
+      "format": "md",
+      "id": "forge-language/forge/docs/benchmarks/selfhost-refactor-2026-10-06.md",
+      "kind": "repository",
+      "path": "docs/benchmarks/selfhost-refactor-2026-10-06.md",
+      "repository": "forge-language/forge",
+      "sha256": "57931fdafc206842f6e1411a1f53f89ba851fce22ffabad25957a1f2a2ddd69e",
+      "source": "https://github.com/forge-language/forge/blob/e01b2060eca4bc11ea0af930dfb2455fb20930cf/docs/benchmarks/selfhost-refactor-2026-10-06.md",
+      "title": "selfhost refactor 2026 10 06"
+    },
+    {
+      "file": "/materials/forge-language/forge/docs/refactoring-performance-2026-10-06.md",
+      "format": "md",
+      "id": "forge-language/forge/docs/refactoring-performance-2026-10-06.md",
+      "kind": "repository",
+      "path": "docs/refactoring-performance-2026-10-06.md",
+      "repository": "forge-language/forge",
+      "sha256": "f1a18e3221761dd6c957cc9542175166118e71a498e990a9a90a3aee99798a45",
+      "source": "https://github.com/forge-language/forge/blob/e01b2060eca4bc11ea0af930dfb2455fb20930cf/docs/refactoring-performance-2026-10-06.md",
+      "title": "refactoring performance 2026 10 06"
     }
   ],
-  "updated_at": "2026-10-10T14:39:46.759081+00:00"
+  "updated_at": "2026-10-10T18:49:55.426573+00:00"
 }
