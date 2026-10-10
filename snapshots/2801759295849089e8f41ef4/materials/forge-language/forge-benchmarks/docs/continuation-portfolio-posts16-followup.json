@@ -1,0 +1,318 @@
+{
+  "date_utc": "2026-10-03T05:39:58Z",
+  "host": "Linux-6.8.0-139-generic-x86_64-with-glibc2.39",
+  "limits": {
+    "cpus_per_server": 2,
+    "memory_mib_per_server": 512,
+    "pool_connections": 5,
+    "forge_workers": 8,
+    "repeats": 5,
+    "clients": [
+      16
+    ],
+    "duration_seconds": 5.0,
+    "warmup_seconds": 1.0,
+    "fixture_posts": 100,
+    "encoding": "identity",
+    "order": "three-way rotation per repeat",
+    "post_equivalence": "All fields after timestamp normalization and sorting equal-time posts by ID; wire timestamp spelling/order can differ",
+    "runtime_bases": "Rust Debian-based versus Forge Alpine/musl; application-level comparison",
+    "project_equivalence": "All fields after timestamp normalization and ID sort; identical DB rows",
+    "timed_endpoints": [
+      "/api/posts"
+    ]
+  },
+  "baseline_forge_commit": "compiler source snapshot",
+  "baseline_application_code_commit": "same application snapshot for both Forge builds",
+  "baseline_image": "forge-continuation-before:20261003-051223",
+  "optimized_source_sha256": "fdbcc19b053254944901c928a2401c243f09a18230669e595b71123a12334a8d",
+  "optimized_application_revision": "application snapshot sha256:f64380effce895fa68823f83c513b51d76220cbc197343f057b30fc5542fc784",
+  "optimized_forge_compiler_commit": "source sha256:93acb869e6e9badd8075323fcc24e54234e9acaf00f230ca55adcc821b6cd994",
+  "optimized_forge_postgres_commit": "source sha256:a84d4bfa9171704d34d9aa0025fe13be5b3550bb23c770ca9207eed5cc501348",
+  "optimized_dirty_diff_sha256": "not recorded",
+  "optimized_forge_web_commit": "source sha256:9c9a5bc45b2ca984f2f02712e50e15ecb0ed7d435fb2d15b888e1b51ae12edd9",
+  "image_ids": {
+    "rust": "sha256:06263bc0a2216ddbdc985d1a728983c4d4b95f494cadb53b0f4f3b957918d0da",
+    "forge_before": "sha256:084935a2867860e7bd04eacc421502766f5969286d4a2c0bbe66f98b7519bb08",
+    "forge_after": "sha256:9338d9ed9194f4d57c7d9513e3bb292a0875e69282eed877f81fabc74e60005f"
+  },
+  "equivalence": {
+    "/api/health": {
+      "rust": {
+        "status": "ok"
+      },
+      "forge_before": {
+        "status": "ok"
+      },
+      "forge_after": {
+        "status": "ok"
+      }
+    },
+    "/api/posts": {
+      "rust": 100,
+      "forge_before": 100,
+      "forge_after": 100
+    },
+    "/api/projects": {
+      "rust": 10,
+      "forge_before": 10,
+      "forge_after": 10
+    }
+  },
+  "results": [
+    {
+      "language": "rust",
+      "endpoint": "/api/posts",
+      "concurrency": 16,
+      "seconds": 5.042,
+      "requests": 18759,
+      "errors": 0,
+      "rps": 3720.42,
+      "p50_ms": 4.065,
+      "p95_ms": 6.721,
+      "p99_ms": 9.18,
+      "cpu_core_percent": 147.04,
+      "memory_mib": 6.34,
+      "repeat": 1
+    },
+    {
+      "language": "forge_before",
+      "endpoint": "/api/posts",
+      "concurrency": 16,
+      "seconds": 5.039,
+      "requests": 14411,
+      "errors": 0,
+      "rps": 2859.86,
+      "p50_ms": 3.425,
+      "p95_ms": 11.648,
+      "p99_ms": 17.47,
+      "cpu_core_percent": 46.57,
+      "memory_mib": 5.19,
+      "repeat": 1
+    },
+    {
+      "language": "forge_after",
+      "endpoint": "/api/posts",
+      "concurrency": 16,
+      "seconds": 5.057,
+      "requests": 16032,
+      "errors": 0,
+      "rps": 3169.99,
+      "p50_ms": 4.957,
+      "p95_ms": 9.121,
+      "p99_ms": 12.121,
+      "cpu_core_percent": 51.63,
+      "memory_mib": 5.48,
+      "repeat": 1
+    },
+    {
+      "language": "forge_before",
+      "endpoint": "/api/posts",
+      "concurrency": 16,
+      "seconds": 5.042,
+      "requests": 21020,
+      "errors": 0,
+      "rps": 4168.84,
+      "p50_ms": 3.593,
+      "p95_ms": 6.731,
+      "p99_ms": 9.395,
+      "cpu_core_percent": 68.05,
+      "memory_mib": 6.74,
+      "repeat": 2
+    },
+    {
+      "language": "forge_after",
+      "endpoint": "/api/posts",
+      "concurrency": 16,
+      "seconds": 5.025,
+      "requests": 10196,
+      "errors": 0,
+      "rps": 2028.89,
+      "p50_ms": 10.661,
+      "p95_ms": 15.167,
+      "p99_ms": 21.56,
+      "cpu_core_percent": 30.02,
+      "memory_mib": 4.76,
+      "repeat": 2
+    },
+    {
+      "language": "rust",
+      "endpoint": "/api/posts",
+      "concurrency": 16,
+      "seconds": 5.047,
+      "requests": 18672,
+      "errors": 0,
+      "rps": 3699.37,
+      "p50_ms": 4.15,
+      "p95_ms": 6.569,
+      "p99_ms": 8.834,
+      "cpu_core_percent": 149.49,
+      "memory_mib": 6.66,
+      "repeat": 2
+    },
+    {
+      "language": "forge_after",
+      "endpoint": "/api/posts",
+      "concurrency": 16,
+      "seconds": 5.05,
+      "requests": 20503,
+      "errors": 0,
+      "rps": 4060.14,
+      "p50_ms": 3.285,
+      "p95_ms": 7.726,
+      "p99_ms": 10.048,
+      "cpu_core_percent": 65.71,
+      "memory_mib": 5.23,
+      "repeat": 3
+    },
+    {
+      "language": "rust",
+      "endpoint": "/api/posts",
+      "concurrency": 16,
+      "seconds": 5.046,
+      "requests": 18712,
+      "errors": 0,
+      "rps": 3708.62,
+      "p50_ms": 4.124,
+      "p95_ms": 6.743,
+      "p99_ms": 8.858,
+      "cpu_core_percent": 151.9,
+      "memory_mib": 6.24,
+      "repeat": 3
+    },
+    {
+      "language": "forge_before",
+      "endpoint": "/api/posts",
+      "concurrency": 16,
+      "seconds": 5.023,
+      "requests": 12915,
+      "errors": 0,
+      "rps": 2570.92,
+      "p50_ms": 2.067,
+      "p95_ms": 14.24,
+      "p99_ms": 22.518,
+      "cpu_core_percent": 42.73,
+      "memory_mib": 4.95,
+      "repeat": 3
+    },
+    {
+      "language": "rust",
+      "endpoint": "/api/posts",
+      "concurrency": 16,
+      "seconds": 5.031,
+      "requests": 18450,
+      "errors": 0,
+      "rps": 3667.34,
+      "p50_ms": 4.171,
+      "p95_ms": 6.894,
+      "p99_ms": 9.032,
+      "cpu_core_percent": 149.18,
+      "memory_mib": 6.47,
+      "repeat": 4
+    },
+    {
+      "language": "forge_before",
+      "endpoint": "/api/posts",
+      "concurrency": 16,
+      "seconds": 5.049,
+      "requests": 24263,
+      "errors": 0,
+      "rps": 4805.74,
+      "p50_ms": 3.296,
+      "p95_ms": 5.357,
+      "p99_ms": 6.572,
+      "cpu_core_percent": 76.41,
+      "memory_mib": 5.44,
+      "repeat": 4
+    },
+    {
+      "language": "forge_after",
+      "endpoint": "/api/posts",
+      "concurrency": 16,
+      "seconds": 5.05,
+      "requests": 23576,
+      "errors": 0,
+      "rps": 4668.76,
+      "p50_ms": 2.857,
+      "p95_ms": 6.371,
+      "p99_ms": 7.872,
+      "cpu_core_percent": 76.04,
+      "memory_mib": 5.25,
+      "repeat": 4
+    },
+    {
+      "language": "forge_before",
+      "endpoint": "/api/posts",
+      "concurrency": 16,
+      "seconds": 5.054,
+      "requests": 23475,
+      "errors": 0,
+      "rps": 4644.85,
+      "p50_ms": 2.871,
+      "p95_ms": 6.264,
+      "p99_ms": 7.719,
+      "cpu_core_percent": 76.33,
+      "memory_mib": 5.5,
+      "repeat": 5
+    },
+    {
+      "language": "forge_after",
+      "endpoint": "/api/posts",
+      "concurrency": 16,
+      "seconds": 5.045,
+      "requests": 18489,
+      "errors": 0,
+      "rps": 3664.6,
+      "p50_ms": 2.944,
+      "p95_ms": 9.568,
+      "p99_ms": 12.633,
+      "cpu_core_percent": 59.91,
+      "memory_mib": 5.7,
+      "repeat": 5
+    },
+    {
+      "language": "rust",
+      "endpoint": "/api/posts",
+      "concurrency": 16,
+      "seconds": 5.032,
+      "requests": 18526,
+      "errors": 0,
+      "rps": 3681.5,
+      "p50_ms": 4.177,
+      "p95_ms": 6.848,
+      "p99_ms": 8.946,
+      "cpu_core_percent": 149.28,
+      "memory_mib": 6.25,
+      "repeat": 5
+    }
+  ],
+  "provenance": {
+    "before": {
+      "application": "f64380effce895fa68823f83c513b51d76220cbc197343f057b30fc5542fc784",
+      "native_adapter": "a12e2b869e14a163e63838a2dc101f5fd8c12b896a2288f7cf549c309ef83807",
+      "toolchain": "db749d0412e0aaf83f3b951df29af26d8f52ab17205e3ba01d366376ca56e8be",
+      "postgres": "a84d4bfa9171704d34d9aa0025fe13be5b3550bb23c770ca9207eed5cc501348",
+      "web": "9c9a5bc45b2ca984f2f02712e50e15ecb0ed7d435fb2d15b888e1b51ae12edd9",
+      "rust": "070e558d24e94fa526186b975670ad3b5343a55109478ee3e5a9a98d953de131"
+    },
+    "after": {
+      "application": "f64380effce895fa68823f83c513b51d76220cbc197343f057b30fc5542fc784",
+      "native_adapter": "a12e2b869e14a163e63838a2dc101f5fd8c12b896a2288f7cf549c309ef83807",
+      "toolchain": "93acb869e6e9badd8075323fcc24e54234e9acaf00f230ca55adcc821b6cd994",
+      "postgres": "a84d4bfa9171704d34d9aa0025fe13be5b3550bb23c770ca9207eed5cc501348",
+      "web": "9c9a5bc45b2ca984f2f02712e50e15ecb0ed7d435fb2d15b888e1b51ae12edd9",
+      "rust": "070e558d24e94fa526186b975670ad3b5343a55109478ee3e5a9a98d953de131"
+    }
+  },
+  "prepared_image_ids": {
+    "before": "sha256:084935a2867860e7bd04eacc421502766f5969286d4a2c0bbe66f98b7519bb08",
+    "after": "sha256:9338d9ed9194f4d57c7d9513e3bb292a0875e69282eed877f81fabc74e60005f",
+    "rust": "sha256:06263bc0a2216ddbdc985d1a728983c4d4b95f494cadb53b0f4f3b957918d0da"
+  },
+  "images": {
+    "before": "forge-continuation-before:20261003-051223",
+    "after": "forge-continuation-after-release:20261003-053000",
+    "rust": "forge-continuation-rust:20261003-051223"
+  },
+  "comparison_scope": "Identical Forge application, native adapter and vendor sources; only compiler/runtime/stdlib snapshot changes. Rust application comparison includes libc/worker/ban-cache differences; scheduler is outside MHD request path."
+}

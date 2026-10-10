@@ -1,0 +1,122 @@
+{
+  "date_utc": "2026-10-05T07:43:24Z",
+  "run_id": "9a23221cfa01",
+  "db": "forge-readiness-9a23221cfa01",
+  "peer": "forge-readiness-9a23221cfa01-peer",
+  "network": "forge-readiness-9a23221cfa01-net",
+  "image": "postgres:16-alpine",
+  "init_minimum_sleep_seconds": 4,
+  "credentials": "Fixed disposable forge/forge_test test credentials",
+  "script_sha256": "77611923737d5bd23014dabc3825493e0c1e4e5603e96562bde17d7204eea7b2",
+  "result": "passed: Unix probe admits temporary server; TCP probe waits for final authenticated SQL",
+  "cleanup": [
+    {
+      "command": [
+        "docker",
+        "rm",
+        "-f",
+        "-v",
+        "forge-readiness-9a23221cfa01-peer"
+      ],
+      "exit_code": 0,
+      "stdout": "forge-readiness-9a23221cfa01-peer",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "docker",
+        "rm",
+        "-f",
+        "-v",
+        "forge-readiness-9a23221cfa01"
+      ],
+      "exit_code": 0,
+      "stdout": "forge-readiness-9a23221cfa01",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "docker",
+        "network",
+        "rm",
+        "forge-readiness-9a23221cfa01-net"
+      ],
+      "exit_code": 0,
+      "stdout": "forge-readiness-9a23221cfa01-net",
+      "stderr": ""
+    }
+  ],
+  "image_id": "sha256:cf78e76683b9ca8c5733cbbdce6c9262b45b6767934dd0a95e671f9a0fc20685",
+  "init_script": "#!/bin/sh\nset -eu\ntouch /tmp/forge-init-running\nsleep 4\nattempt=0\nwhile [ ! -e /tmp/forge-init-release ]; do\n  attempt=$((attempt + 1))\n  if [ \"$attempt\" -ge 200 ]; then exit 1; fi\n  sleep 0.1\ndone\n",
+  "temporary_unix_probe": {
+    "command": [
+      "docker",
+      "exec",
+      "forge-readiness-9a23221cfa01",
+      "pg_isready",
+      "-U",
+      "forge",
+      "-d",
+      "forge_test",
+      "-t",
+      "1"
+    ],
+    "exit_code": 0,
+    "stdout": "/var/run/postgresql:5432 - accepting connections",
+    "stderr": ""
+  },
+  "temporary_tcp_probe": {
+    "command": [
+      "docker",
+      "exec",
+      "forge-readiness-9a23221cfa01",
+      "pg_isready",
+      "-h",
+      "forge-readiness-9a23221cfa01",
+      "-p",
+      "5432",
+      "-U",
+      "forge",
+      "-d",
+      "forge_test",
+      "-t",
+      "1"
+    ],
+    "exit_code": 2,
+    "stdout": "forge-readiness-9a23221cfa01:5432 - no response",
+    "stderr": ""
+  },
+  "final_tcp_probe": {
+    "command": [
+      "docker",
+      "exec",
+      "forge-readiness-9a23221cfa01",
+      "pg_isready",
+      "-h",
+      "forge-readiness-9a23221cfa01",
+      "-p",
+      "5432",
+      "-U",
+      "forge",
+      "-d",
+      "forge_test",
+      "-t",
+      "1"
+    ],
+    "exit_code": 0,
+    "stdout": "forge-readiness-9a23221cfa01:5432 - accepting connections",
+    "stderr": ""
+  },
+  "peer_authenticated_tcp_sql": {
+    "command": [
+      "docker",
+      "start",
+      "-a",
+      "forge-readiness-9a23221cfa01-peer"
+    ],
+    "exit_code": 0,
+    "stdout": "1",
+    "stderr": ""
+  },
+  "db_logs": "The files belonging to this database system will be owned by user \"postgres\".\nThis user must also own the server process.\n\nThe database cluster will be initialized with locale \"en_US.utf8\".\nThe default database encoding has accordingly been set to \"UTF8\".\nThe default text search configuration will be set to \"english\".\n\nData page checksums are disabled.\n\nfixing permissions on existing directory /var/lib/postgresql/data ... ok\ncreating subdirectories ... ok\nselecting dynamic shared memory implementation ... posix\nselecting default max_connections ... 100\nselecting default shared_buffers ... 128MB\nselecting default time zone ... UTC\ncreating configuration files ... ok\nrunning bootstrap script ... ok\nperforming post-bootstrap initialization ... ok\nsyncing data to disk ... ok\n\n\nSuccess. You can now start the database server using:\n\n    pg_ctl -D /var/lib/postgresql/data -l logfile start\n\nwaiting for server to start....2026-10-05 07:43:26.492 UTC [85] LOG:  starting PostgreSQL 16.15 on x86_64-pc-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit\n2026-10-05 07:43:26.502 UTC [85] LOG:  listening on Unix socket \"/var/run/postgresql/.s.PGSQL.5432\"\n2026-10-05 07:43:26.505 UTC [88] LOG:  database system was shut down at 2026-10-05 07:43:26 UTC\n2026-10-05 07:43:26.511 UTC [85] LOG:  database system is ready to accept connections\n done\nserver started\nCREATE DATABASE\n\n\n/usr/local/bin/docker-entrypoint.sh: running /docker-entrypoint-initdb.d/10-readiness-hold.sh\n\nwaiting for server to shut down...2026-10-05 07:43:30.605 UTC [85] LOG:  received fast shutdown request\n2026-10-05 07:43:30.605 UTC [85] LOG:  aborting any active transactions\n.2026-10-05 07:43:30.615 UTC [85] LOG:  background worker \"logical replication launcher\" (PID 91) exited with exit code 1\n2026-10-05 07:43:30.617 UTC [86] LOG:  shutting down\n2026-10-05 07:43:30.617 UTC [86] LOG:  checkpoint starting: shutdown immediate\n2026-10-05 07:43:30.649 UTC [86] LOG:  checkpoint complete: wrote 926 buffers (5.7%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.030 s, sync=0.002 s, total=0.033 s; sync files=301, longest=0.001 s, average=0.001 s; distance=4283 kB, estimate=4283 kB; lsn=0/1925D60, redo lsn=0/1925D60\n2026-10-05 07:43:30.675 UTC [85] LOG:  database system is shut down\n done\nserver stopped\n\nPostgreSQL init process complete; ready for start up."
+}
