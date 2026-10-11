@@ -1,0 +1,2265 @@
+{
+  "method": "Per-trial medians/min/max; SQL excludes first of seven identically per phase; paired ratios match repeat, endpoint, concurrency.",
+  "raw_sha256": {
+    "performance-improvements-verified-posts.json": "8673c524b1d161122bab3cee2e5df84c9ea067780d5ceefd85675d89cea9883b",
+    "performance-improvements-poll-control.json": "f6d22171ac3ef887ab6cd915863ee08b4697f67ff3a38dbfaca595bd12c5d31d",
+    "performance-improvements-diagnosis.json": "80c3f4e2c65c7b2ea3b0a4cfb4192ca07636a5466ef5377d485ee64669fff6a1",
+    "performance-improvements-verified-checks-and-sql.json": "5835cbea494761c91b092ea3084ac1a75746430fad7ec54313d632bb2de6f905"
+  },
+  "datasets": {
+    "final40": {
+      "trials": 40,
+      "requests": 814017,
+      "errors": 0,
+      "nr_throttled": 0,
+      "groups": {
+        "rust|/api/posts|16": {
+          "rps": {
+            "median": 3600.0,
+            "min": 3564.73,
+            "max": 3616.72
+          },
+          "p95_ms": {
+            "median": 7.111,
+            "min": 7.013,
+            "max": 7.182
+          },
+          "cpu_core_percent": {
+            "median": 141.933025845036,
+            "min": 141.22047960993572,
+            "max": 142.41767132656423
+          },
+          "db_cpu_core_percent": {
+            "median": 264.8790240656787,
+            "min": 263.4645372437063,
+            "max": 267.79416511487005
+          },
+          "client_cpu_core_percent": {
+            "median": 132.05319897604537,
+            "min": 130.24144600053768,
+            "max": 134.76347545336574
+          },
+          "peak_threads": {
+            "median": 4,
+            "min": 4,
+            "max": 8
+          },
+          "memory_mib": {
+            "median": 8.875,
+            "min": 6.25390625,
+            "max": 9.0390625
+          },
+          "repeats": 5,
+          "max_individual_client_cpu_percent": 68.30208662906922
+        },
+        "rust|/api/posts|64": {
+          "rps": {
+            "median": 3628.45,
+            "min": 3605.51,
+            "max": 3653.86
+          },
+          "p95_ms": {
+            "median": 33.087,
+            "min": 32.562,
+            "max": 33.493
+          },
+          "cpu_core_percent": {
+            "median": 141.7346652572785,
+            "min": 140.61783572784077,
+            "max": 142.61125793556818
+          },
+          "db_cpu_core_percent": {
+            "median": 264.49126227737514,
+            "min": 261.0406073637392,
+            "max": 266.91367300081924
+          },
+          "client_cpu_core_percent": {
+            "median": 132.92051133289843,
+            "min": 131.6994594646141,
+            "max": 134.62459819228084
+          },
+          "peak_threads": {
+            "median": 4,
+            "min": 4,
+            "max": 7
+          },
+          "memory_mib": {
+            "median": 8.8125,
+            "min": 8.5078125,
+            "max": 9.12109375
+          },
+          "repeats": 5,
+          "max_individual_client_cpu_percent": 68.6640095826326
+        },
+        "profile_fixed_pool|/api/posts|16": {
+          "rps": {
+            "median": 4320.62,
+            "min": 2280.16,
+            "max": 4819.25
+          },
+          "p95_ms": {
+            "median": 8.174,
+            "min": 5.445,
+            "max": 13.572
+          },
+          "cpu_core_percent": {
+            "median": 71.28186064469595,
+            "min": 36.954116377004134,
+            "max": 78.230900837853
+          },
+          "db_cpu_core_percent": {
+            "median": 298.8683698209084,
+            "min": 162.69436483323628,
+            "max": 328.13248598861486
+          },
+          "client_cpu_core_percent": {
+            "median": 149.98629978305607,
+            "min": 94.42172499009475,
+            "max": 158.17161702108803
+          },
+          "peak_threads": {
+            "median": 9,
+            "min": 9,
+            "max": 9
+          },
+          "memory_mib": {
+            "median": 5.0859375,
+            "min": 4.96484375,
+            "max": 5.32421875
+          },
+          "repeats": 5,
+          "max_individual_client_cpu_percent": 86.0117467301518,
+          "profile_us": {
+            "handler_ns": {
+              "median": 781.1941072852273,
+              "min": 761.3996098135847,
+              "max": 794.0777245531616
+            },
+            "cpu_ns": {
+              "median": 78.82397714907509,
+              "min": 76.18616848796515,
+              "max": 82.93023629785625
+            },
+            "acquire_ns": {
+              "median": 0.4488937847615962,
+              "min": 0.2546539387308534,
+              "max": 0.5105168987232076
+            },
+            "query_ns": {
+              "median": 759.7757611069386,
+              "min": 741.0796378115849,
+              "max": 770.5676135860467
+            }
+          },
+          "acquire_percent_of_handler": {
+            "median": 0.05653020741945568,
+            "min": 0.03251272645256344,
+            "max": 0.06535083841035799
+          },
+          "query_percent_of_handler": {
+            "median": 97.25825553744627,
+            "min": 97.03931866614892,
+            "max": 97.43330427266088
+          },
+          "active_lifetime_thread_bins": [
+            3,
+            5,
+            5,
+            2,
+            5
+          ],
+          "highest_nonzero_lifetime_thread_bin": 5
+        },
+        "profile_fixed_pool|/api/posts|64": {
+          "rps": {
+            "median": 5729.15,
+            "min": 5248.7,
+            "max": 5779.91
+          },
+          "p95_ms": {
+            "median": 31.875,
+            "min": 23.057,
+            "max": 35.034
+          },
+          "cpu_core_percent": {
+            "median": 99.21391477187537,
+            "min": 86.71235918861554,
+            "max": 102.7156298135659
+          },
+          "db_cpu_core_percent": {
+            "median": 399.7420407710035,
+            "min": 355.56101966468816,
+            "max": 405.6829187506995
+          },
+          "client_cpu_core_percent": {
+            "median": 180.09210228262543,
+            "min": 171.0230401214779,
+            "max": 181.04590498785734
+          },
+          "peak_threads": {
+            "median": 9,
+            "min": 9,
+            "max": 9
+          },
+          "memory_mib": {
+            "median": 11.609375,
+            "min": 11.3515625,
+            "max": 11.63671875
+          },
+          "repeats": 5,
+          "max_individual_client_cpu_percent": 96.17671040243242,
+          "profile_us": {
+            "handler_ns": {
+              "median": 911.783703653996,
+              "min": 772.9595857068385,
+              "max": 1006.0017183910519
+            },
+            "cpu_ns": {
+              "median": 90.9513946272025,
+              "min": 82.77203898990797,
+              "max": 95.85939341793934
+            },
+            "acquire_ns": {
+              "median": 105.9424267469045,
+              "min": 0.3634198853134923,
+              "max": 185.13414708539472
+            },
+            "query_ns": {
+              "median": 779.3837315784916,
+              "min": 747.9923506942799,
+              "max": 795.7646256829426
+            }
+          },
+          "acquire_percent_of_handler": {
+            "median": 11.619249864012438,
+            "min": 0.04701667357953266,
+            "max": 18.40296529328885
+          },
+          "query_percent_of_handler": {
+            "median": 85.47901530320094,
+            "min": 79.10171634255735,
+            "max": 96.76991715036081
+          },
+          "active_lifetime_thread_bins": [
+            7,
+            7,
+            6,
+            5,
+            7
+          ],
+          "highest_nonzero_lifetime_thread_bin": 7
+        },
+        "profile_fixed_connection|/api/posts|16": {
+          "rps": {
+            "median": 5898.15,
+            "min": 5764.21,
+            "max": 6025.98
+          },
+          "p95_ms": {
+            "median": 3.907,
+            "min": 3.774,
+            "max": 4.079
+          },
+          "cpu_core_percent": {
+            "median": 111.19059934376833,
+            "min": 110.51418281989349,
+            "max": 113.46362798086328
+          },
+          "db_cpu_core_percent": {
+            "median": 414.655246062099,
+            "min": 409.0507205960458,
+            "max": 419.43916301603196
+          },
+          "client_cpu_core_percent": {
+            "median": 184.41599568106352,
+            "min": 182.3495539551645,
+            "max": 184.9595784591948
+          },
+          "peak_threads": {
+            "median": 18,
+            "min": 18,
+            "max": 18
+          },
+          "memory_mib": {
+            "median": 5.80859375,
+            "min": 5.7578125,
+            "max": 6.03125
+          },
+          "repeats": 5,
+          "max_individual_client_cpu_percent": 92.52851338387512,
+          "profile_us": {
+            "handler_ns": {
+              "median": 1589.2358165118594,
+              "min": 1572.5513695428865,
+              "max": 1662.7520174693311
+            },
+            "cpu_ns": {
+              "median": 100.13924136762276,
+              "min": 98.98769389616852,
+              "max": 107.15249226234342
+            },
+            "acquire_ns": {
+              "median": 781.0463790844253,
+              "min": 743.9897671203561,
+              "max": 821.4895642203824
+            },
+            "query_ns": {
+              "median": 794.1171490488497,
+              "min": 780.3213718692984,
+              "max": 808.7115577614982
+            }
+          },
+          "acquire_percent_of_handler": {
+            "median": 49.14603427442933,
+            "min": 47.31099927989132,
+            "max": 49.405416778304065
+          },
+          "query_percent_of_handler": {
+            "median": 49.10041441061843,
+            "min": 48.6369313803232,
+            "max": 50.87364650387395
+          },
+          "active_lifetime_thread_bins": [
+            16,
+            16,
+            16,
+            16,
+            16
+          ],
+          "highest_nonzero_lifetime_thread_bin": 35
+        },
+        "profile_fixed_connection|/api/posts|64": {
+          "rps": {
+            "median": 6069.49,
+            "min": 5957.95,
+            "max": 6104.33
+          },
+          "p95_ms": {
+            "median": 19.261,
+            "min": 19.025,
+            "max": 19.757
+          },
+          "cpu_core_percent": {
+            "median": 109.26023074127804,
+            "min": 108.2122552529831,
+            "max": 112.57495525002805
+          },
+          "db_cpu_core_percent": {
+            "median": 414.86908052109175,
+            "min": 413.0342304037885,
+            "max": 419.5034797058895
+          },
+          "client_cpu_core_percent": {
+            "median": 186.82027535565405,
+            "min": 183.65669990407622,
+            "max": 187.35328524530698
+          },
+          "peak_threads": {
+            "median": 66,
+            "min": 66,
+            "max": 66
+          },
+          "memory_mib": {
+            "median": 14.65234375,
+            "min": 14.48046875,
+            "max": 15.3515625
+          },
+          "repeats": 5,
+          "max_individual_client_cpu_percent": 93.90403671920365,
+          "profile_us": {
+            "handler_ns": {
+              "median": 8824.355393714051,
+              "min": 8667.134626164008,
+              "max": 9169.178776657182
+            },
+            "cpu_ns": {
+              "median": 94.95184029956906,
+              "min": 93.4649282251438,
+              "max": 98.65659375640972
+            },
+            "acquire_ns": {
+              "median": 8021.877857189811,
+              "min": 7864.209375887107,
+              "max": 8353.821703213927
+            },
+            "query_ns": {
+              "median": 775.5679304026294,
+              "min": 770.1084732303417,
+              "max": 788.163989621694
+            }
+          },
+          "acquire_percent_of_handler": {
+            "median": 90.94224932840032,
+            "min": 90.7359780953089,
+            "max": 91.11510520365613
+          },
+          "query_percent_of_handler": {
+            "median": 8.74922473442631,
+            "min": 8.586514449226904,
+            "max": 8.919839873262617
+          },
+          "active_lifetime_thread_bins": [
+            64,
+            64,
+            64,
+            64,
+            64
+          ],
+          "highest_nonzero_lifetime_thread_bin": 164
+        },
+        "plain_fixed_connection|/api/posts|16": {
+          "rps": {
+            "median": 5887.6,
+            "min": 5843.18,
+            "max": 5900.59
+          },
+          "p95_ms": {
+            "median": 3.892,
+            "min": 3.864,
+            "max": 3.992
+          },
+          "cpu_core_percent": {
+            "median": 110.61676033098621,
+            "min": 107.87168776494897,
+            "max": 110.92684929473072
+          },
+          "db_cpu_core_percent": {
+            "median": 415.4138914610684,
+            "min": 412.5613742862141,
+            "max": 417.1522071709437
+          },
+          "client_cpu_core_percent": {
+            "median": 183.65717020048956,
+            "min": 181.699199516533,
+            "max": 185.2073205585788
+          },
+          "peak_threads": {
+            "median": 18,
+            "min": 18,
+            "max": 18
+          },
+          "memory_mib": {
+            "median": 5.67578125,
+            "min": 5.61328125,
+            "max": 5.85546875
+          },
+          "repeats": 5,
+          "max_individual_client_cpu_percent": 92.9708339472016
+        },
+        "plain_fixed_connection|/api/posts|64": {
+          "rps": {
+            "median": 6050.78,
+            "min": 6012.62,
+            "max": 6127.84
+          },
+          "p95_ms": {
+            "median": 19.152,
+            "min": 19.006,
+            "max": 19.348
+          },
+          "cpu_core_percent": {
+            "median": 108.73717077773946,
+            "min": 106.08449007871663,
+            "max": 110.5901402017693
+          },
+          "db_cpu_core_percent": {
+            "median": 415.28419334081207,
+            "min": 412.60586410319917,
+            "max": 420.9263262443469
+          },
+          "client_cpu_core_percent": {
+            "median": 187.23194671264127,
+            "min": 186.37807341748334,
+            "max": 189.51009797152585
+          },
+          "peak_threads": {
+            "median": 66,
+            "min": 66,
+            "max": 66
+          },
+          "memory_mib": {
+            "median": 13.82421875,
+            "min": 13.7734375,
+            "max": 14.00390625
+          },
+          "repeats": 5,
+          "max_individual_client_cpu_percent": 94.95527737659609
+        }
+      },
+      "cpu_observation_seconds": {
+        "median": 4.173327676951885,
+        "min": 4.158735265024006,
+        "max": 4.195733145810664
+      },
+      "request_elapsed_seconds": {
+        "median": 4.007,
+        "min": 4.002,
+        "max": 4.024
+      },
+      "max_client_start_lateness_ms": 1.0427609086036682
+    },
+    "poll20": {
+      "trials": 20,
+      "requests": 464524,
+      "errors": 0,
+      "nr_throttled": 0,
+      "groups": {
+        "profile_fixed_connection|/api/posts|16": {
+          "rps": {
+            "median": 5810.36,
+            "min": 5595.7,
+            "max": 5870.8
+          },
+          "p95_ms": {
+            "median": 3.979,
+            "min": 3.886,
+            "max": 4.3
+          },
+          "cpu_core_percent": {
+            "median": 110.45016204739548,
+            "min": 108.8389356239324,
+            "max": 112.66715435847394
+          },
+          "db_cpu_core_percent": {
+            "median": 411.05232594524944,
+            "min": 400.37490248641524,
+            "max": 413.24975505783107
+          },
+          "client_cpu_core_percent": {
+            "median": 182.33603009982068,
+            "min": 180.34057811942256,
+            "max": 184.37054417958686
+          },
+          "peak_threads": {
+            "median": 18,
+            "min": 18,
+            "max": 18
+          },
+          "memory_mib": {
+            "median": 5.7578125,
+            "min": 5.75,
+            "max": 6.0
+          },
+          "repeats": 5,
+          "max_individual_client_cpu_percent": 92.31908833010108,
+          "profile_us": {
+            "handler_ns": {
+              "median": 1626.2751224735528,
+              "min": 1568.0021619850188,
+              "max": 1693.6821595374174
+            },
+            "cpu_ns": {
+              "median": 101.19793532295519,
+              "min": 100.86897849046883,
+              "max": 106.13031626479993
+            },
+            "acquire_ns": {
+              "median": 793.1617531177432,
+              "min": 743.2110938032005,
+              "max": 832.0282680389355
+            },
+            "query_ns": {
+              "median": 804.4110044723488,
+              "min": 796.1051995233231,
+              "max": 831.6549445436685
+            }
+          },
+          "acquire_percent_of_handler": {
+            "median": 48.77168334908485,
+            "min": 47.39860134263651,
+            "max": 49.51748137396321
+          },
+          "query_percent_of_handler": {
+            "median": 49.46340218553214,
+            "min": 48.573704372936575,
+            "max": 50.77194527050209
+          },
+          "active_lifetime_thread_bins": [
+            16,
+            16,
+            16,
+            16,
+            16
+          ],
+          "highest_nonzero_lifetime_thread_bin": 35
+        },
+        "profile_fixed_connection|/api/posts|64": {
+          "rps": {
+            "median": 6000.03,
+            "min": 5971.74,
+            "max": 6060.15
+          },
+          "p95_ms": {
+            "median": 19.459,
+            "min": 19.162,
+            "max": 19.499
+          },
+          "cpu_core_percent": {
+            "median": 109.36068863620237,
+            "min": 107.77228177287965,
+            "max": 113.7717942311268
+          },
+          "db_cpu_core_percent": {
+            "median": 414.8972226707881,
+            "min": 413.2909605159191,
+            "max": 416.3532136983467
+          },
+          "client_cpu_core_percent": {
+            "median": 186.27819264575888,
+            "min": 184.81191128333018,
+            "max": 186.69212261143613
+          },
+          "peak_threads": {
+            "median": 66,
+            "min": 66,
+            "max": 66
+          },
+          "memory_mib": {
+            "median": 14.53515625,
+            "min": 14.26953125,
+            "max": 14.765625
+          },
+          "repeats": 5,
+          "max_individual_client_cpu_percent": 93.97541799074374,
+          "profile_us": {
+            "handler_ns": {
+              "median": 9084.046603418017,
+              "min": 8826.552123276393,
+              "max": 9216.458485669056
+            },
+            "cpu_ns": {
+              "median": 95.55001849691718,
+              "min": 94.01222700144062,
+              "max": 101.40903320053121
+            },
+            "acquire_ns": {
+              "median": 8269.18838408825,
+              "min": 8024.130103148796,
+              "max": 8405.738853232795
+            },
+            "query_ns": {
+              "median": 781.949515040718,
+              "min": 775.4616588598477,
+              "max": 787.6716388099615
+            }
+          },
+          "acquire_percent_of_handler": {
+            "median": 91.02978821109126,
+            "min": 90.90899811250713,
+            "max": 91.2035666010228
+          },
+          "query_percent_of_handler": {
+            "median": 8.670933485893693,
+            "min": 8.49713435516112,
+            "max": 8.785555764349787
+          },
+          "active_lifetime_thread_bins": [
+            64,
+            64,
+            64,
+            64,
+            64
+          ],
+          "highest_nonzero_lifetime_thread_bin": 164
+        },
+        "profile_fixed_pool_poll|/api/posts|16": {
+          "rps": {
+            "median": 5735.8,
+            "min": 5233.97,
+            "max": 5752.14
+          },
+          "p95_ms": {
+            "median": 5.694,
+            "min": 4.692,
+            "max": 7.186
+          },
+          "cpu_core_percent": {
+            "median": 100.04700595886636,
+            "min": 90.21471030220555,
+            "max": 104.18420345804168
+          },
+          "db_cpu_core_percent": {
+            "median": 401.63686882547654,
+            "min": 369.5733156737711,
+            "max": 409.2459732056039
+          },
+          "client_cpu_core_percent": {
+            "median": 178.24573059167125,
+            "min": 168.71214359549674,
+            "max": 179.9343033435213
+          },
+          "peak_threads": {
+            "median": 9,
+            "min": 9,
+            "max": 9
+          },
+          "memory_mib": {
+            "median": 5.28515625,
+            "min": 5.04296875,
+            "max": 5.37109375
+          },
+          "repeats": 5,
+          "max_individual_client_cpu_percent": 91.39274569788263,
+          "profile_us": {
+            "handler_ns": {
+              "median": 919.0070600992946,
+              "min": 839.3558369092628,
+              "max": 1028.4170832211266
+            },
+            "cpu_ns": {
+              "median": 90.7520567944251,
+              "min": 84.97386460302457,
+              "max": 95.61055557485993
+            },
+            "acquire_ns": {
+              "median": 109.58788184827107,
+              "min": 30.31671644612476,
+              "max": 197.91814898145333
+            },
+            "query_ns": {
+              "median": 788.7512358013937,
+              "min": 785.7690600992945,
+              "max": 830.4912830963061
+            }
+          },
+          "acquire_percent_of_handler": {
+            "median": 11.924596295966495,
+            "min": 3.6119027369559,
+            "max": 19.24493011741401
+          },
+          "query_percent_of_handler": {
+            "median": 85.50196121609727,
+            "min": 78.22493279159067,
+            "max": 93.72850153009664
+          },
+          "active_lifetime_thread_bins": [
+            7,
+            7,
+            6,
+            8,
+            6
+          ],
+          "highest_nonzero_lifetime_thread_bin": 7
+        },
+        "profile_fixed_pool_poll|/api/posts|64": {
+          "rps": {
+            "median": 5971.11,
+            "min": 5331.21,
+            "max": 6057.18
+          },
+          "p95_ms": {
+            "median": 21.015,
+            "min": 19.916,
+            "max": 22.904
+          },
+          "cpu_core_percent": {
+            "median": 106.26247655266333,
+            "min": 101.95724563870385,
+            "max": 107.3999999183029
+          },
+          "db_cpu_core_percent": {
+            "median": 416.6552794992886,
+            "min": 387.3494223452497,
+            "max": 420.02600560187756
+          },
+          "client_cpu_core_percent": {
+            "median": 182.38440682849728,
+            "min": 177.3787358785552,
+            "max": 186.2745893190391
+          },
+          "peak_threads": {
+            "median": 9,
+            "min": 9,
+            "max": 9
+          },
+          "memory_mib": {
+            "median": 11.57421875,
+            "min": 11.3203125,
+            "max": 11.83203125
+          },
+          "repeats": 5,
+          "max_individual_client_cpu_percent": 94.93782701311041,
+          "profile_us": {
+            "handler_ns": {
+              "median": 1241.2585294240487,
+              "min": 1136.5362544466404,
+              "max": 1384.476174461524
+            },
+            "cpu_ns": {
+              "median": 99.22294309010734,
+              "min": 97.53318260046113,
+              "max": 110.39984642339859
+            },
+            "acquire_ns": {
+              "median": 422.60249354717456,
+              "min": 330.43296096837946,
+              "max": 477.80446311264774
+            },
+            "query_ns": {
+              "median": 791.930435283799,
+              "min": 779.9997744153491,
+              "max": 875.6398614680185
+            }
+          },
+          "acquire_percent_of_handler": {
+            "median": 34.04938151833139,
+            "min": 29.073684158827074,
+            "max": 34.51156992994006
+          },
+          "query_percent_of_handler": {
+            "median": 63.80060370269999,
+            "min": 63.247015558688716,
+            "max": 68.62955505058811
+          },
+          "active_lifetime_thread_bins": [
+            8,
+            8,
+            8,
+            8,
+            8
+          ],
+          "highest_nonzero_lifetime_thread_bin": 7
+        }
+      },
+      "cpu_observation_seconds": {
+        "median": 4.175029332051054,
+        "min": 4.161495558917522,
+        "max": 4.186934826895595
+      },
+      "request_elapsed_seconds": {
+        "median": 4.007,
+        "min": 4.002,
+        "max": 4.015
+      },
+      "max_client_start_lateness_ms": 0.6801239214837551
+    },
+    "historical60": {
+      "trials": 60,
+      "requests": 1332948,
+      "errors": 0,
+      "nr_throttled": 0,
+      "groups": {
+        "rust|/api/health|1": {
+          "rps": {
+            "median": 2629.9,
+            "min": 2135.07,
+            "max": 2692.65
+          },
+          "p95_ms": {
+            "median": 0.617,
+            "min": 0.592,
+            "max": 0.775
+          },
+          "cpu_core_percent": {
+            "median": 20.088032023309403,
+            "min": 18.27954939207331,
+            "max": 22.667816578767674
+          },
+          "db_cpu_core_percent": {
+            "median": 0.06279767901227713,
+            "min": 0.013674477217093908,
+            "max": 0.1186010189329897
+          },
+          "client_cpu_core_percent": {
+            "median": 57.87223605551205,
+            "min": 55.81626397919857,
+            "max": 60.293694938346945
+          },
+          "peak_threads": {
+            "median": 4,
+            "min": 4,
+            "max": 7
+          },
+          "memory_mib": {
+            "median": 7.33203125,
+            "min": 4.78125,
+            "max": 7.4765625
+          },
+          "repeats": 3,
+          "max_individual_client_cpu_percent": 60.293694938346945
+        },
+        "rust|/api/health|16": {
+          "rps": {
+            "median": 11307.22,
+            "min": 11009.35,
+            "max": 11668.83
+          },
+          "p95_ms": {
+            "median": 2.1,
+            "min": 1.849,
+            "max": 2.205
+          },
+          "cpu_core_percent": {
+            "median": 87.13731848036926,
+            "min": 79.7665988569066,
+            "max": 88.61404272172663
+          },
+          "db_cpu_core_percent": {
+            "median": 0.19689676494936367,
+            "min": 0.049943644143218224,
+            "max": 0.25675379373927265
+          },
+          "client_cpu_core_percent": {
+            "median": 196.818029977275,
+            "min": 195.83325314795118,
+            "max": 197.85557745538472
+          },
+          "peak_threads": {
+            "median": 4,
+            "min": 4,
+            "max": 6
+          },
+          "memory_mib": {
+            "median": 7.40625,
+            "min": 4.8359375,
+            "max": 7.80859375
+          },
+          "repeats": 3,
+          "max_individual_client_cpu_percent": 99.0192506120328
+        },
+        "rust|/api/posts|16": {
+          "rps": {
+            "median": 3606.99,
+            "min": 3538.57,
+            "max": 3735.37
+          },
+          "p95_ms": {
+            "median": 7.218,
+            "min": 6.906,
+            "max": 7.282
+          },
+          "cpu_core_percent": {
+            "median": 147.45581770647559,
+            "min": 146.88964732392105,
+            "max": 150.59701619091123
+          },
+          "db_cpu_core_percent": {
+            "median": 270.2449540282641,
+            "min": 266.58603668155894,
+            "max": 271.1516240750916
+          },
+          "client_cpu_core_percent": {
+            "median": 134.05130880654448,
+            "min": 130.91394525145648,
+            "max": 135.24930158221179
+          },
+          "peak_threads": {
+            "median": 4,
+            "min": 4,
+            "max": 7
+          },
+          "memory_mib": {
+            "median": 8.79296875,
+            "min": 6.72265625,
+            "max": 9.10546875
+          },
+          "repeats": 3,
+          "max_individual_client_cpu_percent": 68.180622625024
+        },
+        "rust|/api/posts|64": {
+          "rps": {
+            "median": 3584.67,
+            "min": 3561.45,
+            "max": 3644.65
+          },
+          "p95_ms": {
+            "median": 33.991,
+            "min": 33.211,
+            "max": 34.127
+          },
+          "cpu_core_percent": {
+            "median": 147.01884118616522,
+            "min": 146.5592131150199,
+            "max": 147.74391214601394
+          },
+          "db_cpu_core_percent": {
+            "median": 270.87972653327216,
+            "min": 268.87041538741704,
+            "max": 273.73223172031857
+          },
+          "client_cpu_core_percent": {
+            "median": 132.90466532005723,
+            "min": 131.65562646216372,
+            "max": 133.88540156476788
+          },
+          "peak_threads": {
+            "median": 4,
+            "min": 4,
+            "max": 7
+          },
+          "memory_mib": {
+            "median": 8.9453125,
+            "min": 8.921875,
+            "max": 9.10546875
+          },
+          "repeats": 3,
+          "max_individual_client_cpu_percent": 67.56633604737708
+        },
+        "profile_baseline_pool|/api/health|1": {
+          "rps": {
+            "median": 1293.34,
+            "min": 1222.37,
+            "max": 1769.39
+          },
+          "p95_ms": {
+            "median": 1.401,
+            "min": 1.018,
+            "max": 1.42
+          },
+          "cpu_core_percent": {
+            "median": 20.944364475452648,
+            "min": 20.741533781437287,
+            "max": 21.93800938237228
+          },
+          "db_cpu_core_percent": {
+            "median": 26.296298016755458,
+            "min": 23.75816040272601,
+            "max": 26.831470549781724
+          },
+          "client_cpu_core_percent": {
+            "median": 47.03247414570166,
+            "min": 46.6696262327153,
+            "max": 50.255851077910165
+          },
+          "peak_threads": {
+            "median": 9,
+            "min": 9,
+            "max": 9
+          },
+          "memory_mib": {
+            "median": 2.62890625,
+            "min": 2.625,
+            "max": 3.5859375
+          },
+          "repeats": 3,
+          "max_individual_client_cpu_percent": 50.255851077910165,
+          "profile_us": {
+            "handler_ns": {
+              "median": 242.83765333333332,
+              "min": 194.10735979658145,
+              "max": 282.0630739983647
+            },
+            "cpu_ns": {
+              "median": 72.35085893719807,
+              "min": 54.785015115129255,
+              "max": 75.70433728536386
+            },
+            "acquire_ns": {
+              "median": 0.49121177432542923,
+              "min": 0.4059689221641475,
+              "max": 0.5165733333333333
+            },
+            "query_ns": {
+              "median": 227.41093101449275,
+              "min": 181.8295413193954,
+              "max": 266.3130958708095
+            }
+          },
+          "acquire_percent_of_handler": {
+            "median": 0.20914658907812173,
+            "min": 0.1741496209916074,
+            "max": 0.21272373795519026
+          },
+          "query_percent_of_handler": {
+            "median": 93.67472800101304,
+            "min": 93.64731041208633,
+            "max": 94.41615029422586
+          },
+          "active_lifetime_thread_bins": [
+            2,
+            1,
+            2
+          ],
+          "highest_nonzero_lifetime_thread_bin": 2
+        },
+        "profile_baseline_pool|/api/health|16": {
+          "rps": {
+            "median": 9928.77,
+            "min": 9485.35,
+            "max": 10031.97
+          },
+          "p95_ms": {
+            "median": 2.363,
+            "min": 2.252,
+            "max": 2.444
+          },
+          "cpu_core_percent": {
+            "median": 93.52011835547508,
+            "min": 91.12101765910201,
+            "max": 95.59119263646225
+          },
+          "db_cpu_core_percent": {
+            "median": 118.95229067086115,
+            "min": 115.74302754769917,
+            "max": 120.44486972698444
+          },
+          "client_cpu_core_percent": {
+            "median": 196.67071006696656,
+            "min": 196.57908376113912,
+            "max": 197.42173183358628
+          },
+          "peak_threads": {
+            "median": 9,
+            "min": 9,
+            "max": 9
+          },
+          "memory_mib": {
+            "median": 4.6875,
+            "min": 4.64453125,
+            "max": 4.703125
+          },
+          "repeats": 3,
+          "max_individual_client_cpu_percent": 98.76948195963062,
+          "profile_us": {
+            "handler_ns": {
+              "median": 160.88991889669606,
+              "min": 160.2458333920749,
+              "max": 163.32336533241983
+            },
+            "cpu_ns": {
+              "median": 42.314429436388096,
+              "min": 42.10733875434268,
+              "max": 42.70207062109673
+            },
+            "acquire_ns": {
+              "median": 0.415683206408601,
+              "min": 0.39461683701727,
+              "max": 0.5395266606866995
+            },
+            "query_ns": {
+              "median": 149.1514363382668,
+              "min": 149.11786994612558,
+              "max": 151.89142132862526
+            }
+          },
+          "acquire_percent_of_handler": {
+            "median": 0.25451545500702927,
+            "min": 0.24625715918101748,
+            "max": 0.3353390096697842
+          },
+          "query_percent_of_handler": {
+            "median": 93.00042343572422,
+            "min": 92.70402854391003,
+            "max": 93.05569248797724
+          },
+          "active_lifetime_thread_bins": [
+            6,
+            5,
+            5
+          ],
+          "highest_nonzero_lifetime_thread_bin": 7
+        },
+        "profile_baseline_pool|/api/posts|16": {
+          "rps": {
+            "median": 5016.82,
+            "min": 4809.28,
+            "max": 5269.66
+          },
+          "p95_ms": {
+            "median": 5.584,
+            "min": 4.871,
+            "max": 5.685
+          },
+          "cpu_core_percent": {
+            "median": 87.62789392903247,
+            "min": 81.51161962958402,
+            "max": 92.36193048977778
+          },
+          "db_cpu_core_percent": {
+            "median": 361.7981051413492,
+            "min": 341.8413524447828,
+            "max": 379.45443611945694
+          },
+          "client_cpu_core_percent": {
+            "median": 163.20944168501197,
+            "min": 159.22829218007251,
+            "max": 169.83843190503302
+          },
+          "peak_threads": {
+            "median": 9,
+            "min": 9,
+            "max": 9
+          },
+          "memory_mib": {
+            "median": 5.296875,
+            "min": 5.08984375,
+            "max": 5.3515625
+          },
+          "repeats": 3,
+          "max_individual_client_cpu_percent": 89.15035605856791,
+          "profile_us": {
+            "handler_ns": {
+              "median": 791.7045024395101,
+              "min": 771.7480095045186,
+              "max": 798.1414009194749
+            },
+            "cpu_ns": {
+              "median": 83.61144267500829,
+              "min": 80.18804144593331,
+              "max": 83.97797391217763
+            },
+            "acquire_ns": {
+              "median": 0.40856523319829646,
+              "min": 0.4057952305088121,
+              "max": 12.211176216882317
+            },
+            "query_ns": {
+              "median": 762.7242680221811,
+              "min": 749.0928864651501,
+              "max": 767.4602569949218
+            }
+          },
+          "acquire_percent_of_handler": {
+            "median": 0.05294023802673693,
+            "min": 0.05125589525617441,
+            "max": 1.5299514851397005
+          },
+          "query_percent_of_handler": {
+            "median": 96.9377153508811,
+            "min": 95.5625490851004,
+            "max": 97.06444036649819
+          },
+          "active_lifetime_thread_bins": [
+            5,
+            5,
+            6
+          ],
+          "highest_nonzero_lifetime_thread_bin": 7
+        },
+        "profile_baseline_pool|/api/posts|64": {
+          "rps": {
+            "median": 5586.49,
+            "min": 5165.73,
+            "max": 5743.53
+          },
+          "p95_ms": {
+            "median": 29.213,
+            "min": 25.705,
+            "max": 32.431
+          },
+          "cpu_core_percent": {
+            "median": 107.45214653707798,
+            "min": 88.77514420812548,
+            "max": 110.52034294836061
+          },
+          "db_cpu_core_percent": {
+            "median": 414.67518509186533,
+            "min": 367.5725137404854,
+            "max": 425.70854361791544
+          },
+          "client_cpu_core_percent": {
+            "median": 176.86561784576526,
+            "min": 167.15347232567902,
+            "max": 177.50764651632332
+          },
+          "peak_threads": {
+            "median": 9,
+            "min": 9,
+            "max": 9
+          },
+          "memory_mib": {
+            "median": 11.55078125,
+            "min": 11.40234375,
+            "max": 11.8984375
+          },
+          "repeats": 3,
+          "max_individual_client_cpu_percent": 94.55960928603741,
+          "profile_us": {
+            "handler_ns": {
+              "median": 1120.6116106312884,
+              "min": 780.2167751408077,
+              "max": 1175.9402716712898
+            },
+            "cpu_ns": {
+              "median": 103.0264402546523,
+              "min": 83.66136961440331,
+              "max": 104.7455695648405
+            },
+            "acquire_ns": {
+              "median": 258.9259080669575,
+              "min": 0.36104149617291675,
+              "max": 330.8245275225382
+            },
+            "query_ns": {
+              "median": 815.3473560592927,
+              "min": 755.8079542675589,
+              "max": 832.5602331047992
+            }
+          },
+          "acquire_percent_of_handler": {
+            "median": 23.105767030299955,
+            "min": 0.04627451083806275,
+            "max": 28.132766220546056
+          },
+          "query_percent_of_handler": {
+            "median": 74.29516392711498,
+            "min": 69.33577969062074,
+            "max": 96.87153344417084
+          },
+          "active_lifetime_thread_bins": [
+            5,
+            8,
+            8
+          ],
+          "highest_nonzero_lifetime_thread_bin": 7
+        },
+        "profile_fixed_pool|/api/health|1": {
+          "rps": {
+            "median": 1697.5,
+            "min": 1502.35,
+            "max": 1793.61
+          },
+          "p95_ms": {
+            "median": 1.026,
+            "min": 0.997,
+            "max": 1.235
+          },
+          "cpu_core_percent": {
+            "median": 21.214707455438674,
+            "min": 19.921093263886103,
+            "max": 25.41504006028416
+          },
+          "db_cpu_core_percent": {
+            "median": 25.970764218677164,
+            "min": 22.611829771481613,
+            "max": 27.20325970041235
+          },
+          "client_cpu_core_percent": {
+            "median": 47.44480159554757,
+            "min": 43.9877423864288,
+            "max": 48.640200266578276
+          },
+          "peak_threads": {
+            "median": 9,
+            "min": 9,
+            "max": 9
+          },
+          "memory_mib": {
+            "median": 2.63671875,
+            "min": 2.62890625,
+            "max": 3.40625
+          },
+          "repeats": 3,
+          "max_individual_client_cpu_percent": 48.640200266578276,
+          "profile_us": {
+            "handler_ns": {
+              "median": 190.95453577738516,
+              "min": 187.55977313266445,
+              "max": 231.00803892863084
+            },
+            "cpu_ns": {
+              "median": 58.859328564298785,
+              "min": 52.096841415830546,
+              "max": 66.33417844522968
+            },
+            "acquire_ns": {
+              "median": 0.4111079988851728,
+              "min": 0.40661819996672766,
+              "max": 0.46536469375736156
+            },
+            "query_ns": {
+              "median": 176.50376545936396,
+              "min": 175.79535632664437,
+              "max": 218.04292979537516
+            }
+          },
+          "acquire_percent_of_handler": {
+            "median": 0.21918772454175908,
+            "min": 0.17601906922916696,
+            "max": 0.24370444612003556
+          },
+          "query_percent_of_handler": {
+            "median": 93.72764393476906,
+            "min": 92.43235031878586,
+            "max": 94.38759395846773
+          },
+          "active_lifetime_thread_bins": [
+            2,
+            1,
+            2
+          ],
+          "highest_nonzero_lifetime_thread_bin": 3
+        },
+        "profile_fixed_pool|/api/health|16": {
+          "rps": {
+            "median": 9564.62,
+            "min": 9391.88,
+            "max": 9879.11
+          },
+          "p95_ms": {
+            "median": 2.445,
+            "min": 2.282,
+            "max": 2.696
+          },
+          "cpu_core_percent": {
+            "median": 94.23523563799893,
+            "min": 91.47619595579742,
+            "max": 95.7275681609704
+          },
+          "db_cpu_core_percent": {
+            "median": 120.2818045455843,
+            "min": 119.06462959204441,
+            "max": 120.83809559996635
+          },
+          "client_cpu_core_percent": {
+            "median": 196.76827998564613,
+            "min": 196.4598047072249,
+            "max": 196.77994799293123
+          },
+          "peak_threads": {
+            "median": 9,
+            "min": 9,
+            "max": 9
+          },
+          "memory_mib": {
+            "median": 4.68359375,
+            "min": 4.66015625,
+            "max": 4.6875
+          },
+          "repeats": 3,
+          "max_individual_client_cpu_percent": 98.50551983396986,
+          "profile_us": {
+            "handler_ns": {
+              "median": 167.1531216532709,
+              "min": 166.4900809149103,
+              "max": 167.25309196633913
+            },
+            "cpu_ns": {
+              "median": 44.060486639697665,
+              "min": 43.54079801634491,
+              "max": 44.07681520489233
+            },
+            "acquire_ns": {
+              "median": 0.43208470102446167,
+              "min": 0.41450513653057963,
+              "max": 0.6902405687827342
+            },
+            "query_ns": {
+              "median": 155.3859777859084,
+              "min": 154.1567154568226,
+              "max": 155.54486807366794
+            }
+          },
+          "acquire_percent_of_handler": {
+            "median": 0.2583418314989488,
+            "min": 0.24797929732380117,
+            "max": 0.414583598608197
+          },
+          "query_percent_of_handler": {
+            "median": 92.90469668398175,
+            "min": 92.59213198148963,
+            "max": 93.05531750481923
+          },
+          "active_lifetime_thread_bins": [
+            4,
+            6,
+            5
+          ],
+          "highest_nonzero_lifetime_thread_bin": 6
+        },
+        "profile_fixed_pool|/api/posts|16": {
+          "rps": {
+            "median": 5074.61,
+            "min": 4811.59,
+            "max": 5164.53
+          },
+          "p95_ms": {
+            "median": 5.49,
+            "min": 5.051,
+            "max": 6.79
+          },
+          "cpu_core_percent": {
+            "median": 88.29455939436257,
+            "min": 81.05242176322031,
+            "max": 91.66836961056298
+          },
+          "db_cpu_core_percent": {
+            "median": 365.9938597839695,
+            "min": 339.73978102648596,
+            "max": 377.70860144413047
+          },
+          "client_cpu_core_percent": {
+            "median": 165.0602220915297,
+            "min": 157.87152262210057,
+            "max": 168.6429690888712
+          },
+          "peak_threads": {
+            "median": 9,
+            "min": 9,
+            "max": 9
+          },
+          "memory_mib": {
+            "median": 5.34375,
+            "min": 5.34375,
+            "max": 5.58203125
+          },
+          "repeats": 3,
+          "max_individual_client_cpu_percent": 88.77733266092804,
+          "profile_us": {
+            "handler_ns": {
+              "median": 795.2487141028796,
+              "min": 766.8226450038931,
+              "max": 822.7192650614061
+            },
+            "cpu_ns": {
+              "median": 84.08514969234555,
+              "min": 79.55959672982091,
+              "max": 86.67016531283241
+            },
+            "acquire_ns": {
+              "median": 0.41038864713277245,
+              "min": 0.38179911395520555,
+              "max": 0.4238255904490008
+            },
+            "query_ns": {
+              "median": 771.0122228402658,
+              "min": 744.1064824292758,
+              "max": 797.2067032201916
+            }
+          },
+          "acquire_percent_of_handler": {
+            "median": 0.049881978526677855,
+            "min": 0.048010025943382155,
+            "max": 0.05527035400041545
+          },
+          "query_percent_of_handler": {
+            "median": 96.95233820152038,
+            "min": 96.89899545025114,
+            "max": 97.03762496809131
+          },
+          "active_lifetime_thread_bins": [
+            5,
+            5,
+            5
+          ],
+          "highest_nonzero_lifetime_thread_bin": 7
+        },
+        "profile_fixed_pool|/api/posts|64": {
+          "rps": {
+            "median": 5791.11,
+            "min": 5721.91,
+            "max": 5837.74
+          },
+          "p95_ms": {
+            "median": 33.77,
+            "min": 27.979,
+            "max": 35.553
+          },
+          "cpu_core_percent": {
+            "median": 107.62523529631801,
+            "min": 104.21975027375967,
+            "max": 107.74306476835727
+          },
+          "db_cpu_core_percent": {
+            "median": 424.9868844517143,
+            "min": 418.6897020920882,
+            "max": 427.56900132633456
+          },
+          "client_cpu_core_percent": {
+            "median": 178.64892717361144,
+            "min": 176.53363072170077,
+            "max": 180.45635887955106
+          },
+          "peak_threads": {
+            "median": 9,
+            "min": 9,
+            "max": 9
+          },
+          "memory_mib": {
+            "median": 11.6171875,
+            "min": 11.39453125,
+            "max": 11.8359375
+          },
+          "repeats": 3,
+          "max_individual_client_cpu_percent": 94.28106865051467,
+          "profile_us": {
+            "handler_ns": {
+              "median": 972.0219532734164,
+              "min": 924.0423725430509,
+              "max": 1011.412410274002
+            },
+            "cpu_ns": {
+              "median": 96.02941432039869,
+              "min": 94.89936828144026,
+              "max": 98.48867094035418
+            },
+            "acquire_ns": {
+              "median": 156.32065050900883,
+              "min": 99.16803391894243,
+              "max": 182.33081287251832
+            },
+            "query_ns": {
+              "median": 798.4269773004,
+              "min": 788.6787661541082,
+              "max": 801.6943620770978
+            }
+          },
+          "acquire_percent_of_handler": {
+            "median": 16.08200822857732,
+            "min": 10.731979059144521,
+            "max": 18.027345820595876
+          },
+          "query_percent_of_handler": {
+            "median": 81.1379582012654,
+            "min": 79.26483340855098,
+            "max": 86.40588365044933
+          },
+          "active_lifetime_thread_bins": [
+            7,
+            6,
+            7
+          ],
+          "highest_nonzero_lifetime_thread_bin": 7
+        },
+        "profile_fixed_connection|/api/health|1": {
+          "rps": {
+            "median": 1310.3,
+            "min": 1235.3,
+            "max": 1895.17
+          },
+          "p95_ms": {
+            "median": 1.235,
+            "min": 0.832,
+            "max": 1.37
+          },
+          "cpu_core_percent": {
+            "median": 21.513936678031882,
+            "min": 20.54247985901192,
+            "max": 22.003030537811888
+          },
+          "db_cpu_core_percent": {
+            "median": 25.84725775288381,
+            "min": 25.559916394603174,
+            "max": 27.081028779378247
+          },
+          "client_cpu_core_percent": {
+            "median": 46.900806605733905,
+            "min": 46.74741977400001,
+            "max": 47.11256186651287
+          },
+          "peak_threads": {
+            "median": 3,
+            "min": 3,
+            "max": 3
+          },
+          "memory_mib": {
+            "median": 2.36328125,
+            "min": 2.359375,
+            "max": 2.40234375
+          },
+          "repeats": 3,
+          "max_individual_client_cpu_percent": 47.11256186651287,
+          "profile_us": {
+            "handler_ns": {
+              "median": 262.5321216860576,
+              "min": 179.30006343972568,
+              "max": 273.46290875986244
+            },
+            "cpu_ns": {
+              "median": 69.6111831012779,
+              "min": 50.13012767079926,
+              "max": 79.85519866477848
+            },
+            "acquire_ns": {
+              "median": 0.5264365821094793,
+              "min": 0.34616525982590346,
+              "max": 0.5717066558769978
+            },
+            "query_ns": {
+              "median": 247.39358458897578,
+              "min": 167.87065127934582,
+              "max": 256.7461683188347
+            }
+          },
+          "acquire_percent_of_handler": {
+            "median": 0.20052273174366264,
+            "min": 0.193064772641462,
+            "max": 0.20906186453938216
+          },
+          "query_percent_of_handler": {
+            "median": 93.88701724967487,
+            "min": 93.625539254635,
+            "max": 94.23364386808831
+          },
+          "active_lifetime_thread_bins": [
+            2,
+            2,
+            2
+          ],
+          "highest_nonzero_lifetime_thread_bin": 6
+        },
+        "profile_fixed_connection|/api/health|16": {
+          "rps": {
+            "median": 9843.13,
+            "min": 9822.95,
+            "max": 9991.85
+          },
+          "p95_ms": {
+            "median": 2.165,
+            "min": 2.119,
+            "max": 2.232
+          },
+          "cpu_core_percent": {
+            "median": 104.33501689118033,
+            "min": 100.65037588582226,
+            "max": 104.51842334469099
+          },
+          "db_cpu_core_percent": {
+            "median": 124.80427036231947,
+            "min": 119.7614478452669,
+            "max": 126.95392548587327
+          },
+          "client_cpu_core_percent": {
+            "median": 196.95229196333756,
+            "min": 196.703913104538,
+            "max": 197.22632361028965
+          },
+          "peak_threads": {
+            "median": 18,
+            "min": 18,
+            "max": 18
+          },
+          "memory_mib": {
+            "median": 5.39453125,
+            "min": 5.39453125,
+            "max": 5.6484375
+          },
+          "repeats": 3,
+          "max_individual_client_cpu_percent": 98.64044430428976,
+          "profile_us": {
+            "handler_ns": {
+              "median": 179.10192615540885,
+              "min": 174.19242410748365,
+              "max": 181.2513677140141
+            },
+            "cpu_ns": {
+              "median": 46.439929879421626,
+              "min": 45.221329703045875,
+              "max": 47.00716160487557
+            },
+            "acquire_ns": {
+              "median": 6.54958128705565,
+              "min": 5.9824712036566785,
+              "max": 7.80972977435333
+            },
+            "query_ns": {
+              "median": 159.81930354730576,
+              "min": 154.99817473727066,
+              "max": 160.13912265109192
+            }
+          },
+          "acquire_percent_of_handler": {
+            "median": 3.7599690805234434,
+            "min": 3.3402606728336455,
+            "max": 4.3087839131100205
+          },
+          "query_percent_of_handler": {
+            "median": 88.98100794649406,
+            "min": 88.17550210130014,
+            "max": 89.412283881379
+          },
+          "active_lifetime_thread_bins": [
+            16,
+            16,
+            16
+          ],
+          "highest_nonzero_lifetime_thread_bin": 38
+        },
+        "profile_fixed_connection|/api/posts|16": {
+          "rps": {
+            "median": 5898.58,
+            "min": 5764.32,
+            "max": 5907.98
+          },
+          "p95_ms": {
+            "median": 3.942,
+            "min": 3.89,
+            "max": 4.117
+          },
+          "cpu_core_percent": {
+            "median": 116.8408315488633,
+            "min": 115.75502640644035,
+            "max": 117.05138335520775
+          },
+          "db_cpu_core_percent": {
+            "median": 431.76253085288073,
+            "min": 425.93562498997085,
+            "max": 432.61407086254303
+          },
+          "client_cpu_core_percent": {
+            "median": 183.1226842739685,
+            "min": 180.5464841491713,
+            "max": 183.7711300562187
+          },
+          "peak_threads": {
+            "median": 18,
+            "min": 18,
+            "max": 18
+          },
+          "memory_mib": {
+            "median": 5.51953125,
+            "min": 5.5078125,
+            "max": 5.75
+          },
+          "repeats": 3,
+          "max_individual_client_cpu_percent": 92.13439588327996,
+          "profile_us": {
+            "handler_ns": {
+              "median": 1654.8997728312438,
+              "min": 1627.9405380158998,
+              "max": 1677.9692173913045
+            },
+            "cpu_ns": {
+              "median": 102.3838072564276,
+              "min": 102.13693379362927,
+              "max": 104.07406575924401
+            },
+            "acquire_ns": {
+              "median": 829.6803423839377,
+              "min": 805.2107558355887,
+              "max": 837.1659065412458
+            },
+            "query_ns": {
+              "median": 795.2836381735005,
+              "min": 792.2900523088633,
+              "max": 810.1307376565954
+            }
+          },
+          "acquire_percent_of_handler": {
+            "median": 49.89161290114524,
+            "min": 49.46192671244386,
+            "max": 50.13477891561372
+          },
+          "query_percent_of_handler": {
+            "median": 48.280429060318816,
+            "min": 48.0563023350296,
+            "max": 48.668242715700785
+          },
+          "active_lifetime_thread_bins": [
+            16,
+            16,
+            16
+          ],
+          "highest_nonzero_lifetime_thread_bin": 70
+        },
+        "profile_fixed_connection|/api/posts|64": {
+          "rps": {
+            "median": 5854.87,
+            "min": 5794.51,
+            "max": 5893.81
+          },
+          "p95_ms": {
+            "median": 19.948,
+            "min": 19.904,
+            "max": 20.548
+          },
+          "cpu_core_percent": {
+            "median": 115.30636386284351,
+            "min": 115.27165012624219,
+            "max": 116.12121452207231
+          },
+          "db_cpu_core_percent": {
+            "median": 425.55285677070907,
+            "min": 422.61191537925816,
+            "max": 427.30559884691957
+          },
+          "client_cpu_core_percent": {
+            "median": 183.30364052459592,
+            "min": 182.92191779974974,
+            "max": 183.55059296287345
+          },
+          "peak_threads": {
+            "median": 66,
+            "min": 66,
+            "max": 66
+          },
+          "memory_mib": {
+            "median": 14.84765625,
+            "min": 14.27734375,
+            "max": 14.859375
+          },
+          "repeats": 3,
+          "max_individual_client_cpu_percent": 91.99748358775196,
+          "profile_us": {
+            "handler_ns": {
+              "median": 9364.694230959278,
+              "min": 9314.23944012569,
+              "max": 9399.233436079725
+            },
+            "cpu_ns": {
+              "median": 101.05814022831828,
+              "min": 100.87286530404975,
+              "max": 102.78148954028926
+            },
+            "acquire_ns": {
+              "median": 8534.55000362072,
+              "min": 8478.189360623277,
+              "max": 8575.017929033897
+            },
+            "query_ns": {
+              "median": 799.6895394445392,
+              "min": 793.0665459777412,
+              "max": 803.5302946367079
+            }
+          },
+          "acquire_percent_of_handler": {
+            "median": 91.1353835281227,
+            "min": 91.02395762019268,
+            "max": 91.23103482160565
+          },
+          "query_percent_of_handler": {
+            "median": 8.539408972914456,
+            "min": 8.437566226767924,
+            "max": 8.626901850677191
+          },
+          "active_lifetime_thread_bins": [
+            64,
+            64,
+            64
+          ],
+          "highest_nonzero_lifetime_thread_bin": 199
+        },
+        "plain_fixed_connection|/api/health|1": {
+          "rps": {
+            "median": 1362.66,
+            "min": 980.03,
+            "max": 1385.08
+          },
+          "p95_ms": {
+            "median": 1.388,
+            "min": 1.362,
+            "max": 1.401
+          },
+          "cpu_core_percent": {
+            "median": 21.127676255693896,
+            "min": 20.318715176022273,
+            "max": 22.31845152909586
+          },
+          "db_cpu_core_percent": {
+            "median": 25.92269515225137,
+            "min": 24.555856365910714,
+            "max": 27.14728964689196
+          },
+          "client_cpu_core_percent": {
+            "median": 46.93650367701035,
+            "min": 45.28350751947934,
+            "max": 50.99675024809319
+          },
+          "peak_threads": {
+            "median": 3,
+            "min": 3,
+            "max": 3
+          },
+          "memory_mib": {
+            "median": 2.59765625,
+            "min": 2.3515625,
+            "max": 2.59765625
+          },
+          "repeats": 3,
+          "max_individual_client_cpu_percent": 50.99675024809319
+        },
+        "plain_fixed_connection|/api/health|16": {
+          "rps": {
+            "median": 9864.16,
+            "min": 9347.35,
+            "max": 10471.39
+          },
+          "p95_ms": {
+            "median": 2.17,
+            "min": 1.926,
+            "max": 2.343
+          },
+          "cpu_core_percent": {
+            "median": 96.66867600065443,
+            "min": 94.62142481864227,
+            "max": 100.19149912423579
+          },
+          "db_cpu_core_percent": {
+            "median": 122.12227524791405,
+            "min": 117.98390763652732,
+            "max": 124.11612347154136
+          },
+          "client_cpu_core_percent": {
+            "median": 196.91190111646299,
+            "min": 195.89637708279136,
+            "max": 197.64331000483796
+          },
+          "peak_threads": {
+            "median": 18,
+            "min": 18,
+            "max": 18
+          },
+          "memory_mib": {
+            "median": 5.2578125,
+            "min": 5.0234375,
+            "max": 5.26171875
+          },
+          "repeats": 3,
+          "max_individual_client_cpu_percent": 98.84231383199523
+        },
+        "plain_fixed_connection|/api/posts|16": {
+          "rps": {
+            "median": 5955.75,
+            "min": 5893.88,
+            "max": 5984.38
+          },
+          "p95_ms": {
+            "median": 3.851,
+            "min": 3.843,
+            "max": 3.907
+          },
+          "cpu_core_percent": {
+            "median": 114.66956619364797,
+            "min": 114.57227910192749,
+            "max": 115.216101291171
+          },
+          "db_cpu_core_percent": {
+            "median": 435.8165452035508,
+            "min": 431.8220599014326,
+            "max": 436.61196062618643
+          },
+          "client_cpu_core_percent": {
+            "median": 183.21931772585074,
+            "min": 182.245772695695,
+            "max": 183.6648885096015
+          },
+          "peak_threads": {
+            "median": 18,
+            "min": 18,
+            "max": 18
+          },
+          "memory_mib": {
+            "median": 5.625,
+            "min": 5.390625,
+            "max": 5.84375
+          },
+          "repeats": 3,
+          "max_individual_client_cpu_percent": 91.95225935197384
+        },
+        "plain_fixed_connection|/api/posts|64": {
+          "rps": {
+            "median": 5889.83,
+            "min": 5886.22,
+            "max": 5941.65
+          },
+          "p95_ms": {
+            "median": 19.794,
+            "min": 19.782,
+            "max": 20.094
+          },
+          "cpu_core_percent": {
+            "median": 112.73091202127324,
+            "min": 112.17774379215196,
+            "max": 113.03644208373865
+          },
+          "db_cpu_core_percent": {
+            "median": 428.0466528346267,
+            "min": 427.04464633653015,
+            "max": 431.20798285631685
+          },
+          "client_cpu_core_percent": {
+            "median": 184.2998547739758,
+            "min": 183.80601683417945,
+            "max": 185.13734909739406
+          },
+          "peak_threads": {
+            "median": 66,
+            "min": 66,
+            "max": 66
+          },
+          "memory_mib": {
+            "median": 13.7421875,
+            "min": 13.73828125,
+            "max": 14.0
+          },
+          "repeats": 3,
+          "max_individual_client_cpu_percent": 93.33040636543599
+        }
+      }
+    }
+  },
+  "comparisons": {
+    "final40|profile_fixed_connection/profile_fixed_pool|16": {
+      "rps_ratio_of_medians": 1.3651165804907628,
+      "paired_rps_ratio": {
+        "median": 1.3651165804907628,
+        "min": 1.2288405872283032,
+        "max": 2.560486983369588
+      },
+      "paired_rps_ratios": [
+        1.7243788953178922,
+        1.2288405872283032,
+        1.3651165804907628,
+        2.560486983369588,
+        1.2466714824555332
+      ],
+      "p95_ratio_of_medians": 0.4779789576706631,
+      "paired_p95_ratio": {
+        "median": 0.4779789576706631,
+        "min": 0.2887562628941939,
+        "max": 0.70633608815427
+      }
+    },
+    "final40|profile_fixed_connection/profile_fixed_pool|64": {
+      "rps_ratio_of_medians": 1.0594049728144663,
+      "paired_rps_ratio": {
+        "median": 1.0654861541415395,
+        "min": 1.0501011261421025,
+        "max": 1.1351286985348754
+      },
+      "paired_rps_ratios": [
+        1.0654861541415395,
+        1.0501011261421025,
+        1.0665643260728765,
+        1.1351286985348754,
+        1.0586056796615186
+      ],
+      "p95_ratio_of_medians": 0.6042666666666666,
+      "paired_p95_ratio": {
+        "median": 0.5987450980392157,
+        "min": 0.549780213506879,
+        "max": 0.8568764366569807
+      }
+    },
+    "final40|plain_fixed_connection/rust|16": {
+      "rps_ratio_of_medians": 1.6354444444444445,
+      "paired_rps_ratio": {
+        "median": 1.6354444444444445,
+        "min": 1.631475480545909,
+        "max": 1.6475244969464726
+      },
+      "paired_rps_ratios": [
+        1.631475480545909,
+        1.635450586636341,
+        1.6354444444444445,
+        1.6340171590286245,
+        1.6475244969464726
+      ],
+      "p95_ratio_of_medians": 0.5473210518914358,
+      "paired_p95_ratio": {
+        "median": 0.5509767574504492,
+        "min": 0.5420495683653578,
+        "max": 0.5605167087896659
+      }
+    },
+    "final40|plain_fixed_connection/rust|64": {
+      "rps_ratio_of_medians": 1.6675936005732475,
+      "paired_rps_ratio": {
+        "median": 1.66262453664788,
+        "min": 1.6548601688267723,
+        "max": 1.691217747210439
+      },
+      "paired_rps_ratios": [
+        1.6548601688267723,
+        1.66262453664788,
+        1.691217747210439,
+        1.6559966720126111,
+        1.6865686130394866
+      ],
+      "p95_ratio_of_medians": 0.5788376099374376,
+      "paired_p95_ratio": {
+        "median": 0.5799292769174491,
+        "min": 0.5682253049509687,
+        "max": 0.588170259812051
+      }
+    },
+    "poll20|profile_fixed_connection/profile_fixed_pool_poll|16": {
+      "rps_ratio_of_medians": 1.0129990585445796,
+      "paired_rps_ratio": {
+        "median": 1.0235363855085602,
+        "min": 0.9752990019904416,
+        "max": 1.1101248192098923
+      },
+      "paired_rps_ratios": [
+        1.0235363855085602,
+        0.9752990019904416,
+        1.0946571937536322,
+        1.0117799636309268,
+        1.1101248192098923
+      ],
+      "p95_ratio_of_medians": 0.6988057604495961,
+      "paired_p95_ratio": {
+        "median": 0.6988057604495961,
+        "min": 0.5619259671583635,
+        "max": 0.8579409417398245
+      }
+    },
+    "poll20|profile_fixed_connection/profile_fixed_pool_poll|64": {
+      "rps_ratio_of_medians": 1.0048433205886342,
+      "paired_rps_ratio": {
+        "median": 1.0030374338690566,
+        "min": 0.9884286086924938,
+        "max": 1.1367306859043256
+      },
+      "paired_rps_ratios": [
+        1.0100822539536105,
+        0.9884286086924938,
+        1.0030374338690566,
+        1.0001055080211216,
+        1.1367306859043256
+      ],
+      "p95_ratio_of_medians": 0.9259576492981203,
+      "paired_p95_ratio": {
+        "median": 0.9259576492981203,
+        "min": 0.8366224240307369,
+        "max": 0.9746435027113879
+      }
+    }
+  },
+  "sql_execution_ms": {
+    "missing_index": {
+      "rows": {
+        "median": 41.4355,
+        "min": 31.477,
+        "max": 48.002
+      },
+      "json": {
+        "median": 34.4995,
+        "min": 31.474,
+        "max": 57.571
+      },
+      "guarded_json": {
+        "median": 45.718,
+        "min": 31.868,
+        "max": 51.237
+      },
+      "comments_for_post": {
+        "median": 22.822499999999998,
+        "min": 17.374,
+        "max": 25.694
+      },
+      "ban_only": {
+        "median": 0.0765,
+        "min": 0.052,
+        "max": 0.099
+      }
+    },
+    "restored_index": {
+      "rows": {
+        "median": 41.795500000000004,
+        "min": 31.764,
+        "max": 53.965
+      },
+      "json": {
+        "median": 51.653,
+        "min": 33.796,
+        "max": 62.476
+      },
+      "guarded_json": {
+        "median": 42.3465,
+        "min": 31.583,
+        "max": 54.493
+      },
+      "comments_for_post": {
+        "median": 2.926,
+        "min": 1.619,
+        "max": 3.468
+      },
+      "ban_only": {
+        "median": 0.066,
+        "min": 0.056,
+        "max": 0.1
+      }
+    }
+  }
+}
