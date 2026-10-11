@@ -1,0 +1,622 @@
+{
+  "date_utc": "2026-10-03T05:25:24.198237+00:00",
+  "host": "Linux-6.8.0-139-generic-x86_64-with-glibc2.39",
+  "compiler": "cc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+  "repeats": 7,
+  "order": "alternating before/after and after/before",
+  "scope": "Shared host; dispatch excludes spawn/destruction; includes worker startup/stop. One yield is consumed within one reduction budget. Bootstrap excludes C compilation.",
+  "roots": {
+    "before": "/tmp/forge-continuation-20261003/baseline",
+    "after": "/home/helloworld0822/coding/forge"
+  },
+  "builds": {
+    "before": "/tmp/forge-continuation-20261003/baseline-build",
+    "after": "/tmp/forge-continuation-20261003/after-build"
+  },
+  "binary_sha256": {
+    "before": {
+      "forge": "6207563a74005fb91b42aeda4cba0ee263aceff344d2d931bea7438a9107485a",
+      "forge-stage2": "1c0d5663e20eef5e8a5b50956827b7a75b73e0e7f6adef5766720a85622c3c91"
+    },
+    "after": {
+      "forge": "c522fa5e4f6e8408bb7ed09a48ee9eb66932e2da6312cf777829fb328eb795bc",
+      "forge-stage2": "7d27edf96efc45774b39f82fc69442530bbd54f90c89ab55bea6d1ecc7cba6cf"
+    }
+  },
+  "library_sha256": {
+    "before": {
+      "libforge_std.a": "33eccb2e83a5c222575a9dbbb54f86f0f6f725414697f0a4c2e636e14d0b7c65",
+      "libforge_runtime.a": "85af0afe0aee5cf782f7b8b3fb9fe8e726405d4981782801b4b5ac1a8e224d4b"
+    },
+    "after": {
+      "libforge_std.a": "3ec728179baa49d4042637c617e8a228cd7d365b287af22ba10dc61e9b21446e",
+      "libforge_runtime.a": "17884c32f7887dc42525afdbb1ad4e65a16493ecc94adbc01c183540d95db793"
+    }
+  },
+  "benchmark_source_sha256": "2a03ebdb424c80b733b64ede44eb2a416df87014820e2865c20eee249066de78",
+  "input_sha256": "7eea51a3bcccc0ecb3ce741bf7b9df39a4df77cd01aca552ef9b9b2d2807404d",
+  "common_input_bytes": 39699,
+  "output_sha256": {
+    "before": "c7e8f451f528f040ca71947e81a352cd85bec58e4581636176c99f107fccfe57",
+    "after": "c7e8f451f528f040ca71947e81a352cd85bec58e4581636176c99f107fccfe57"
+  },
+  "correctness": "Both emitted compilers compile/execute the same native fixture; per-variant deterministic C",
+  "summary": {
+    "scheduler_dispatch_10000_1": {
+      "before": {
+        "wall_ms": {
+          "median": 61.504,
+          "min": 14.028,
+          "max": 62.188
+        },
+        "process_cpu_ms": {
+          "median": 66.726,
+          "min": 15.875,
+          "max": 67.346
+        }
+      },
+      "after": {
+        "wall_ms": {
+          "median": 7.48,
+          "min": 3.591,
+          "max": 9.992
+        },
+        "process_cpu_ms": {
+          "median": 12.327,
+          "min": 5.815,
+          "max": 16.047
+        }
+      },
+      "wall_speedup": 8.222459893048127
+    },
+    "scheduler_dispatch_100000_4": {
+      "before": {
+        "wall_ms": {
+          "median": 3533.036,
+          "min": 2357.269,
+          "max": 6215.195
+        },
+        "process_cpu_ms": {
+          "median": 3600.946,
+          "min": 2405.296,
+          "max": 6344.698
+        }
+      },
+      "after": {
+        "wall_ms": {
+          "median": 106.924,
+          "min": 88.632,
+          "max": 118.622
+        },
+        "process_cpu_ms": {
+          "median": 381.245,
+          "min": 318.419,
+          "max": 429.899
+        }
+      },
+      "wall_speedup": 33.042497474841944
+    },
+    "scheduler_idle_500ms": {
+      "before": {
+        "wall_ms": {
+          "median": 500.698,
+          "min": 500.633,
+          "max": 500.917
+        },
+        "process_cpu_ms": {
+          "median": 3.381,
+          "min": 2.581,
+          "max": 3.929
+        }
+      },
+      "after": {
+        "wall_ms": {
+          "median": 500.773,
+          "min": 500.6,
+          "max": 500.964
+        },
+        "process_cpu_ms": {
+          "median": 3.419,
+          "min": 2.885,
+          "max": 3.728
+        }
+      },
+      "wall_speedup": 0.9998502315420359
+    },
+    "bootstrap_common_input": {
+      "before": {
+        "wall_ms": {
+          "median": 67.32049095444381,
+          "min": 35.826175939291716,
+          "max": 69.46581089869142
+        }
+      },
+      "after": {
+        "wall_ms": {
+          "median": 18.872316926717758,
+          "min": 6.230686092749238,
+          "max": 21.235886961221695
+        }
+      },
+      "wall_speedup": 3.567155597050059
+    }
+  },
+  "runs": [
+    {
+      "case": "scheduler_dispatch_10000_1",
+      "variant": "before",
+      "repeat": 1,
+      "coroutines": 10000.0,
+      "workers": 1.0,
+      "wall_ms": 62.188,
+      "process_cpu_ms": 67.346,
+      "completed": 10000.0
+    },
+    {
+      "case": "scheduler_dispatch_10000_1",
+      "variant": "after",
+      "repeat": 1,
+      "coroutines": 10000.0,
+      "workers": 1.0,
+      "wall_ms": 5.505,
+      "process_cpu_ms": 9.396,
+      "completed": 10000.0
+    },
+    {
+      "case": "scheduler_dispatch_10000_1",
+      "variant": "after",
+      "repeat": 2,
+      "coroutines": 10000.0,
+      "workers": 1.0,
+      "wall_ms": 9.992,
+      "process_cpu_ms": 15.688,
+      "completed": 10000.0
+    },
+    {
+      "case": "scheduler_dispatch_10000_1",
+      "variant": "before",
+      "repeat": 2,
+      "coroutines": 10000.0,
+      "workers": 1.0,
+      "wall_ms": 61.879,
+      "process_cpu_ms": 67.013,
+      "completed": 10000.0
+    },
+    {
+      "case": "scheduler_dispatch_10000_1",
+      "variant": "before",
+      "repeat": 3,
+      "coroutines": 10000.0,
+      "workers": 1.0,
+      "wall_ms": 61.93,
+      "process_cpu_ms": 67.056,
+      "completed": 10000.0
+    },
+    {
+      "case": "scheduler_dispatch_10000_1",
+      "variant": "after",
+      "repeat": 3,
+      "coroutines": 10000.0,
+      "workers": 1.0,
+      "wall_ms": 9.539,
+      "process_cpu_ms": 16.047,
+      "completed": 10000.0
+    },
+    {
+      "case": "scheduler_dispatch_10000_1",
+      "variant": "after",
+      "repeat": 4,
+      "coroutines": 10000.0,
+      "workers": 1.0,
+      "wall_ms": 8.584,
+      "process_cpu_ms": 14.627,
+      "completed": 10000.0
+    },
+    {
+      "case": "scheduler_dispatch_10000_1",
+      "variant": "before",
+      "repeat": 4,
+      "coroutines": 10000.0,
+      "workers": 1.0,
+      "wall_ms": 57.853,
+      "process_cpu_ms": 62.874,
+      "completed": 10000.0
+    },
+    {
+      "case": "scheduler_dispatch_10000_1",
+      "variant": "before",
+      "repeat": 5,
+      "coroutines": 10000.0,
+      "workers": 1.0,
+      "wall_ms": 14.028,
+      "process_cpu_ms": 15.875,
+      "completed": 10000.0
+    },
+    {
+      "case": "scheduler_dispatch_10000_1",
+      "variant": "after",
+      "repeat": 5,
+      "coroutines": 10000.0,
+      "workers": 1.0,
+      "wall_ms": 6.593,
+      "process_cpu_ms": 10.658,
+      "completed": 10000.0
+    },
+    {
+      "case": "scheduler_dispatch_10000_1",
+      "variant": "after",
+      "repeat": 6,
+      "coroutines": 10000.0,
+      "workers": 1.0,
+      "wall_ms": 7.48,
+      "process_cpu_ms": 12.327,
+      "completed": 10000.0
+    },
+    {
+      "case": "scheduler_dispatch_10000_1",
+      "variant": "before",
+      "repeat": 6,
+      "coroutines": 10000.0,
+      "workers": 1.0,
+      "wall_ms": 61.504,
+      "process_cpu_ms": 66.726,
+      "completed": 10000.0
+    },
+    {
+      "case": "scheduler_dispatch_10000_1",
+      "variant": "before",
+      "repeat": 7,
+      "coroutines": 10000.0,
+      "workers": 1.0,
+      "wall_ms": 58.83,
+      "process_cpu_ms": 63.69,
+      "completed": 10000.0
+    },
+    {
+      "case": "scheduler_dispatch_10000_1",
+      "variant": "after",
+      "repeat": 7,
+      "coroutines": 10000.0,
+      "workers": 1.0,
+      "wall_ms": 3.591,
+      "process_cpu_ms": 5.815,
+      "completed": 10000.0
+    },
+    {
+      "case": "scheduler_dispatch_100000_4",
+      "variant": "before",
+      "repeat": 1,
+      "coroutines": 100000.0,
+      "workers": 4.0,
+      "wall_ms": 3719.693,
+      "process_cpu_ms": 3794.608,
+      "completed": 100000.0
+    },
+    {
+      "case": "scheduler_dispatch_100000_4",
+      "variant": "after",
+      "repeat": 1,
+      "coroutines": 100000.0,
+      "workers": 4.0,
+      "wall_ms": 116.601,
+      "process_cpu_ms": 415.698,
+      "completed": 100000.0
+    },
+    {
+      "case": "scheduler_dispatch_100000_4",
+      "variant": "after",
+      "repeat": 2,
+      "coroutines": 100000.0,
+      "workers": 4.0,
+      "wall_ms": 106.924,
+      "process_cpu_ms": 381.245,
+      "completed": 100000.0
+    },
+    {
+      "case": "scheduler_dispatch_100000_4",
+      "variant": "before",
+      "repeat": 2,
+      "coroutines": 100000.0,
+      "workers": 4.0,
+      "wall_ms": 2737.188,
+      "process_cpu_ms": 2788.015,
+      "completed": 100000.0
+    },
+    {
+      "case": "scheduler_dispatch_100000_4",
+      "variant": "before",
+      "repeat": 3,
+      "coroutines": 100000.0,
+      "workers": 4.0,
+      "wall_ms": 2357.269,
+      "process_cpu_ms": 2405.296,
+      "completed": 100000.0
+    },
+    {
+      "case": "scheduler_dispatch_100000_4",
+      "variant": "after",
+      "repeat": 3,
+      "coroutines": 100000.0,
+      "workers": 4.0,
+      "wall_ms": 118.622,
+      "process_cpu_ms": 429.899,
+      "completed": 100000.0
+    },
+    {
+      "case": "scheduler_dispatch_100000_4",
+      "variant": "after",
+      "repeat": 4,
+      "coroutines": 100000.0,
+      "workers": 4.0,
+      "wall_ms": 98.38,
+      "process_cpu_ms": 355.72,
+      "completed": 100000.0
+    },
+    {
+      "case": "scheduler_dispatch_100000_4",
+      "variant": "before",
+      "repeat": 4,
+      "coroutines": 100000.0,
+      "workers": 4.0,
+      "wall_ms": 3533.036,
+      "process_cpu_ms": 3600.946,
+      "completed": 100000.0
+    },
+    {
+      "case": "scheduler_dispatch_100000_4",
+      "variant": "before",
+      "repeat": 5,
+      "coroutines": 100000.0,
+      "workers": 4.0,
+      "wall_ms": 3378.042,
+      "process_cpu_ms": 3444.112,
+      "completed": 100000.0
+    },
+    {
+      "case": "scheduler_dispatch_100000_4",
+      "variant": "after",
+      "repeat": 5,
+      "coroutines": 100000.0,
+      "workers": 4.0,
+      "wall_ms": 112.0,
+      "process_cpu_ms": 401.498,
+      "completed": 100000.0
+    },
+    {
+      "case": "scheduler_dispatch_100000_4",
+      "variant": "after",
+      "repeat": 6,
+      "coroutines": 100000.0,
+      "workers": 4.0,
+      "wall_ms": 88.632,
+      "process_cpu_ms": 318.419,
+      "completed": 100000.0
+    },
+    {
+      "case": "scheduler_dispatch_100000_4",
+      "variant": "before",
+      "repeat": 6,
+      "coroutines": 100000.0,
+      "workers": 4.0,
+      "wall_ms": 6215.195,
+      "process_cpu_ms": 6344.698,
+      "completed": 100000.0
+    },
+    {
+      "case": "scheduler_dispatch_100000_4",
+      "variant": "before",
+      "repeat": 7,
+      "coroutines": 100000.0,
+      "workers": 4.0,
+      "wall_ms": 4382.564,
+      "process_cpu_ms": 4489.664,
+      "completed": 100000.0
+    },
+    {
+      "case": "scheduler_dispatch_100000_4",
+      "variant": "after",
+      "repeat": 7,
+      "coroutines": 100000.0,
+      "workers": 4.0,
+      "wall_ms": 93.037,
+      "process_cpu_ms": 332.945,
+      "completed": 100000.0
+    },
+    {
+      "case": "scheduler_idle_500ms",
+      "variant": "before",
+      "repeat": 1,
+      "wait_ms": 500.0,
+      "wall_ms": 500.633,
+      "process_cpu_ms": 2.585
+    },
+    {
+      "case": "scheduler_idle_500ms",
+      "variant": "after",
+      "repeat": 1,
+      "wait_ms": 500.0,
+      "wall_ms": 500.6,
+      "process_cpu_ms": 2.885
+    },
+    {
+      "case": "scheduler_idle_500ms",
+      "variant": "after",
+      "repeat": 2,
+      "wait_ms": 500.0,
+      "wall_ms": 500.773,
+      "process_cpu_ms": 2.934
+    },
+    {
+      "case": "scheduler_idle_500ms",
+      "variant": "before",
+      "repeat": 2,
+      "wait_ms": 500.0,
+      "wall_ms": 500.652,
+      "process_cpu_ms": 3.381
+    },
+    {
+      "case": "scheduler_idle_500ms",
+      "variant": "before",
+      "repeat": 3,
+      "wait_ms": 500.0,
+      "wall_ms": 500.698,
+      "process_cpu_ms": 3.444
+    },
+    {
+      "case": "scheduler_idle_500ms",
+      "variant": "after",
+      "repeat": 3,
+      "wait_ms": 500.0,
+      "wall_ms": 500.735,
+      "process_cpu_ms": 3.531
+    },
+    {
+      "case": "scheduler_idle_500ms",
+      "variant": "after",
+      "repeat": 4,
+      "wait_ms": 500.0,
+      "wall_ms": 500.804,
+      "process_cpu_ms": 3.419
+    },
+    {
+      "case": "scheduler_idle_500ms",
+      "variant": "before",
+      "repeat": 4,
+      "wait_ms": 500.0,
+      "wall_ms": 500.719,
+      "process_cpu_ms": 2.581
+    },
+    {
+      "case": "scheduler_idle_500ms",
+      "variant": "before",
+      "repeat": 5,
+      "wait_ms": 500.0,
+      "wall_ms": 500.646,
+      "process_cpu_ms": 3.299
+    },
+    {
+      "case": "scheduler_idle_500ms",
+      "variant": "after",
+      "repeat": 5,
+      "wait_ms": 500.0,
+      "wall_ms": 500.677,
+      "process_cpu_ms": 3.262
+    },
+    {
+      "case": "scheduler_idle_500ms",
+      "variant": "after",
+      "repeat": 6,
+      "wait_ms": 500.0,
+      "wall_ms": 500.943,
+      "process_cpu_ms": 3.728
+    },
+    {
+      "case": "scheduler_idle_500ms",
+      "variant": "before",
+      "repeat": 6,
+      "wait_ms": 500.0,
+      "wall_ms": 500.839,
+      "process_cpu_ms": 3.929
+    },
+    {
+      "case": "scheduler_idle_500ms",
+      "variant": "before",
+      "repeat": 7,
+      "wait_ms": 500.0,
+      "wall_ms": 500.917,
+      "process_cpu_ms": 3.666
+    },
+    {
+      "case": "scheduler_idle_500ms",
+      "variant": "after",
+      "repeat": 7,
+      "wait_ms": 500.0,
+      "wall_ms": 500.964,
+      "process_cpu_ms": 3.658
+    },
+    {
+      "case": "bootstrap_common_input",
+      "variant": "before",
+      "repeat": 1,
+      "wall_ms": 69.46581089869142
+    },
+    {
+      "case": "bootstrap_common_input",
+      "variant": "after",
+      "repeat": 1,
+      "wall_ms": 20.90982091613114
+    },
+    {
+      "case": "bootstrap_common_input",
+      "variant": "after",
+      "repeat": 2,
+      "wall_ms": 14.712812146171927
+    },
+    {
+      "case": "bootstrap_common_input",
+      "variant": "before",
+      "repeat": 2,
+      "wall_ms": 68.89507593587041
+    },
+    {
+      "case": "bootstrap_common_input",
+      "variant": "before",
+      "repeat": 3,
+      "wall_ms": 58.635131223127246
+    },
+    {
+      "case": "bootstrap_common_input",
+      "variant": "after",
+      "repeat": 3,
+      "wall_ms": 20.501113031059504
+    },
+    {
+      "case": "bootstrap_common_input",
+      "variant": "after",
+      "repeat": 4,
+      "wall_ms": 21.235886961221695
+    },
+    {
+      "case": "bootstrap_common_input",
+      "variant": "before",
+      "repeat": 4,
+      "wall_ms": 67.32049095444381
+    },
+    {
+      "case": "bootstrap_common_input",
+      "variant": "before",
+      "repeat": 5,
+      "wall_ms": 59.265512973070145
+    },
+    {
+      "case": "bootstrap_common_input",
+      "variant": "after",
+      "repeat": 5,
+      "wall_ms": 6.230686092749238
+    },
+    {
+      "case": "bootstrap_common_input",
+      "variant": "after",
+      "repeat": 6,
+      "wall_ms": 18.872316926717758
+    },
+    {
+      "case": "bootstrap_common_input",
+      "variant": "before",
+      "repeat": 6,
+      "wall_ms": 35.826175939291716
+    },
+    {
+      "case": "bootstrap_common_input",
+      "variant": "before",
+      "repeat": 7,
+      "wall_ms": 68.6384488362819
+    },
+    {
+      "case": "bootstrap_common_input",
+      "variant": "after",
+      "repeat": 7,
+      "wall_ms": 18.759822938591242
+    }
+  ]
+}
