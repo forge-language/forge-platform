@@ -1,5 +1,10 @@
 {
-  "checked_at": "2026-10-12T00:46:15.212392+00:00",
-  "content_id": "09cc566bc0e104a552e40d13",
-  "errors": []
+  "checked_at": "2026-10-12T06:35:37.070129+00:00",
+  "content_id": "925d8dce2bc1d78b02f5a9e7",
+  "errors": [
+    {
+      "component": "reports",
+      "message": "ValueError: public refresh failed; previous data retained"
+    }
+  ]
 }
