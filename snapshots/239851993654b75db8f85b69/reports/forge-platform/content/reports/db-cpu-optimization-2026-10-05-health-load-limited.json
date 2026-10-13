@@ -1,0 +1,602 @@
+{
+  "date_utc": "2026-10-05T07:58:46Z",
+  "prepared": {
+    "snapshot_directory": "/tmp/forge-portfolio-snapshot-_8ronqk6",
+    "images": {
+      "before": "forge-continuation-before:20261003-051223",
+      "after": "forge-continuation-after-release:20261003-053000",
+      "rust": "forge-continuation-rust:20261003-051223"
+    },
+    "provenance": {
+      "before": {
+        "application": "f64380effce895fa68823f83c513b51d76220cbc197343f057b30fc5542fc784",
+        "native_adapter": "a12e2b869e14a163e63838a2dc101f5fd8c12b896a2288f7cf549c309ef83807",
+        "toolchain": "db749d0412e0aaf83f3b951df29af26d8f52ab17205e3ba01d366376ca56e8be",
+        "postgres": "a84d4bfa9171704d34d9aa0025fe13be5b3550bb23c770ca9207eed5cc501348",
+        "web": "9c9a5bc45b2ca984f2f02712e50e15ecb0ed7d435fb2d15b888e1b51ae12edd9",
+        "rust": "070e558d24e94fa526186b975670ad3b5343a55109478ee3e5a9a98d953de131"
+      },
+      "after": {
+        "application": "f64380effce895fa68823f83c513b51d76220cbc197343f057b30fc5542fc784",
+        "native_adapter": "a12e2b869e14a163e63838a2dc101f5fd8c12b896a2288f7cf549c309ef83807",
+        "toolchain": "93acb869e6e9badd8075323fcc24e54234e9acaf00f230ca55adcc821b6cd994",
+        "postgres": "a84d4bfa9171704d34d9aa0025fe13be5b3550bb23c770ca9207eed5cc501348",
+        "web": "9c9a5bc45b2ca984f2f02712e50e15ecb0ed7d435fb2d15b888e1b51ae12edd9",
+        "rust": "070e558d24e94fa526186b975670ad3b5343a55109478ee3e5a9a98d953de131"
+      }
+    },
+    "image_ids": {
+      "before": "sha256:084935a2867860e7bd04eacc421502766f5969286d4a2c0bbe66f98b7519bb08",
+      "after": "sha256:9338d9ed9194f4d57c7d9513e3bb292a0875e69282eed877f81fabc74e60005f",
+      "rust": "sha256:06263bc0a2216ddbdc985d1a728983c4d4b95f494cadb53b0f4f3b957918d0da"
+    },
+    "build_note": "All images built successfully. Initial metadata write failed ENOSPC; metadata recovered from exact retained contexts and image IDs. Unused own builder images removed. Final source matches common.h=0.3.0 freeze."
+  },
+  "configs": [
+    {
+      "name": "rust"
+    },
+    {
+      "name": "plain_fixed_connection",
+      "binary": "portfolio-fixed",
+      "workers": 8,
+      "pool": 5,
+      "threads": "connection"
+    },
+    {
+      "name": "plain_baseline_connection",
+      "binary": "portfolio-baseline",
+      "workers": 8,
+      "pool": 5,
+      "threads": "connection"
+    }
+  ],
+  "cases": [
+    [
+      "/api/health",
+      16
+    ]
+  ],
+  "repeats": 3,
+  "profile_source_sha256": "eda61ace8c07690b36a22670fe83f722e8eeeef2c49b5cb88b1ad47773ab7e4d",
+  "binary_sha256": {
+    "portfolio-fixed": "5aecf3e34a6193371a555e2213d8aea3c5762010d2f555ff24b617e96dbc98de",
+    "portfolio-baseline": "cd99f8b1c598993284e53f5ddfb108db7b85757b736fcb3f140f8e4505d264e1"
+  },
+  "candidate_web_source_sha256": "ff7908bd428bfb19aed12dff9cce15523447ec26e83d011817448164207fb3dc",
+  "client_processes": 2,
+  "target_rps": 8000.0,
+  "image_healthchecks_disabled": true,
+  "runtime_image": "forge-portfolio-improved:1791186788077593287",
+  "runtime_image_id": "sha256:3a721ff20645ae62be9381aa0101ed28e39c4d567d01e81ee837974da0510ec2",
+  "load_source_sha256": "87dbe5e3862467f47970734ed85bfedb2c38505a1a3cde36588426a878094b93",
+  "threads": {
+    "rust": [
+      "portfolio-blog-",
+      "actix-rt|system",
+      "actix-rt|system",
+      "actix-server ac"
+    ],
+    "plain_fixed_connection": [
+      "portfolio-fixed",
+      "portfolio-fixed"
+    ],
+    "plain_baseline_connection": [
+      "portfolio-basel",
+      "portfolio-basel"
+    ]
+  },
+  "results": [
+    {
+      "language": "rust",
+      "endpoint": "/api/health",
+      "concurrency": 16,
+      "seconds": 4.001,
+      "requests": 31956,
+      "errors": 0,
+      "rps": 7986.78,
+      "mean_ms": 1.284,
+      "p50_ms": 1.254,
+      "p95_ms": 2.534,
+      "p99_ms": 3.231,
+      "cpu_core_percent": 60.79129594494407,
+      "db_cpu_core_percent": 0.043258216519937956,
+      "cpu_observation_seconds": 4.1772411009296775,
+      "client_start_lateness_ms": [
+        0.5345367826521397,
+        0.5705247167497873
+      ],
+      "client_cpu_core_percent": 196.63162393498905,
+      "client_process_cpu_core_percent": [
+        98.27877227629688,
+        98.35285165869217
+      ],
+      "client_processes": 2,
+      "peak_threads": 7,
+      "memory_mib": 4.8671875,
+      "server_cpu_usec": 2539399,
+      "db_cpu_usec": 1807,
+      "server_cpu_usec_per_request": 79.46548379021154,
+      "db_cpu_usec_per_request": 0.056546501439479285,
+      "server_cpu_delta": {
+        "usage_usec": 2539399,
+        "user_usec": 1368325,
+        "system_usec": 1171074,
+        "core_sched.force_idle_usec": 0,
+        "nr_periods": 41,
+        "nr_throttled": 0,
+        "throttled_usec": 0,
+        "nr_bursts": 0,
+        "burst_usec": 0,
+        "pressure_some_us": 17324
+      },
+      "target_rps": 8000.0,
+      "requested_seconds": 4.0,
+      "offered_requests": 32000.0,
+      "schedule_lateness_mean_ms": 4.72801169571001,
+      "schedule_lateness_p95_ms": 15.470184851437807,
+      "schedule_lateness_max_ms": 32.672878820449114,
+      "repeat": 1,
+      "config": {
+        "name": "rust"
+      }
+    },
+    {
+      "language": "plain_fixed_connection",
+      "endpoint": "/api/health",
+      "concurrency": 16,
+      "seconds": 4.002,
+      "requests": 31890,
+      "errors": 0,
+      "rps": 7969.24,
+      "mean_ms": 1.592,
+      "p50_ms": 1.573,
+      "p95_ms": 2.417,
+      "p99_ms": 3.2,
+      "cpu_core_percent": 91.8730632020794,
+      "db_cpu_core_percent": 55.369202662786385,
+      "cpu_observation_seconds": 4.197098546195775,
+      "client_start_lateness_ms": [
+        0.4575077909976244,
+        0.6192207802087069
+      ],
+      "client_cpu_core_percent": 196.9452297736934,
+      "client_process_cpu_core_percent": [
+        98.48599690717064,
+        98.45923286652274
+      ],
+      "client_processes": 2,
+      "peak_threads": 18,
+      "memory_mib": 5.87890625,
+      "server_cpu_usec": 3856003,
+      "db_cpu_usec": 2323900,
+      "server_cpu_usec_per_request": 120.91574161179054,
+      "db_cpu_usec_per_request": 72.87237378488554,
+      "server_cpu_delta": {
+        "usage_usec": 3856003,
+        "user_usec": 1605302,
+        "system_usec": 2250700,
+        "core_sched.force_idle_usec": 0,
+        "nr_periods": 41,
+        "nr_throttled": 0,
+        "throttled_usec": 0,
+        "nr_bursts": 0,
+        "burst_usec": 0,
+        "pressure_some_us": 67373
+      },
+      "target_rps": 8000.0,
+      "requested_seconds": 4.0,
+      "offered_requests": 32000.0,
+      "schedule_lateness_mean_ms": 7.617729580349339,
+      "schedule_lateness_p95_ms": 22.694024723023176,
+      "schedule_lateness_max_ms": 39.44143489934504,
+      "repeat": 1,
+      "config": {
+        "name": "plain_fixed_connection",
+        "binary": "portfolio-fixed",
+        "workers": 8,
+        "pool": 5,
+        "threads": "connection"
+      }
+    },
+    {
+      "language": "plain_baseline_connection",
+      "endpoint": "/api/health",
+      "concurrency": 16,
+      "seconds": 4.001,
+      "requests": 31889,
+      "errors": 0,
+      "rps": 7970.84,
+      "mean_ms": 1.646,
+      "p50_ms": 1.594,
+      "p95_ms": 2.47,
+      "p99_ms": 3.35,
+      "cpu_core_percent": 87.52810047374196,
+      "db_cpu_core_percent": 51.97427861179083,
+      "cpu_observation_seconds": 4.197709055850282,
+      "client_start_lateness_ms": [
+        0.4997348878532648,
+        0.6589440163224936
+      ],
+      "client_cpu_core_percent": 196.48866940571733,
+      "client_process_cpu_core_percent": [
+        98.20971581315335,
+        98.278953592564
+      ],
+      "client_processes": 2,
+      "peak_threads": 18,
+      "memory_mib": 5.8515625,
+      "server_cpu_usec": 3674175,
+      "db_cpu_usec": 2181729,
+      "server_cpu_usec_per_request": 115.21762990372856,
+      "db_cpu_usec_per_request": 68.41635046567782,
+      "server_cpu_delta": {
+        "usage_usec": 3674175,
+        "user_usec": 1566359,
+        "system_usec": 2107815,
+        "core_sched.force_idle_usec": 0,
+        "nr_periods": 41,
+        "nr_throttled": 0,
+        "throttled_usec": 0,
+        "nr_bursts": 0,
+        "burst_usec": 0,
+        "pressure_some_us": 64696
+      },
+      "target_rps": 8000.0,
+      "requested_seconds": 4.0,
+      "offered_requests": 32000.0,
+      "schedule_lateness_mean_ms": 14.418199031965601,
+      "schedule_lateness_p95_ms": 36.20366775430739,
+      "schedule_lateness_max_ms": 47.71797498688102,
+      "repeat": 1,
+      "config": {
+        "name": "plain_baseline_connection",
+        "binary": "portfolio-baseline",
+        "workers": 8,
+        "pool": 5,
+        "threads": "connection"
+      }
+    },
+    {
+      "language": "plain_fixed_connection",
+      "endpoint": "/api/health",
+      "concurrency": 16,
+      "seconds": 4.001,
+      "requests": 31806,
+      "errors": 0,
+      "rps": 7950.16,
+      "mean_ms": 1.657,
+      "p50_ms": 1.635,
+      "p95_ms": 2.473,
+      "p99_ms": 3.296,
+      "cpu_core_percent": 87.37591112904421,
+      "db_cpu_core_percent": 58.61930277315284,
+      "cpu_observation_seconds": 4.173725862056017,
+      "client_start_lateness_ms": [
+        0.37516187876462936,
+        0.6470540538430214
+      ],
+      "client_cpu_core_percent": 196.36263848987227,
+      "client_process_cpu_core_percent": [
+        98.03400664168448,
+        98.32863184818774
+      ],
+      "client_processes": 2,
+      "peak_threads": 18,
+      "memory_mib": 5.83984375,
+      "server_cpu_usec": 3646831,
+      "db_cpu_usec": 2446609,
+      "server_cpu_usec_per_request": 114.65858643023329,
+      "db_cpu_usec_per_request": 76.92287618688297,
+      "server_cpu_delta": {
+        "usage_usec": 3646831,
+        "user_usec": 1533503,
+        "system_usec": 2113327,
+        "core_sched.force_idle_usec": 0,
+        "nr_periods": 40,
+        "nr_throttled": 0,
+        "throttled_usec": 0,
+        "nr_bursts": 0,
+        "burst_usec": 0,
+        "pressure_some_us": 67517
+      },
+      "target_rps": 8000.0,
+      "requested_seconds": 4.0,
+      "offered_requests": 32000.0,
+      "schedule_lateness_mean_ms": 12.631066621786955,
+      "schedule_lateness_p95_ms": 40.465980069711804,
+      "schedule_lateness_max_ms": 54.19238889589906,
+      "repeat": 2,
+      "config": {
+        "name": "plain_fixed_connection",
+        "binary": "portfolio-fixed",
+        "workers": 8,
+        "pool": 5,
+        "threads": "connection"
+      }
+    },
+    {
+      "language": "plain_baseline_connection",
+      "endpoint": "/api/health",
+      "concurrency": 16,
+      "seconds": 4.002,
+      "requests": 31845,
+      "errors": 0,
+      "rps": 7958.22,
+      "mean_ms": 1.624,
+      "p50_ms": 1.59,
+      "p95_ms": 2.351,
+      "p99_ms": 3.178,
+      "cpu_core_percent": 87.42283839216849,
+      "db_cpu_core_percent": 52.43193817138776,
+      "cpu_observation_seconds": 4.199428967898712,
+      "client_start_lateness_ms": [
+        0.5352229345589876,
+        0.5351498257368803
+      ],
+      "client_cpu_core_percent": 196.38699813797183,
+      "client_process_cpu_core_percent": [
+        97.84197032855215,
+        98.54502780941968
+      ],
+      "client_processes": 2,
+      "peak_threads": 18,
+      "memory_mib": 5.37109375,
+      "server_cpu_usec": 3671260,
+      "db_cpu_usec": 2201842,
+      "server_cpu_usec_per_request": 115.28528811430365,
+      "db_cpu_usec_per_request": 69.14247134558015,
+      "server_cpu_delta": {
+        "usage_usec": 3671260,
+        "user_usec": 1561966,
+        "system_usec": 2109294,
+        "core_sched.force_idle_usec": 0,
+        "nr_periods": 41,
+        "nr_throttled": 0,
+        "throttled_usec": 0,
+        "nr_bursts": 0,
+        "burst_usec": 0,
+        "pressure_some_us": 65682
+      },
+      "target_rps": 8000.0,
+      "requested_seconds": 4.0,
+      "offered_requests": 32000.0,
+      "schedule_lateness_mean_ms": 20.219620284699705,
+      "schedule_lateness_p95_ms": 88.84357078932226,
+      "schedule_lateness_max_ms": 133.19037086330354,
+      "repeat": 2,
+      "config": {
+        "name": "plain_baseline_connection",
+        "binary": "portfolio-baseline",
+        "workers": 8,
+        "pool": 5,
+        "threads": "connection"
+      }
+    },
+    {
+      "language": "rust",
+      "endpoint": "/api/health",
+      "concurrency": 16,
+      "seconds": 4.0,
+      "requests": 31978,
+      "errors": 0,
+      "rps": 7993.63,
+      "mean_ms": 1.304,
+      "p50_ms": 1.263,
+      "p95_ms": 2.606,
+      "p99_ms": 3.279,
+      "cpu_core_percent": 62.87285053684573,
+      "db_cpu_core_percent": 0.0038277732655124554,
+      "cpu_observation_seconds": 4.1799758998677135,
+      "client_start_lateness_ms": [
+        0.42191799730062485,
+        0.5766088142991066
+      ],
+      "client_cpu_core_percent": 197.24068923565463,
+      "client_process_cpu_core_percent": [
+        98.2552845232581,
+        98.98540471239654
+      ],
+      "client_processes": 2,
+      "peak_threads": 4,
+      "memory_mib": 5.02734375,
+      "server_cpu_usec": 2628070,
+      "db_cpu_usec": 160,
+      "server_cpu_usec_per_request": 82.1836887860404,
+      "db_cpu_usec_per_request": 0.0050034398649071235,
+      "server_cpu_delta": {
+        "usage_usec": 2628070,
+        "user_usec": 1416902,
+        "system_usec": 1211167,
+        "core_sched.force_idle_usec": 0,
+        "nr_periods": 40,
+        "nr_throttled": 0,
+        "throttled_usec": 0,
+        "nr_bursts": 0,
+        "burst_usec": 0,
+        "pressure_some_us": 15696
+      },
+      "target_rps": 8000.0,
+      "requested_seconds": 4.0,
+      "offered_requests": 32000.0,
+      "schedule_lateness_mean_ms": 5.826307646803529,
+      "schedule_lateness_p95_ms": 18.494914984330535,
+      "schedule_lateness_max_ms": 38.06282486766577,
+      "repeat": 2,
+      "config": {
+        "name": "rust"
+      }
+    },
+    {
+      "language": "plain_baseline_connection",
+      "endpoint": "/api/health",
+      "concurrency": 16,
+      "seconds": 4.001,
+      "requests": 31956,
+      "errors": 0,
+      "rps": 7987.25,
+      "mean_ms": 1.615,
+      "p50_ms": 1.595,
+      "p95_ms": 2.386,
+      "p99_ms": 3.213,
+      "cpu_core_percent": 91.75257391669099,
+      "db_cpu_core_percent": 53.05595891927744,
+      "cpu_observation_seconds": 4.186590997967869,
+      "client_start_lateness_ms": [
+        0.6127548404037952,
+        0.6130489055067301
+      ],
+      "client_cpu_core_percent": 197.05758227171134,
+      "client_process_cpu_core_percent": [
+        98.47035396684407,
+        98.5872283048673
+      ],
+      "client_processes": 2,
+      "peak_threads": 18,
+      "memory_mib": 5.8671875,
+      "server_cpu_usec": 3841305,
+      "db_cpu_usec": 2221236,
+      "server_cpu_usec_per_request": 120.20606458880961,
+      "db_cpu_usec_per_request": 69.50920015020654,
+      "server_cpu_delta": {
+        "usage_usec": 3841305,
+        "user_usec": 1572896,
+        "system_usec": 2268409,
+        "core_sched.force_idle_usec": 0,
+        "nr_periods": 41,
+        "nr_throttled": 0,
+        "throttled_usec": 0,
+        "nr_bursts": 0,
+        "burst_usec": 0,
+        "pressure_some_us": 69122
+      },
+      "target_rps": 8000.0,
+      "requested_seconds": 4.0,
+      "offered_requests": 32000.0,
+      "schedule_lateness_mean_ms": 6.290666443764527,
+      "schedule_lateness_p95_ms": 15.420778887346387,
+      "schedule_lateness_max_ms": 30.252639669924974,
+      "repeat": 3,
+      "config": {
+        "name": "plain_baseline_connection",
+        "binary": "portfolio-baseline",
+        "workers": 8,
+        "pool": 5,
+        "threads": "connection"
+      }
+    },
+    {
+      "language": "rust",
+      "endpoint": "/api/health",
+      "concurrency": 16,
+      "seconds": 4.0,
+      "requests": 31999,
+      "errors": 0,
+      "rps": 7998.95,
+      "mean_ms": 1.354,
+      "p50_ms": 1.287,
+      "p95_ms": 2.646,
+      "p99_ms": 3.389,
+      "cpu_core_percent": 63.587291928399715,
+      "db_cpu_core_percent": 0.019596820926889007,
+      "cpu_observation_seconds": 4.189455029787496,
+      "client_start_lateness_ms": [
+        0.570658827200532,
+        0.5706800147891045
+      ],
+      "client_cpu_core_percent": 196.27323333446623,
+      "client_process_cpu_core_percent": [
+        98.33534690625224,
+        97.93788642821396
+      ],
+      "client_processes": 2,
+      "peak_threads": 4,
+      "memory_mib": 4.78515625,
+      "server_cpu_usec": 2663961,
+      "db_cpu_usec": 821,
+      "server_cpu_usec_per_request": 83.25138285571424,
+      "db_cpu_usec_per_request": 0.025657051782868215,
+      "server_cpu_delta": {
+        "usage_usec": 2663961,
+        "user_usec": 1418318,
+        "system_usec": 1245642,
+        "core_sched.force_idle_usec": 0,
+        "nr_periods": 41,
+        "nr_throttled": 0,
+        "throttled_usec": 0,
+        "nr_bursts": 0,
+        "burst_usec": 0,
+        "pressure_some_us": 15861
+      },
+      "target_rps": 8000.0,
+      "requested_seconds": 4.0,
+      "offered_requests": 32000.0,
+      "schedule_lateness_mean_ms": 6.6416424754150185,
+      "schedule_lateness_p95_ms": 20.60715085826814,
+      "schedule_lateness_max_ms": 34.866543021053076,
+      "repeat": 3,
+      "config": {
+        "name": "rust"
+      }
+    },
+    {
+      "language": "plain_fixed_connection",
+      "endpoint": "/api/health",
+      "concurrency": 16,
+      "seconds": 4.001,
+      "requests": 31664,
+      "errors": 0,
+      "rps": 7914.44,
+      "mean_ms": 1.662,
+      "p50_ms": 1.627,
+      "p95_ms": 2.411,
+      "p99_ms": 3.342,
+      "cpu_core_percent": 84.5226354053879,
+      "db_cpu_core_percent": 61.803123107064295,
+      "cpu_observation_seconds": 4.1827174259815365,
+      "client_start_lateness_ms": [
+        0.48490194603800774,
+        0.6394889205694199
+      ],
+      "client_cpu_core_percent": 196.63806486083212,
+      "client_process_cpu_core_percent": [
+        98.2622186364402,
+        98.37584622439189
+      ],
+      "client_processes": 2,
+      "peak_threads": 18,
+      "memory_mib": 5.36328125,
+      "server_cpu_usec": 3535343,
+      "db_cpu_usec": 2585050,
+      "server_cpu_usec_per_request": 111.65181278423447,
+      "db_cpu_usec_per_request": 81.64003284487114,
+      "server_cpu_delta": {
+        "usage_usec": 3535343,
+        "user_usec": 1533199,
+        "system_usec": 2002143,
+        "core_sched.force_idle_usec": 0,
+        "nr_periods": 41,
+        "nr_throttled": 0,
+        "throttled_usec": 0,
+        "nr_bursts": 0,
+        "burst_usec": 0,
+        "pressure_some_us": 59908
+      },
+      "target_rps": 8000.0,
+      "requested_seconds": 4.0,
+      "offered_requests": 32000.0,
+      "schedule_lateness_mean_ms": 17.56286111091402,
+      "schedule_lateness_p95_ms": 64.11267095245421,
+      "schedule_lateness_max_ms": 99.57725810818374,
+      "repeat": 3,
+      "config": {
+        "name": "plain_fixed_connection",
+        "binary": "portfolio-fixed",
+        "workers": 8,
+        "pool": 5,
+        "threads": "connection"
+      }
+    }
+  ],
+  "scope": "Shared host; identical fixtures. Rust checks cached bans; Forge checks PostgreSQL. Health may batch multiple IP checks into one SQL query. Instrumented handler intervals include pool wait and synchronous libpq calls; exclude MHD queueing and response transmission. Compiler/packaging/instrumentation controls included. Client and DB CPU sampled; the aiohttp load generator can constrain throughput."
+}
