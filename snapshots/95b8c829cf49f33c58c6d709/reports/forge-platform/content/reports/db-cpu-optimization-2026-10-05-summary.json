@@ -1,0 +1,570 @@
+{
+  "max": [
+    {
+      "name": "rust",
+      "endpoint": "/api/health",
+      "concurrency": 1,
+      "trials": 3,
+      "rps": 2963.81,
+      "p95_ms": 0.555,
+      "db_cpu_core_percent": 0.023475967297415194,
+      "cpu_core_percent": 20.383159166941752,
+      "db_cpu_usec_per_request": 0.09135200974421437,
+      "server_cpu_usec_per_request": 71.42737854251013,
+      "total_cpu_usec_per_request": 71.46027327935224,
+      "rps_range": [
+        2668.15,
+        3306.46
+      ]
+    },
+    {
+      "name": "rust",
+      "endpoint": "/api/health",
+      "concurrency": 16,
+      "trials": 3,
+      "rps": 11501.73,
+      "p95_ms": 1.843,
+      "db_cpu_core_percent": 0.014120171972985417,
+      "cpu_core_percent": 83.88229694332722,
+      "db_cpu_usec_per_request": 0.012779274971746501,
+      "server_cpu_usec_per_request": 76.49727589048622,
+      "total_cpu_usec_per_request": 76.5077373866862,
+      "rps_range": [
+        10919.75,
+        11797.65
+      ]
+    },
+    {
+      "name": "rust",
+      "endpoint": "/api/posts",
+      "concurrency": 16,
+      "trials": 3,
+      "rps": 3635.45,
+      "p95_ms": 7.027,
+      "db_cpu_core_percent": 263.15774933848377,
+      "cpu_core_percent": 142.518995963835,
+      "db_cpu_usec_per_request": 759.6380625214703,
+      "server_cpu_usec_per_request": 409.5479216763999,
+      "total_cpu_usec_per_request": 1169.18598419787,
+      "rps_range": [
+        3542.01,
+        3636.9
+      ]
+    },
+    {
+      "name": "rust",
+      "endpoint": "/api/posts",
+      "concurrency": 64,
+      "trials": 3,
+      "rps": 3559.31,
+      "p95_ms": 33.471,
+      "db_cpu_core_percent": 264.6677862679106,
+      "cpu_core_percent": 141.06877525881174,
+      "db_cpu_usec_per_request": 771.5236862360927,
+      "server_cpu_usec_per_request": 408.09002117341714,
+      "total_cpu_usec_per_request": 1177.217619480792,
+      "rps_range": [
+        3548.41,
+        3645.14
+      ]
+    },
+    {
+      "name": "plain_fixed_connection",
+      "endpoint": "/api/health",
+      "concurrency": 1,
+      "trials": 3,
+      "rps": 1585.78,
+      "p95_ms": 1.174,
+      "db_cpu_core_percent": 23.709213676203767,
+      "cpu_core_percent": 19.159634539592503,
+      "db_cpu_usec_per_request": 155.89393223010245,
+      "server_cpu_usec_per_request": 125.83795574945466,
+      "total_cpu_usec_per_request": 278.6498029944838,
+      "rps_range": [
+        1319.84,
+        1604.41
+      ]
+    },
+    {
+      "name": "plain_fixed_connection",
+      "endpoint": "/api/health",
+      "concurrency": 16,
+      "trials": 3,
+      "rps": 9751.84,
+      "p95_ms": 2.289,
+      "db_cpu_core_percent": 59.700026567091626,
+      "cpu_core_percent": 97.27758611034866,
+      "db_cpu_usec_per_request": 64.40063014434702,
+      "server_cpu_usec_per_request": 108.77714932126698,
+      "total_cpu_usec_per_request": 173.06784570037166,
+      "rps_range": [
+        9280.58,
+        10233.72
+      ]
+    },
+    {
+      "name": "plain_fixed_connection",
+      "endpoint": "/api/posts",
+      "concurrency": 16,
+      "trials": 3,
+      "rps": 6307.23,
+      "p95_ms": 3.648,
+      "db_cpu_core_percent": 343.905530489122,
+      "cpu_core_percent": 182.21652630731538,
+      "db_cpu_usec_per_request": 569.1244502555569,
+      "server_cpu_usec_per_request": 301.07496335037047,
+      "total_cpu_usec_per_request": 870.1994136059274,
+      "rps_range": [
+        6252.56,
+        6363.37
+      ]
+    },
+    {
+      "name": "plain_fixed_connection",
+      "endpoint": "/api/posts",
+      "concurrency": 64,
+      "trials": 3,
+      "rps": 6390.77,
+      "p95_ms": 18.662,
+      "db_cpu_core_percent": 342.9610042860386,
+      "cpu_core_percent": 183.23938947274718,
+      "db_cpu_usec_per_request": 561.6764855058328,
+      "server_cpu_usec_per_request": 299.6230147783251,
+      "total_cpu_usec_per_request": 861.2530477117818,
+      "rps_range": [
+        6330.44,
+        6403.87
+      ]
+    },
+    {
+      "name": "plain_baseline_connection",
+      "endpoint": "/api/health",
+      "concurrency": 1,
+      "trials": 3,
+      "rps": 1550.89,
+      "p95_ms": 1.092,
+      "db_cpu_core_percent": 21.806765381430868,
+      "cpu_core_percent": 19.90843960504786,
+      "db_cpu_usec_per_request": 146.645390070922,
+      "server_cpu_usec_per_request": 133.87959381044487,
+      "total_cpu_usec_per_request": 280.5249838813669,
+      "rps_range": [
+        1520.09,
+        1766.9
+      ]
+    },
+    {
+      "name": "plain_baseline_connection",
+      "endpoint": "/api/health",
+      "concurrency": 16,
+      "trials": 3,
+      "rps": 9617.85,
+      "p95_ms": 2.251,
+      "db_cpu_core_percent": 57.67461254145427,
+      "cpu_core_percent": 95.37660614483153,
+      "db_cpu_usec_per_request": 62.675399078149006,
+      "server_cpu_usec_per_request": 103.64641545793079,
+      "total_cpu_usec_per_request": 166.32181453607978,
+      "rps_range": [
+        9598.73,
+        9800.76
+      ]
+    },
+    {
+      "name": "plain_baseline_connection",
+      "endpoint": "/api/posts",
+      "concurrency": 16,
+      "trials": 3,
+      "rps": 5863.23,
+      "p95_ms": 3.881,
+      "db_cpu_core_percent": 414.8265993776865,
+      "cpu_core_percent": 109.88113878369548,
+      "db_cpu_usec_per_request": 735.3535202863961,
+      "server_cpu_usec_per_request": 194.78375383566313,
+      "total_cpu_usec_per_request": 930.1372741220592,
+      "rps_range": [
+        5735.35,
+        5947.16
+      ]
+    },
+    {
+      "name": "plain_baseline_connection",
+      "endpoint": "/api/posts",
+      "concurrency": 64,
+      "trials": 3,
+      "rps": 5889.05,
+      "p95_ms": 19.734,
+      "db_cpu_core_percent": 410.21112266662,
+      "cpu_core_percent": 107.19403502071681,
+      "db_cpu_usec_per_request": 725.1914524122157,
+      "server_cpu_usec_per_request": 189.50290143589308,
+      "total_cpu_usec_per_request": 914.6943538481087,
+      "rps_range": [
+        5790.6,
+        6130.24
+      ]
+    }
+  ],
+  "fixed-health": [
+    {
+      "name": "rust",
+      "endpoint": "/api/health",
+      "concurrency": 16,
+      "trials": 3,
+      "rps": 3998.71,
+      "p95_ms": 1.73,
+      "db_cpu_core_percent": 0.020623206499654854,
+      "cpu_core_percent": 35.57093055107736,
+      "db_cpu_usec_per_request": 0.05375335958497406,
+      "server_cpu_usec_per_request": 92.71385711606976,
+      "schedule_lateness_p95_ms": 1.2671060394495726,
+      "schedule_lateness_max_ms": 6.658924976363778,
+      "total_cpu_usec_per_request": 92.76761047565473,
+      "rps_range": [
+        3998.63,
+        3999.03
+      ],
+      "offered_fraction_range": [
+        0.999875,
+        0.9999375
+      ]
+    },
+    {
+      "name": "plain_fixed_connection",
+      "endpoint": "/api/health",
+      "concurrency": 16,
+      "trials": 3,
+      "rps": 3998.86,
+      "p95_ms": 2.559,
+      "db_cpu_core_percent": 44.10662742454786,
+      "cpu_core_percent": 46.75508714178185,
+      "db_cpu_usec_per_request": 115.01925,
+      "server_cpu_usec_per_request": 122.1557694711839,
+      "schedule_lateness_p95_ms": 1.368511002510786,
+      "schedule_lateness_max_ms": 7.897337898612022,
+      "total_cpu_usec_per_request": 238.566125,
+      "rps_range": [
+        3998.76,
+        3999.05
+      ],
+      "offered_fraction_range": [
+        0.999875,
+        1.0
+      ]
+    },
+    {
+      "name": "plain_baseline_connection",
+      "endpoint": "/api/health",
+      "concurrency": 16,
+      "trials": 3,
+      "rps": 3999.53,
+      "p95_ms": 2.329,
+      "db_cpu_core_percent": 44.64625809745641,
+      "cpu_core_percent": 48.243155269232695,
+      "db_cpu_usec_per_request": 116.548125,
+      "server_cpu_usec_per_request": 125.93775,
+      "schedule_lateness_p95_ms": 1.3716057874262333,
+      "schedule_lateness_max_ms": 7.809540722519159,
+      "total_cpu_usec_per_request": 242.485875,
+      "rps_range": [
+        3999.36,
+        3999.55
+      ],
+      "offered_fraction_range": [
+        0.9999375,
+        1.0
+      ]
+    }
+  ],
+  "fixed-posts": [
+    {
+      "name": "rust",
+      "endpoint": "/api/posts",
+      "concurrency": 16,
+      "trials": 3,
+      "rps": 1998.9,
+      "p95_ms": 3.538,
+      "db_cpu_core_percent": 165.04945391650446,
+      "cpu_core_percent": 89.000735520573,
+      "db_cpu_usec_per_request": 860.7260907613452,
+      "server_cpu_usec_per_request": 464.8866108263533,
+      "schedule_lateness_p95_ms": 1.1313697323203087,
+      "schedule_lateness_max_ms": 21.2451727129519,
+      "total_cpu_usec_per_request": 1331.5214401800224,
+      "rps_range": [
+        1998.61,
+        1998.9
+      ],
+      "offered_fraction_range": [
+        0.999875,
+        0.999875
+      ]
+    },
+    {
+      "name": "plain_fixed_connection",
+      "endpoint": "/api/posts",
+      "concurrency": 16,
+      "trials": 3,
+      "rps": 1999.53,
+      "p95_ms": 2.871,
+      "db_cpu_core_percent": 126.4372122778822,
+      "cpu_core_percent": 58.89185788626856,
+      "db_cpu_usec_per_request": 658.2635,
+      "server_cpu_usec_per_request": 306.605625,
+      "schedule_lateness_p95_ms": 1.0530499275773764,
+      "schedule_lateness_max_ms": 4.708659835159779,
+      "total_cpu_usec_per_request": 964.8691249999999,
+      "rps_range": [
+        1998.76,
+        1999.62
+      ],
+      "offered_fraction_range": [
+        0.999875,
+        1.0
+      ]
+    },
+    {
+      "name": "plain_baseline_connection",
+      "endpoint": "/api/posts",
+      "concurrency": 16,
+      "trials": 3,
+      "rps": 1999.57,
+      "p95_ms": 2.907,
+      "db_cpu_core_percent": 160.1862379150429,
+      "cpu_core_percent": 36.715151644876805,
+      "db_cpu_usec_per_request": 834.501125,
+      "server_cpu_usec_per_request": 191.242625,
+      "schedule_lateness_p95_ms": 1.0893407743424177,
+      "schedule_lateness_max_ms": 3.1816880218684673,
+      "total_cpu_usec_per_request": 1025.74375,
+      "rps_range": [
+        1999.4,
+        1999.62
+      ],
+      "offered_fraction_range": [
+        0.99975,
+        1.0
+      ]
+    }
+  ],
+  "profile-health": [
+    {
+      "name": "profile_fixed_connection",
+      "endpoint": "/api/health",
+      "concurrency": 16,
+      "trials": 3,
+      "rps": 10170.35,
+      "p95_ms": 2.161,
+      "db_cpu_core_percent": 60.93851010963217,
+      "cpu_core_percent": 106.80856234986594,
+      "db_cpu_usec_per_request": 62.65099137613326,
+      "server_cpu_usec_per_request": 109.73236934313773,
+      "total_cpu_usec_per_request": 173.37607955386665,
+      "rps_range": [
+        10129.47,
+        10184.15
+      ],
+      "requests_per_query": 1.9131804080097772
+    }
+  ],
+  "validation": {
+    "image": "forge-portfolio-improved:1791188026654457042",
+    "image_id": "sha256:9c68165c795e72dd7320ca727b9c81683d8428b85414651ac77275566c3ef392",
+    "binary_sha256": "db432033c1fc58cd75c48a6ccb8f397934a874ad720bf0677b8eb45d8a5d1b75",
+    "integration": "passed with pool1 and mock GitHub; default connection mode; migration11 restart",
+    "integration_tests": 30,
+    "native_ctest": 3,
+    "python_ast_files": 9,
+    "source_sha256": {
+      "backend-forge/native/adapter.c": "03c4d727ea5d1565fa092c3f91f381974a876d87c710f22f9595f89b5ebf3a50",
+      "backend-forge/src/posts.fg": "8aa07762f50d79366ec5de0eb0a54f3384b54d06b53f67f60823ad3849d039be",
+      "backend-forge/src/routes.fg": "44cd02a8eeac35ec317253cc83f892d686c1b3c3604ca13731bcabfb2e0c06e0",
+      "backend-forge/tests/integration.py": "3263fb36e61edc9bc8058fc582bf45b0419f84e45a88e8fd524ff8549a6aa291",
+      "backend-forge/tests/health_batch_lifecycle.py": "527b34e9ea0ea5f4a5e9b01aeb06d10acfdd72bf6435410ec0043e2397fdf73e",
+      "backend-forge/tests/proxy_security.py": "d0a4638a5e4c3e272c513c48cb40576790fc12d762b0e8255180658adf546730",
+      "backend-forge/scripts/test-integration.sh": "9e2e6a6dd30336f25c4859201152ef76e84dbedbb99efeec42b7443dd4557d55",
+      "backend-forge/vendor/forge-web/src/bridge.c": "ff7908bd428bfb19aed12dff9cce15523447ec26e83d011817448164207fb3dc"
+    },
+    "health_block_sha256": "f92a81527b886cf7ef8c14164903caba8944f9de4f644bcfbd1d45db0ecee128",
+    "health_block_identical_to_previous": true,
+    "normalized_health_instructions_sha256": "9a8d7605e2b2a9e323c6de8bc00e81e7285b7ffd9558725010d1b3e87390db7b",
+    "normalized_health_instructions_identical": true,
+    "stages": [
+      {
+        "stage": "checks",
+        "command": [
+          "/usr/bin/python3",
+          "benchmark/portfolio_check.py",
+          "--app",
+          "/home/helloworld0822/orca/workspaces/portfolio-platform/forge-migration",
+          "--binary",
+          "/tmp/forge-db-cpu-limit-20261005/portfolio-fixed",
+          "--prepared",
+          "/tmp/forge-continuation-20261003/portfolio-comparison-prepared.json",
+          "--output",
+          "/dev/shm/forge-db-cpu-limit-20261005-checks.json"
+        ],
+        "exit_code": 0,
+        "seconds": 34.822475821943954,
+        "log": "/dev/shm/forge-db-cpu-limit-20261005-checks.log"
+      },
+      {
+        "stage": "max",
+        "command": [
+          "/tmp/forge-benchmark-env/bin/python",
+          "benchmark/portfolio_diagnose.py",
+          "--prepared",
+          "/tmp/forge-continuation-20261003/portfolio-comparison-prepared.json",
+          "--profile-dir",
+          "/tmp/forge-db-cpu-limit-20261005",
+          "--runtime-image",
+          "forge-portfolio-improved:1791188026654457042",
+          "--improvement",
+          "--client-processes",
+          "2",
+          "--repeats",
+          "3",
+          "--seconds",
+          "4",
+          "--output",
+          "/dev/shm/forge-db-cpu-limit-20261005-max.json",
+          "--variants",
+          "rust",
+          "plain_baseline_connection",
+          "plain_fixed_connection"
+        ],
+        "exit_code": 0,
+        "seconds": 233.4902422230225,
+        "log": "/dev/shm/forge-db-cpu-limit-20261005-max.log"
+      },
+      {
+        "stage": "fixed-health",
+        "command": [
+          "/tmp/forge-benchmark-env/bin/python",
+          "benchmark/portfolio_diagnose.py",
+          "--prepared",
+          "/tmp/forge-continuation-20261003/portfolio-comparison-prepared.json",
+          "--profile-dir",
+          "/tmp/forge-db-cpu-limit-20261005",
+          "--runtime-image",
+          "forge-portfolio-improved:1791188026654457042",
+          "--improvement",
+          "--client-processes",
+          "2",
+          "--repeats",
+          "3",
+          "--seconds",
+          "4",
+          "--output",
+          "/dev/shm/forge-db-cpu-limit-20261005-fixed-health.json",
+          "--health-only",
+          "--concurrency",
+          "16",
+          "--rate",
+          "4000",
+          "--variants",
+          "rust",
+          "plain_baseline_connection",
+          "plain_fixed_connection"
+        ],
+        "exit_code": 0,
+        "seconds": 73.02728996588849,
+        "log": "/dev/shm/forge-db-cpu-limit-20261005-fixed-health.log"
+      },
+      {
+        "stage": "fixed-posts",
+        "command": [
+          "/tmp/forge-benchmark-env/bin/python",
+          "benchmark/portfolio_diagnose.py",
+          "--prepared",
+          "/tmp/forge-continuation-20261003/portfolio-comparison-prepared.json",
+          "--profile-dir",
+          "/tmp/forge-db-cpu-limit-20261005",
+          "--runtime-image",
+          "forge-portfolio-improved:1791188026654457042",
+          "--improvement",
+          "--client-processes",
+          "2",
+          "--repeats",
+          "3",
+          "--seconds",
+          "4",
+          "--output",
+          "/dev/shm/forge-db-cpu-limit-20261005-fixed-posts.json",
+          "--posts-only",
+          "--concurrency",
+          "16",
+          "--rate",
+          "2000",
+          "--variants",
+          "rust",
+          "plain_baseline_connection",
+          "plain_fixed_connection"
+        ],
+        "exit_code": 0,
+        "seconds": 72.75952843111008,
+        "log": "/dev/shm/forge-db-cpu-limit-20261005-fixed-posts.log"
+      },
+      {
+        "stage": "profile-health",
+        "command": [
+          "/tmp/forge-benchmark-env/bin/python",
+          "benchmark/portfolio_diagnose.py",
+          "--prepared",
+          "/tmp/forge-continuation-20261003/portfolio-comparison-prepared.json",
+          "--profile-dir",
+          "/tmp/forge-db-cpu-limit-20261005",
+          "--runtime-image",
+          "forge-portfolio-improved:1791188026654457042",
+          "--improvement",
+          "--client-processes",
+          "2",
+          "--repeats",
+          "3",
+          "--seconds",
+          "4",
+          "--output",
+          "/dev/shm/forge-db-cpu-limit-20261005-profile-health.json",
+          "--health-only",
+          "--concurrency",
+          "16",
+          "--variants",
+          "profile_fixed_connection"
+        ],
+        "exit_code": 0,
+        "seconds": 33.44123415905051,
+        "log": "/dev/shm/forge-db-cpu-limit-20261005-profile-health.log"
+      },
+      {
+        "stage": "proxy",
+        "command": [
+          "/usr/bin/python3",
+          "/home/helloworld0822/orca/workspaces/portfolio-platform/forge-migration/backend-forge/tests/proxy_security.py",
+          "--api-image",
+          "forge-portfolio-improved:1791188026654457042"
+        ],
+        "exit_code": 0,
+        "seconds": 10.401674560969695,
+        "log": "/dev/shm/forge-db-cpu-limit-20261005-proxy.log"
+      },
+      {
+        "stage": "lifecycle",
+        "command": [
+          "/usr/bin/python3",
+          "/home/helloworld0822/orca/workspaces/portfolio-platform/forge-migration/backend-forge/tests/health_batch_lifecycle.py",
+          "--api-image",
+          "forge-portfolio-improved:1791188026654457042"
+        ],
+        "exit_code": 0,
+        "seconds": 14.700330724939704,
+        "log": "/dev/shm/forge-db-cpu-limit-20261005-lifecycle.log"
+      }
+    ],
+    "app_path": "/home/helloworld0822/orca/workspaces/portfolio-platform/forge-migration",
+    "source_snapshot": "/dev/shm/forge-db-cpu-limit-source-20261005",
+    "binaries": "/tmp/forge-db-cpu-limit-20261005",
+    "build_log": "/dev/shm/forge-db-cpu-limit-build-20261005.log",
+    "build_log_sha256": "326810e27120f0b2ab90e764f1729ff84383ae143eaddb14e1ae558ebeda8a40",
+    "final_audit": "Binary/image/source fingerprints match; all HTTP trials errors=0; normalized health instructions identical; local report links resolve; owned containers cleaned; Python AST and both git diff checks pass."
+  }
+}
