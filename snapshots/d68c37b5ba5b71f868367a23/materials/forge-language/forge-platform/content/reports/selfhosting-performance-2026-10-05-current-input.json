@@ -1,0 +1,730 @@
+{
+  "date_utc": "2026-10-05T03:49:08Z",
+  "host": "Linux-6.8.0-139-generic-x86_64-with-glibc2.39",
+  "repeats": 31,
+  "order": "alternating forward and reverse compiler order",
+  "scope": "Process startup, Forge validation/parsing and C file emission; excludes downstream C compilation. Child user+system CPU. Shared host.",
+  "compilers": {
+    "current_stage0": {
+      "stage": "stage0",
+      "path": "/dev/shm/forge-compiler-cpu-20261005/current-build/bin/forge",
+      "sha256": "b87c67f6fb654527115a1a054ed0e0b4d1b40af0c3c2a798ca3b19b1b0c89708"
+    },
+    "current_stage2": {
+      "stage": "stage2",
+      "path": "/dev/shm/forge-compiler-cpu-20261005/current-stage2",
+      "sha256": "c6e1871c4e12bfb7a169e1ef8a8ba0e6b3a1036bbe6b95304be1529b57cfb8e2"
+    },
+    "optimized_stage2": {
+      "stage": "stage2",
+      "path": "/dev/shm/forge-compiler-cpu-20261005/dispatch-stage2",
+      "sha256": "6252a91d9160b6603ca99b46e313a69ecc34c7b87045f736aecb1eb580b8dff6"
+    }
+  },
+  "inputs": {
+    "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg": {
+      "bytes": 56468,
+      "sha256": "8332ac161a2fabffe1850a635bb195286d4cc145e84ca137e96fbd0bbfafb6e6"
+    }
+  },
+  "output_sha256": {
+    "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg": {
+      "current_stage0": "dc318a8b94ffb639a1b4469480ce12d2026e2f4cc16a2bde128d62e8d25de8c8",
+      "current_stage2": "342f88948144f1809b24bb04e10e2a414cd186592ecc5b7c18fec9a29bd6ff71",
+      "optimized_stage2": "342f88948144f1809b24bb04e10e2a414cd186592ecc5b7c18fec9a29bd6ff71"
+    }
+  },
+  "summary": {
+    "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg": {
+      "current_stage0": {
+        "wall_ms": {
+          "median": 8.466692874208093,
+          "min": 4.105845000594854,
+          "max": 14.84259800054133
+        },
+        "cpu_ms": {
+          "median": 7.918999999999995,
+          "min": 3.7619999999999876,
+          "max": 14.30600000000004
+        }
+      },
+      "current_stage2": {
+        "wall_ms": {
+          "median": 17.037359066307545,
+          "min": 7.641138043254614,
+          "max": 25.897823041304946
+        },
+        "cpu_ms": {
+          "median": 16.804,
+          "min": 7.221000000000005,
+          "max": 25.267000000000095
+        }
+      },
+      "optimized_stage2": {
+        "wall_ms": {
+          "median": 13.316419208422303,
+          "min": 6.395166972652078,
+          "max": 23.039642022922635
+        },
+        "cpu_ms": {
+          "median": 12.907999999999989,
+          "min": 6.014999999999993,
+          "max": 22.531999999999996
+        }
+      }
+    }
+  },
+  "runs": [
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "current_stage0",
+      "repeat": 1,
+      "wall_ms": 9.162117959931493,
+      "cpu_ms": 8.908
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "current_stage2",
+      "repeat": 1,
+      "wall_ms": 18.304452067241073,
+      "cpu_ms": 18.048000000000002
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "optimized_stage2",
+      "repeat": 1,
+      "wall_ms": 6.800787057727575,
+      "cpu_ms": 6.492999999999999
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "optimized_stage2",
+      "repeat": 2,
+      "wall_ms": 22.844779072329402,
+      "cpu_ms": 22.531999999999996
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "current_stage2",
+      "repeat": 2,
+      "wall_ms": 19.568709889426827,
+      "cpu_ms": 19.108999999999995
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "current_stage0",
+      "repeat": 2,
+      "wall_ms": 8.466692874208093,
+      "cpu_ms": 8.031000000000008
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "current_stage0",
+      "repeat": 3,
+      "wall_ms": 8.114675991237164,
+      "cpu_ms": 7.824999999999998
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "current_stage2",
+      "repeat": 3,
+      "wall_ms": 17.037359066307545,
+      "cpu_ms": 16.804
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "optimized_stage2",
+      "repeat": 3,
+      "wall_ms": 16.428874107077718,
+      "cpu_ms": 16.089000000000006
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "optimized_stage2",
+      "repeat": 4,
+      "wall_ms": 13.270256109535694,
+      "cpu_ms": 12.920999999999992
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "current_stage2",
+      "repeat": 4,
+      "wall_ms": 13.760070083662868,
+      "cpu_ms": 13.477999999999993
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "current_stage0",
+      "repeat": 4,
+      "wall_ms": 5.820902995765209,
+      "cpu_ms": 5.620000000000007
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "current_stage0",
+      "repeat": 5,
+      "wall_ms": 6.017402978613973,
+      "cpu_ms": 5.751999999999979
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "current_stage2",
+      "repeat": 5,
+      "wall_ms": 10.250893887132406,
+      "cpu_ms": 9.916999999999994
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "optimized_stage2",
+      "repeat": 5,
+      "wall_ms": 6.609658943489194,
+      "cpu_ms": 6.2850000000000055
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "optimized_stage2",
+      "repeat": 6,
+      "wall_ms": 6.523574003949761,
+      "cpu_ms": 6.2639999999999985
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "current_stage2",
+      "repeat": 6,
+      "wall_ms": 16.088138101622462,
+      "cpu_ms": 15.805999999999987
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "current_stage0",
+      "repeat": 6,
+      "wall_ms": 8.574275998398662,
+      "cpu_ms": 8.260999999999983
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "current_stage0",
+      "repeat": 7,
+      "wall_ms": 8.27912287786603,
+      "cpu_ms": 7.918999999999995
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "current_stage2",
+      "repeat": 7,
+      "wall_ms": 15.238416148349643,
+      "cpu_ms": 14.80900000000001
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "optimized_stage2",
+      "repeat": 7,
+      "wall_ms": 13.316419208422303,
+      "cpu_ms": 12.907999999999989
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "optimized_stage2",
+      "repeat": 8,
+      "wall_ms": 13.269040966406465,
+      "cpu_ms": 12.740000000000014
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "current_stage2",
+      "repeat": 8,
+      "wall_ms": 16.084559028968215,
+      "cpu_ms": 15.650999999999984
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "current_stage0",
+      "repeat": 8,
+      "wall_ms": 7.552610943093896,
+      "cpu_ms": 7.208000000000034
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "current_stage0",
+      "repeat": 9,
+      "wall_ms": 7.443693000823259,
+      "cpu_ms": 7.109999999999977
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "current_stage2",
+      "repeat": 9,
+      "wall_ms": 15.073248883709311,
+      "cpu_ms": 14.608000000000038
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "optimized_stage2",
+      "repeat": 9,
+      "wall_ms": 11.396195041015744,
+      "cpu_ms": 10.957000000000022
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "optimized_stage2",
+      "repeat": 10,
+      "wall_ms": 11.03788590990007,
+      "cpu_ms": 10.544000000000025
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "current_stage2",
+      "repeat": 10,
+      "wall_ms": 13.09625105932355,
+      "cpu_ms": 12.598000000000026
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "current_stage0",
+      "repeat": 10,
+      "wall_ms": 6.907583912834525,
+      "cpu_ms": 6.4609999999999665
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "current_stage0",
+      "repeat": 11,
+      "wall_ms": 12.438595062121749,
+      "cpu_ms": 11.995000000000033
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "current_stage2",
+      "repeat": 11,
+      "wall_ms": 23.759002098813653,
+      "cpu_ms": 23.199000000000026
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "optimized_stage2",
+      "repeat": 11,
+      "wall_ms": 13.351646019145846,
+      "cpu_ms": 12.794
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "optimized_stage2",
+      "repeat": 12,
+      "wall_ms": 23.039642022922635,
+      "cpu_ms": 22.31599999999999
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "current_stage2",
+      "repeat": 12,
+      "wall_ms": 18.830504966899753,
+      "cpu_ms": 18.244000000000053
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "current_stage0",
+      "repeat": 12,
+      "wall_ms": 8.479724870994687,
+      "cpu_ms": 7.836999999999955
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "current_stage0",
+      "repeat": 13,
+      "wall_ms": 8.446105057373643,
+      "cpu_ms": 7.827999999999988
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "current_stage2",
+      "repeat": 13,
+      "wall_ms": 23.03449483588338,
+      "cpu_ms": 22.51
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "optimized_stage2",
+      "repeat": 13,
+      "wall_ms": 17.192850122228265,
+      "cpu_ms": 16.777999999999988
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "optimized_stage2",
+      "repeat": 14,
+      "wall_ms": 13.091258006170392,
+      "cpu_ms": 12.713000000000072
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "current_stage2",
+      "repeat": 14,
+      "wall_ms": 20.50693705677986,
+      "cpu_ms": 20.18299999999998
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "current_stage0",
+      "repeat": 14,
+      "wall_ms": 7.986368844285607,
+      "cpu_ms": 7.644000000000012
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "current_stage0",
+      "repeat": 15,
+      "wall_ms": 8.265607990324497,
+      "cpu_ms": 7.932000000000023
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "current_stage2",
+      "repeat": 15,
+      "wall_ms": 25.050018914043903,
+      "cpu_ms": 24.685999999999904
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "optimized_stage2",
+      "repeat": 15,
+      "wall_ms": 13.886255910620093,
+      "cpu_ms": 13.555000000000039
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "optimized_stage2",
+      "repeat": 16,
+      "wall_ms": 16.094791004434228,
+      "cpu_ms": 15.727999999999993
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "current_stage2",
+      "repeat": 16,
+      "wall_ms": 7.641138043254614,
+      "cpu_ms": 7.221000000000005
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "current_stage0",
+      "repeat": 16,
+      "wall_ms": 11.584552004933357,
+      "cpu_ms": 11.073
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "current_stage0",
+      "repeat": 17,
+      "wall_ms": 12.003040872514248,
+      "cpu_ms": 11.521000000000031
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "current_stage2",
+      "repeat": 17,
+      "wall_ms": 20.54980513639748,
+      "cpu_ms": 20.078999999999958
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "optimized_stage2",
+      "repeat": 17,
+      "wall_ms": 17.164482967928052,
+      "cpu_ms": 16.744999999999983
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "optimized_stage2",
+      "repeat": 18,
+      "wall_ms": 17.42558809928596,
+      "cpu_ms": 16.495000000000008
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "current_stage2",
+      "repeat": 18,
+      "wall_ms": 15.229129930958152,
+      "cpu_ms": 14.805999999999987
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "current_stage0",
+      "repeat": 18,
+      "wall_ms": 12.931035831570625,
+      "cpu_ms": 12.454999999999966
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "current_stage0",
+      "repeat": 19,
+      "wall_ms": 7.299668854102492,
+      "cpu_ms": 6.886000000000031
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "current_stage2",
+      "repeat": 19,
+      "wall_ms": 18.324570963159204,
+      "cpu_ms": 17.933000000000003
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "optimized_stage2",
+      "repeat": 19,
+      "wall_ms": 12.305798009037971,
+      "cpu_ms": 11.79800000000003
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "optimized_stage2",
+      "repeat": 20,
+      "wall_ms": 18.757970072329044,
+      "cpu_ms": 18.305000000000042
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "current_stage2",
+      "repeat": 20,
+      "wall_ms": 20.166275091469288,
+      "cpu_ms": 19.726000000000077
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "current_stage0",
+      "repeat": 20,
+      "wall_ms": 12.258370872586966,
+      "cpu_ms": 11.856999999999923
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "current_stage0",
+      "repeat": 21,
+      "wall_ms": 10.010631987825036,
+      "cpu_ms": 9.692000000000034
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "current_stage2",
+      "repeat": 21,
+      "wall_ms": 15.113319968804717,
+      "cpu_ms": 14.753000000000045
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "optimized_stage2",
+      "repeat": 21,
+      "wall_ms": 12.717213947325945,
+      "cpu_ms": 12.41099999999995
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "optimized_stage2",
+      "repeat": 22,
+      "wall_ms": 20.255529088899493,
+      "cpu_ms": 19.86799999999994
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "current_stage2",
+      "repeat": 22,
+      "wall_ms": 16.614832915365696,
+      "cpu_ms": 16.09199999999994
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "current_stage0",
+      "repeat": 22,
+      "wall_ms": 14.84259800054133,
+      "cpu_ms": 14.30600000000004
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "current_stage0",
+      "repeat": 23,
+      "wall_ms": 7.356737973168492,
+      "cpu_ms": 6.962999999999914
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "current_stage2",
+      "repeat": 23,
+      "wall_ms": 17.352035967633128,
+      "cpu_ms": 16.91099999999998
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "optimized_stage2",
+      "repeat": 23,
+      "wall_ms": 13.261939864605665,
+      "cpu_ms": 12.812000000000017
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "optimized_stage2",
+      "repeat": 24,
+      "wall_ms": 21.110363071784377,
+      "cpu_ms": 20.717000000000013
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "current_stage2",
+      "repeat": 24,
+      "wall_ms": 19.777070032432675,
+      "cpu_ms": 19.33499999999999
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "current_stage0",
+      "repeat": 24,
+      "wall_ms": 8.552493993192911,
+      "cpu_ms": 8.145999999999987
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "current_stage0",
+      "repeat": 25,
+      "wall_ms": 9.060767013579607,
+      "cpu_ms": 8.859999999999978
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "current_stage2",
+      "repeat": 25,
+      "wall_ms": 19.05195601284504,
+      "cpu_ms": 18.857000000000067
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "optimized_stage2",
+      "repeat": 25,
+      "wall_ms": 16.398658975958824,
+      "cpu_ms": 16.149999999999885
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "optimized_stage2",
+      "repeat": 26,
+      "wall_ms": 6.706913001835346,
+      "cpu_ms": 6.37799999999994
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "current_stage2",
+      "repeat": 26,
+      "wall_ms": 23.87736295349896,
+      "cpu_ms": 23.47399999999994
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "current_stage0",
+      "repeat": 26,
+      "wall_ms": 8.500164141878486,
+      "cpu_ms": 7.856999999999948
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "current_stage0",
+      "repeat": 27,
+      "wall_ms": 8.589302888140082,
+      "cpu_ms": 7.978999999999847
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "current_stage2",
+      "repeat": 27,
+      "wall_ms": 25.897823041304946,
+      "cpu_ms": 25.267000000000095
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "optimized_stage2",
+      "repeat": 27,
+      "wall_ms": 16.614619875326753,
+      "cpu_ms": 16.166000000000125
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "optimized_stage2",
+      "repeat": 28,
+      "wall_ms": 12.457499047741294,
+      "cpu_ms": 11.853999999999921
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "current_stage2",
+      "repeat": 28,
+      "wall_ms": 11.966024059802294,
+      "cpu_ms": 11.430999999999914
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "current_stage0",
+      "repeat": 28,
+      "wall_ms": 5.945042008534074,
+      "cpu_ms": 5.435000000000024
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "current_stage0",
+      "repeat": 29,
+      "wall_ms": 5.521467188373208,
+      "cpu_ms": 5.10900000000003
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "current_stage2",
+      "repeat": 29,
+      "wall_ms": 8.658434031531215,
+      "cpu_ms": 8.087999999999873
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "optimized_stage2",
+      "repeat": 29,
+      "wall_ms": 6.887277122586966,
+      "cpu_ms": 6.253000000000064
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "optimized_stage2",
+      "repeat": 30,
+      "wall_ms": 14.650798169896007,
+      "cpu_ms": 13.978999999999909
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "current_stage2",
+      "repeat": 30,
+      "wall_ms": 7.842177990823984,
+      "cpu_ms": 7.395999999999903
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "current_stage0",
+      "repeat": 30,
+      "wall_ms": 4.105845000594854,
+      "cpu_ms": 3.7619999999999876
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "current_stage0",
+      "repeat": 31,
+      "wall_ms": 13.37685901671648,
+      "cpu_ms": 13.008999999999993
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "current_stage2",
+      "repeat": 31,
+      "wall_ms": 7.756445789709687,
+      "cpu_ms": 7.332999999999812
+    },
+    {
+      "source": "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg",
+      "variant": "optimized_stage2",
+      "repeat": 31,
+      "wall_ms": 6.395166972652078,
+      "cpu_ms": 6.014999999999993
+    }
+  ]
+}
