@@ -1,0 +1,1354 @@
+{
+  "checks": {
+    "parser_declarations": true,
+    "scheduler_completed": true,
+    "string_checksums": true
+  },
+  "environment": {
+    "compiler": "cc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+    "cpu": "AMD EPYC 7763 64-Core Processor",
+    "logical_cpus": 4,
+    "os": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+    "python": "3.12.3",
+    "runner": "GitHub Actions 1000000811",
+    "runner_os": "Linux"
+  },
+  "measured_at": "2026-10-15T15:14:48.391399+00:00",
+  "repeats": 5,
+  "run_url": "https://github.com/forge-language/forge-benchmarks/actions/runs/38758480289",
+  "runs": {
+    "parser": [
+      {
+        "declarations": 100000,
+        "iterations": 15,
+        "parse_seconds": 0.667716536,
+        "raw_stdout": "declarations=100000 iterations=15 parse_seconds=0.667716536 realloc_calls=225\n",
+        "realloc_calls": 225,
+        "repeat": 1
+      },
+      {
+        "declarations": 100000,
+        "iterations": 15,
+        "parse_seconds": 0.674151276,
+        "raw_stdout": "declarations=100000 iterations=15 parse_seconds=0.674151276 realloc_calls=225\n",
+        "realloc_calls": 225,
+        "repeat": 2
+      },
+      {
+        "declarations": 100000,
+        "iterations": 15,
+        "parse_seconds": 0.673251676,
+        "raw_stdout": "declarations=100000 iterations=15 parse_seconds=0.673251676 realloc_calls=225\n",
+        "realloc_calls": 225,
+        "repeat": 3
+      },
+      {
+        "declarations": 100000,
+        "iterations": 15,
+        "parse_seconds": 0.667749587,
+        "raw_stdout": "declarations=100000 iterations=15 parse_seconds=0.667749587 realloc_calls=225\n",
+        "realloc_calls": 225,
+        "repeat": 4
+      },
+      {
+        "declarations": 100000,
+        "iterations": 15,
+        "parse_seconds": 0.674117383,
+        "raw_stdout": "declarations=100000 iterations=15 parse_seconds=0.674117383 realloc_calls=225\n",
+        "realloc_calls": 225,
+        "repeat": 5
+      }
+    ],
+    "scheduler": [
+      {
+        "case": "dispatch_10000_1",
+        "completed": 10000.0,
+        "coroutines": 10000.0,
+        "process_cpu_ms": 0.701,
+        "raw_csv": "coroutines,workers,wall_ms,process_cpu_ms,completed\n10000,1,0.688,0.701,10000\n",
+        "repeat": 1,
+        "wall_ms": 0.688,
+        "workers": 1.0
+      },
+      {
+        "case": "dispatch_10000_4",
+        "completed": 10000.0,
+        "coroutines": 10000.0,
+        "process_cpu_ms": 9.282,
+        "raw_csv": "coroutines,workers,wall_ms,process_cpu_ms,completed\n10000,4,3.196,9.282,10000\n",
+        "repeat": 1,
+        "wall_ms": 3.196,
+        "workers": 4.0
+      },
+      {
+        "case": "idle_50ms",
+        "process_cpu_ms": 0.661,
+        "raw_csv": "wait_ms,wall_ms,process_cpu_ms\n50,50.365,0.661\n",
+        "repeat": 1,
+        "wait_ms": 50.0,
+        "wall_ms": 50.365
+      },
+      {
+        "case": "idle_50ms",
+        "process_cpu_ms": 0.725,
+        "raw_csv": "wait_ms,wall_ms,process_cpu_ms\n50,50.352,0.725\n",
+        "repeat": 2,
+        "wait_ms": 50.0,
+        "wall_ms": 50.352
+      },
+      {
+        "case": "dispatch_10000_4",
+        "completed": 10000.0,
+        "coroutines": 10000.0,
+        "process_cpu_ms": 9.506,
+        "raw_csv": "coroutines,workers,wall_ms,process_cpu_ms,completed\n10000,4,3.332,9.506,10000\n",
+        "repeat": 2,
+        "wall_ms": 3.332,
+        "workers": 4.0
+      },
+      {
+        "case": "dispatch_10000_1",
+        "completed": 10000.0,
+        "coroutines": 10000.0,
+        "process_cpu_ms": 0.628,
+        "raw_csv": "coroutines,workers,wall_ms,process_cpu_ms,completed\n10000,1,0.619,0.628,10000\n",
+        "repeat": 2,
+        "wall_ms": 0.619,
+        "workers": 1.0
+      },
+      {
+        "case": "dispatch_10000_1",
+        "completed": 10000.0,
+        "coroutines": 10000.0,
+        "process_cpu_ms": 0.6,
+        "raw_csv": "coroutines,workers,wall_ms,process_cpu_ms,completed\n10000,1,0.590,0.600,10000\n",
+        "repeat": 3,
+        "wall_ms": 0.59,
+        "workers": 1.0
+      },
+      {
+        "case": "dispatch_10000_4",
+        "completed": 10000.0,
+        "coroutines": 10000.0,
+        "process_cpu_ms": 9.314,
+        "raw_csv": "coroutines,workers,wall_ms,process_cpu_ms,completed\n10000,4,3.155,9.314,10000\n",
+        "repeat": 3,
+        "wall_ms": 3.155,
+        "workers": 4.0
+      },
+      {
+        "case": "idle_50ms",
+        "process_cpu_ms": 0.597,
+        "raw_csv": "wait_ms,wall_ms,process_cpu_ms\n50,50.331,0.597\n",
+        "repeat": 3,
+        "wait_ms": 50.0,
+        "wall_ms": 50.331
+      },
+      {
+        "case": "idle_50ms",
+        "process_cpu_ms": 0.601,
+        "raw_csv": "wait_ms,wall_ms,process_cpu_ms\n50,50.338,0.601\n",
+        "repeat": 4,
+        "wait_ms": 50.0,
+        "wall_ms": 50.338
+      },
+      {
+        "case": "dispatch_10000_4",
+        "completed": 10000.0,
+        "coroutines": 10000.0,
+        "process_cpu_ms": 9.39,
+        "raw_csv": "coroutines,workers,wall_ms,process_cpu_ms,completed\n10000,4,3.214,9.390,10000\n",
+        "repeat": 4,
+        "wall_ms": 3.214,
+        "workers": 4.0
+      },
+      {
+        "case": "dispatch_10000_1",
+        "completed": 10000.0,
+        "coroutines": 10000.0,
+        "process_cpu_ms": 0.672,
+        "raw_csv": "coroutines,workers,wall_ms,process_cpu_ms,completed\n10000,1,0.660,0.672,10000\n",
+        "repeat": 4,
+        "wall_ms": 0.66,
+        "workers": 1.0
+      },
+      {
+        "case": "dispatch_10000_1",
+        "completed": 10000.0,
+        "coroutines": 10000.0,
+        "process_cpu_ms": 0.682,
+        "raw_csv": "coroutines,workers,wall_ms,process_cpu_ms,completed\n10000,1,0.673,0.682,10000\n",
+        "repeat": 5,
+        "wall_ms": 0.673,
+        "workers": 1.0
+      },
+      {
+        "case": "dispatch_10000_4",
+        "completed": 10000.0,
+        "coroutines": 10000.0,
+        "process_cpu_ms": 8.862,
+        "raw_csv": "coroutines,workers,wall_ms,process_cpu_ms,completed\n10000,4,3.093,8.862,10000\n",
+        "repeat": 5,
+        "wall_ms": 3.093,
+        "workers": 4.0
+      },
+      {
+        "case": "idle_50ms",
+        "process_cpu_ms": 0.593,
+        "raw_csv": "wait_ms,wall_ms,process_cpu_ms\n50,50.330,0.593\n",
+        "repeat": 5,
+        "wait_ms": 50.0,
+        "wall_ms": 50.33
+      }
+    ],
+    "strings": [
+      {
+        "bytes": 4096,
+        "checksum": 491520,
+        "implementation": "legacy",
+        "operation": "scan",
+        "repeat": 1,
+        "seconds": 0.000115838
+      },
+      {
+        "bytes": 4096,
+        "checksum": 491520,
+        "implementation": "view",
+        "operation": "scan",
+        "repeat": 1,
+        "seconds": 1.3796e-05
+      },
+      {
+        "bytes": 4096,
+        "checksum": 4096,
+        "implementation": "legacy",
+        "operation": "append",
+        "repeat": 1,
+        "seconds": 0.000938951
+      },
+      {
+        "bytes": 4096,
+        "checksum": 4096,
+        "implementation": "builder",
+        "operation": "append",
+        "repeat": 1,
+        "seconds": 6.091e-06
+      },
+      {
+        "bytes": 4096,
+        "checksum": 4096,
+        "implementation": "substring",
+        "operation": "match",
+        "repeat": 1,
+        "seconds": 0.000189045
+      },
+      {
+        "bytes": 4096,
+        "checksum": 4096,
+        "implementation": "view",
+        "operation": "match",
+        "repeat": 1,
+        "seconds": 1.3105e-05
+      },
+      {
+        "bytes": 4096,
+        "checksum": 4096,
+        "implementation": "substring",
+        "operation": "append_slice",
+        "repeat": 1,
+        "seconds": 6.351e-06
+      },
+      {
+        "bytes": 4096,
+        "checksum": 4096,
+        "implementation": "view",
+        "operation": "append_slice",
+        "repeat": 1,
+        "seconds": 1.312e-06
+      },
+      {
+        "bytes": 16384,
+        "checksum": 1966080,
+        "implementation": "legacy",
+        "operation": "scan",
+        "repeat": 1,
+        "seconds": 0.001660344
+      },
+      {
+        "bytes": 16384,
+        "checksum": 1966080,
+        "implementation": "view",
+        "operation": "scan",
+        "repeat": 1,
+        "seconds": 1.0319e-05
+      },
+      {
+        "bytes": 16384,
+        "checksum": 16384,
+        "implementation": "legacy",
+        "operation": "append",
+        "repeat": 1,
+        "seconds": 0.015762944
+      },
+      {
+        "bytes": 16384,
+        "checksum": 16384,
+        "implementation": "builder",
+        "operation": "append",
+        "repeat": 1,
+        "seconds": 2.4837e-05
+      },
+      {
+        "bytes": 16384,
+        "checksum": 4096,
+        "implementation": "substring",
+        "operation": "match",
+        "repeat": 1,
+        "seconds": 0.000479589
+      },
+      {
+        "bytes": 16384,
+        "checksum": 4096,
+        "implementation": "view",
+        "operation": "match",
+        "repeat": 1,
+        "seconds": 9.687e-06
+      },
+      {
+        "bytes": 16384,
+        "checksum": 16384,
+        "implementation": "substring",
+        "operation": "append_slice",
+        "repeat": 1,
+        "seconds": 6.2357e-05
+      },
+      {
+        "bytes": 16384,
+        "checksum": 16384,
+        "implementation": "view",
+        "operation": "append_slice",
+        "repeat": 1,
+        "seconds": 3.897e-06
+      },
+      {
+        "bytes": 65536,
+        "checksum": 7864320,
+        "implementation": "legacy",
+        "operation": "scan",
+        "repeat": 1,
+        "seconds": 0.043207002
+      },
+      {
+        "bytes": 65536,
+        "checksum": 7864320,
+        "implementation": "view",
+        "operation": "scan",
+        "repeat": 1,
+        "seconds": 4.1268e-05
+      },
+      {
+        "bytes": 65536,
+        "checksum": 4096,
+        "implementation": "substring",
+        "operation": "match",
+        "repeat": 1,
+        "seconds": 0.002746964
+      },
+      {
+        "bytes": 65536,
+        "checksum": 4096,
+        "implementation": "view",
+        "operation": "match",
+        "repeat": 1,
+        "seconds": 1.0159e-05
+      },
+      {
+        "bytes": 65536,
+        "checksum": 65536,
+        "implementation": "substring",
+        "operation": "append_slice",
+        "repeat": 1,
+        "seconds": 0.001385679
+      },
+      {
+        "bytes": 65536,
+        "checksum": 65536,
+        "implementation": "view",
+        "operation": "append_slice",
+        "repeat": 1,
+        "seconds": 1.7262e-05
+      },
+      {
+        "bytes": 4096,
+        "checksum": 491520,
+        "implementation": "legacy",
+        "operation": "scan",
+        "repeat": 2,
+        "seconds": 0.000125916
+      },
+      {
+        "bytes": 4096,
+        "checksum": 491520,
+        "implementation": "view",
+        "operation": "scan",
+        "repeat": 2,
+        "seconds": 1.3315e-05
+      },
+      {
+        "bytes": 4096,
+        "checksum": 4096,
+        "implementation": "legacy",
+        "operation": "append",
+        "repeat": 2,
+        "seconds": 0.000934503
+      },
+      {
+        "bytes": 4096,
+        "checksum": 4096,
+        "implementation": "builder",
+        "operation": "append",
+        "repeat": 2,
+        "seconds": 1.9015e-05
+      },
+      {
+        "bytes": 4096,
+        "checksum": 4096,
+        "implementation": "substring",
+        "operation": "match",
+        "repeat": 2,
+        "seconds": 0.000156243
+      },
+      {
+        "bytes": 4096,
+        "checksum": 4096,
+        "implementation": "view",
+        "operation": "match",
+        "repeat": 2,
+        "seconds": 9.558e-06
+      },
+      {
+        "bytes": 4096,
+        "checksum": 4096,
+        "implementation": "substring",
+        "operation": "append_slice",
+        "repeat": 2,
+        "seconds": 6.302e-06
+      },
+      {
+        "bytes": 4096,
+        "checksum": 4096,
+        "implementation": "view",
+        "operation": "append_slice",
+        "repeat": 2,
+        "seconds": 1.323e-06
+      },
+      {
+        "bytes": 16384,
+        "checksum": 1966080,
+        "implementation": "legacy",
+        "operation": "scan",
+        "repeat": 2,
+        "seconds": 0.00165777
+      },
+      {
+        "bytes": 16384,
+        "checksum": 1966080,
+        "implementation": "view",
+        "operation": "scan",
+        "repeat": 2,
+        "seconds": 1.032e-05
+      },
+      {
+        "bytes": 16384,
+        "checksum": 16384,
+        "implementation": "legacy",
+        "operation": "append",
+        "repeat": 2,
+        "seconds": 0.014258792
+      },
+      {
+        "bytes": 16384,
+        "checksum": 16384,
+        "implementation": "builder",
+        "operation": "append",
+        "repeat": 2,
+        "seconds": 2.4276e-05
+      },
+      {
+        "bytes": 16384,
+        "checksum": 4096,
+        "implementation": "substring",
+        "operation": "match",
+        "repeat": 2,
+        "seconds": 0.000465884
+      },
+      {
+        "bytes": 16384,
+        "checksum": 4096,
+        "implementation": "view",
+        "operation": "match",
+        "repeat": 2,
+        "seconds": 9.628e-06
+      },
+      {
+        "bytes": 16384,
+        "checksum": 16384,
+        "implementation": "substring",
+        "operation": "append_slice",
+        "repeat": 2,
+        "seconds": 6.1917e-05
+      },
+      {
+        "bytes": 16384,
+        "checksum": 16384,
+        "implementation": "view",
+        "operation": "append_slice",
+        "repeat": 2,
+        "seconds": 3.687e-06
+      },
+      {
+        "bytes": 65536,
+        "checksum": 7864320,
+        "implementation": "legacy",
+        "operation": "scan",
+        "repeat": 2,
+        "seconds": 0.043601703
+      },
+      {
+        "bytes": 65536,
+        "checksum": 7864320,
+        "implementation": "view",
+        "operation": "scan",
+        "repeat": 2,
+        "seconds": 4.1277e-05
+      },
+      {
+        "bytes": 65536,
+        "checksum": 4096,
+        "implementation": "substring",
+        "operation": "match",
+        "repeat": 2,
+        "seconds": 0.002758295
+      },
+      {
+        "bytes": 65536,
+        "checksum": 4096,
+        "implementation": "view",
+        "operation": "match",
+        "repeat": 2,
+        "seconds": 1.0209e-05
+      },
+      {
+        "bytes": 65536,
+        "checksum": 65536,
+        "implementation": "substring",
+        "operation": "append_slice",
+        "repeat": 2,
+        "seconds": 0.001387463
+      },
+      {
+        "bytes": 65536,
+        "checksum": 65536,
+        "implementation": "view",
+        "operation": "append_slice",
+        "repeat": 2,
+        "seconds": 1.6561e-05
+      },
+      {
+        "bytes": 4096,
+        "checksum": 491520,
+        "implementation": "legacy",
+        "operation": "scan",
+        "repeat": 3,
+        "seconds": 0.000123752
+      },
+      {
+        "bytes": 4096,
+        "checksum": 491520,
+        "implementation": "view",
+        "operation": "scan",
+        "repeat": 3,
+        "seconds": 1.2714e-05
+      },
+      {
+        "bytes": 4096,
+        "checksum": 4096,
+        "implementation": "legacy",
+        "operation": "append",
+        "repeat": 3,
+        "seconds": 0.00082606
+      },
+      {
+        "bytes": 4096,
+        "checksum": 4096,
+        "implementation": "builder",
+        "operation": "append",
+        "repeat": 3,
+        "seconds": 5.991e-06
+      },
+      {
+        "bytes": 4096,
+        "checksum": 4096,
+        "implementation": "substring",
+        "operation": "match",
+        "repeat": 3,
+        "seconds": 0.000168596
+      },
+      {
+        "bytes": 4096,
+        "checksum": 4096,
+        "implementation": "view",
+        "operation": "match",
+        "repeat": 3,
+        "seconds": 9.578e-06
+      },
+      {
+        "bytes": 4096,
+        "checksum": 4096,
+        "implementation": "substring",
+        "operation": "append_slice",
+        "repeat": 3,
+        "seconds": 6.241e-06
+      },
+      {
+        "bytes": 4096,
+        "checksum": 4096,
+        "implementation": "view",
+        "operation": "append_slice",
+        "repeat": 3,
+        "seconds": 1.373e-06
+      },
+      {
+        "bytes": 16384,
+        "checksum": 1966080,
+        "implementation": "legacy",
+        "operation": "scan",
+        "repeat": 3,
+        "seconds": 0.001648412
+      },
+      {
+        "bytes": 16384,
+        "checksum": 1966080,
+        "implementation": "view",
+        "operation": "scan",
+        "repeat": 3,
+        "seconds": 1.0319e-05
+      },
+      {
+        "bytes": 16384,
+        "checksum": 16384,
+        "implementation": "legacy",
+        "operation": "append",
+        "repeat": 3,
+        "seconds": 0.014160066
+      },
+      {
+        "bytes": 16384,
+        "checksum": 16384,
+        "implementation": "builder",
+        "operation": "append",
+        "repeat": 3,
+        "seconds": 2.4876e-05
+      },
+      {
+        "bytes": 16384,
+        "checksum": 4096,
+        "implementation": "substring",
+        "operation": "match",
+        "repeat": 3,
+        "seconds": 0.000485641
+      },
+      {
+        "bytes": 16384,
+        "checksum": 4096,
+        "implementation": "view",
+        "operation": "match",
+        "repeat": 3,
+        "seconds": 9.628e-06
+      },
+      {
+        "bytes": 16384,
+        "checksum": 16384,
+        "implementation": "substring",
+        "operation": "append_slice",
+        "repeat": 3,
+        "seconds": 6.1616e-05
+      },
+      {
+        "bytes": 16384,
+        "checksum": 16384,
+        "implementation": "view",
+        "operation": "append_slice",
+        "repeat": 3,
+        "seconds": 3.656e-06
+      },
+      {
+        "bytes": 65536,
+        "checksum": 7864320,
+        "implementation": "legacy",
+        "operation": "scan",
+        "repeat": 3,
+        "seconds": 0.043261424
+      },
+      {
+        "bytes": 65536,
+        "checksum": 7864320,
+        "implementation": "view",
+        "operation": "scan",
+        "repeat": 3,
+        "seconds": 4.1287e-05
+      },
+      {
+        "bytes": 65536,
+        "checksum": 4096,
+        "implementation": "substring",
+        "operation": "match",
+        "repeat": 3,
+        "seconds": 0.00275582
+      },
+      {
+        "bytes": 65536,
+        "checksum": 4096,
+        "implementation": "view",
+        "operation": "match",
+        "repeat": 3,
+        "seconds": 1.097e-05
+      },
+      {
+        "bytes": 65536,
+        "checksum": 65536,
+        "implementation": "substring",
+        "operation": "append_slice",
+        "repeat": 3,
+        "seconds": 0.001397021
+      },
+      {
+        "bytes": 65536,
+        "checksum": 65536,
+        "implementation": "view",
+        "operation": "append_slice",
+        "repeat": 3,
+        "seconds": 1.6091e-05
+      },
+      {
+        "bytes": 4096,
+        "checksum": 491520,
+        "implementation": "legacy",
+        "operation": "scan",
+        "repeat": 4,
+        "seconds": 0.000104416
+      },
+      {
+        "bytes": 4096,
+        "checksum": 491520,
+        "implementation": "view",
+        "operation": "scan",
+        "repeat": 4,
+        "seconds": 1.08e-05
+      },
+      {
+        "bytes": 4096,
+        "checksum": 4096,
+        "implementation": "legacy",
+        "operation": "append",
+        "repeat": 4,
+        "seconds": 0.000856767
+      },
+      {
+        "bytes": 4096,
+        "checksum": 4096,
+        "implementation": "builder",
+        "operation": "append",
+        "repeat": 4,
+        "seconds": 5.981e-06
+      },
+      {
+        "bytes": 4096,
+        "checksum": 4096,
+        "implementation": "substring",
+        "operation": "match",
+        "repeat": 4,
+        "seconds": 0.000156905
+      },
+      {
+        "bytes": 4096,
+        "checksum": 4096,
+        "implementation": "view",
+        "operation": "match",
+        "repeat": 4,
+        "seconds": 9.589e-06
+      },
+      {
+        "bytes": 4096,
+        "checksum": 4096,
+        "implementation": "substring",
+        "operation": "append_slice",
+        "repeat": 4,
+        "seconds": 6.212e-06
+      },
+      {
+        "bytes": 4096,
+        "checksum": 4096,
+        "implementation": "view",
+        "operation": "append_slice",
+        "repeat": 4,
+        "seconds": 1.322e-06
+      },
+      {
+        "bytes": 16384,
+        "checksum": 1966080,
+        "implementation": "legacy",
+        "operation": "scan",
+        "repeat": 4,
+        "seconds": 0.001673379
+      },
+      {
+        "bytes": 16384,
+        "checksum": 1966080,
+        "implementation": "view",
+        "operation": "scan",
+        "repeat": 4,
+        "seconds": 1.0339e-05
+      },
+      {
+        "bytes": 16384,
+        "checksum": 16384,
+        "implementation": "legacy",
+        "operation": "append",
+        "repeat": 4,
+        "seconds": 0.014131062
+      },
+      {
+        "bytes": 16384,
+        "checksum": 16384,
+        "implementation": "builder",
+        "operation": "append",
+        "repeat": 4,
+        "seconds": 2.4797e-05
+      },
+      {
+        "bytes": 16384,
+        "checksum": 4096,
+        "implementation": "substring",
+        "operation": "match",
+        "repeat": 4,
+        "seconds": 0.000471555
+      },
+      {
+        "bytes": 16384,
+        "checksum": 4096,
+        "implementation": "view",
+        "operation": "match",
+        "repeat": 4,
+        "seconds": 9.628e-06
+      },
+      {
+        "bytes": 16384,
+        "checksum": 16384,
+        "implementation": "substring",
+        "operation": "append_slice",
+        "repeat": 4,
+        "seconds": 6.2668e-05
+      },
+      {
+        "bytes": 16384,
+        "checksum": 16384,
+        "implementation": "view",
+        "operation": "append_slice",
+        "repeat": 4,
+        "seconds": 3.677e-06
+      },
+      {
+        "bytes": 65536,
+        "checksum": 7864320,
+        "implementation": "legacy",
+        "operation": "scan",
+        "repeat": 4,
+        "seconds": 0.043266594
+      },
+      {
+        "bytes": 65536,
+        "checksum": 7864320,
+        "implementation": "view",
+        "operation": "scan",
+        "repeat": 4,
+        "seconds": 4.1407e-05
+      },
+      {
+        "bytes": 65536,
+        "checksum": 4096,
+        "implementation": "substring",
+        "operation": "match",
+        "repeat": 4,
+        "seconds": 0.002742886
+      },
+      {
+        "bytes": 65536,
+        "checksum": 4096,
+        "implementation": "view",
+        "operation": "match",
+        "repeat": 4,
+        "seconds": 1.8104e-05
+      },
+      {
+        "bytes": 65536,
+        "checksum": 65536,
+        "implementation": "substring",
+        "operation": "append_slice",
+        "repeat": 4,
+        "seconds": 0.001389186
+      },
+      {
+        "bytes": 65536,
+        "checksum": 65536,
+        "implementation": "view",
+        "operation": "append_slice",
+        "repeat": 4,
+        "seconds": 1.632e-05
+      },
+      {
+        "bytes": 4096,
+        "checksum": 491520,
+        "implementation": "legacy",
+        "operation": "scan",
+        "repeat": 5,
+        "seconds": 0.000106029
+      },
+      {
+        "bytes": 4096,
+        "checksum": 491520,
+        "implementation": "view",
+        "operation": "scan",
+        "repeat": 5,
+        "seconds": 1.1582e-05
+      },
+      {
+        "bytes": 4096,
+        "checksum": 4096,
+        "implementation": "legacy",
+        "operation": "append",
+        "repeat": 5,
+        "seconds": 0.000853271
+      },
+      {
+        "bytes": 4096,
+        "checksum": 4096,
+        "implementation": "builder",
+        "operation": "append",
+        "repeat": 5,
+        "seconds": 6.081e-06
+      },
+      {
+        "bytes": 4096,
+        "checksum": 4096,
+        "implementation": "substring",
+        "operation": "match",
+        "repeat": 5,
+        "seconds": 0.000157054
+      },
+      {
+        "bytes": 4096,
+        "checksum": 4096,
+        "implementation": "view",
+        "operation": "match",
+        "repeat": 5,
+        "seconds": 9.568e-06
+      },
+      {
+        "bytes": 4096,
+        "checksum": 4096,
+        "implementation": "substring",
+        "operation": "append_slice",
+        "repeat": 5,
+        "seconds": 6.271e-06
+      },
+      {
+        "bytes": 4096,
+        "checksum": 4096,
+        "implementation": "view",
+        "operation": "append_slice",
+        "repeat": 5,
+        "seconds": 1.332e-06
+      },
+      {
+        "bytes": 16384,
+        "checksum": 1966080,
+        "implementation": "legacy",
+        "operation": "scan",
+        "repeat": 5,
+        "seconds": 0.001706902
+      },
+      {
+        "bytes": 16384,
+        "checksum": 1966080,
+        "implementation": "view",
+        "operation": "scan",
+        "repeat": 5,
+        "seconds": 1.0319e-05
+      },
+      {
+        "bytes": 16384,
+        "checksum": 16384,
+        "implementation": "legacy",
+        "operation": "append",
+        "repeat": 5,
+        "seconds": 0.014045541
+      },
+      {
+        "bytes": 16384,
+        "checksum": 16384,
+        "implementation": "builder",
+        "operation": "append",
+        "repeat": 5,
+        "seconds": 2.5307e-05
+      },
+      {
+        "bytes": 16384,
+        "checksum": 4096,
+        "implementation": "substring",
+        "operation": "match",
+        "repeat": 5,
+        "seconds": 0.000476324
+      },
+      {
+        "bytes": 16384,
+        "checksum": 4096,
+        "implementation": "view",
+        "operation": "match",
+        "repeat": 5,
+        "seconds": 9.639e-06
+      },
+      {
+        "bytes": 16384,
+        "checksum": 16384,
+        "implementation": "substring",
+        "operation": "append_slice",
+        "repeat": 5,
+        "seconds": 6.1606e-05
+      },
+      {
+        "bytes": 16384,
+        "checksum": 16384,
+        "implementation": "view",
+        "operation": "append_slice",
+        "repeat": 5,
+        "seconds": 3.637e-06
+      },
+      {
+        "bytes": 65536,
+        "checksum": 7864320,
+        "implementation": "legacy",
+        "operation": "scan",
+        "repeat": 5,
+        "seconds": 0.043226108
+      },
+      {
+        "bytes": 65536,
+        "checksum": 7864320,
+        "implementation": "view",
+        "operation": "scan",
+        "repeat": 5,
+        "seconds": 4.1257e-05
+      },
+      {
+        "bytes": 65536,
+        "checksum": 4096,
+        "implementation": "substring",
+        "operation": "match",
+        "repeat": 5,
+        "seconds": 0.002751643
+      },
+      {
+        "bytes": 65536,
+        "checksum": 4096,
+        "implementation": "view",
+        "operation": "match",
+        "repeat": 5,
+        "seconds": 1.0209e-05
+      },
+      {
+        "bytes": 65536,
+        "checksum": 65536,
+        "implementation": "substring",
+        "operation": "append_slice",
+        "repeat": 5,
+        "seconds": 0.001389136
+      },
+      {
+        "bytes": 65536,
+        "checksum": 65536,
+        "implementation": "view",
+        "operation": "append_slice",
+        "repeat": 5,
+        "seconds": 1.6411e-05
+      }
+    ]
+  },
+  "schema_version": 1,
+  "scope": "Shared host; bounded CPU/parser/scheduler API workloads, not application request throughput. Parser timing excludes fixture construction/free; scheduler timing excludes task creation; string legacy/new algorithms execute in fixed order. CI hosts vary; compare matching environments.",
+  "sha256": {
+    "measurement_script": "77ea514826f9f73f6b0ea4912ecfcd4655a763afc3a85c6ec6320a97a83583dc",
+    "parser_binary": "43970ac9674c7d8f6ba0a914746cbce295f2788f97f9bcd2ec2cadedcc4059af",
+    "parser_harness": "55e80a8bba80449e9efd3ae50930d12b71c23512b15f683aa7f29d1031c5e50b",
+    "scheduler_binary": "bc1eee76e765c3f1998d9356ee94506ae2e7a225174af76aae1ffaef284a080e",
+    "scheduler_source": "2a03ebdb424c80b733b64ede44eb2a416df87014820e2865c20eee249066de78",
+    "string_binary": "cf2db41df76bdea6f4a263e83df6939cc645169d893331588c5d17deb9517456",
+    "string_source": "d948067d0733a69714ef8907e6d55657ecb5e2a9c2df42d97df6e6607b9fb2fb"
+  },
+  "source_revisions": {
+    "forge": "a750b60923bcc71adda025596664dd9a0413f80b",
+    "forge-benchmarks": "08bf5c456f5c6185c7b89d30b33cebde565a39ce",
+    "forge-runtime": "dcbb1929b17c2f1d11fd367ecf80c7c87c58a274",
+    "forge-stdlib": "6aa28667b83009a415ab2d7ac13ef6c675af7012"
+  },
+  "source_tree_clean": {
+    "forge": true,
+    "forge-benchmarks": true,
+    "forge-runtime": true,
+    "forge-stdlib": true
+  },
+  "summary": {
+    "parser": {
+      "parse_seconds": {
+        "max": 0.674151276,
+        "median": 0.673251676,
+        "min": 0.667716536
+      },
+      "realloc_calls": {
+        "max": 225,
+        "median": 225,
+        "min": 225
+      }
+    },
+    "scheduler": [
+      {
+        "case": "dispatch_10000_1",
+        "process_cpu_ms": {
+          "max": 0.701,
+          "median": 0.672,
+          "min": 0.6
+        },
+        "wall_ms": {
+          "max": 0.688,
+          "median": 0.66,
+          "min": 0.59
+        }
+      },
+      {
+        "case": "dispatch_10000_4",
+        "process_cpu_ms": {
+          "max": 9.506,
+          "median": 9.314,
+          "min": 8.862
+        },
+        "wall_ms": {
+          "max": 3.332,
+          "median": 3.196,
+          "min": 3.093
+        }
+      },
+      {
+        "case": "idle_50ms",
+        "process_cpu_ms": {
+          "max": 0.725,
+          "median": 0.601,
+          "min": 0.593
+        },
+        "wall_ms": {
+          "max": 50.365,
+          "median": 50.338,
+          "min": 50.33
+        }
+      }
+    ],
+    "strings": [
+      {
+        "algorithms": {
+          "builder": {
+            "max_seconds": 1.9015e-05,
+            "median_seconds": 6.081e-06,
+            "min_seconds": 5.981e-06
+          },
+          "legacy": {
+            "max_seconds": 0.000938951,
+            "median_seconds": 0.000856767,
+            "min_seconds": 0.00082606
+          }
+        },
+        "bytes": 4096,
+        "operation": "append",
+        "speedup": 140.89245189935866
+      },
+      {
+        "algorithms": {
+          "builder": {
+            "max_seconds": 2.5307e-05,
+            "median_seconds": 2.4837e-05,
+            "min_seconds": 2.4276e-05
+          },
+          "legacy": {
+            "max_seconds": 0.015762944,
+            "median_seconds": 0.014160066,
+            "min_seconds": 0.014045541
+          }
+        },
+        "bytes": 16384,
+        "operation": "append",
+        "speedup": 570.1198212344486
+      },
+      {
+        "algorithms": {
+          "substring": {
+            "max_seconds": 6.351e-06,
+            "median_seconds": 6.271e-06,
+            "min_seconds": 6.212e-06
+          },
+          "view": {
+            "max_seconds": 1.373e-06,
+            "median_seconds": 1.323e-06,
+            "min_seconds": 1.312e-06
+          }
+        },
+        "bytes": 4096,
+        "operation": "append_slice",
+        "speedup": 4.739984882842025
+      },
+      {
+        "algorithms": {
+          "substring": {
+            "max_seconds": 6.2668e-05,
+            "median_seconds": 6.1917e-05,
+            "min_seconds": 6.1606e-05
+          },
+          "view": {
+            "max_seconds": 3.897e-06,
+            "median_seconds": 3.677e-06,
+            "min_seconds": 3.637e-06
+          }
+        },
+        "bytes": 16384,
+        "operation": "append_slice",
+        "speedup": 16.838999184117487
+      },
+      {
+        "algorithms": {
+          "substring": {
+            "max_seconds": 0.001397021,
+            "median_seconds": 0.001389136,
+            "min_seconds": 0.001385679
+          },
+          "view": {
+            "max_seconds": 1.7262e-05,
+            "median_seconds": 1.6411e-05,
+            "min_seconds": 1.6091e-05
+          }
+        },
+        "bytes": 65536,
+        "operation": "append_slice",
+        "speedup": 84.64663944914996
+      },
+      {
+        "algorithms": {
+          "substring": {
+            "max_seconds": 0.000189045,
+            "median_seconds": 0.000157054,
+            "min_seconds": 0.000156243
+          },
+          "view": {
+            "max_seconds": 1.3105e-05,
+            "median_seconds": 9.578e-06,
+            "min_seconds": 9.558e-06
+          }
+        },
+        "bytes": 4096,
+        "operation": "match",
+        "speedup": 16.397368970557526
+      },
+      {
+        "algorithms": {
+          "substring": {
+            "max_seconds": 0.000485641,
+            "median_seconds": 0.000476324,
+            "min_seconds": 0.000465884
+          },
+          "view": {
+            "max_seconds": 9.687e-06,
+            "median_seconds": 9.628e-06,
+            "min_seconds": 9.628e-06
+          }
+        },
+        "bytes": 16384,
+        "operation": "match",
+        "speedup": 49.47278770253427
+      },
+      {
+        "algorithms": {
+          "substring": {
+            "max_seconds": 0.002758295,
+            "median_seconds": 0.002751643,
+            "min_seconds": 0.002742886
+          },
+          "view": {
+            "max_seconds": 1.8104e-05,
+            "median_seconds": 1.0209e-05,
+            "min_seconds": 1.0159e-05
+          }
+        },
+        "bytes": 65536,
+        "operation": "match",
+        "speedup": 269.53110000979524
+      },
+      {
+        "algorithms": {
+          "legacy": {
+            "max_seconds": 0.000125916,
+            "median_seconds": 0.000115838,
+            "min_seconds": 0.000104416
+          },
+          "view": {
+            "max_seconds": 1.3796e-05,
+            "median_seconds": 1.2714e-05,
+            "min_seconds": 1.08e-05
+          }
+        },
+        "bytes": 4096,
+        "operation": "scan",
+        "speedup": 9.111058675475853
+      },
+      {
+        "algorithms": {
+          "legacy": {
+            "max_seconds": 0.001706902,
+            "median_seconds": 0.001660344,
+            "min_seconds": 0.001648412
+          },
+          "view": {
+            "max_seconds": 1.0339e-05,
+            "median_seconds": 1.0319e-05,
+            "min_seconds": 1.0319e-05
+          }
+        },
+        "bytes": 16384,
+        "operation": "scan",
+        "speedup": 160.90163775559645
+      },
+      {
+        "algorithms": {
+          "legacy": {
+            "max_seconds": 0.043601703,
+            "median_seconds": 0.043261424,
+            "min_seconds": 0.043207002
+          },
+          "view": {
+            "max_seconds": 4.1407e-05,
+            "median_seconds": 4.1277e-05,
+            "min_seconds": 4.1257e-05
+          }
+        },
+        "bytes": 65536,
+        "operation": "scan",
+        "speedup": 1048.0757807011169
+      }
+    ]
+  }
+}
