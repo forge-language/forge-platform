@@ -1,0 +1,1716 @@
+{
+  "activity": {
+    "pulls": [
+      {
+        "author": "Helloworld0822",
+        "labels": [],
+        "merged_at": "2026-10-05T14:09:13Z",
+        "number": 8,
+        "state": "closed",
+        "title": "Optimize self-hosted compiler and report portfolio DB CPU improvements",
+        "url": "https://github.com/forge-language/forge/pull/8"
+      },
+      {
+        "author": "Helloworld0822",
+        "labels": [],
+        "merged_at": "2026-10-03T16:08:49Z",
+        "number": 7,
+        "state": "closed",
+        "title": "Integrate native compiler, self-hosting and reviewed runtime improvements",
+        "url": "https://github.com/forge-language/forge/pull/7"
+      },
+      {
+        "author": "Helloworld0822",
+        "labels": [],
+        "merged_at": "2026-09-08T12:38:55Z",
+        "number": 5,
+        "state": "closed",
+        "title": "Full codebase audit fixes + advanced HTTP serving modes (io_uring/TLS/routing)",
+        "url": "https://github.com/forge-language/forge/pull/5"
+      },
+      {
+        "author": "Helloworld0822",
+        "labels": [],
+        "merged_at": "2026-09-08T12:35:02Z",
+        "number": 4,
+        "state": "closed",
+        "title": "Support building Forge libraries in external out-of-tree projects",
+        "url": "https://github.com/forge-language/forge/pull/4"
+      },
+      {
+        "author": "Helloworld0822",
+        "labels": [],
+        "merged_at": "2026-09-08T12:32:25Z",
+        "number": 6,
+        "state": "closed",
+        "title": "Fix secure temporary file suffix handling",
+        "url": "https://github.com/forge-language/forge/pull/6"
+      },
+      {
+        "author": "Helloworld0822",
+        "labels": [],
+        "merged_at": "2026-09-08T12:28:02Z",
+        "number": 2,
+        "state": "closed",
+        "title": "Harden the HTTP stdlib server: fd capacity, recv timeout, full body reads",
+        "url": "https://github.com/forge-language/forge/pull/2"
+      },
+      {
+        "author": "Helloworld0822",
+        "labels": [],
+        "merged_at": "2026-09-08T12:28:00Z",
+        "number": 3,
+        "state": "closed",
+        "title": "Add self-hosted Forge LSP server with editor integrations",
+        "url": "https://github.com/forge-language/forge/pull/3"
+      }
+    ],
+    "repository": "https://github.com/forge-language/forge",
+    "stats": {
+      "forks": 0,
+      "open_items": 0,
+      "stars": 1
+    },
+    "updated_at": "2026-10-15T05:16:57.472100+00:00"
+  },
+  "content_id": "2187d66d1db774ef4cd440fe",
+  "documents": [
+    {
+      "commit": "a750b60923bcc71adda025596664dd9a0413f80b",
+      "path": "documents/ARCHITECTURE.md",
+      "repository": "forge",
+      "sha256": "e69e52a2409211ccdd97acf579f881c9df06964d7b370b0be3052d3afade7c70",
+      "source_path": "ARCHITECTURE.md",
+      "title": "ARCHITECTURE",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/documents/ARCHITECTURE.md"
+    },
+    {
+      "commit": "a750b60923bcc71adda025596664dd9a0413f80b",
+      "path": "documents/CODE_OF_CONDUCT.md",
+      "repository": "forge",
+      "sha256": "2458b5e503fa7abfcbeaf9a86b08040732e5915611c6e749ff965405308f7826",
+      "source_path": "CODE_OF_CONDUCT.md",
+      "title": "CODE_OF_CONDUCT",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/documents/CODE_OF_CONDUCT.md"
+    },
+    {
+      "commit": "a750b60923bcc71adda025596664dd9a0413f80b",
+      "path": "documents/CONTRIBUTING.md",
+      "repository": "forge",
+      "sha256": "bbe48e63ee4370ab8d8f85f6d18bd981a58e53405b1447ff8906d9667b615ecc",
+      "source_path": "CONTRIBUTING.md",
+      "title": "CONTRIBUTING",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/documents/CONTRIBUTING.md"
+    },
+    {
+      "commit": "a750b60923bcc71adda025596664dd9a0413f80b",
+      "path": "documents/GOOD_FIRST_ISSUES.md",
+      "repository": "forge",
+      "sha256": "2817a585b356a6ae7119a85389d90bb82cee3b493f22631229ed6a26f4de323f",
+      "source_path": "GOOD_FIRST_ISSUES.md",
+      "title": "GOOD_FIRST_ISSUES",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/documents/GOOD_FIRST_ISSUES.md"
+    },
+    {
+      "commit": "a750b60923bcc71adda025596664dd9a0413f80b",
+      "path": "documents/LANGUAGE_SPEC.md",
+      "repository": "forge",
+      "sha256": "7f5d655e2af71327298654bdbe8420e0e2b2d95c557b072f8953af0321a0b7c0",
+      "source_path": "LANGUAGE_SPEC.md",
+      "title": "LANGUAGE_SPEC",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/documents/LANGUAGE_SPEC.md"
+    },
+    {
+      "commit": "a750b60923bcc71adda025596664dd9a0413f80b",
+      "path": "documents/README.md",
+      "repository": "forge",
+      "sha256": "49129cfafe8cba3450650d71059693f449d4816eca3451109d6cb1e0a988efbe",
+      "source_path": "README.md",
+      "title": "README",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/documents/README.md"
+    },
+    {
+      "commit": "a750b60923bcc71adda025596664dd9a0413f80b",
+      "path": "documents/RFC_PROCESS.md",
+      "repository": "forge",
+      "sha256": "1da0a3170f74ce9662f8f3d1f575c0d49ecd247721292355e33021143677ab4c",
+      "source_path": "RFC_PROCESS.md",
+      "title": "RFC_PROCESS",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/documents/RFC_PROCESS.md"
+    },
+    {
+      "commit": "a750b60923bcc71adda025596664dd9a0413f80b",
+      "path": "documents/ROADMAP.md",
+      "repository": "forge",
+      "sha256": "c255da517af8b7d98986257e0d621264edefd9dc06769202e1773792b455b540",
+      "source_path": "ROADMAP.md",
+      "title": "ROADMAP",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/documents/ROADMAP.md"
+    }
+  ],
+  "errors": [
+    {
+      "component": "reports",
+      "message": "ValueError: public refresh failed; previous data retained"
+    }
+  ],
+  "generated_at": "2026-10-15T05:16:59.205217+00:00",
+  "latest_benchmark": {
+    "commit": "08bf5c456f5c6185c7b89d30b33cebde565a39ce",
+    "measured_at": "2026-10-15T00:55:24.585124+00:00",
+    "repository": "forge-benchmarks",
+    "run_url": "https://github.com/forge-language/forge-benchmarks/actions/runs/38662698049",
+    "source_revisions": {
+      "forge": "a750b60923bcc71adda025596664dd9a0413f80b",
+      "forge-benchmarks": "08bf5c456f5c6185c7b89d30b33cebde565a39ce",
+      "forge-runtime": "dcbb1929b17c2f1d11fd367ecf80c7c87c58a274",
+      "forge-stdlib": "6aa28667b83009a415ab2d7ac13ef6c675af7012"
+    },
+    "status": "available",
+    "summary": {
+      "parser": {
+        "parse_seconds": {
+          "max": 0.705688415,
+          "median": 0.6734307,
+          "min": 0.672225094
+        },
+        "realloc_calls": {
+          "max": 225,
+          "median": 225,
+          "min": 225
+        }
+      },
+      "scheduler": [
+        {
+          "case": "dispatch_10000_1",
+          "process_cpu_ms": {
+            "max": 0.756,
+            "median": 0.626,
+            "min": 0.617
+          },
+          "wall_ms": {
+            "max": 0.742,
+            "median": 0.616,
+            "min": 0.607
+          }
+        },
+        {
+          "case": "dispatch_10000_4",
+          "process_cpu_ms": {
+            "max": 9.215,
+            "median": 8.968,
+            "min": 8.104
+          },
+          "wall_ms": {
+            "max": 2.996,
+            "median": 2.905,
+            "min": 2.676
+          }
+        },
+        {
+          "case": "idle_50ms",
+          "process_cpu_ms": {
+            "max": 0.58,
+            "median": 0.561,
+            "min": 0.543
+          },
+          "wall_ms": {
+            "max": 50.333,
+            "median": 50.318,
+            "min": 50.3
+          }
+        }
+      ],
+      "strings": [
+        {
+          "algorithms": {
+            "builder": {
+              "max_seconds": 6.331e-06,
+              "median_seconds": 6.001e-06,
+              "min_seconds": 5.961e-06
+            },
+            "legacy": {
+              "max_seconds": 0.00084666,
+              "median_seconds": 0.000824108,
+              "min_seconds": 0.000804742
+            }
+          },
+          "bytes": 4096,
+          "operation": "append",
+          "speedup": 137.3284452591235
+        },
+        {
+          "algorithms": {
+            "builder": {
+              "max_seconds": 2.5257e-05,
+              "median_seconds": 2.4717e-05,
+              "min_seconds": 2.4445e-05
+            },
+            "legacy": {
+              "max_seconds": 0.013841061,
+              "median_seconds": 0.013731127,
+              "min_seconds": 0.013482202
+            }
+          },
+          "bytes": 16384,
+          "operation": "append",
+          "speedup": 555.5337217299833
+        },
+        {
+          "algorithms": {
+            "substring": {
+              "max_seconds": 6.743e-06,
+              "median_seconds": 6.462e-06,
+              "min_seconds": 6.262e-06
+            },
+            "view": {
+              "max_seconds": 1.362e-06,
+              "median_seconds": 1.352e-06,
+              "min_seconds": 1.312e-06
+            }
+          },
+          "bytes": 4096,
+          "operation": "append_slice",
+          "speedup": 4.779585798816568
+        },
+        {
+          "algorithms": {
+            "substring": {
+              "max_seconds": 7.3708e-05,
+              "median_seconds": 6.2697e-05,
+              "min_seconds": 6.1365e-05
+            },
+            "view": {
+              "max_seconds": 3.787e-06,
+              "median_seconds": 3.676e-06,
+              "min_seconds": 3.637e-06
+            }
+          },
+          "bytes": 16384,
+          "operation": "append_slice",
+          "speedup": 17.055767138193687
+        },
+        {
+          "algorithms": {
+            "substring": {
+              "max_seconds": 0.001398098,
+              "median_seconds": 0.001385465,
+              "min_seconds": 0.001383361
+            },
+            "view": {
+              "max_seconds": 1.66e-05,
+              "median_seconds": 1.607e-05,
+              "min_seconds": 1.5779e-05
+            }
+          },
+          "bytes": 65536,
+          "operation": "append_slice",
+          "speedup": 86.21437461107654
+        },
+        {
+          "algorithms": {
+            "substring": {
+              "max_seconds": 0.000161892,
+              "median_seconds": 0.000158135,
+              "min_seconds": 0.000155971
+            },
+            "view": {
+              "max_seconds": 2.2762e-05,
+              "median_seconds": 9.578e-06,
+              "min_seconds": 9.568e-06
+            }
+          },
+          "bytes": 4096,
+          "operation": "match",
+          "speedup": 16.51023178116517
+        },
+        {
+          "algorithms": {
+            "substring": {
+              "max_seconds": 0.000498721,
+              "median_seconds": 0.000477411,
+              "min_seconds": 0.000465008
+            },
+            "view": {
+              "max_seconds": 2.3474e-05,
+              "median_seconds": 9.638e-06,
+              "min_seconds": 9.618e-06
+            }
+          },
+          "bytes": 16384,
+          "operation": "match",
+          "speedup": 49.53423946876946
+        },
+        {
+          "algorithms": {
+            "substring": {
+              "max_seconds": 0.00278735,
+              "median_seconds": 0.002751352,
+              "min_seconds": 0.002745502
+            },
+            "view": {
+              "max_seconds": 1.0189e-05,
+              "median_seconds": 1.0159e-05,
+              "min_seconds": 9.528e-06
+            }
+          },
+          "bytes": 65536,
+          "operation": "match",
+          "speedup": 270.8290186041933
+        },
+        {
+          "algorithms": {
+            "legacy": {
+              "max_seconds": 0.000106569,
+              "median_seconds": 0.000105837,
+              "min_seconds": 0.000104205
+            },
+            "view": {
+              "max_seconds": 2.9925e-05,
+              "median_seconds": 1.091e-05,
+              "min_seconds": 1.054e-05
+            }
+          },
+          "bytes": 4096,
+          "operation": "scan",
+          "speedup": 9.700916590284143
+        },
+        {
+          "algorithms": {
+            "legacy": {
+              "max_seconds": 0.001668533,
+              "median_seconds": 0.001651722,
+              "min_seconds": 0.001642084
+            },
+            "view": {
+              "max_seconds": 1.0359e-05,
+              "median_seconds": 1.033e-05,
+              "min_seconds": 1.0319e-05
+            }
+          },
+          "bytes": 16384,
+          "operation": "scan",
+          "speedup": 159.89564375605036
+        },
+        {
+          "algorithms": {
+            "legacy": {
+              "max_seconds": 0.043311681,
+              "median_seconds": 0.043191007,
+              "min_seconds": 0.043166661
+            },
+            "view": {
+              "max_seconds": 4.9492e-05,
+              "median_seconds": 4.1297e-05,
+              "min_seconds": 4.1187e-05
+            }
+          },
+          "bytes": 65536,
+          "operation": "scan",
+          "speedup": 1045.8630651136884
+        }
+      ]
+    },
+    "url": "/live/snapshots/2187d66d1db774ef4cd440fe/benchmarks/latest.json"
+  },
+  "report_source_revisions": {
+    "forge": "a750b60923bcc71adda025596664dd9a0413f80b",
+    "forge-platform": "72376bb8c1631d7cb7f5538cf5c55ffc571a7443",
+    "forge-storage": "c135817142a53ee0b515a95bf2ef511ab58c02e5"
+  },
+  "report_source_timestamps": {
+    "forge": "2026-10-14T04:51:34Z",
+    "forge-platform": "2026-10-15T00:45:58Z",
+    "forge-storage": "2026-10-09T04:41:40Z"
+  },
+  "reports": [
+    {
+      "commit": "407774db31bc9cba95a06eeed6345ec6ae1653ee",
+      "date": null,
+      "path": "reports/benchmark-performance-report.md",
+      "repository": "forge-benchmarks",
+      "sha256": "19a651476895eed10c85bc6d509c199ea5bf3fc42669585d25b8620d64640426",
+      "source_path": "docs/benchmark-performance-report.md",
+      "title": "benchmark performance report",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/benchmark-performance-report.md"
+    },
+    {
+      "commit": "407774db31bc9cba95a06eeed6345ec6ae1653ee",
+      "date": "2026-10-10",
+      "path": "reports/builder-byte-inline-2026-10-10.json",
+      "repository": "forge-benchmarks",
+      "sha256": "b9b36079a54b05667f2698b1dd5498eab56828dcb6b8c697ece63a75b00ec969",
+      "source_path": "docs/builder-byte-inline-2026-10-10.json",
+      "title": "builder byte inline 2026 10 10",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/builder-byte-inline-2026-10-10.json"
+    },
+    {
+      "commit": "407774db31bc9cba95a06eeed6345ec6ae1653ee",
+      "date": "2026-10-10",
+      "path": "reports/builder-byte-inline-2026-10-10.md",
+      "repository": "forge-benchmarks",
+      "sha256": "288b60966ba1a47ed5ccdb315e4f793565b8c82057408ff1de47f4cd074c1601",
+      "source_path": "docs/builder-byte-inline-2026-10-10.md",
+      "title": "builder byte inline 2026 10 10",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/builder-byte-inline-2026-10-10.md"
+    },
+    {
+      "commit": "407774db31bc9cba95a06eeed6345ec6ae1653ee",
+      "date": "2026-10-03",
+      "path": "reports/continuation-2026-10-03.md",
+      "repository": "forge-benchmarks",
+      "sha256": "7afed48e19b820c2d2530c8445cdd229618826c5c7147e279891187704b8772d",
+      "source_path": "docs/continuation-2026-10-03.md",
+      "title": "continuation 2026 10 03",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/continuation-2026-10-03.md"
+    },
+    {
+      "commit": "407774db31bc9cba95a06eeed6345ec6ae1653ee",
+      "date": null,
+      "path": "reports/continuation-docker-image.json",
+      "repository": "forge-benchmarks",
+      "sha256": "dcb818d4956cbef79edf42b87e66f4fcaf116427a9753dd6149d0d2c4481e6df",
+      "source_path": "docs/continuation-docker-image.json",
+      "title": "continuation docker image",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/continuation-docker-image.json"
+    },
+    {
+      "commit": "407774db31bc9cba95a06eeed6345ec6ae1653ee",
+      "date": null,
+      "path": "reports/continuation-portfolio-comparison.json",
+      "repository": "forge-benchmarks",
+      "sha256": "74011d9736da0ac999c5e96f0980126b308bac6b0598ac06eb6cb47bcb0b30c5",
+      "source_path": "docs/continuation-portfolio-comparison.json",
+      "title": "continuation portfolio comparison",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/continuation-portfolio-comparison.json"
+    },
+    {
+      "commit": "407774db31bc9cba95a06eeed6345ec6ae1653ee",
+      "date": null,
+      "path": "reports/continuation-portfolio-posts16-followup.json",
+      "repository": "forge-benchmarks",
+      "sha256": "08638b9dd8f649177d373970a4f47151fab4b717a7495bddf50b21091a52acda",
+      "source_path": "docs/continuation-portfolio-posts16-followup.json",
+      "title": "continuation portfolio posts16 followup",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/continuation-portfolio-posts16-followup.json"
+    },
+    {
+      "commit": "407774db31bc9cba95a06eeed6345ec6ae1653ee",
+      "date": null,
+      "path": "reports/continuation-runtime-comparison.json",
+      "repository": "forge-benchmarks",
+      "sha256": "3f4137fe113937ace9e9c25750eeedfcfde2f92792b581fa79a6b423570305f9",
+      "source_path": "docs/continuation-runtime-comparison.json",
+      "title": "continuation runtime comparison",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/continuation-runtime-comparison.json"
+    },
+    {
+      "commit": "407774db31bc9cba95a06eeed6345ec6ae1653ee",
+      "date": null,
+      "path": "reports/continuation-string-comparison.json",
+      "repository": "forge-benchmarks",
+      "sha256": "0f5f4a3cc70fb3b615745432cb77b9ec771fb74cc6810c85e885b23f739054f8",
+      "source_path": "docs/continuation-string-comparison.json",
+      "title": "continuation string comparison",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/continuation-string-comparison.json"
+    },
+    {
+      "commit": "407774db31bc9cba95a06eeed6345ec6ae1653ee",
+      "date": "2026-10-10",
+      "path": "reports/coroutine-rust-forge-2026-10-10.json",
+      "repository": "forge-benchmarks",
+      "sha256": "300d2b703b902c43e977a6f924cdcd1ee5f30c4a846b6517105be83892f5766c",
+      "source_path": "docs/coroutine-rust-forge-2026-10-10.json",
+      "title": "coroutine rust forge 2026 10 10",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/coroutine-rust-forge-2026-10-10.json"
+    },
+    {
+      "commit": "407774db31bc9cba95a06eeed6345ec6ae1653ee",
+      "date": "2026-10-10",
+      "path": "reports/coroutine-rust-forge-2026-10-10.md",
+      "repository": "forge-benchmarks",
+      "sha256": "e978de2705399f53e76c340799e4a55d1316863ab3d86cf8f7daa2648a592ca1",
+      "source_path": "docs/coroutine-rust-forge-2026-10-10.md",
+      "title": "coroutine rust forge 2026 10 10",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/coroutine-rust-forge-2026-10-10.md"
+    },
+    {
+      "commit": "407774db31bc9cba95a06eeed6345ec6ae1653ee",
+      "date": "2026-10-09",
+      "path": "reports/cpu-rust-forge-2026-10-09.json",
+      "repository": "forge-benchmarks",
+      "sha256": "f7897420aef4e7b7aa5e82c21b1e1151e21bbd58677082aa2aa34a7892d26736",
+      "source_path": "docs/cpu-rust-forge-2026-10-09.json",
+      "title": "cpu rust forge 2026 10 09",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/cpu-rust-forge-2026-10-09.json"
+    },
+    {
+      "commit": "407774db31bc9cba95a06eeed6345ec6ae1653ee",
+      "date": "2026-10-09",
+      "path": "reports/cpu-rust-forge-2026-10-09.md",
+      "repository": "forge-benchmarks",
+      "sha256": "51bd483537d2cd921e9d581147497e2f6eab0ce996d216002af536bf423bf6cd",
+      "source_path": "docs/cpu-rust-forge-2026-10-09.md",
+      "title": "cpu rust forge 2026 10 09",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/cpu-rust-forge-2026-10-09.md"
+    },
+    {
+      "commit": "407774db31bc9cba95a06eeed6345ec6ae1653ee",
+      "date": "2026-10-09",
+      "path": "reports/cpu-rust-forge-prewarmed-baseline-2026-10-09.json",
+      "repository": "forge-benchmarks",
+      "sha256": "51fa109c914958eaccbdc045ec6282f8ad89c1ecf92abb701d651e336657cbc5",
+      "source_path": "docs/cpu-rust-forge-prewarmed-baseline-2026-10-09.json",
+      "title": "cpu rust forge prewarmed baseline 2026 10 09",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/cpu-rust-forge-prewarmed-baseline-2026-10-09.json"
+    },
+    {
+      "commit": "407774db31bc9cba95a06eeed6345ec6ae1653ee",
+      "date": "2026-10-09",
+      "path": "reports/cpu-rust-forge-prewarmed-baseline-2026-10-09.md",
+      "repository": "forge-benchmarks",
+      "sha256": "4cb4b77d1414b4b365b2661926bb48df5e5dca36760ccec801abc4f91cd28379",
+      "source_path": "docs/cpu-rust-forge-prewarmed-baseline-2026-10-09.md",
+      "title": "cpu rust forge prewarmed baseline 2026 10 09",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/cpu-rust-forge-prewarmed-baseline-2026-10-09.md"
+    },
+    {
+      "commit": "407774db31bc9cba95a06eeed6345ec6ae1653ee",
+      "date": "2026-10-10",
+      "path": "reports/cpu-rust-forge-prewarmed-inline-2026-10-10.json",
+      "repository": "forge-benchmarks",
+      "sha256": "481263a62f807b69dbcfe5d37f6a07efe1daa614bf7a1721525da3884f761a83",
+      "source_path": "docs/cpu-rust-forge-prewarmed-inline-2026-10-10.json",
+      "title": "cpu rust forge prewarmed inline 2026 10 10",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/cpu-rust-forge-prewarmed-inline-2026-10-10.json"
+    },
+    {
+      "commit": "407774db31bc9cba95a06eeed6345ec6ae1653ee",
+      "date": "2026-10-10",
+      "path": "reports/cpu-rust-forge-prewarmed-inline-2026-10-10.md",
+      "repository": "forge-benchmarks",
+      "sha256": "cd2d3dc98e3bc134250debb46571dfaf4e50e7905e571ea786290fd41ce04d30",
+      "source_path": "docs/cpu-rust-forge-prewarmed-inline-2026-10-10.md",
+      "title": "cpu rust forge prewarmed inline 2026 10 10",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/cpu-rust-forge-prewarmed-inline-2026-10-10.md"
+    },
+    {
+      "commit": "407774db31bc9cba95a06eeed6345ec6ae1653ee",
+      "date": "2026-10-09",
+      "path": "reports/cpu-rust-forge-prewarmed-overlap-2026-10-09.json",
+      "repository": "forge-benchmarks",
+      "sha256": "7dc54f5b04aec9f12b31328f84352753b24715c87eb2a9de97c22794e9815e0f",
+      "source_path": "docs/cpu-rust-forge-prewarmed-overlap-2026-10-09.json",
+      "title": "cpu rust forge prewarmed overlap 2026 10 09",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/cpu-rust-forge-prewarmed-overlap-2026-10-09.json"
+    },
+    {
+      "commit": "407774db31bc9cba95a06eeed6345ec6ae1653ee",
+      "date": "2026-10-09",
+      "path": "reports/cpu-rust-forge-prewarmed-overlap-2026-10-09.md",
+      "repository": "forge-benchmarks",
+      "sha256": "eadfeba263eb6a8f39b0be5fe3a8a576ef453897b475a62afd3c490b41a897bb",
+      "source_path": "docs/cpu-rust-forge-prewarmed-overlap-2026-10-09.md",
+      "title": "cpu rust forge prewarmed overlap 2026 10 09",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/cpu-rust-forge-prewarmed-overlap-2026-10-09.md"
+    },
+    {
+      "commit": "407774db31bc9cba95a06eeed6345ec6ae1653ee",
+      "date": "2026-10-05",
+      "path": "reports/db-cpu-optimization-2026-10-05-fixed-health.json",
+      "repository": "forge-benchmarks",
+      "sha256": "351d69d9f56a0d35ebc20cce46a3e67dbb6b9498597e768dca3aa4496a5f9079",
+      "source_path": "docs/db-cpu-optimization-2026-10-05-fixed-health.json",
+      "title": "db cpu optimization 2026 10 05 fixed health",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/db-cpu-optimization-2026-10-05-fixed-health.json"
+    },
+    {
+      "commit": "407774db31bc9cba95a06eeed6345ec6ae1653ee",
+      "date": "2026-10-05",
+      "path": "reports/db-cpu-optimization-2026-10-05-fixed-posts.json",
+      "repository": "forge-benchmarks",
+      "sha256": "29a2393fceb43fe9ab64b1d18225b32c972f084d7333aa0cf3ef7ba573c765c1",
+      "source_path": "docs/db-cpu-optimization-2026-10-05-fixed-posts.json",
+      "title": "db cpu optimization 2026 10 05 fixed posts",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/db-cpu-optimization-2026-10-05-fixed-posts.json"
+    },
+    {
+      "commit": "407774db31bc9cba95a06eeed6345ec6ae1653ee",
+      "date": "2026-10-05",
+      "path": "reports/db-cpu-optimization-2026-10-05-health-load-limited.json",
+      "repository": "forge-benchmarks",
+      "sha256": "cb18300e8be36a0b6bd6156092f82723b80a9be961b5c36e380687d7e067750d",
+      "source_path": "docs/db-cpu-optimization-2026-10-05-health-load-limited.json",
+      "title": "db cpu optimization 2026 10 05 health load limited",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/db-cpu-optimization-2026-10-05-health-load-limited.json"
+    },
+    {
+      "commit": "407774db31bc9cba95a06eeed6345ec6ae1653ee",
+      "date": "2026-10-05",
+      "path": "reports/db-cpu-optimization-2026-10-05-max.json",
+      "repository": "forge-benchmarks",
+      "sha256": "0f2874a2764857476550f7675beb5fc5fad6f299af42915dfd30a960eda8ec33",
+      "source_path": "docs/db-cpu-optimization-2026-10-05-max.json",
+      "title": "db cpu optimization 2026 10 05 max",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/db-cpu-optimization-2026-10-05-max.json"
+    },
+    {
+      "commit": "407774db31bc9cba95a06eeed6345ec6ae1653ee",
+      "date": "2026-10-05",
+      "path": "reports/db-cpu-optimization-2026-10-05-profile-health.json",
+      "repository": "forge-benchmarks",
+      "sha256": "916c82f7c31d653b4f05ab10fc3e47461481b526676434054b55cb5e8b1feae7",
+      "source_path": "docs/db-cpu-optimization-2026-10-05-profile-health.json",
+      "title": "db cpu optimization 2026 10 05 profile health",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/db-cpu-optimization-2026-10-05-profile-health.json"
+    },
+    {
+      "commit": "407774db31bc9cba95a06eeed6345ec6ae1653ee",
+      "date": "2026-10-05",
+      "path": "reports/db-cpu-optimization-2026-10-05-readiness.json",
+      "repository": "forge-benchmarks",
+      "sha256": "04020bcb7ae03f92e9010f02af229a593f41842611ce36c132587911bd7ece51",
+      "source_path": "docs/db-cpu-optimization-2026-10-05-readiness.json",
+      "title": "db cpu optimization 2026 10 05 readiness",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/db-cpu-optimization-2026-10-05-readiness.json"
+    },
+    {
+      "commit": "407774db31bc9cba95a06eeed6345ec6ae1653ee",
+      "date": "2026-10-05",
+      "path": "reports/db-cpu-optimization-2026-10-05-sql.json",
+      "repository": "forge-benchmarks",
+      "sha256": "105d3d54bb3eabd76cf27ae5889dd07dc5887526fdbbb3b5611b7a0ada11b259",
+      "source_path": "docs/db-cpu-optimization-2026-10-05-sql.json",
+      "title": "db cpu optimization 2026 10 05 sql",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/db-cpu-optimization-2026-10-05-sql.json"
+    },
+    {
+      "commit": "407774db31bc9cba95a06eeed6345ec6ae1653ee",
+      "date": "2026-10-05",
+      "path": "reports/db-cpu-optimization-2026-10-05-summary.json",
+      "repository": "forge-benchmarks",
+      "sha256": "a6c301d2eb8c11b1881dec132552db393a354969d20d4a3d89906cd846fa7ed3",
+      "source_path": "docs/db-cpu-optimization-2026-10-05-summary.json",
+      "title": "db cpu optimization 2026 10 05 summary",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/db-cpu-optimization-2026-10-05-summary.json"
+    },
+    {
+      "commit": "407774db31bc9cba95a06eeed6345ec6ae1653ee",
+      "date": "2026-10-05",
+      "path": "reports/db-cpu-optimization-2026-10-05.md",
+      "repository": "forge-benchmarks",
+      "sha256": "9d4190c86c96e39532757b04e9b24c60c50bfef9e00bc0df459e791cf37dfb65",
+      "source_path": "docs/db-cpu-optimization-2026-10-05.md",
+      "title": "db cpu optimization 2026 10 05",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/db-cpu-optimization-2026-10-05.md"
+    },
+    {
+      "commit": "407774db31bc9cba95a06eeed6345ec6ae1653ee",
+      "date": "2026-10-04",
+      "path": "reports/health-optimization-2026-10-04-summary.json",
+      "repository": "forge-benchmarks",
+      "sha256": "6c8a8b7f2c220074fd8984559a31197cb1f67bdbf3c4a3149d7c0a988ea52b4b",
+      "source_path": "docs/health-optimization-2026-10-04-summary.json",
+      "title": "health optimization 2026 10 04 summary",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/health-optimization-2026-10-04-summary.json"
+    },
+    {
+      "commit": "407774db31bc9cba95a06eeed6345ec6ae1653ee",
+      "date": "2026-10-04",
+      "path": "reports/health-optimization-2026-10-04.json",
+      "repository": "forge-benchmarks",
+      "sha256": "fbdd1bf00aadbcf7fa3d631859f9ce52fda98d57f5c464ead82affd1b02b53c4",
+      "source_path": "docs/health-optimization-2026-10-04.json",
+      "title": "health optimization 2026 10 04",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/health-optimization-2026-10-04.json"
+    },
+    {
+      "commit": "407774db31bc9cba95a06eeed6345ec6ae1653ee",
+      "date": "2026-10-04",
+      "path": "reports/health-optimization-2026-10-04.md",
+      "repository": "forge-benchmarks",
+      "sha256": "d97b39d7e8fa49c3c53134d3ea076e0f682226dfd3d59eb7755a39f4e0e15efa",
+      "source_path": "docs/health-optimization-2026-10-04.md",
+      "title": "health optimization 2026 10 04",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/health-optimization-2026-10-04.md"
+    },
+    {
+      "commit": "407774db31bc9cba95a06eeed6345ec6ae1653ee",
+      "date": "2026-10-10",
+      "path": "reports/immutable-append-and-ownership-next-steps-2026-10-10.md",
+      "repository": "forge-benchmarks",
+      "sha256": "ecee2600d4041f3d9d3ef04f689acfc930cce1f4b2869eae734f352c65037b5f",
+      "source_path": "docs/immutable-append-and-ownership-next-steps-2026-10-10.md",
+      "title": "immutable append and ownership next steps 2026 10 10",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/immutable-append-and-ownership-next-steps-2026-10-10.md"
+    },
+    {
+      "commit": "407774db31bc9cba95a06eeed6345ec6ae1653ee",
+      "date": "2026-10-10",
+      "path": "reports/native-thread-rust-forge-2026-10-10.json",
+      "repository": "forge-benchmarks",
+      "sha256": "ec162ba9d407ab87ca5983590624dfd215658884e9e815f2e4b08666827ba1f1",
+      "source_path": "docs/native-thread-rust-forge-2026-10-10.json",
+      "title": "native thread rust forge 2026 10 10",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/native-thread-rust-forge-2026-10-10.json"
+    },
+    {
+      "commit": "407774db31bc9cba95a06eeed6345ec6ae1653ee",
+      "date": "2026-10-10",
+      "path": "reports/native-thread-rust-forge-2026-10-10.md",
+      "repository": "forge-benchmarks",
+      "sha256": "8f4314c09cf3860f508bcdef435a7ecbd77704f4d2aba050d67fe23100f987c2",
+      "source_path": "docs/native-thread-rust-forge-2026-10-10.md",
+      "title": "native thread rust forge 2026 10 10",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/native-thread-rust-forge-2026-10-10.md"
+    },
+    {
+      "commit": "407774db31bc9cba95a06eeed6345ec6ae1653ee",
+      "date": null,
+      "path": "reports/optimization-performance.json",
+      "repository": "forge-benchmarks",
+      "sha256": "f8f72935c72f80fbf4cf91ebd292e542f11382985873d4c2a7e446877850e586",
+      "source_path": "docs/optimization-performance.json",
+      "title": "optimization performance",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/optimization-performance.json"
+    },
+    {
+      "commit": "407774db31bc9cba95a06eeed6345ec6ae1653ee",
+      "date": null,
+      "path": "reports/optimization-performance.md",
+      "repository": "forge-benchmarks",
+      "sha256": "06ff7754557f76dc34d019a3a819a27de280b75ba2d749b535726a11d9057e00",
+      "source_path": "docs/optimization-performance.md",
+      "title": "optimization performance",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/optimization-performance.md"
+    },
+    {
+      "commit": "407774db31bc9cba95a06eeed6345ec6ae1653ee",
+      "date": "2026-10-03",
+      "path": "reports/performance-improvements-2026-10-03.md",
+      "repository": "forge-benchmarks",
+      "sha256": "0874e2eb70a6301f3e5364d719edf5730f2b4e5a074549cd7f163939a5edc707",
+      "source_path": "docs/performance-improvements-2026-10-03.md",
+      "title": "performance improvements 2026 10 03",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/performance-improvements-2026-10-03.md"
+    },
+    {
+      "commit": "407774db31bc9cba95a06eeed6345ec6ae1653ee",
+      "date": null,
+      "path": "reports/performance-improvements-agents.json",
+      "repository": "forge-benchmarks",
+      "sha256": "c46df3468bc854c44ec692b58ea079f05eb928acfb54b20dd14f429b86cb7d60",
+      "source_path": "docs/performance-improvements-agents.json",
+      "title": "performance improvements agents",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/performance-improvements-agents.json"
+    },
+    {
+      "commit": "407774db31bc9cba95a06eeed6345ec6ae1653ee",
+      "date": null,
+      "path": "reports/performance-improvements-diagnosis.json",
+      "repository": "forge-benchmarks",
+      "sha256": "80c3f4e2c65c7b2ea3b0a4cfb4192ca07636a5466ef5377d485ee64669fff6a1",
+      "source_path": "docs/performance-improvements-diagnosis.json",
+      "title": "performance improvements diagnosis",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/performance-improvements-diagnosis.json"
+    },
+    {
+      "commit": "407774db31bc9cba95a06eeed6345ec6ae1653ee",
+      "date": null,
+      "path": "reports/performance-improvements-poll-control.json",
+      "repository": "forge-benchmarks",
+      "sha256": "f6d22171ac3ef887ab6cd915863ee08b4697f67ff3a38dbfaca595bd12c5d31d",
+      "source_path": "docs/performance-improvements-poll-control.json",
+      "title": "performance improvements poll control",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/performance-improvements-poll-control.json"
+    },
+    {
+      "commit": "407774db31bc9cba95a06eeed6345ec6ae1653ee",
+      "date": null,
+      "path": "reports/performance-improvements-statistics.json",
+      "repository": "forge-benchmarks",
+      "sha256": "e35032911c59f334d6a1c4fc337724952e8030b71a704dbd66dc7e0863867b89",
+      "source_path": "docs/performance-improvements-statistics.json",
+      "title": "performance improvements statistics",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/performance-improvements-statistics.json"
+    },
+    {
+      "commit": "407774db31bc9cba95a06eeed6345ec6ae1653ee",
+      "date": null,
+      "path": "reports/performance-improvements-validation.json",
+      "repository": "forge-benchmarks",
+      "sha256": "b31ad006935d2d28a2a705d719537711669f874a2bc3a2e96289d93416c97488",
+      "source_path": "docs/performance-improvements-validation.json",
+      "title": "performance improvements validation",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/performance-improvements-validation.json"
+    },
+    {
+      "commit": "407774db31bc9cba95a06eeed6345ec6ae1653ee",
+      "date": null,
+      "path": "reports/performance-improvements-verified-checks-and-sql.json",
+      "repository": "forge-benchmarks",
+      "sha256": "5835cbea494761c91b092ea3084ac1a75746430fad7ec54313d632bb2de6f905",
+      "source_path": "docs/performance-improvements-verified-checks-and-sql.json",
+      "title": "performance improvements verified checks and sql",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/performance-improvements-verified-checks-and-sql.json"
+    },
+    {
+      "commit": "407774db31bc9cba95a06eeed6345ec6ae1653ee",
+      "date": null,
+      "path": "reports/performance-improvements-verified-posts.json",
+      "repository": "forge-benchmarks",
+      "sha256": "8673c524b1d161122bab3cee2e5df84c9ea067780d5ceefd85675d89cea9883b",
+      "source_path": "docs/performance-improvements-verified-posts.json",
+      "title": "performance improvements verified posts",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/performance-improvements-verified-posts.json"
+    },
+    {
+      "commit": "407774db31bc9cba95a06eeed6345ec6ae1653ee",
+      "date": "2026-10-04",
+      "path": "reports/rust-forge-comparison-2026-10-04-poll-control.json",
+      "repository": "forge-benchmarks",
+      "sha256": "8285ef8d60799a222df26cf802ba3354b7e6d91da1ec32f8dd2d9ab062f8d2e8",
+      "source_path": "docs/rust-forge-comparison-2026-10-04-poll-control.json",
+      "title": "rust forge comparison 2026 10 04 poll control",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/rust-forge-comparison-2026-10-04-poll-control.json"
+    },
+    {
+      "commit": "407774db31bc9cba95a06eeed6345ec6ae1653ee",
+      "date": "2026-10-04",
+      "path": "reports/rust-forge-comparison-2026-10-04-summary.json",
+      "repository": "forge-benchmarks",
+      "sha256": "50eff1b3d27e6cfc4e2a75816a5ce8b9a2e9584fd5307c30e53ad41e8cd5353b",
+      "source_path": "docs/rust-forge-comparison-2026-10-04-summary.json",
+      "title": "rust forge comparison 2026 10 04 summary",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/rust-forge-comparison-2026-10-04-summary.json"
+    },
+    {
+      "commit": "407774db31bc9cba95a06eeed6345ec6ae1653ee",
+      "date": "2026-10-04",
+      "path": "reports/rust-forge-comparison-2026-10-04.json",
+      "repository": "forge-benchmarks",
+      "sha256": "ca38c55159bf0d810d22ee9e28f4ee4a77acc25e9af13af001182a5245fe7494",
+      "source_path": "docs/rust-forge-comparison-2026-10-04.json",
+      "title": "rust forge comparison 2026 10 04",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/rust-forge-comparison-2026-10-04.json"
+    },
+    {
+      "commit": "407774db31bc9cba95a06eeed6345ec6ae1653ee",
+      "date": "2026-10-04",
+      "path": "reports/rust-forge-comparison-2026-10-04.md",
+      "repository": "forge-benchmarks",
+      "sha256": "c332be92014abf93e1be517424e91023386189873c667d48b2b5d5517dfa61ce",
+      "source_path": "docs/rust-forge-comparison-2026-10-04.md",
+      "title": "rust forge comparison 2026 10 04",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/rust-forge-comparison-2026-10-04.md"
+    },
+    {
+      "commit": "407774db31bc9cba95a06eeed6345ec6ae1653ee",
+      "date": "2026-10-03",
+      "path": "reports/rust-performance-diagnosis-2026-10-03.md",
+      "repository": "forge-benchmarks",
+      "sha256": "c60dac7b5e7fe9590d91102c0e6b8fed5faf4f9e7f9cc883b39e8e12dc5fb155",
+      "source_path": "docs/rust-performance-diagnosis-2026-10-03.md",
+      "title": "rust performance diagnosis 2026 10 03",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/rust-performance-diagnosis-2026-10-03.md"
+    },
+    {
+      "commit": "407774db31bc9cba95a06eeed6345ec6ae1653ee",
+      "date": null,
+      "path": "reports/rust-performance-diagnosis.json",
+      "repository": "forge-benchmarks",
+      "sha256": "f5583e68527d2a797301797c82feae54a63eca48bf904b3d38332b2149ce92f9",
+      "source_path": "docs/rust-performance-diagnosis.json",
+      "title": "rust performance diagnosis",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/rust-performance-diagnosis.json"
+    },
+    {
+      "commit": "407774db31bc9cba95a06eeed6345ec6ae1653ee",
+      "date": "2026-10-09",
+      "path": "reports/scheduler-completion-notify-2026-10-09.json",
+      "repository": "forge-benchmarks",
+      "sha256": "94d22c38548eb51489381f494543e34c23f92096b2ff11642f3890f02ba765df",
+      "source_path": "docs/scheduler-completion-notify-2026-10-09.json",
+      "title": "scheduler completion notify 2026 10 09",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/scheduler-completion-notify-2026-10-09.json"
+    },
+    {
+      "commit": "407774db31bc9cba95a06eeed6345ec6ae1653ee",
+      "date": "2026-10-09",
+      "path": "reports/scheduler-completion-notify-2026-10-09.md",
+      "repository": "forge-benchmarks",
+      "sha256": "b5733dba26839f4574329cf617b972f9a431e8ee59166c3952aa3aa31ae0f38e",
+      "source_path": "docs/scheduler-completion-notify-2026-10-09.md",
+      "title": "scheduler completion notify 2026 10 09",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/scheduler-completion-notify-2026-10-09.md"
+    },
+    {
+      "commit": "407774db31bc9cba95a06eeed6345ec6ae1653ee",
+      "date": "2026-10-05",
+      "path": "reports/selfhosting-performance-2026-10-05-current-input.json",
+      "repository": "forge-benchmarks",
+      "sha256": "ccfd201551887f62f96a9d77e821928f3aecd8303353ef05f15be9a7aa26d35d",
+      "source_path": "docs/selfhosting-performance-2026-10-05-current-input.json",
+      "title": "selfhosting performance 2026 10 05 current input",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/selfhosting-performance-2026-10-05-current-input.json"
+    },
+    {
+      "commit": "407774db31bc9cba95a06eeed6345ec6ae1653ee",
+      "date": "2026-10-05",
+      "path": "reports/selfhosting-performance-2026-10-05-runtime.json",
+      "repository": "forge-benchmarks",
+      "sha256": "f16aa8ae503cb24b3df0e39ddaa09684b248672d6d36515b5b2dd19e30e35be2",
+      "source_path": "docs/selfhosting-performance-2026-10-05-runtime.json",
+      "title": "selfhosting performance 2026 10 05 runtime",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/selfhosting-performance-2026-10-05-runtime.json"
+    },
+    {
+      "commit": "407774db31bc9cba95a06eeed6345ec6ae1653ee",
+      "date": "2026-10-05",
+      "path": "reports/selfhosting-performance-2026-10-05-validation.json",
+      "repository": "forge-benchmarks",
+      "sha256": "68ca6b2b1c8455e5f9f36aa5fcf66f96f8cd4e8202660a85a6cd2b33375f796e",
+      "source_path": "docs/selfhosting-performance-2026-10-05-validation.json",
+      "title": "selfhosting performance 2026 10 05 validation",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/selfhosting-performance-2026-10-05-validation.json"
+    },
+    {
+      "commit": "407774db31bc9cba95a06eeed6345ec6ae1653ee",
+      "date": "2026-10-05",
+      "path": "reports/selfhosting-performance-2026-10-05.json",
+      "repository": "forge-benchmarks",
+      "sha256": "e46b885f0d754c649df6f95eac7bd9855e06b2632a839afcea8f6a1f8a636539",
+      "source_path": "docs/selfhosting-performance-2026-10-05.json",
+      "title": "selfhosting performance 2026 10 05",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/selfhosting-performance-2026-10-05.json"
+    },
+    {
+      "commit": "407774db31bc9cba95a06eeed6345ec6ae1653ee",
+      "date": "2026-10-05",
+      "path": "reports/selfhosting-performance-2026-10-05.md",
+      "repository": "forge-benchmarks",
+      "sha256": "74de4cb40f89cd01c2471ef1ffeeb68e23c38af65dffd788d24a1d4b4cff42e3",
+      "source_path": "docs/selfhosting-performance-2026-10-05.md",
+      "title": "selfhosting performance 2026 10 05",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/selfhosting-performance-2026-10-05.md"
+    },
+    {
+      "commit": "407774db31bc9cba95a06eeed6345ec6ae1653ee",
+      "date": "2026-10-10",
+      "path": "reports/string-view-inline-2026-10-10.md",
+      "repository": "forge-benchmarks",
+      "sha256": "b5070a13a2f234b9f0ab7b4c9852797e5af5270ef9c6278b24330ec4d32da771",
+      "source_path": "docs/string-view-inline-2026-10-10.md",
+      "title": "string view inline 2026 10 10",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/string-view-inline-2026-10-10.md"
+    },
+    {
+      "commit": "c135817142a53ee0b515a95bf2ef511ab58c02e5",
+      "date": null,
+      "path": "reports/forge-storage/vendor-web/benchmarks/README.md",
+      "repository": "forge-storage",
+      "sha256": "58b4909f3555af4fec7eeb5dc15b88262333f1b70c1caac8807b68282bc251cd",
+      "source_path": "vendor-web/benchmarks/README.md",
+      "title": "README",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/forge-storage/vendor-web/benchmarks/README.md"
+    },
+    {
+      "commit": "c135817142a53ee0b515a95bf2ef511ab58c02e5",
+      "date": "2026-10-01",
+      "path": "reports/forge-storage/vendor-web/benchmarks/results-2026-10-01.json",
+      "repository": "forge-storage",
+      "sha256": "764920cf78233124d0b42980bb37fd3b60c11fb35a68ad858fdd01397bdc7c91",
+      "source_path": "vendor-web/benchmarks/results-2026-10-01.json",
+      "title": "results 2026 10 01",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/forge-storage/vendor-web/benchmarks/results-2026-10-01.json"
+    },
+    {
+      "commit": "c135817142a53ee0b515a95bf2ef511ab58c02e5",
+      "date": "2026-10-02",
+      "path": "reports/forge-storage/vendor-web/benchmarks/security-results-2026-10-02.json",
+      "repository": "forge-storage",
+      "sha256": "01262bd8a9a0849da9c5fa291376edfe63c1eb261add613c606f9b32d0edcf9f",
+      "source_path": "vendor-web/benchmarks/security-results-2026-10-02.json",
+      "title": "security results 2026 10 02",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/forge-storage/vendor-web/benchmarks/security-results-2026-10-02.json"
+    },
+    {
+      "commit": "72376bb8c1631d7cb7f5538cf5c55ffc571a7443",
+      "date": null,
+      "path": "reports/forge-platform/benchmarks/README.md",
+      "repository": "forge-platform",
+      "sha256": "a3f5e016d89478352a630b83ec04ee482897ce9c356e58eb221603f03eb593d2",
+      "source_path": "benchmarks/README.md",
+      "title": "README",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/forge-platform/benchmarks/README.md"
+    },
+    {
+      "commit": "72376bb8c1631d7cb7f5538cf5c55ffc571a7443",
+      "date": "2026-10-01",
+      "path": "reports/forge-platform/benchmarks/build-cache-results-2026-10-01.json",
+      "repository": "forge-platform",
+      "sha256": "c26f619483e1a2ea0ae88748aa861e50d3e4e41d934b2cd19d677ebbf1604018",
+      "source_path": "benchmarks/build-cache-results-2026-10-01.json",
+      "title": "build cache results 2026 10 01",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/forge-platform/benchmarks/build-cache-results-2026-10-01.json"
+    },
+    {
+      "commit": "72376bb8c1631d7cb7f5538cf5c55ffc571a7443",
+      "date": "2026-10-06",
+      "path": "reports/forge-platform/benchmarks/redis-cache-2026-10-06.json",
+      "repository": "forge-platform",
+      "sha256": "020cd82f3a1bcd41840e4a4eae972c6ac3ed3abdb9df8803f524ef613d27f985",
+      "source_path": "benchmarks/redis-cache-2026-10-06.json",
+      "title": "redis cache 2026 10 06",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/forge-platform/benchmarks/redis-cache-2026-10-06.json"
+    },
+    {
+      "commit": "72376bb8c1631d7cb7f5538cf5c55ffc571a7443",
+      "date": null,
+      "path": "reports/forge-platform/content/reports/compiler-and-selfhosting.md",
+      "repository": "forge-platform",
+      "sha256": "f94cdee0d7698f62d3a721a2bab30903ce6cacbaf43967034c49fa58a2479fb4",
+      "source_path": "content/reports/compiler-and-selfhosting.md",
+      "title": "compiler and selfhosting",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/forge-platform/content/reports/compiler-and-selfhosting.md"
+    },
+    {
+      "commit": "72376bb8c1631d7cb7f5538cf5c55ffc571a7443",
+      "date": "2026-10-03",
+      "path": "reports/forge-platform/content/reports/continuation-2026-10-03.md",
+      "repository": "forge-platform",
+      "sha256": "7afed48e19b820c2d2530c8445cdd229618826c5c7147e279891187704b8772d",
+      "source_path": "content/reports/continuation-2026-10-03.md",
+      "title": "continuation 2026 10 03",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/forge-platform/content/reports/continuation-2026-10-03.md"
+    },
+    {
+      "commit": "72376bb8c1631d7cb7f5538cf5c55ffc571a7443",
+      "date": "2026-10-05",
+      "path": "reports/forge-platform/content/reports/db-cpu-optimization-2026-10-05-fixed-health.json",
+      "repository": "forge-platform",
+      "sha256": "351d69d9f56a0d35ebc20cce46a3e67dbb6b9498597e768dca3aa4496a5f9079",
+      "source_path": "content/reports/db-cpu-optimization-2026-10-05-fixed-health.json",
+      "title": "db cpu optimization 2026 10 05 fixed health",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/forge-platform/content/reports/db-cpu-optimization-2026-10-05-fixed-health.json"
+    },
+    {
+      "commit": "72376bb8c1631d7cb7f5538cf5c55ffc571a7443",
+      "date": "2026-10-05",
+      "path": "reports/forge-platform/content/reports/db-cpu-optimization-2026-10-05-fixed-posts.json",
+      "repository": "forge-platform",
+      "sha256": "29a2393fceb43fe9ab64b1d18225b32c972f084d7333aa0cf3ef7ba573c765c1",
+      "source_path": "content/reports/db-cpu-optimization-2026-10-05-fixed-posts.json",
+      "title": "db cpu optimization 2026 10 05 fixed posts",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/forge-platform/content/reports/db-cpu-optimization-2026-10-05-fixed-posts.json"
+    },
+    {
+      "commit": "72376bb8c1631d7cb7f5538cf5c55ffc571a7443",
+      "date": "2026-10-05",
+      "path": "reports/forge-platform/content/reports/db-cpu-optimization-2026-10-05-health-load-limited.json",
+      "repository": "forge-platform",
+      "sha256": "cb18300e8be36a0b6bd6156092f82723b80a9be961b5c36e380687d7e067750d",
+      "source_path": "content/reports/db-cpu-optimization-2026-10-05-health-load-limited.json",
+      "title": "db cpu optimization 2026 10 05 health load limited",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/forge-platform/content/reports/db-cpu-optimization-2026-10-05-health-load-limited.json"
+    },
+    {
+      "commit": "72376bb8c1631d7cb7f5538cf5c55ffc571a7443",
+      "date": "2026-10-05",
+      "path": "reports/forge-platform/content/reports/db-cpu-optimization-2026-10-05-max.json",
+      "repository": "forge-platform",
+      "sha256": "0f2874a2764857476550f7675beb5fc5fad6f299af42915dfd30a960eda8ec33",
+      "source_path": "content/reports/db-cpu-optimization-2026-10-05-max.json",
+      "title": "db cpu optimization 2026 10 05 max",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/forge-platform/content/reports/db-cpu-optimization-2026-10-05-max.json"
+    },
+    {
+      "commit": "72376bb8c1631d7cb7f5538cf5c55ffc571a7443",
+      "date": "2026-10-05",
+      "path": "reports/forge-platform/content/reports/db-cpu-optimization-2026-10-05-profile-health.json",
+      "repository": "forge-platform",
+      "sha256": "916c82f7c31d653b4f05ab10fc3e47461481b526676434054b55cb5e8b1feae7",
+      "source_path": "content/reports/db-cpu-optimization-2026-10-05-profile-health.json",
+      "title": "db cpu optimization 2026 10 05 profile health",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/forge-platform/content/reports/db-cpu-optimization-2026-10-05-profile-health.json"
+    },
+    {
+      "commit": "72376bb8c1631d7cb7f5538cf5c55ffc571a7443",
+      "date": "2026-10-05",
+      "path": "reports/forge-platform/content/reports/db-cpu-optimization-2026-10-05-readiness.json",
+      "repository": "forge-platform",
+      "sha256": "04020bcb7ae03f92e9010f02af229a593f41842611ce36c132587911bd7ece51",
+      "source_path": "content/reports/db-cpu-optimization-2026-10-05-readiness.json",
+      "title": "db cpu optimization 2026 10 05 readiness",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/forge-platform/content/reports/db-cpu-optimization-2026-10-05-readiness.json"
+    },
+    {
+      "commit": "72376bb8c1631d7cb7f5538cf5c55ffc571a7443",
+      "date": "2026-10-05",
+      "path": "reports/forge-platform/content/reports/db-cpu-optimization-2026-10-05-sql.json",
+      "repository": "forge-platform",
+      "sha256": "105d3d54bb3eabd76cf27ae5889dd07dc5887526fdbbb3b5611b7a0ada11b259",
+      "source_path": "content/reports/db-cpu-optimization-2026-10-05-sql.json",
+      "title": "db cpu optimization 2026 10 05 sql",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/forge-platform/content/reports/db-cpu-optimization-2026-10-05-sql.json"
+    },
+    {
+      "commit": "72376bb8c1631d7cb7f5538cf5c55ffc571a7443",
+      "date": "2026-10-05",
+      "path": "reports/forge-platform/content/reports/db-cpu-optimization-2026-10-05-summary.json",
+      "repository": "forge-platform",
+      "sha256": "a6c301d2eb8c11b1881dec132552db393a354969d20d4a3d89906cd846fa7ed3",
+      "source_path": "content/reports/db-cpu-optimization-2026-10-05-summary.json",
+      "title": "db cpu optimization 2026 10 05 summary",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/forge-platform/content/reports/db-cpu-optimization-2026-10-05-summary.json"
+    },
+    {
+      "commit": "72376bb8c1631d7cb7f5538cf5c55ffc571a7443",
+      "date": "2026-10-05",
+      "path": "reports/forge-platform/content/reports/db-cpu-optimization-2026-10-05.md",
+      "repository": "forge-platform",
+      "sha256": "9d4190c86c96e39532757b04e9b24c60c50bfef9e00bc0df459e791cf37dfb65",
+      "source_path": "content/reports/db-cpu-optimization-2026-10-05.md",
+      "title": "db cpu optimization 2026 10 05",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/forge-platform/content/reports/db-cpu-optimization-2026-10-05.md"
+    },
+    {
+      "commit": "72376bb8c1631d7cb7f5538cf5c55ffc571a7443",
+      "date": "2026-10-04",
+      "path": "reports/forge-platform/content/reports/health-optimization-2026-10-04-summary.json",
+      "repository": "forge-platform",
+      "sha256": "6c8a8b7f2c220074fd8984559a31197cb1f67bdbf3c4a3149d7c0a988ea52b4b",
+      "source_path": "content/reports/health-optimization-2026-10-04-summary.json",
+      "title": "health optimization 2026 10 04 summary",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/forge-platform/content/reports/health-optimization-2026-10-04-summary.json"
+    },
+    {
+      "commit": "72376bb8c1631d7cb7f5538cf5c55ffc571a7443",
+      "date": "2026-10-04",
+      "path": "reports/forge-platform/content/reports/health-optimization-2026-10-04.json",
+      "repository": "forge-platform",
+      "sha256": "fbdd1bf00aadbcf7fa3d631859f9ce52fda98d57f5c464ead82affd1b02b53c4",
+      "source_path": "content/reports/health-optimization-2026-10-04.json",
+      "title": "health optimization 2026 10 04",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/forge-platform/content/reports/health-optimization-2026-10-04.json"
+    },
+    {
+      "commit": "72376bb8c1631d7cb7f5538cf5c55ffc571a7443",
+      "date": "2026-10-04",
+      "path": "reports/forge-platform/content/reports/health-optimization-2026-10-04.md",
+      "repository": "forge-platform",
+      "sha256": "d97b39d7e8fa49c3c53134d3ea076e0f682226dfd3d59eb7755a39f4e0e15efa",
+      "source_path": "content/reports/health-optimization-2026-10-04.md",
+      "title": "health optimization 2026 10 04",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/forge-platform/content/reports/health-optimization-2026-10-04.md"
+    },
+    {
+      "commit": "72376bb8c1631d7cb7f5538cf5c55ffc571a7443",
+      "date": "2026-10-03",
+      "path": "reports/forge-platform/content/reports/performance-improvements-2026-10-03.md",
+      "repository": "forge-platform",
+      "sha256": "0874e2eb70a6301f3e5364d719edf5730f2b4e5a074549cd7f163939a5edc707",
+      "source_path": "content/reports/performance-improvements-2026-10-03.md",
+      "title": "performance improvements 2026 10 03",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/forge-platform/content/reports/performance-improvements-2026-10-03.md"
+    },
+    {
+      "commit": "72376bb8c1631d7cb7f5538cf5c55ffc571a7443",
+      "date": "2026-10-06",
+      "path": "reports/forge-platform/content/reports/redis-cache-2026-10-06.json",
+      "repository": "forge-platform",
+      "sha256": "020cd82f3a1bcd41840e4a4eae972c6ac3ed3abdb9df8803f524ef613d27f985",
+      "source_path": "content/reports/redis-cache-2026-10-06.json",
+      "title": "redis cache 2026 10 06",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/forge-platform/content/reports/redis-cache-2026-10-06.json"
+    },
+    {
+      "commit": "72376bb8c1631d7cb7f5538cf5c55ffc571a7443",
+      "date": "2026-10-06",
+      "path": "reports/forge-platform/content/reports/redis-cache-performance-2026-10-06.md",
+      "repository": "forge-platform",
+      "sha256": "b19490435459c1f2c0c429f88db02e4be29a465b341bff66fa5e7b933d6d6c3d",
+      "source_path": "content/reports/redis-cache-performance-2026-10-06.md",
+      "title": "redis cache performance 2026 10 06",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/forge-platform/content/reports/redis-cache-performance-2026-10-06.md"
+    },
+    {
+      "commit": "72376bb8c1631d7cb7f5538cf5c55ffc571a7443",
+      "date": "2026-10-04",
+      "path": "reports/forge-platform/content/reports/rust-forge-comparison-2026-10-04-poll-control.json",
+      "repository": "forge-platform",
+      "sha256": "8285ef8d60799a222df26cf802ba3354b7e6d91da1ec32f8dd2d9ab062f8d2e8",
+      "source_path": "content/reports/rust-forge-comparison-2026-10-04-poll-control.json",
+      "title": "rust forge comparison 2026 10 04 poll control",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/forge-platform/content/reports/rust-forge-comparison-2026-10-04-poll-control.json"
+    },
+    {
+      "commit": "72376bb8c1631d7cb7f5538cf5c55ffc571a7443",
+      "date": "2026-10-04",
+      "path": "reports/forge-platform/content/reports/rust-forge-comparison-2026-10-04-summary.json",
+      "repository": "forge-platform",
+      "sha256": "50eff1b3d27e6cfc4e2a75816a5ce8b9a2e9584fd5307c30e53ad41e8cd5353b",
+      "source_path": "content/reports/rust-forge-comparison-2026-10-04-summary.json",
+      "title": "rust forge comparison 2026 10 04 summary",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/forge-platform/content/reports/rust-forge-comparison-2026-10-04-summary.json"
+    },
+    {
+      "commit": "72376bb8c1631d7cb7f5538cf5c55ffc571a7443",
+      "date": "2026-10-04",
+      "path": "reports/forge-platform/content/reports/rust-forge-comparison-2026-10-04.json",
+      "repository": "forge-platform",
+      "sha256": "ca38c55159bf0d810d22ee9e28f4ee4a77acc25e9af13af001182a5245fe7494",
+      "source_path": "content/reports/rust-forge-comparison-2026-10-04.json",
+      "title": "rust forge comparison 2026 10 04",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/forge-platform/content/reports/rust-forge-comparison-2026-10-04.json"
+    },
+    {
+      "commit": "72376bb8c1631d7cb7f5538cf5c55ffc571a7443",
+      "date": "2026-10-04",
+      "path": "reports/forge-platform/content/reports/rust-forge-comparison-2026-10-04.md",
+      "repository": "forge-platform",
+      "sha256": "c332be92014abf93e1be517424e91023386189873c667d48b2b5d5517dfa61ce",
+      "source_path": "content/reports/rust-forge-comparison-2026-10-04.md",
+      "title": "rust forge comparison 2026 10 04",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/forge-platform/content/reports/rust-forge-comparison-2026-10-04.md"
+    },
+    {
+      "commit": "72376bb8c1631d7cb7f5538cf5c55ffc571a7443",
+      "date": "2026-10-05",
+      "path": "reports/forge-platform/content/reports/selfhosting-performance-2026-10-05-current-input.json",
+      "repository": "forge-platform",
+      "sha256": "ccfd201551887f62f96a9d77e821928f3aecd8303353ef05f15be9a7aa26d35d",
+      "source_path": "content/reports/selfhosting-performance-2026-10-05-current-input.json",
+      "title": "selfhosting performance 2026 10 05 current input",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/forge-platform/content/reports/selfhosting-performance-2026-10-05-current-input.json"
+    },
+    {
+      "commit": "72376bb8c1631d7cb7f5538cf5c55ffc571a7443",
+      "date": "2026-10-05",
+      "path": "reports/forge-platform/content/reports/selfhosting-performance-2026-10-05-runtime.json",
+      "repository": "forge-platform",
+      "sha256": "f16aa8ae503cb24b3df0e39ddaa09684b248672d6d36515b5b2dd19e30e35be2",
+      "source_path": "content/reports/selfhosting-performance-2026-10-05-runtime.json",
+      "title": "selfhosting performance 2026 10 05 runtime",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/forge-platform/content/reports/selfhosting-performance-2026-10-05-runtime.json"
+    },
+    {
+      "commit": "72376bb8c1631d7cb7f5538cf5c55ffc571a7443",
+      "date": "2026-10-05",
+      "path": "reports/forge-platform/content/reports/selfhosting-performance-2026-10-05-validation.json",
+      "repository": "forge-platform",
+      "sha256": "68ca6b2b1c8455e5f9f36aa5fcf66f96f8cd4e8202660a85a6cd2b33375f796e",
+      "source_path": "content/reports/selfhosting-performance-2026-10-05-validation.json",
+      "title": "selfhosting performance 2026 10 05 validation",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/forge-platform/content/reports/selfhosting-performance-2026-10-05-validation.json"
+    },
+    {
+      "commit": "72376bb8c1631d7cb7f5538cf5c55ffc571a7443",
+      "date": "2026-10-05",
+      "path": "reports/forge-platform/content/reports/selfhosting-performance-2026-10-05.json",
+      "repository": "forge-platform",
+      "sha256": "e46b885f0d754c649df6f95eac7bd9855e06b2632a839afcea8f6a1f8a636539",
+      "source_path": "content/reports/selfhosting-performance-2026-10-05.json",
+      "title": "selfhosting performance 2026 10 05",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/forge-platform/content/reports/selfhosting-performance-2026-10-05.json"
+    },
+    {
+      "commit": "72376bb8c1631d7cb7f5538cf5c55ffc571a7443",
+      "date": "2026-10-05",
+      "path": "reports/forge-platform/content/reports/selfhosting-performance-2026-10-05.md",
+      "repository": "forge-platform",
+      "sha256": "9b552075995bb609901d182d29e443be864e3aa9c0be46d36178e4d76f588281",
+      "source_path": "content/reports/selfhosting-performance-2026-10-05.md",
+      "title": "selfhosting performance 2026 10 05",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/forge-platform/content/reports/selfhosting-performance-2026-10-05.md"
+    },
+    {
+      "commit": "72376bb8c1631d7cb7f5538cf5c55ffc571a7443",
+      "date": "2026-10-06",
+      "path": "reports/forge-platform/content/reports/site-performance-2026-10-06.json",
+      "repository": "forge-platform",
+      "sha256": "2b405f961ff7c02eb70c5b3d4fbe5127c00485b4ec4bba213722eb8308f77a4a",
+      "source_path": "content/reports/site-performance-2026-10-06.json",
+      "title": "site performance 2026 10 06",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/forge-platform/content/reports/site-performance-2026-10-06.json"
+    },
+    {
+      "commit": "72376bb8c1631d7cb7f5538cf5c55ffc571a7443",
+      "date": "2026-10-06",
+      "path": "reports/forge-platform/content/reports/site-performance-2026-10-06.md",
+      "repository": "forge-platform",
+      "sha256": "56831c41c41a0122b426cb1435bb85edb5960ebb7a63936083589db045d83110",
+      "source_path": "content/reports/site-performance-2026-10-06.md",
+      "title": "site performance 2026 10 06",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/forge-platform/content/reports/site-performance-2026-10-06.md"
+    },
+    {
+      "commit": "72376bb8c1631d7cb7f5538cf5c55ffc571a7443",
+      "date": "2026-10-06",
+      "path": "reports/forge-platform/content/reports/storage-deployment-2026-10-06.md",
+      "repository": "forge-platform",
+      "sha256": "ad5ed532440f70f62e60a71cd73cdc88606411016bd5e06c52a7d20ff1af7354",
+      "source_path": "content/reports/storage-deployment-2026-10-06.md",
+      "title": "storage deployment 2026 10 06",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/forge-platform/content/reports/storage-deployment-2026-10-06.md"
+    },
+    {
+      "commit": "72376bb8c1631d7cb7f5538cf5c55ffc571a7443",
+      "date": "2026-10-06",
+      "path": "reports/forge-platform/content/reports/storage-sdk-validation-2026-10-06.md",
+      "repository": "forge-platform",
+      "sha256": "3a64d399f84028051a1329c96dbc6676c673087213e0f0046cd688efacbc37b4",
+      "source_path": "content/reports/storage-sdk-validation-2026-10-06.md",
+      "title": "storage sdk validation 2026 10 06",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/forge-platform/content/reports/storage-sdk-validation-2026-10-06.md"
+    },
+    {
+      "commit": "72376bb8c1631d7cb7f5538cf5c55ffc571a7443",
+      "date": "2026-10-06",
+      "path": "reports/forge-platform/docs/redis-cache-performance-2026-10-06.md",
+      "repository": "forge-platform",
+      "sha256": "b19490435459c1f2c0c429f88db02e4be29a465b341bff66fa5e7b933d6d6c3d",
+      "source_path": "docs/redis-cache-performance-2026-10-06.md",
+      "title": "redis cache performance 2026 10 06",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/forge-platform/docs/redis-cache-performance-2026-10-06.md"
+    },
+    {
+      "commit": "72376bb8c1631d7cb7f5538cf5c55ffc571a7443",
+      "date": null,
+      "path": "reports/forge-platform/docs/registry-security-performance.json",
+      "repository": "forge-platform",
+      "sha256": "748869f28478a0646da25b3db45b1389d53e9791c6e93491233672163193f480",
+      "source_path": "docs/registry-security-performance.json",
+      "title": "registry security performance",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/forge-platform/docs/registry-security-performance.json"
+    },
+    {
+      "commit": "72376bb8c1631d7cb7f5538cf5c55ffc571a7443",
+      "date": null,
+      "path": "reports/forge-platform/docs/registry-security-performance.md",
+      "repository": "forge-platform",
+      "sha256": "cdff0287bbc4d37e169ce652cfb1e33d7666904831a51105af20fa46a6656385",
+      "source_path": "docs/registry-security-performance.md",
+      "title": "registry security performance",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/forge-platform/docs/registry-security-performance.md"
+    },
+    {
+      "commit": "72376bb8c1631d7cb7f5538cf5c55ffc571a7443",
+      "date": "2026-10-06",
+      "path": "reports/forge-platform/docs/site-performance-2026-10-06.json",
+      "repository": "forge-platform",
+      "sha256": "2b405f961ff7c02eb70c5b3d4fbe5127c00485b4ec4bba213722eb8308f77a4a",
+      "source_path": "docs/site-performance-2026-10-06.json",
+      "title": "site performance 2026 10 06",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/forge-platform/docs/site-performance-2026-10-06.json"
+    },
+    {
+      "commit": "72376bb8c1631d7cb7f5538cf5c55ffc571a7443",
+      "date": "2026-10-06",
+      "path": "reports/forge-platform/docs/site-performance-2026-10-06.md",
+      "repository": "forge-platform",
+      "sha256": "56831c41c41a0122b426cb1435bb85edb5960ebb7a63936083589db045d83110",
+      "source_path": "docs/site-performance-2026-10-06.md",
+      "title": "site performance 2026 10 06",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/forge-platform/docs/site-performance-2026-10-06.md"
+    },
+    {
+      "commit": null,
+      "date": null,
+      "path": "reports/compiler-and-selfhosting.md",
+      "provenance": "checked-in historical snapshot",
+      "repository": "forge-benchmarks",
+      "sha256": "f94cdee0d7698f62d3a721a2bab30903ce6cacbaf43967034c49fa58a2479fb4",
+      "title": "compiler and selfhosting",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/compiler-and-selfhosting.md"
+    },
+    {
+      "commit": null,
+      "date": "2026-10-06",
+      "path": "reports/redis-cache-2026-10-06.json",
+      "provenance": "checked-in historical snapshot",
+      "repository": "forge-benchmarks",
+      "sha256": "020cd82f3a1bcd41840e4a4eae972c6ac3ed3abdb9df8803f524ef613d27f985",
+      "title": "redis cache 2026 10 06",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/redis-cache-2026-10-06.json"
+    },
+    {
+      "commit": null,
+      "date": "2026-10-06",
+      "path": "reports/redis-cache-performance-2026-10-06.md",
+      "provenance": "checked-in historical snapshot",
+      "repository": "forge-benchmarks",
+      "sha256": "b19490435459c1f2c0c429f88db02e4be29a465b341bff66fa5e7b933d6d6c3d",
+      "title": "redis cache performance 2026 10 06",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/redis-cache-performance-2026-10-06.md"
+    },
+    {
+      "commit": null,
+      "date": "2026-10-06",
+      "path": "reports/site-performance-2026-10-06.json",
+      "provenance": "checked-in historical snapshot",
+      "repository": "forge-benchmarks",
+      "sha256": "2b405f961ff7c02eb70c5b3d4fbe5127c00485b4ec4bba213722eb8308f77a4a",
+      "title": "site performance 2026 10 06",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/site-performance-2026-10-06.json"
+    },
+    {
+      "commit": null,
+      "date": "2026-10-06",
+      "path": "reports/site-performance-2026-10-06.md",
+      "provenance": "checked-in historical snapshot",
+      "repository": "forge-benchmarks",
+      "sha256": "56831c41c41a0122b426cb1435bb85edb5960ebb7a63936083589db045d83110",
+      "title": "site performance 2026 10 06",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/site-performance-2026-10-06.md"
+    },
+    {
+      "commit": null,
+      "date": "2026-10-06",
+      "path": "reports/storage-deployment-2026-10-06.md",
+      "provenance": "checked-in historical snapshot",
+      "repository": "forge-benchmarks",
+      "sha256": "ad5ed532440f70f62e60a71cd73cdc88606411016bd5e06c52a7d20ff1af7354",
+      "title": "storage deployment 2026 10 06",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/storage-deployment-2026-10-06.md"
+    },
+    {
+      "commit": null,
+      "date": "2026-10-06",
+      "path": "reports/storage-sdk-validation-2026-10-06.md",
+      "provenance": "checked-in historical snapshot",
+      "repository": "forge-benchmarks",
+      "sha256": "3a64d399f84028051a1329c96dbc6676c673087213e0f0046cd688efacbc37b4",
+      "title": "storage sdk validation 2026 10 06",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/storage-sdk-validation-2026-10-06.md"
+    },
+    {
+      "commit": "a750b60923bcc71adda025596664dd9a0413f80b",
+      "date": "2026-10-06",
+      "path": "reports/forge/docs/benchmarks/selfhost-refactor-2026-10-06.json",
+      "repository": "forge",
+      "sha256": "92a818f2229773ef11b8da764017a78e42f76ccc4d6bc559c16a1a92e2164e34",
+      "source_path": "docs/benchmarks/selfhost-refactor-2026-10-06.json",
+      "title": "selfhost refactor 2026 10 06",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/forge/docs/benchmarks/selfhost-refactor-2026-10-06.json"
+    },
+    {
+      "commit": "a750b60923bcc71adda025596664dd9a0413f80b",
+      "date": "2026-10-06",
+      "path": "reports/forge/docs/benchmarks/selfhost-refactor-2026-10-06.md",
+      "repository": "forge",
+      "sha256": "57931fdafc206842f6e1411a1f53f89ba851fce22ffabad25957a1f2a2ddd69e",
+      "source_path": "docs/benchmarks/selfhost-refactor-2026-10-06.md",
+      "title": "selfhost refactor 2026 10 06",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/forge/docs/benchmarks/selfhost-refactor-2026-10-06.md"
+    },
+    {
+      "commit": "a750b60923bcc71adda025596664dd9a0413f80b",
+      "date": "2026-10-06",
+      "path": "reports/forge/docs/refactoring-performance-2026-10-06.md",
+      "repository": "forge",
+      "sha256": "f1a18e3221761dd6c957cc9542175166118e71a498e990a9a90a3aee99798a45",
+      "source_path": "docs/refactoring-performance-2026-10-06.md",
+      "title": "refactoring performance 2026 10 06",
+      "url": "/live/snapshots/2187d66d1db774ef4cd440fe/reports/forge/docs/refactoring-performance-2026-10-06.md"
+    }
+  ],
+  "repositories": [
+    {
+      "archived": false,
+      "default_branch": "main",
+      "description": "Forge Vim and Neovim editor integrations",
+      "forks": 0,
+      "name": "editor-configs",
+      "open_items": 0,
+      "pushed_at": "2026-10-08T01:12:53Z",
+      "stars": 0,
+      "url": "https://github.com/forge-language/editor-configs"
+    },
+    {
+      "archived": false,
+      "default_branch": "main",
+      "description": "Forge compiler, self-hosting bootstrap and language toolchain",
+      "forks": 0,
+      "name": "forge",
+      "open_items": 0,
+      "pushed_at": "2026-10-14T04:51:34Z",
+      "stars": 1,
+      "url": "https://github.com/forge-language/forge"
+    },
+    {
+      "archived": false,
+      "default_branch": "main",
+      "description": "Forge reproducible performance benchmarks and historical measurements",
+      "forks": 0,
+      "name": "forge-benchmarks",
+      "open_items": 0,
+      "pushed_at": "2026-10-15T00:55:26Z",
+      "stars": 0,
+      "url": "https://github.com/forge-language/forge-benchmarks"
+    },
+    {
+      "archived": false,
+      "default_branch": "main",
+      "description": "",
+      "forks": 0,
+      "name": "forge-browser",
+      "open_items": 1,
+      "pushed_at": "2026-10-05T14:32:47Z",
+      "stars": 1,
+      "url": "https://github.com/forge-language/forge-browser"
+    },
+    {
+      "archived": false,
+      "default_branch": "main",
+      "description": "Learn Forge with verified browser and terminal lessons, exercises and editor setup",
+      "forks": 0,
+      "name": "forge-learning",
+      "open_items": 0,
+      "pushed_at": "2026-10-08T01:29:56Z",
+      "stars": 0,
+      "url": "https://github.com/forge-language/forge-learning"
+    },
+    {
+      "archived": false,
+      "default_branch": "main",
+      "description": "",
+      "forks": 0,
+      "name": "forge-platform",
+      "open_items": 0,
+      "pushed_at": "2026-10-15T00:45:58Z",
+      "stars": 1,
+      "url": "https://github.com/forge-language/forge-platform"
+    },
+    {
+      "archived": false,
+      "default_branch": "main",
+      "description": "",
+      "forks": 0,
+      "name": "forge-postgres",
+      "open_items": 0,
+      "pushed_at": "2026-10-03T15:42:59Z",
+      "stars": 1,
+      "url": "https://github.com/forge-language/forge-postgres"
+    },
+    {
+      "archived": false,
+      "default_branch": "main",
+      "description": "Forge Lean formal models and proofs",
+      "forks": 0,
+      "name": "forge-proofs",
+      "open_items": 0,
+      "pushed_at": "2026-10-08T12:51:16Z",
+      "stars": 0,
+      "url": "https://github.com/forge-language/forge-proofs"
+    },
+    {
+      "archived": false,
+      "default_branch": "main",
+      "description": "Forge scheduler, arena, ownership, and platform runtime",
+      "forks": 0,
+      "name": "forge-runtime",
+      "open_items": 0,
+      "pushed_at": "2026-10-13T00:30:01Z",
+      "stars": 0,
+      "url": "https://github.com/forge-language/forge-runtime"
+    },
+    {
+      "archived": false,
+      "default_branch": "main",
+      "description": "Forge standard library, networking and system modules",
+      "forks": 0,
+      "name": "forge-stdlib",
+      "open_items": 0,
+      "pushed_at": "2026-10-13T01:08:59Z",
+      "stars": 0,
+      "url": "https://github.com/forge-language/forge-stdlib"
+    },
+    {
+      "archived": false,
+      "default_branch": "main",
+      "description": "Forge library and immutable object distribution service with verified streaming uploads and downloads",
+      "forks": 0,
+      "name": "forge-storage",
+      "open_items": 0,
+      "pushed_at": "2026-10-09T04:41:40Z",
+      "stars": 0,
+      "url": "https://github.com/forge-language/forge-storage"
+    },
+    {
+      "archived": false,
+      "default_branch": "main",
+      "description": "",
+      "forks": 0,
+      "name": "forge-web",
+      "open_items": 0,
+      "pushed_at": "2026-10-06T23:42:50Z",
+      "stars": 1,
+      "url": "https://github.com/forge-language/forge-web"
+    },
+    {
+      "archived": false,
+      "default_branch": "main",
+      "description": "Language Server Protocol implementation for Forge",
+      "forks": 0,
+      "name": "language-server",
+      "open_items": 0,
+      "pushed_at": "2026-10-10T18:17:38Z",
+      "stars": 1,
+      "url": "https://github.com/forge-language/language-server"
+    },
+    {
+      "archived": false,
+      "default_branch": "main",
+      "description": "Package repository for Package Control",
+      "forks": 0,
+      "name": "sublime-lsp-package-index",
+      "open_items": 0,
+      "pushed_at": "2026-10-12T06:24:14Z",
+      "stars": 0,
+      "url": "https://github.com/forge-language/sublime-lsp-package-index"
+    },
+    {
+      "archived": false,
+      "default_branch": "main",
+      "description": "Independent Forge syntax, snippets and build commands for Sublime Text",
+      "forks": 0,
+      "name": "sublime-syntax",
+      "open_items": 0,
+      "pushed_at": "2026-10-08T01:11:53Z",
+      "stars": 0,
+      "url": "https://github.com/forge-language/sublime-syntax"
+    },
+    {
+      "archived": false,
+      "default_branch": "main",
+      "description": "Forge language support for Sublime Text: syntax, build commands and LSP integration",
+      "forks": 0,
+      "name": "sublime-text",
+      "open_items": 0,
+      "pushed_at": "2026-10-12T23:34:50Z",
+      "stars": 0,
+      "url": "https://github.com/forge-language/sublime-text"
+    },
+    {
+      "archived": false,
+      "default_branch": "main",
+      "description": "VS Code and Cursor extension for Forge",
+      "forks": 0,
+      "name": "vscode-extension",
+      "open_items": 0,
+      "pushed_at": "2026-10-08T01:28:48Z",
+      "stars": 1,
+      "url": "https://github.com/forge-language/vscode-extension"
+    }
+  ],
+  "schema_version": 1,
+  "source_revisions": {
+    "forge": "a750b60923bcc71adda025596664dd9a0413f80b",
+    "forge-benchmarks": "407774db31bc9cba95a06eeed6345ec6ae1653ee"
+  },
+  "source_timestamps": {
+    "forge": "2026-10-14T04:51:34Z",
+    "forge-benchmarks": "2026-10-10T08:20:04Z"
+  }
+}
