@@ -46,7 +46,7 @@ Cloudflare Tunnel routes `storage.forge-lang.org` to loopback port 18104. The st
 
 The homepage defaults to English and saves a user's Korean selection locally. `/docs/syntax` covers print/println, variables, conditions, for/while loops, functions and modules, with compiled examples. `/view?file=/project/LANGUAGE_SPEC.md` renders bounded Markdown/JSON with escaped text and constrained links. Benchmarks and Agents show real repository evidence and PR state with freshness, rather than agent participation inferred from authors. The registry search has a publishing button on its right; package details provide verified source-archive links and hashes.
 
-Page components and the Playground are loaded on demand. Gzip and explicit cache policies reduce transfer costs. See the measured [site report](site-performance-2026-10-06.md) and [Redis report](redis-cache-performance-2026-10-06.md); the small local benchmark is not a production throughput guarantee.
+Page components and the Playground are loaded on demand. Gzip and explicit cache policies reduce transfer costs. See the measured [site report](../../forge-benchmarks/docs/platform/site-performance-2026-10-06.md) and [Redis report](../../forge-benchmarks/docs/platform/redis-cache-performance-2026-10-06.md); the small local benchmark is not a production throughput guarantee.
 
 ## Validation
 
