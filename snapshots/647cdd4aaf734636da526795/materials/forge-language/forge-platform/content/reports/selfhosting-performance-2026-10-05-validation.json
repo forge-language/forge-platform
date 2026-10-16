@@ -1,0 +1,68 @@
+{
+  "compiler_source_before_sha256": "8332ac161a2fabffe1850a635bb195286d4cc145e84ca137e96fbd0bbfafb6e6",
+  "compiler_source_after_sha256": "6dce1375f6bc9f6c2c8857727081d40efc46efc3a8f3dfcb3ca92f5894413b1b",
+  "builtin_mappings_unchanged": 61,
+  "fixedpoint": "stage2/stage3/stage4 C byte-identical\nCurrent56,468B compilerinput current/dispatch C byte-identical\nSHA256 ffb3d5e4c02578799ba90588194fe54dd4e642d81399f919cebf92885b9c28d4\n",
+  "selfhost_test_log": "....................\n----------------------------------------------------------------------\nRan 20 tests in 1.268s\n\nOK\n",
+  "selfhost_test_log_sha256": "9a77a790adcc0f67d02f30d792d624a8fa6b5dd80e9a1d3e4b4728ecaf853550",
+  "fixedpoint_log_sha256": "baa801481c0bc5642f05be134a259018382e52cb7288a7df4c7ccf76f6ed59f7",
+  "benchmark_source_sha256": "4fcfa5b437e5e7b3f3ffcc092f3b5334142d7155098766509939a60d752e763c",
+  "test_source_sha256": "afe9246c1d0019e3915a065dbef58871d77050c3fa028ca3acc22c39ef0e1284",
+  "library_sha256": {
+    "libforge_runtime.a": "17884c32f7887dc42525afdbb1ad4e65a16493ecc94adbc01c183540d95db793",
+    "libforge_std.a": "3ec728179baa49d4042637c617e8a228cd7d365b287af22ba10dc61e9b21446e"
+  },
+  "build_options": "Release; GPU OFF; LTO OFF. Stage1/2/3 emitted C compiled with cc -std=c11 -O3; same current runtime/std libraries.",
+  "historical_baseline_source_commit": "ba36611",
+  "current_before_source_commit": "c6921d7",
+  "scope": "Measurements completed while parent API benchmark/build paused; existing host services remain shared. C emission excludes C compilation. Native benchmarks exclude compiler work. Fixedpoint covers documented FG subset.",
+  "inputs": {
+    "/tmp/forge-continuation-20261003/baseline/bootstrap/compiler.fg": {
+      "bytes": 39699,
+      "sha256": "7eea51a3bcccc0ecb3ce741bf7b9df39a4df77cd01aca552ef9b9b2d2807404d"
+    },
+    "/dev/shm/forge-compiler-cpu-20261005/current-compiler.fg": {
+      "bytes": 56468,
+      "sha256": "8332ac161a2fabffe1850a635bb195286d4cc145e84ca137e96fbd0bbfafb6e6"
+    }
+  },
+  "changes": {
+    "only_compiler_fgbuiltin_dispatch": "Reject identifiers shorter than shortest builtin, select first-two-byte group, keep all61exactnamemappings. Compiler/runtime/Cbackend unchanged.",
+    "discarded_io_candidate": "Wholefunctionoutput builder had no demonstrated improvement and was not applied."
+  },
+  "initial_dispatch_probe": {
+    "summary": {
+      "current": {
+        "wall_ms": 13.667509192600846,
+        "cpu_ms": 13.133000000000145
+      },
+      "dispatch": {
+        "wall_ms": 10.885585099458694,
+        "cpu_ms": 10.194000000000091
+      }
+    },
+    "output_sha256": {
+      "current": "c7e8f451f528f040ca71947e81a352cd85bec58e4581636176c99f107fccfe57",
+      "dispatch": "c7e8f451f528f040ca71947e81a352cd85bec58e4581636176c99f107fccfe57"
+    }
+  },
+  "workspace_build": {
+    "path": "/home/helloworld0822/coding/forge/build",
+    "targets": [
+      "forge-selfhost",
+      "forge-selfhost-test",
+      "forge-selfhost-control",
+      "forge-selfhost-verify"
+    ],
+    "result": "all passed; repeat command exit0/ninja no work",
+    "config": "Existing Release/GPU ON/LTO OFF configuration preserved. Performance measurement build is Release/GPU OFF/LTO OFF.",
+    "forge_sha256": "b87c67f6fb654527115a1a054ed0e0b4d1b40af0c3c2a798ca3b19b1b0c89708",
+    "stage2_sha256": "79a47b07585c179ffd26c302f4dba1b5140da7caed8dfe50b2914fc7e0768c82",
+    "stage3_c_sha256": "ffb3d5e4c02578799ba90588194fe54dd4e642d81399f919cebf92885b9c28d4",
+    "stage4_c_sha256": "ffb3d5e4c02578799ba90588194fe54dd4e642d81399f919cebf92885b9c28d4",
+    "measured_stage2_text_sha256": "5d599e962e4e899c0a646087782ca31027ea8b09f05922db5ba5f1e392dede7a",
+    "workspace_stage2_text_sha256": "5d599e962e4e899c0a646087782ca31027ea8b09f05922db5ba5f1e392dede7a",
+    "selfhost_tests": "....................\n----------------------------------------------------------------------\nRan 20 tests in 1.431s\n\nOK\n",
+    "build_log_sha256": "a961378cab3a80ed317334bf0647216dbeadcbb271aaccbbe4b120b2855973ca"
+  }
+}
