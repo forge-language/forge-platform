@@ -1,0 +1,94 @@
+{
+  "date_utc": "2026-10-03",
+  "scope": "Retained final native/API verification logs and independent JSON recomputation; no additional execution by report author. Runtime image overlays final binary and migration on immutable prepared after-release image, not a new complete multi-stage source rebuild.",
+  "runtime_image_id": "sha256:f0a497df4f13e616260764e3cfd860fb421e66b98321589fa694365927f02a5a",
+  "plain_binary_sha256": "0f6a4690708d53db5b43b79ad430c7e1a18f98c17920045f5a7d2962b29ccfc8",
+  "candidate_web_sha256": "ff7908bd428bfb19aed12dff9cce15523447ec26e83d011817448164207fb3dc",
+  "logs": {
+    "native_ctest": {
+      "path": "/dev/shm/forge-improvement-verified-build.log",
+      "sha256": "a4f31cbae6d15154cddcea13857e27023b905bb9a265c923fdaa199e06806154",
+      "passed": 3,
+      "failed": 0
+    },
+    "blocking": {
+      "path": "/dev/shm/forge-improvement-verified-blocking.log",
+      "sha256": "3c929e4dd7172a5a230b6c9d8be1e98b7a297d81ae72df35d47e23cf55b858b1",
+      "configurations": 5,
+      "pool_auto_fast_seconds": 1.0,
+      "connection_fast_seconds": 0.001
+    },
+    "http_auto": {
+      "path": "/dev/shm/forge-improvement-verified-http-auto.log",
+      "sha256": "b02251d99338d3282d20ea7464b75a67b1bfee12124ba52ae9ba0990ea50b967",
+      "configuration": "connection/auto→poll",
+      "passed": true
+    },
+    "http_select": {
+      "path": "/dev/shm/forge-improvement-verified-http-select.log",
+      "sha256": "483fda1ba1ac1aa998449a7bae5eeb949eef43e03e336f9fa01f88b745be7a85",
+      "configuration": "connection/select",
+      "passed": true
+    },
+    "integration": {
+      "path": "/dev/shm/forge-improvement-verified-checks.log",
+      "sha256": "1b2da5fd19c9eb07ab37bf1352529b87645b48b73bfcdb6377cab4f4bb45e08d",
+      "tests": 26,
+      "skipped": 0,
+      "passed": true
+    },
+    "proxy": {
+      "path": "/dev/shm/forge-improvement-proxy.log",
+      "sha256": "c10082b697a7c42a0c624c52673c38fb37dab7a8a47e176eecc6c0e62cd22146",
+      "configurations": 2,
+      "assertions_total": 12,
+      "passed": true
+    }
+  },
+  "measurements": {
+    "final40": {
+      "trials": 40,
+      "requests": 814017,
+      "errors": 0,
+      "nr_throttled": 0
+    },
+    "poll20": {
+      "trials": 20,
+      "requests": 464524,
+      "errors": 0,
+      "nr_throttled": 0
+    },
+    "historical60": {
+      "trials": 60,
+      "requests": 1332948,
+      "errors": 0,
+      "nr_throttled": 0
+    }
+  },
+  "migration": {
+    "registered_version_count": 11,
+    "fresh_restart_upgrade_checked": true,
+    "index_valid_ready_checked": true,
+    "if_not_exists_rerun_checked": true,
+    "upgrade_data_invariant": "comments count(*) and sum(post_id) preserved; not bytewise all-column equality",
+    "rust_loader": "Source inspected; migration11 startup on rebuilt Rust image not executed"
+  },
+  "policy": "Authoritative PostgreSQL ban query retained per request; final40/poll20 profiled requests==queries==client requests==sum(lifetime-thread histogram).",
+  "cleanup": {
+    "owned_diagnosis_improvement_containers_and_networks_remaining": 0,
+    "basis": "Coordinator verified final cleanup; report author did not execute Docker"
+  },
+  "review_team": {
+    "transport": "MultiAgentV2",
+    "actual_codex_workers": 3,
+    "numbered_review_jobs": 10,
+    "earlier_glm_counts_as_codex_review": false
+  },
+  "limits": [
+    "Shared host and near-two-core client saturation",
+    "Sampled memory.current, not absolute or long-lived peak",
+    "Final throughput fixture has100 published posts/no comments; SQL fixture1000 posts/200000 comments",
+    "Default auto contrast changes both thread mode and polling; poll20 stronger control",
+    "Historical health measurements use older binaries/harness boundaries"
+  ]
+}
