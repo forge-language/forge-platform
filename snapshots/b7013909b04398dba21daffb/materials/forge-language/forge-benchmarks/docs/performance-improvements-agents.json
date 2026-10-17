@@ -1,0 +1,198 @@
+{
+  "completed_utc": "2026-10-03T15:13:05.252788+00:00",
+  "workflow": "OMO Codex teammode SKILL.md and bundled team.mjs with native Codex MultiAgentV2 workers",
+  "workflow_source": "/home/helloworld0822/.cache/opencode/packages/oh-my-openagent@latest/node_modules/oh-my-openagent/packages/omo-codex/plugin/skills/teammode/SKILL.md",
+  "model_routing": "Inherited session model, no child model overrides",
+  "actual_worker_threads": 3,
+  "numbered_review_tasks": 10,
+  "requested_maximum_workers": 10,
+  "environment_concurrency_limit_including_root": 4,
+  "assignments": {
+    "A": [
+      1,
+      2,
+      3
+    ],
+    "B": [
+      4,
+      5,
+      6
+    ],
+    "C": [
+      7,
+      8,
+      9,
+      10
+    ]
+  },
+  "earlier_glm_output_counted_as_codex": false,
+  "review_verdict": "All scoped reviews passed with recorded measurement and resource limits",
+  "team_state": {
+    "schemaVersion": 3,
+    "transport": "multi_agent_v2",
+    "teamId": "488d28d1-0845-4572-88fb-c296b4348fbc",
+    "teamName": "forge-codex-review",
+    "sessionName": "forge-improvement",
+    "sessionId": "forge-codex-review-20261003",
+    "threadTitleConvention": null,
+    "status": "archived",
+    "createdAt": "2026-10-03T14:44:08.409Z",
+    "updatedAt": "2026-10-03T15:11:59.626Z",
+    "archivedAt": "2026-10-03T15:11:59.626Z",
+    "leader": {
+      "kind": "main-session",
+      "sessionId": null,
+      "agentPath": "/root"
+    },
+    "communication": {
+      "memberLanguage": "english",
+      "replyToUserInUserLanguage": true
+    },
+    "worktree": {
+      "enabled": false,
+      "baseBranch": "dev",
+      "root": "/tmp/forge-improvement-20261003/.omo/teams/forge-codex-review-20261003/worktrees"
+    },
+    "paths": {
+      "dir": "/tmp/forge-improvement-20261003/.omo/teams/forge-codex-review-20261003",
+      "team": "/tmp/forge-improvement-20261003/.omo/teams/forge-codex-review-20261003/team.json",
+      "guide": "/tmp/forge-improvement-20261003/.omo/teams/forge-codex-review-20261003/guide.md",
+      "artifacts": "/tmp/forge-improvement-20261003/.omo/teams/forge-codex-review-20261003/artifacts"
+    },
+    "members": [
+      {
+        "id": "A",
+        "name": "http-lifecycle",
+        "focus": "HTTP flags, lifetimes and resource bounds",
+        "lens": "perspective",
+        "deliverable": "Evidence-backed findings and final review verdict",
+        "taskName": "web_concurrency_review",
+        "agentPath": "/root/web_concurrency_review",
+        "threadId": null,
+        "threadTitle": null,
+        "cwd": "/home/helloworld0822/coding/forge",
+        "worktree": {
+          "path": null,
+          "branch": null
+        },
+        "status": "archived"
+      },
+      {
+        "id": "B",
+        "name": "measurement",
+        "focus": "Benchmark controls, statistics and report",
+        "lens": "perspective",
+        "deliverable": "Evidence-backed findings and final review verdict",
+        "taskName": "string_optimization",
+        "agentPath": "/root/string_optimization",
+        "threadId": null,
+        "threadTitle": null,
+        "cwd": "/home/helloworld0822/coding/forge",
+        "worktree": {
+          "path": null,
+          "branch": null
+        },
+        "status": "archived"
+      },
+      {
+        "id": "C",
+        "name": "schema-policy",
+        "focus": "Migration, ban policy and packaging",
+        "lens": "perspective",
+        "deliverable": "Evidence-backed findings and final review verdict",
+        "taskName": "rust_benchmark_audit",
+        "agentPath": "/root/rust_benchmark_audit",
+        "threadId": null,
+        "threadTitle": null,
+        "cwd": "/home/helloworld0822/coding/forge",
+        "worktree": {
+          "path": null,
+          "branch": null
+        },
+        "status": "archived"
+      }
+    ],
+    "log": [
+      {
+        "ts": "2026-10-03T14:44:08.409Z",
+        "event": "created",
+        "detail": "team forge-codex-review"
+      },
+      {
+        "ts": "2026-10-03T14:44:21.736Z",
+        "event": "add-member",
+        "detail": "member A (perspective): HTTP flags, lifetimes and resource bounds"
+      },
+      {
+        "ts": "2026-10-03T14:44:22.190Z",
+        "event": "add-member",
+        "detail": "member B (perspective): Benchmark controls, statistics and report"
+      },
+      {
+        "ts": "2026-10-03T14:44:22.426Z",
+        "event": "bind-agent",
+        "detail": "member B -> agent /root/string_optimization"
+      },
+      {
+        "ts": "2026-10-03T14:44:22.646Z",
+        "event": "add-member",
+        "detail": "member C (perspective): Migration, ban policy and packaging"
+      },
+      {
+        "ts": "2026-10-03T14:44:22.849Z",
+        "event": "bind-agent",
+        "detail": "member C -> agent /root/rust_benchmark_audit"
+      },
+      {
+        "ts": "2026-10-03T14:44:29.100Z",
+        "event": "bind-agent",
+        "detail": "member A -> agent /root/web_concurrency_review"
+      },
+      {
+        "ts": "2026-10-03T14:50:38.235Z",
+        "event": "set-status",
+        "detail": "member C -> reported: Tasks 7–10 PASS with evidence limits; review-C.md saved"
+      },
+      {
+        "ts": "2026-10-03T14:51:23.431Z",
+        "event": "set-status",
+        "detail": "member A -> reported: Tasks 1–3 PASS; exact source, native behavior and resource limits verified"
+      },
+      {
+        "ts": "2026-10-03T15:11:40.826Z",
+        "event": "set-status",
+        "detail": "member B -> reported: Tasks 4–6 PASS; Korean report, raw JSON, statistics and validation ready"
+      },
+      {
+        "ts": "2026-10-03T15:11:59.626Z",
+        "event": "archive",
+        "detail": "All 3 Codex workers completed tasks 1–10. Native V2 has no runtime archive operation; this archives durable team bookkeeping only. Evidence will be retained in Forge docs before state deletion."
+      }
+    ]
+  },
+  "preserved_artifacts": {
+    "review-A.md": {
+      "sha256": "7ca6764a7ae694d13aa8e27b113a8f9fbda2186d7c8b2193cc59ea5151bdc43b",
+      "content": "# Member A final audit — HTTP lifecycle and resource bounds\n\nVerdict: PASS for the reviewed HTTP implementation and native regression evidence. No blocking lifecycle, ownership, or PostgreSQL lease regression found. Resource claims must stay scoped to measured workloads; the connection limit is not a universal process-memory or thread-count limit.\n\nReview performed read-only except this artifact. No Docker, builds, load generation, credentials, or production accessed. Product paths below use the application root `/home/helloworld0822/orca/workspaces/portfolio-platform/forge-migration`; HTTP sources are under `backend-forge/vendor/forge-web`, not root-level `vendor`.\n\n## 1. HTTP flags, default, fallback, and lifecycle\n\n**Verdict: PASS.**\n\n- `backend-forge/vendor/forge-web/src/bridge.c:1549` defaults `FORGE_WEB_THREADS` to `connection`; lines 1550–1553 accept only connection/pool and fail startup for invalid values. Explicit pool preserves the existing worker-count option.\n- Lines 1517–1523 start connection mode without supplying `MHD_OPTION_THREAD_POOL_SIZE`; lines 1524–1529 supply it only for pool mode. Both retain 256 connections, 30-second connection timeout, 128 KiB MHD connection-memory limit, and the completion callback.\n- Lines 1571–1577 remove epoll from connection mode, choose poll when available, and add `MHD_USE_THREAD_PER_CONNECTION | MHD_USE_ITC`. Select startup fallback at lines 1580–1583 preserves both flags. No unsupported epoll/thread-per-connection combination remains.\n- Existing pool mode still selects epoll/poll/select via feature checks. Requested epoll in connection mode means poll/select fallback, not actual epoll operation. Startup logs report the effective polling strategy.\n- `new_request` at line 989 owns method/path/route scratch storage; response creation at line 1207 uses `MHD_RESPMEM_MUST_COPY`. The handler runs within a per-thread web scope at lines 1465–1490, and completion at lines 1395–1414 frees upload processor, temporary file/fd, response, body, origin, and request exactly through its MHD context. No scope-owned response bytes are borrowed after scope teardown.\n- Shared rate counters are protected by the mutex at lines 618, 630, and 675. Trusted proxy configuration and the handler pointer are initialized before daemon threads start. MHD stops at line 1597 before application `server.fg:33` closes the PostgreSQL pool.\n\n**Source parity:** live bridge and `/tmp/forge-improvement-20261003/verified-binaries/candidate-web.c` both hash to `ff7908bd428bfb19aed12dff9cce15523447ec26e83d011817448164207fb3dc`. `verified-posts.json` records this same candidate hash. Its recorded final binary hashes match actual files: profile `1438c1943d509e0374aefba30c69a18a4c9a95249ccc86d214d374023e2ae25c`, plain `0f6a4690708d53db5b43b79ad430c7e1a18f98c17920045f5a7d2962b29ccfc8`. `verified-checks-and-sql.json` names that same plain binary hash.\n\n**Provenance limitation:** `final-source/backend-forge/vendor/forge-web/src/bridge.c` hashes to `d601e58130a3d5e17e741239322cbc79935db4cacc9f4d4c21fd5d66ad82e614` and the final-source snapshot has no new blocking_test.py. The verified candidate overlay is exact current web source; the final-source snapshot alone is not. The build log records the separate `/tmp/web-fixed` build and three passing native CTests, but is not a standalone signed provenance manifest linking every command and input. Do not describe the snapshot alone as exact final HTTP source.\n\nGNU's flow-control manual supports blocking handlers in thread-per-connection mode and requires offload plus suspend/resume in shared poller modes: https://www.gnu.org/software/libmicrohttpd/manual/html_node/microhttpd_002dflow.html.\n\n## 2. Blocking, disconnect, shutdown, and HTTP regression evidence\n\n**Verdict: PASS with stated coverage limits.**\n\n- `/dev/shm/forge-improvement-verified-build.log` records successful web compilation with GCC 13.2.1, musl 1.2.5, and libmicrohttpd 0.9.77. It records 3/3 passing CTests: bridge scopes/validation; bounded buffers, rate concurrency, scope cleanup; JSON/JWT/trusted-proxy security.\n- `/dev/shm/forge-improvement-verified-blocking.log` records pool/auto fast-request latency 1.000 s and connection/auto, connection/poll, connection/select, and connection/epoll-requested latency 0.001 s, with the script's 64-request isolation and disconnect checks passing.\n- `tests/http_server_test.c:9–12` signals `/slow` entry and sleeps one second while retrying EINTR. `tests/blocking_test.py:24–30,51–61` waits for that signal before timing `/fast`, requires connection latency below 0.5 s while slow remains incomplete, and requires pool latency above 0.7 s. This directly exercises blocking callback isolation.\n- Earlier disconnect/shutdown test gaps are fixed: lines 65–69 wait for the abandoned slow handler to start, disconnect, and assert a subsequent fast request; lines 72–73 check Docker stop success and require server exit code zero. A crash or forced SIGKILL cannot count as a passing shutdown. The checked stop occurs while the abandoned slow handler may still be active, exercising completion during shutdown.\n- `/dev/shm/forge-improvement-verified-http-auto.log` explicitly reports `threads=connection, polling=poll`; the select log explicitly reports `threads=connection, polling=select`. Both reach their success summaries. `tests/http_test.py:85–119` reuses one connection across changed path/proxy headers, verifies route/IP cache isolation, exercises chunked POST bodies at exact 2 MiB boundaries and one byte over, and rejects embedded NUL.\n- The summary's GET/POST/PUT/DELETE isolation, outbound connection reuse, redirect, protocol, and credential-reset coverage comes from `tests/http_client_test.c:8–45`, which the Python script invokes with `check=True` at line 63. These are outbound client checks; do not describe them as four-method inbound concurrency coverage.\n\n**Limits:** the blocking script selects every threading mode explicitly, so these logs do not separately test an unset `FORGE_WEB_THREADS` variable. Default selection is straightforward source-verified behavior. Poll/select feature absence and forced startup failure fallback are source-reviewed, not fault-injected here. The disconnect test proves recovery and clean process exit, not absence of every allocation leak; the native thread-destructor exercise is not an ASan/LSan proof. `http_test.py:126–127` itself still ignores shutdown exit codes, so shutdown claims should cite the checked blocking test. None of these limitations identifies a blocking product defect.\n\n## 3. TLS arenas, PostgreSQL lease safety, and resource bounds\n\n**Verdict: PASS for ownership/lease safety; resource interpretation requires workload scope.**\n\n- Web `ThreadState` at bridge lines 44–53 is thread-local and registered with a pthread key. Destructor lines 77–90 clears outstanding owned values, cached blocks, and the cURL handle. Scope end bounds cached tracking blocks to about 33 KiB per thread. Curl global initialization uses pthread_once; each thread owns its own easy handle.\n- Forge `runtime/arena.c:21–28` independently gives string arenas TLS storage and a pthread destructor. Lines 99–102 reset positions without releasing blocks; line 111 initializes a 4 MiB arena on first string allocation. `backend-forge/native/adapter.c:7–10` resets it after the application handler. The verified snapshot's toolchain `runtime/arena.c` and `stdlib/string.c` bytes match current Forge sources exactly.\n- Responses copy generated string bytes before the adapter resets its arena. Current request/response state is not transferred to another worker, so adding HTTP threads does not create cross-thread arena ownership.\n- PostgreSQL pool `bridge.c:97–103` marks a connection busy under its mutex before exposing the lease. Release at lines 131–162 validates ownership, marks the slot releasing while rollback runs, then returns it to availability. Other handlers cannot borrow that connection until release completes. Prepared statements reside in the pooled `Connection` (lines 21–24), not HTTP TLS; HTTP connection/thread churn does not discard that cache. The live dispatch releases its lease on public, detached, and normal paths (`routes.fg:106–120`).\n- The 256 connection limit bounds HTTP connection threads, not all process threads: web `fw_fetch_many` at line 1671 may create four helper threads per simultaneous metadata handler. The `workers` argument is ignored by MHD in connection mode and does not bound handler concurrency.\n- 128 KiB × 256 is 32 MiB of configured MHD connection-memory limits. It excludes app body buffers (2 MiB JSON limit), parsed JSON, copied response bytes, string arenas, stack mappings, cURL caches, and fetch helper resources.\n- 256 used TLS string arenas reserve at least 1 GiB of arena capacity/address space. This is not a claim of 1 GiB resident RSS: malloc pages are touched on demand. Arenas can retain larger blocks after large requests until the connection thread exits; idle keepalive threads retain caches.\n- In the 40 final `verified-posts.json` samples, actual binary/candidate hashes match, HTTP peak is 66 total threads, maximum sampled memory is 15.3515625 MiB, and errors total zero. This supports the tested 16/64-client posts workloads under the configured container memory budget; it does not establish resource safety for 256 simultaneous large-body or metadata requests.\n- PostgreSQL acquire has a 10-second wait, individual queries have server timeouts, and outbound cURL calls have individual timeouts. The MHD 30-second connection timeout is not a universal deadline for a synchronous handler containing multiple operations. Do not claim a guaranteed maximum shutdown duration from that timeout.\n\n**Cross-cutting measurement caution:** root's final poll-controlled comparison shows pool(POLL) → connection(POLL) approximately +1.3% posts16 RPS and −30.1% p95; at posts64 approximately +0.48% RPS and −7.4% p95. AUTO mode changes polling strategy as well as threading. Do not attribute all AUTO throughput gain to thread-per-connection alone. The one-worker slow/fast control independently establishes the blocking-isolation behavior.\n\n**Final disposition:** no required product-code fix in Member A's scope. Evidence supports the synchronous connection-mode default and checked shutdown regression. Report candidate-overlay provenance, controlled attribution, and measured resource limits accurately.\n"
+    },
+    "review-B.md": {
+      "sha256": "31af4241da16deb377e7c417f66fa931bcd9051543f49c535ae4695afbf4ff16",
+      "content": "# Member B — measurement review (Codex, MultiAgentV2)\n\nRead team guide/team.json and independently recomputed retained JSON, then inspected harness sources and ordinary test logs. No Docker, build, new load, database, provider log or production action was performed. Parent retains integration ownership. Deliverables are in `/home/helloworld0822/coding/forge/docs`.\n\n## 4. Final 40-trial numeric statistics — PASS within stated scope\n\nEvidence: `verified-posts.json`, byte-identical repository copy `performance-improvements-verified-posts.json`; reproducible independent calculator `statistics-B.py` and its `statistics-B.json` in this artifact directory. Four configs × two concurrencies × five repeats: 40 trials, 814,017 client requests, zero errors, zero API cgroup throttles. Every profiled trial has requests == queries == measured client requests == summed lifetime-thread bins, with final bin unused. Image and profile/plain executable hashes match poll and SQL validation metadata.\n\nFinal profile pool/auto → same exact profile executable connection/auto (poll) medians:\n\n| Concurrency | pool RPS | connection RPS | RPS ratio-of-medians improvement | pool p95 ms | connection p95 ms | p95 reduction |\n|---|---:|---:|---:|---:|---:|---:|\n| 16 | 4320.62 | 5898.15 | 36.51% | 8.174 | 3.907 | 52.20% |\n| 64 | 5729.15 | 6069.49 | 5.94% | 31.875 | 19.261 | 39.57% |\n\nPaired RPS ratios medians 1.3651165805 / 1.0654861541; ranges 1.2288405872–2.5604869834 / 1.0501011261–1.1351286985. Label this same-binary settings comparison, not an old-binary/new-binary remeasurement. Default AUTO changes both thread mode and polling; attribution must use task 5 control.\n\nPlain final Forge medians 5887.60 / 6050.78 RPS versus Rust release 3600.00 / 3628.45: ratio of medians +63.54% / +66.76%; paired medians +63.54% / +66.26%. Published-post100/no-comment fixture and differing libc/SQL/policy/compiler profiles prevent general language-speed claims. Profile is not the Rust comparison's plain endpoint numerator.\n\nResource interpretation: final instrumented connection64 sampled max memory15.3515625MiB; plain14.00390625MiB. No universal “under15MiB” claim. Thread count66 at64 is sampled process threads, not the connection256 cap as an entire process/thread maximum. Plain client CPU medians183.657% /187.232%, highest individual child92.971% /94.955%; DB about415% on an unconstrained DB container. Application2CPU limit and zero throttles do not prove API saturation. Request versus cgroup denominator difference retained explicitly: request4.002–4.024s, cgroup4.158735–4.195733s. Final maximum start lateness1.042761ms.\n\nFinal connection64 handler median8824.355µs, acquire8021.878µs, query775.568µs; median per-trial acquire share90.942%. PG pool5 is now observable next bottleneck. SQL selectivecomments median22.8225→2.926ms7.80x/87.18%lower, while listJSON34.4995→51.653ms is slower. Equal first-of-seven removal per phase, six remaining medians; do not attribute HTTP fixture RPS to selective comment index.\n\n## 5. Poll-control 20-trial causal control — PASS; default attribution constrained\n\nEvidence: `poll-control.json` and byte-identical `performance-improvements-poll-control.json`. Same runtime image, exact profile executable, candidate web, profile source, client load hash as final40. 20 trials,464,524 requests, errors0, API throttles0. Both configurations use poll; connection AUTO is demoted to poll by implementation.\n\n| Concurrency | pool/poll RPS | connection/poll RPS | ratio-of-medians improvement | pool p95 ms | connection p95 ms | p95 reduction |\n|---|---:|---:|---:|---:|---:|---:|\n| 16 | 5735.80 | 5810.36 | 1.30% | 5.694 | 3.979 | 30.12% |\n| 64 | 5971.11 | 6000.03 | 0.48% | 21.015 | 19.459 | 7.40% |\n\nPaired RPS ratio medians1.0235363855 /1.0030374339; ranges0.9752990020–1.1101248192 /0.9884286087–1.1367306859. Cross-one ratios and overlapping ranges make “consistent throughput superiority from threads alone” unsupported. Tail improvement remains observed in this stronger control, not statistical inference from a large sample. Five repeats on shared host and sequential configurations are not randomized simultaneous pairs. Maximum lateness0.680124ms; cgroup window4.161496–4.186935s.\n\n## 6. Load-generator limitations and historical60 health — PASS with separate historical labeling\n\nEvidence: current `benchmark/portfolio_load.py`, `portfolio_diagnose.py`, `portfolio_profile.c`; historical `diagnosis.json`, byte-identical `performance-improvements-diagnosis.json`. Historical60 uses older source/executable SHA and does not record final runtime image/load hash/CPU observation window/start lateness. Historical requests1,332,948/errors0/throttles0 remain valid recorded client totals, but not final health revalidation.\n\nHistorical health16 Rust11307.22 RPS, plain previous Forge9864.16; p95 2.100/2.170ms, generator196.818%/196.912% near two-core client ceiling. Health1 Rust2629.90 versus previous plainForge1362.66, with broad ranges and only one generator process. Forge retains authoritative DB ban check per request; Rust health has immediate JSON path and different policy path. Health does not support language-wide claims or every-endpoint improvement.\n\nHistorical instrumented health1 trial counters include exactly one extra profile request/query relative to client attempts in each of nine trials; boundary is disclosed rather than silently asserting equality. Final40/poll20 have no mismatch. Histogram IDs are per thread lifetime, capped512 with overflow-slot rejection, not persistent worker allocation. Highest final40 nonzero lifetime bin164. Cleanup uses child kill+reap in finally, owned-container flag follows create success, readiness barrier before scheduled start; no known unresolved fatal measurement corruption in retained final40/poll20. Sampled memory and2processclientCPU remain capacity limitations.\n\n## Deliverables and verification\n\n- Korean report: `docs/performance-improvements-2026-10-03.md` (all tables derived from retained measurements).\n- Four raw JSON copies: `performance-improvements-{verified-posts,poll-control,verified-checks-and-sql,diagnosis}.json` with exact SHA preserved.\n- Derived stats: `docs/performance-improvements-statistics.json`.\n- Compact test evidence: `docs/performance-improvements-validation.json` (six exact ordinary-log SHAs: native3/3, blocking5configs, HTTP2configs, API26/no skips, proxy2configs/12 assertions total, coordinator cleanup attestation).\n- This artifact, independent calculator and report writer remain in team artifacts; no source edits outside assigned new docs.\n\nRetained snapshot has old web bridge d601e581…; actual final bridge overlay ff7908bd… matches verified-binaries/candidate-web.c. Report explicitly identifies snapshot+overlay, source/bin/runtimeimage SHA, newly layered API image rather than fullmulti-stage source rebuild, Rust migration loader source inspection rather than unexecuted new Rust migration11 startup, upgrade preservation only comments count and sum(post_id). Per-request ban policy retained. Actual team is3 Codex workers handling10 numbered jobs on MultiAgentV2; earlier GLM does not count as Codex review.\n\nResource detail incorporated from A: used TLS string arenas allocate initial4MiB capacity/address space per thread and retain blocks until thread exit; reset does not release. Metadata fetch_many may add4helper threads per handler, so connection256 cap is not total process threadcap. Actual API validation launches without FORGE_WEB_THREADS and confirms default connection mode; unsupported native fallback feature combinations remain source review only.\n"
+    },
+    "review-C.md": {
+      "sha256": "02c5a57b80aae2b4e2adf3295fdbaade4fb4f94ffb7ecba34d92e21fbb4007ef",
+      "content": "# Member C: schema-policy final review\n\nVerdict: PASS for the scoped implementation and recorded disposable checks, with the evidence limits below. Read-only product audit; no Docker, build, load, production, secret or authentication-store access. Only this team artifact was written. Git commands used GIT_MASTER=1. Historical user security changes remain intact and are not attributed to this optimization.\n\n## 7. Migration 11, upgrade, data, catalog and index timing\n\n- Migration 0004 created comments_post_id_created_at_idx; 0009 drops comments.post_id and renames the replacement column, losing the old index. New backend/migrations/0011_restore_comment_post_index.sql recreates the exact btree(post_id, created_at) index with IF NOT EXISTS; no data manipulation is added.\n- Rust backend/src/db.rs discovers numbered files from ./migrations, sorts versions and applies missing versions transactionally, so a new Rust build/runtime migration directory discovers 11 without a hardcoded version edit. Forge backend-forge/src/server.fg explicitly registers version 11. test-integration.sh expects 11 both before and after restart.\n- benchmark/portfolio_check.py first runs the retained old executable on a separate disposable sql_test DB and asserts the comments index is absent. It inserts 1,000 posts (20 published), 200,000 comments, analyzes both tables, and then starts the improved executable against that populated schema. It asserts migration count 11 and unchanged comments count/sum(post_id); rerunning migration SQL succeeds idempotently. The completed verified log/JSON is evidence these assertions executed. This is a count/relationship-sum preservation check, not bytewise equality of all data columns.\n- Integration test_comment_post_index_restored asserts pg_index.indisvalid AND indisready and the exact index definition. verified-checks-and-sql.json records CREATE INDEX comments_post_id_created_at_idx ON public.comments USING btree (post_id, created_at).\n- Independently computed Execution Time medians from seven EXPLAIN ANALYZE runs per phase, discarding the first warm run:\n\n| Query | Missing index ms | Restored index ms |\n|---|---:|---:|\n| rows public list | 41.4355 | 41.7955 |\n| JSON public list | 34.4995 | 51.6530 |\n| guarded JSON public list | 45.7180 | 42.3465 |\n| comments for post | 22.8225 | 2.9260 |\n| ban only | 0.0765 | 0.0660 |\n\nOnly comments_for_post uses the restored index in the recorded final plans: 7.80x faster / 87.18% less execution time in this fixture. Public-list plans still scan the entire comments table; do not claim their improvement from the index. Phases were sequential on a shared host, not a randomized timing experiment; these SQL timings do not measure HTTP throughput, index build duration, production data or Rust startup execution.\n\n## 8. Strict ban, admin and proxy regressions\n\n- /dev/shm/forge-improvement-verified-checks.log records 26 tests, every named test ending ok, Ran 26 tests and OK. No unittest skip occurred. All three TEST_DATABASE_URL-gated tests executed: direct expired/fail-closed DB policy, concurrent authoritative bans, and index catalog validity. The launch script supplies TEST_DATABASE_URL and DB pool size 1, mock GitHub endpoints, and asserts threads=connection in startup logs.\n- test_public_read_concurrent_authoritative_bans sends 12 concurrent cases across health/posts/projects/timeline after each completed direct SQL change, mixing unauthenticated, invalid-JWT and valid-admin callers. Permanent insert produces 403 for non-admin; expiry and delete recover to 200. A committed banned_ips rename yields 500 for all fresh non-admin requests while valid admin remains 200; restoration immediately recovers. Cleanup is in finally. This preserves authoritative per-request DB behavior, not a stale-cache approximation.\n- Existing sequential immediate bans, expiry, JWT, normalized IPv6, uploads, pool recovery and delayed-GitHub lease tests also passed.\n- /dev/shm/forge-improvement-proxy.log records both React and Forge nginx configurations passing all 12 security assertions: forged forwarding headers ignored, real peer bans immediate, valid admin bypass. Its initial curl connection refusal is a startup readiness retry, followed by successful assertions.\n- Diagnosis priority 1 now explicitly retains authoritative DB checks and warns that memory caching changes this contract. Older diagnostic measurements remain historical. Public health still depends on successful DB checks.\n- Limits: these tests do not prove every possible network/authentication race, simultaneous SQL mutation visibility for requests already in flight, production proxy configuration, or concurrent partial-upload cleanup. Historical dirty auth/contact/GitHub/nginx modifications were preserved; their broad suite coverage does not make them newly authored changes.\n\n## 9. Container packaging and ignore cleanliness\n\n- Product Containerfile copies all backend/migrations into /app/backend/migrations, including 0011, with /app as working directory; it also includes OpenAPI/docs and creates writable uploads. Rust Containerfile runtime migration copy is compatible with directory discovery; no default Compose deployment was executed or changed by this audit.\n- Recorded verification builds only a 136.7kB context over immutable existing runtime 9338d9ed9194, copies the verified portfolio-api plus migration 0011, and produces unique final image forge-portfolio-improved:1791036876723055070. This validates runtime packaging without pretending a fresh full multi-stage build was run.\n- Generated build files, frontend dist/generated/test-results/node_modules, Python caches, .omo/.serena agent state and erl_crash.dump are ignored. Representative check-ignore checks passed. git ls-files -ci --exclude-standard returned no tracked ignored files. App and forge-web diff --check passed.\n- Pinned backend-forge/toolchain, native adapter, FG sources, vendor modules, migration SQL, documentation, tests and runtime assets remain intact. No removal, untracking, commits or pushes were performed. Current untracked proxy_security.py, nginx/forge.conf and migration 0011 are legitimate source deliverables, not clutter.\n\n## 10. Final delivery, provenance and validation scope\n\n- Final runtime image ID recorded in verified-checks-and-sql.json and verified-posts.json: sha256:f0a497df4f13e616260764e3cfd860fb421e66b98321589fa694365927f02a5a. Build log independently ends Successfully built f0a497df4f13.\n- SHA-256 independently computed from verified-binaries/portfolio-fixed: 0f6a4690708d53db5b43b79ad430c7e1a18f98c17920045f5a7d2962b29ccfc8. Both checks and benchmark JSON record that same plain executable hash. Instrumented executable hash: 1438c1943d509e0374aefba30c69a18a4c9a95249ccc86d214d374023e2ae25c.\n- Live product forge-web/src/bridge.c and retained verified-binaries/candidate-web.c both hash ff7908bd428bfb19aed12dff9cce15523447ec26e83d011817448164207fb3dc, matching the HTTP benchmark provenance. All current FG source files and native adapter exactly match final-source; migration 0011 matches in both locations (6a95b105b7c5d7e63decbc6c6d39f037e20b3a98e9f8a2cb9bfc18fc13b93bb1).\n- Important reproducibility qualification: final-source's forge-web bridge hashes d601e58130a3d5e17e741239322cbc79935db4cacc9f4d4c21fd5d66ad82e614, not the final candidate. portfolio_improve_build.sh intentionally rebuilds and links the live /candidate web library over the retained source/compiler/Postgres context. Reproduction therefore requires the retained source PLUS the matching candidate web source; final-source alone is insufficient. New blocking_test.py is a live vendor test deliverable.\n- Scope of personally reviewed evidence: 26 disposable API tests, 12 proxy assertions, migration upgrade/restart/catalog checks, SQL plans/statistics, artifact/source hashes and repository cleanliness. No fresh builds, Docker inspections, Rust runtime migration execution or benchmarks were performed by this reviewer. Member A separately reviews native HTTP blocking/shutdown evidence; member B owns benchmark statistics. Runtime/library dependencies still use native C FFI; the application remains implemented in Forge FG with its small C adapter.\n\nEvidence files: /tmp/forge-improvement-20261003/verified-checks-and-sql.json; /tmp/forge-improvement-20261003/verified-posts.json; /dev/shm/forge-improvement-verified-checks.log; /dev/shm/forge-improvement-proxy.log; benchmark/portfolio_check.py; benchmark/portfolio_improve_build.sh; current app source and vendor tests.\n"
+    },
+    "statistics-B.py": {
+      "sha256": "4579e082d07483f911a1db80210e91944c8518696008288a2b191e8236724c87",
+      "content": "#!/usr/bin/env python3\n\"\"\"Read-only recomputation of retained measurements; no server or load operations.\"\"\"\nimport hashlib,json,statistics\nfrom collections import defaultdict\nfrom pathlib import Path\nBASE=Path('/tmp/forge-improvement-20261003')\nDOC=Path('/home/helloworld0822/coding/forge/docs')\nART=BASE/'.omo/teams/forge-codex-review-20261003/artifacts'\nFILES={'final40':'verified-posts','poll20':'poll-control','historical60':'diagnosis','sql':'verified-checks-and-sql'}\ndata={k:json.loads((BASE/(v+'.json')).read_text()) for k,v in FILES.items()}\nmetric_names=['rps','p95_ms','cpu_core_percent','db_cpu_core_percent','client_cpu_core_percent','peak_threads','memory_mib']\ndef stats(values):\n return {'median':statistics.median(values),'min':min(values),'max':max(values)}\nresult={'method':'Per-trial medians/min/max; SQL excludes first of seven identically per phase; paired ratios match repeat, endpoint, concurrency.', 'raw_sha256':{},'datasets':{}}\nfor key,expected in [('final40',40),('poll20',20),('historical60',60)]:\n d=data[key];rows=d['results'];assert len(rows)==expected\n assert sum(r['errors'] for r in rows)==0\n assert sum(r['server_cpu_delta']['nr_throttled'] for r in rows)==0\n groups=defaultdict(list)\n for r in rows:\n  groups[(r['config']['name'],r['endpoint'],r['concurrency'])].append(r)\n  if 'profile' in r:\n   p=r['profile'];assert p['requests']==p['queries']==sum(p['worker_requests']);assert not p['worker_requests'][-1]\n   if key != 'historical60': assert p['requests']==r['requests']\n out={'trials':len(rows),'requests':sum(r['requests'] for r in rows),'errors':0,'nr_throttled':0,'groups':{}}\n for (name,endpoint,c),rr in groups.items():\n  g={m:stats([r[m] for r in rr]) for m in metric_names};g['repeats']=len(rr)\n  g['max_individual_client_cpu_percent']=max(x for r in rr for x in r['client_process_cpu_core_percent'])\n  if 'profile' in rr[0]:\n   g['profile_us']={m:stats([r['profile'][m]/r['profile']['requests']/1000 for r in rr]) for m in ['handler_ns','cpu_ns','acquire_ns','query_ns']}\n   g['acquire_percent_of_handler']=stats([r['profile']['acquire_ns']/r['profile']['handler_ns']*100 for r in rr])\n   g['query_percent_of_handler']=stats([r['profile']['query_ns']/r['profile']['handler_ns']*100 for r in rr])\n   g['active_lifetime_thread_bins']=[sum(x>0 for x in r['profile']['worker_requests']) for r in rr]\n   g['highest_nonzero_lifetime_thread_bin']=max(i for r in rr for i,x in enumerate(r['profile']['worker_requests']) if x)\n  out['groups'][f'{name}|{endpoint}|{c}']=g\n if 'cpu_observation_seconds'in rows[0]:\n  out['cpu_observation_seconds']=stats([r['cpu_observation_seconds'] for r in rows])\n  out['request_elapsed_seconds']=stats([r['seconds'] for r in rows])\n  out['max_client_start_lateness_ms']=max(x for r in rows for x in r['client_start_lateness_ms'])\n result['datasets'][key]=out\nassert data['final40']['runtime_image_id']==data['poll20']['runtime_image_id']==data['sql']['image_id']\nfor k in ['candidate_web_source_sha256','profile_source_sha256','load_source_sha256']:\n assert data['final40'][k]==data['poll20'][k]\nassert data['final40']['binary_sha256']['portfolio-fixed-profile']==data['poll20']['binary_sha256']['portfolio-fixed-profile']\nassert data['final40']['binary_sha256']['portfolio-fixed']==data['sql']['binary_sha256']\nresult['comparisons']={}\nfor key,a,b in [('final40','profile_fixed_connection','profile_fixed_pool'),('final40','plain_fixed_connection','rust'),('poll20','profile_fixed_connection','profile_fixed_pool_poll')]:\n rows=data[key]['results']\n for c in [16,64]:\n  aa={r['repeat']:r for r in rows if r['config']['name']==a and r['concurrency']==c}\n  bb={r['repeat']:r for r in rows if r['config']['name']==b and r['concurrency']==c};assert aa.keys()==bb.keys()\n  ratios=[aa[i]['rps']/bb[i]['rps'] for i in sorted(aa)]\n  ga=result['datasets'][key]['groups'][f'{a}|/api/posts|{c}'];gb=result['datasets'][key]['groups'][f'{b}|/api/posts|{c}']\n  result['comparisons'][f'{key}|{a}/{b}|{c}']={'rps_ratio_of_medians':ga['rps']['median']/gb['rps']['median'],'paired_rps_ratio':stats(ratios),'paired_rps_ratios':ratios,'p95_ratio_of_medians':ga['p95_ms']['median']/gb['p95_ms']['median'],'paired_p95_ratio':stats([aa[i]['p95_ms']/bb[i]['p95_ms'] for i in sorted(aa)])}\nresult['sql_execution_ms']={phase:{q:stats([p['Execution Time'] for p in plans[1:]]) for q,plans in qq.items()} for phase,qq in data['sql']['plans'].items()}\nfor key,name in FILES.items():\n source=BASE/(name+'.json');dest=DOC/('performance-improvements-'+name+'.json');dest.write_bytes(source.read_bytes())\n result['raw_sha256'][dest.name]=hashlib.sha256(dest.read_bytes()).hexdigest()\n(ART/'statistics-B.json').write_text(json.dumps(result,indent=2)+'\\n')\nprint(json.dumps({k:{x:v[x] for x in ['trials','requests','errors','nr_throttled']} for k,v in result['datasets'].items()},indent=2))\n"
+    }
+  },
+  "cleanup": {
+    "runtime_thread_archive": "Unavailable on native MultiAgentV2; workers completed. Archived bookkeeping is preserved here.",
+    "owned_diagnosis_improvement_containers_and_networks": 0,
+    "obsolete_owned_image_tags_removed": 3,
+    "final_verified_image_retained": "forge-portfolio-improved:1791036876723055070",
+    "temporary_team_state_deleted": true
+  }
+}

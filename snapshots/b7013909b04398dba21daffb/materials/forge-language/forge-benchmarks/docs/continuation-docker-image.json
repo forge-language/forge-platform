@@ -1,0 +1,15 @@
+{
+  "tag": "forge-language:local",
+  "id": "sha256:900b57ffc33f81785cc8107f862b397f3cd27be775f2b51c2d571d06b754ac61",
+  "created": "2026-10-03T05:43:17.846398067Z",
+  "size_bytes": 98041726,
+  "os": "linux",
+  "architecture": "amd64",
+  "source_version": "0.3.0",
+  "validation": "Canonical Dockerfile builds stage2 and stage3/stage4 fixed point; native hello/thread and FG control_flow compile and execute; final OS string returns tested through both compilers with container user UID/GID",
+  "local_install_prefix": "/home/helloworld0822/.local",
+  "build_source_sha256": "5fa9737f15489e649611b0a3272eed77d9400787dbc5c7f8263cf6fbbbb4123a",
+  "hash_scope": "Sorted path NUL bytes NUL: compiler/include/runtime/stdlib/bootstrap/cmake/libs/CMakeLists.txt/Dockerfile/.dockerignore; examples/tests/docs not included",
+  "final_native_compiler_sha256": "b87c67f6fb654527115a1a054ed0e0b4d1b40af0c3c2a798ca3b19b1b0c89708",
+  "final_stage2_sha256": "7d27edf96efc45774b39f82fc69442530bbd54f90c89ab55bea6d1ecc7cba6cf"
+}
