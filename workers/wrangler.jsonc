@@ -1,0 +1,16 @@
+{
+  "name": "forge-registry",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-10-29",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": false,
+  "build": { "command": "node scripts/build.mjs" },
+  "hyperdrive": [{ "binding": "HYPERDRIVE", "id": "00000000000000000000000000000000" }],
+  "durable_objects": { "bindings": [{ "name": "RATE_LIMITS", "class_name": "RateLimits" }] },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["RateLimits"] }],
+  "vars": {
+    "FRONTEND_URL": "https://forge-lang.org",
+    "BACKEND_BASE_URL": "https://forge-lang.org",
+    "CORS_ALLOWED_ORIGINS": "https://forge-lang.org"
+  }
+}

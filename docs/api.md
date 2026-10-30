@@ -1,5 +1,10 @@
 # Registry API
 
+The native server and the [Cloudflare Workers adapter](cloudflare-workers.md)
+share `backend/src/routes.fg`, authentication, manifest validation and SQL.
+Workers setup uses PostgreSQL through Hyperdrive; its bindings and migration
+steps are documented in that guide.
+
 `GET /api/health`, `GET /api/stats`, `GET /api/me` (Bearer JWT).
 `GET /api/packages?q=<search>` returns up to 100 latest releases.
 `GET /api/packages/<name>` returns owner and versions sorted numerically.

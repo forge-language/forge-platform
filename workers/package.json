@@ -1,0 +1,15 @@
+{
+  "name": "forge-registry-worker",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "build": "node scripts/build.mjs && tsc --noEmit",
+    "check": "npm run build && wrangler deploy --dry-run --outdir dist",
+    "dev": "npm run build && wrangler dev --ip 127.0.0.1",
+    "test": "npm run build && vitest run",
+    "test:integration": "node scripts/integration.mjs"
+  },
+  "dependencies": { "pg": "8.23.1", "zod": "4.6.7" },
+  "devDependencies": { "@cloudflare/workers-types": "5.20261029.1", "@types/node": "22.18.6", "@types/pg": "8.15.5", "typescript": "5.9.3", "vitest": "5.0.5", "wrangler": "4.156.0" }
+}
