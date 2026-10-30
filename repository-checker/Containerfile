@@ -1,0 +1,7 @@
+FROM python:3.12-alpine3.23
+WORKDIR /app
+COPY repository-checker/service.py ./repository-checker/service.py
+USER 65534:65534
+EXPOSE 8090
+HEALTHCHECK --interval=15s --timeout=3s --start-period=5s CMD python -c "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8090/health',timeout=2)" || exit 1
+CMD ["python", "repository-checker/service.py"]

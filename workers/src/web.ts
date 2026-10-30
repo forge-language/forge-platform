@@ -2,6 +2,18 @@ import { randomUUID } from 'node:crypto';
 import { Arena } from './json';
 import type { Environment } from './index';
 
+async function responseText(response: Response): Promise<string> {
+  if (!response.body) return '';
+  const decoder = new TextDecoder('utf-8', { fatal: true });
+  let size = 0; let text = '';
+  for await (const chunk of response.body) {
+    size += chunk.byteLength;
+    if (size > 4194304) throw new RangeError('HTTP response exceeds Forge protocol limit');
+    text += decoder.decode(chunk, { stream: true });
+  }
+  return text + decoder.decode();
+}
+
 export class Web {
   private readonly url: URL;
   private readonly headers = new Headers({ 'Content-Type': 'application/json; charset=utf-8', 'X-Content-Type-Options': 'nosniff' });
@@ -18,6 +30,7 @@ export class Web {
     fw_header: (_request: bigint, name: string) => this.request.headers.get(name) ?? '',
     fw_query: (_request: bigint, name: string) => this.url.searchParams.get(name) ?? '',
     fw_body: (_request: bigint) => this.body,
+    fw_ip: (_request: bigint) => this.request.headers.get('CF-Connecting-IP') ?? '127.0.0.1',
     fw_segment: (_request: bigint, index: bigint) => this.url.pathname.replace(/^\/+/, '').split('/')[Number(index)] ?? '',
     fw_segments: (_request: bigint) => {
       const path = this.url.pathname.replace(/^\//, '');
@@ -25,7 +38,7 @@ export class Web {
     },
     fw_respond: (_request: bigint, status: bigint, body: string) => { this.status = Number(status); this.output = body; return 1n; },
     fw_redirect: (_request: bigint, url: string) => {
-      this.status = 302; this.output = ''; this.headers.set('Location', url); this.headers.set('Cache-Control', 'no-store'); return 1n;
+      this.status = 302; this.output = ''; this.headers.set('Content-Type', 'text/plain'); this.headers.set('Location', url); this.headers.set('Cache-Control', 'no-store'); return 1n;
     },
     fw_cors: (_request: bigint, origins: string) => {
       const origin = this.request.headers.get('Origin');
@@ -42,7 +55,7 @@ export class Web {
       return '';
     },
     fw_set_cookie: (_request: bigint, name: string, value: string, age: bigint, secure: bigint) => {
-      this.headers.append('Set-Cookie', `${name}=${value}; Path=/; HttpOnly; SameSite=Lax; Max-Age=${age}${secure ? '; Secure' : ''}`); return 1n;
+      this.headers.append('Set-Cookie', `${name}=${value}; Path=/api/auth/github; HttpOnly; SameSite=Lax; Max-Age=${age}${secure ? '; Secure' : ''}`); return 1n;
     },
     fw_trim: (value: string) => value.trim(),
     fw_chars: (value: string) => BigInt([...value].length),
@@ -70,8 +83,24 @@ export class Web {
       if (bearer) headers.set('Authorization', `Bearer ${bearer}`);
       if (body) headers.set('Content-Type', 'application/x-www-form-urlencoded');
       // Protocol primitive: OAuth policy and endpoints remain in auth.fg. Never retry token exchanges.
-      const response = await fetch(url, { method, headers, ...(body ? { body } : {}), redirect: 'manual', signal: AbortSignal.timeout(15000) });
-      return response.ok ? this.context.arena.parse(await response.text()) : 0n;
+      try {
+        const response = await fetch(url, { method, headers, ...(body ? { body } : {}), redirect: 'manual', signal: AbortSignal.timeout(10000) });
+        return response.ok ? this.context.arena.parse(await responseText(response)) : 0n;
+      } catch (error) {
+        if (!(error instanceof Error)) throw error;
+        return 0n;
+      }
+    },
+    fw_request: async (url: string, method: string, body: string, bearer: string) => {
+      if (!['GET', 'POST', 'PUT', 'DELETE'].includes(method)) return 0n;
+      try {
+        const response = await fetch(url, { method, headers: { Accept: 'application/json', 'Content-Type': 'application/json', Authorization: `Bearer ${bearer}` }, ...(body ? { body } : {}), redirect: 'manual', signal: AbortSignal.timeout(10000) });
+        const data = await responseText(response);
+        return this.context.arena.store({ status: response.status, data: this.context.arena.value(this.context.arena.parse(data)) });
+      } catch (error) {
+        if (!(error instanceof Error)) throw error;
+        return this.context.arena.store({ status: 0, data: null });
+      }
     },
   };
 }

@@ -1,0 +1,25 @@
+name: Learning experience
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  browser-course:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - run: npm ci --prefix frontend
+      - run: node frontend/node_modules/@playwright/test/cli.js install --with-deps chromium
+      - run: docker build -f frontend/Containerfile -t forge-learning-site .
+      - name: Extract the actual compiler assets
+        run: |
+          docker create --name course-assets forge-learning-site
+          docker cp course-assets:/usr/share/nginx/html/playground/compiler.mjs frontend/public/playground/compiler.mjs
+          docker cp course-assets:/usr/share/nginx/html/playground/compiler.wasm frontend/public/playground/compiler.wasm
+          docker rm course-assets
+      - run: node frontend/node_modules/@playwright/test/cli.js test --config tests/learning-ui.config.ts

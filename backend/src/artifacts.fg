@@ -1,0 +1,38 @@
+import web;
+import postgres;
+import database;
+import manifest;
+import storage;
+import cache;
+import strings;
+// The registry chooses the source and public object URL. User URLs are ignored.
+fn build(value: int): int {
+ if (manifest.valid(value)==0) { return 0; }
+ if (web.chars(web.env("STORAGE_BASE_URL",""))==0) { web.set(value,"artifact",0); return value; }
+ let repository: string=web.field_text(value,"repository_url");
+ let relative: string=str_sub(repository,19,str_len(repository)-19);
+ if (str_len(relative)>4 && web.equal(str_sub(relative,str_len(relative)-4,4),".git")!=0) { relative=str_sub(relative,0,str_len(relative)-4); }
+ let source: string=str_concat(str_concat(str_concat("https://codeload.github.com/",relative),"/tar.gz/"),web.field_text(value,"git_commit"));
+ let artifact: int=storage.archive(source,web.env("STORAGE_BASE_URL",""),web.env("STORAGE_TOKEN",""));
+ if (web.kind(artifact)!=4 || storage.valid_digest(web.field_text(artifact,"sha256"))==0 || web.required(artifact,"size",2)==0 || web.field_int(artifact,"size")<=0 || web.field_int(artifact,"size")>268435456) { return 0; }
+ web.set(artifact,"url",web.jstring(storage.object_url(web.env("STORAGE_PUBLIC_URL","https://storage.forge-lang.org"),web.field_text(artifact,"sha256"))));
+ web.set(value,"artifact",artifact); return value;
+}
+fn backfill(conn: int): int {
+ if (web.equal(web.env("STORAGE_BACKFILL_ON_START","0"),"1")==0) { return 1; }
+ if (web.chars(web.env("STORAGE_BASE_URL",""))==0 || web.chars(web.env("STORAGE_TOKEN",""))==0) { println("Artifact backfill requires STORAGE_BASE_URL and STORAGE_TOKEN"); return 0; }
+ let releases: int=database.fetch(conn,"SELECT COALESCE(jsonb_agg(manifest ORDER BY name,major,minor,patch),'[]'::jsonb)::text FROM releases WHERE manifest->'artifact' IS NULL OR manifest->'artifact'='null'::jsonb",web.array());
+ if (web.kind(releases)!=5) { println("Artifact backfill could not read legacy releases"); return 0; }
+ let index: int=0;
+ while (index<web.count(releases)) {
+  let value: int=web.at(releases,index);
+  if (build(value)==0) { println(str_concat("Artifact backfill failed for ",web.field_text(value,"name"))); return 0; }
+  let values: int=database.args2(web.field_text(value,"name"),web.field_text(value,"version")); web.push(values,web.jstring(web.dump(value)));
+  let row: int=database.query(conn,"UPDATE releases SET manifest=$3::jsonb WHERE name=$1 AND version=$2 AND (manifest->'artifact' IS NULL OR manifest->'artifact'='null'::jsonb)",values);
+  let ok: int=postgres.ok(row); postgres.clear(row);
+  if (ok==0) { println("Artifact backfill could not save metadata"); return 0; }
+  // Invalidate every committed change, including a partially completed run.
+  cache.invalidate(); index=index+1;
+ }
+ println(str_concat("Artifact backfill completed: ",str_from_int(web.count(releases)))); return 1;
+}

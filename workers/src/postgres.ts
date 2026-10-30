@@ -40,6 +40,7 @@ export class Postgres {
     fpg_push_null: (handle: bigint) => { this.params.get(handle)?.push(null); return 1n; },
     fpg_params_close: (handle: bigint) => { this.params.delete(handle); return 1n; },
     fpg_query: (_conn: bigint, sql: string, handle: bigint) => this.query(sql, this.params.get(handle)),
+    fpg_query_prepared: (_conn: bigint, sql: string, handle: bigint) => this.query(sql, this.params.get(handle)),
     fpg_exec: (_conn: bigint, sql: string) => this.query(sql),
     fpg_ok: (handle: bigint) => this.results.get(handle)?.state === '' ? 1n : 0n,
     fpg_rows: (handle: bigint) => BigInt(this.results.get(handle)?.rows.length ?? 0),

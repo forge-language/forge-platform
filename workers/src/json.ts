@@ -1,6 +1,38 @@
 import { z } from 'zod';
 
 export type Json = z.infer<ReturnType<typeof z.json>>;
+function unambiguous(text: string): boolean {
+  const tokens = text.match(/"(?:[^"\\]|\\.)*"|[{}\[\],:]|[^\s{}\[\],:]+/g) ?? [];
+  let index = 0;
+  const value = (depth: number): boolean => {
+    if (depth >= 32) return false;
+    const token = tokens[index++];
+    if (token === '{') {
+      const keys = new Set<string>();
+      if (tokens[index] === '}') { index++; return true; }
+      do {
+        const key: unknown = JSON.parse(tokens[index++] ?? 'null');
+        if (typeof key !== 'string' || key.includes('\0') || keys.has(key) || tokens[index++] !== ':') return false;
+        keys.add(key);
+        if (!value(depth + 1)) return false;
+        if (tokens[index] === '}') { index++; return true; }
+      } while (tokens[index++] === ',');
+      return false;
+    }
+    if (token === '[') {
+      if (tokens[index] === ']') { index++; return true; }
+      do {
+        if (!value(depth + 1)) return false;
+        if (tokens[index] === ']') { index++; return true; }
+      } while (tokens[index++] === ',');
+      return false;
+    }
+    const primitive: unknown = JSON.parse(token ?? '');
+    return typeof primitive !== 'object' || primitive === null
+      ? typeof primitive !== 'string' || !primitive.includes('\0') : false;
+  };
+  return value(0) && index === tokens.length;
+}
 export class Arena {
   private readonly values = new Map<bigint, Json>();
   private next = 1n;
@@ -20,13 +52,17 @@ export class Arena {
     return typeof value === 'string' ? value : '';
   }
   parse(text: string): bigint {
-    try { return this.store(z.json().parse(JSON.parse(text))); }
+    try {
+      if (new TextEncoder().encode(text).length > 4194304 || !unambiguous(text)) return 0n;
+      return this.store(z.json().parse(JSON.parse(text)));
+    }
     catch (error) {
       if (error instanceof SyntaxError || error instanceof z.ZodError) return 0n;
       throw error;
     }
   }
   readonly native = {
+    fw_has: (handle: bigint, key: string) => Object.hasOwn(this.object(handle) ?? {}, key) ? 1n : 0n,
     fw_parse: (text: string) => this.parse(text),
     fw_kind: (handle: bigint) => {
       const value = this.value(handle);

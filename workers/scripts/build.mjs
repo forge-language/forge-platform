@@ -10,7 +10,7 @@ await mkdir(generated, { recursive: true });
 const output = fileURLToPath(new URL('routes.js', generated));
 execFileSync(process.env['FORGE'] ?? `${homedir()}/.forge/bin/forge`, [
   `${root}backend/src/routes.fg`, '--emit-js', '-o', output,
-  '-I', `${root}vendor/forge-web`, '-I', `${root}vendor/forge-postgres`, '-I', `${root}backend/src`,
+  '-I', `${root}vendor/forge-web`, '-I', `${root}vendor/forge-postgres`, '-I', `${root}vendor/forge-storage`, '-I', `${root}backend/src`,
 ], { stdio: 'inherit' });
 const source = ts.createSourceFile(output, await readFile(output, 'utf8'), ts.ScriptTarget.ES2022, true, ts.ScriptKind.JS);
 const functions = new Set(source.statements.filter(ts.isFunctionDeclaration).map(node => node.name?.text));

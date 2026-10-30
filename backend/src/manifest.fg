@@ -46,7 +46,7 @@ fn valid(value: int): int {
  while (i < web.count(keys)) { let key: string = web.text(web.at(keys, i)); if (name(key) == 0 || web.kind(web.get(deps, key)) != 3 || version(web.field_text(deps, key)) == 0 || web.equal(key, web.field_text(value, "name")) != 0) { return 0; } i = i + 1; }
  let native_info: int = web.get(value, "native");
  if (web.kind(native_info) != 0) {
-  if (web.kind(native_info) != 4 || path(web.field_text(native_info, "library")) == 0 || str_contains(web.field_text(native_info, "library"), "/") != 0 || path(web.field_text(native_info, "cmake_target")) == 0 || web.string_array(web.get(native_info, "pkg_config")) == 0 || web.count(web.get(native_info,"pkg_config")) > 32) { return 0; }
+  if (web.kind(native_info) != 4 || path(web.field_text(native_info, "library")) == 0 || str_contains(web.field_text(native_info, "library"), "/") != 0 || web.starts(web.field_text(native_info,"library"),"-") != 0 || path(web.field_text(native_info, "cmake_target")) == 0 || str_contains(web.field_text(native_info,"cmake_target"),"/") != 0 || web.starts(web.field_text(native_info,"cmake_target"),"-") != 0 || web.string_array(web.get(native_info, "pkg_config")) == 0 || web.count(web.get(native_info,"pkg_config")) > 32) { return 0; }
   let pkg: int = web.get(native_info, "pkg_config"); i = 0;
   while (i < web.count(pkg)) { if (path(web.text(web.at(pkg, i))) == 0 || str_contains(web.text(web.at(pkg, i)), "/") != 0 || web.starts(web.text(web.at(pkg,i)),"-") != 0) { return 0; } i = i + 1; }
  }

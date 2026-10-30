@@ -7,6 +7,7 @@ bash scripts/install.sh --prefix "$ROOT/toolchain" --no-modify-path >/dev/null
 export PATH="$ROOT/toolchain/bin:$PATH"
 cd "$ROOT/project"
 forge init browser-app
+cd browser-app
 forge pkg add forge-browser 0.1.3
 cat > main.fg <<'PROGRAM'
 import browser;
@@ -19,4 +20,4 @@ PROGRAM
 forge build --emit-js
 printf '%s\n' '<!doctype html><meta charset="utf-8"><div id="app"></div><script src="build/app.js"></script>' > index.html
 echo 'Installed browser module build passed'
-echo "Browser client project: $ROOT/project"
+echo "Browser client project: $ROOT/project/browser-app"

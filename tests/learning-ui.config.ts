@@ -1,0 +1,2 @@
+import {defineConfig} from '../frontend/node_modules/@playwright/test/index';
+export default defineConfig({testDir:'.',testMatch:'learning-ui.spec.ts',timeout:60000,use:{baseURL:process.env.FORGE_LEARN_ORIGIN||'http://127.0.0.1:18119',headless:true},reporter:'line',outputDir:'../frontend/test-results/learning',webServer:process.env.FORGE_LEARN_ORIGIN?undefined:{command:'npm run dev --prefix ../frontend -- --port 18119',url:'http://127.0.0.1:18119',reuseExistingServer:true}});

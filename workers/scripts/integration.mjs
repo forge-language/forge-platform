@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { spawn, spawnSync } from 'node:child_process';
 import { createHmac, randomUUID } from 'node:crypto';
-import { mkdir, mkdtemp, readFile, writeFile } from 'node:fs/promises';
+import { mkdir, mkdtemp, readFile, writeFile, readdir } from 'node:fs/promises';
 import { createServer } from 'node:net';
 import { fileURLToPath } from 'node:url';
 import { setTimeout } from 'node:timers/promises';
@@ -19,6 +19,7 @@ const run = (command, args, options = {}) => {
 const name = `forge-workers-test-${randomUUID()}`;
 const secret = 'workers-isolated-integration-key';
 const runtime = {};
+let output = '';
 try {
   run(process.execPath, ['scripts/build.mjs'], { cwd });
   run('docker', ['run', '-d', '--name', name, '-e', 'POSTGRES_PASSWORD=worker-test-only', '-e', 'POSTGRES_DB=forge_worker_test', '-p', '127.0.0.1::5432', 'postgres:16-alpine']);
@@ -35,7 +36,9 @@ try {
   assert.ok(ready, 'isolated database becomes ready');
   const client = new Client({ connectionString });
   await client.connect();
-  await client.query(await readFile(`${root}backend/migrations/0001_registry.sql`, 'utf8'));
+  for (const migration of (await readdir(`${root}backend/migrations`)).filter(name => name.endsWith('.sql')).sort()) {
+    await client.query(await readFile(`${root}backend/migrations/${migration}`, 'utf8'));
+  }
   await client.end();
   const socket = createServer();
   await new Promise(resolve => socket.listen(0, '127.0.0.1', resolve));
@@ -43,15 +46,28 @@ try {
   assert.ok(address && typeof address !== 'string');
   const workerPort = address.port;
   await new Promise((resolve, reject) => socket.close(error => error ? reject(error) : resolve()));
+  const fixtureSocket = createServer();
+  await new Promise(resolve => fixtureSocket.listen(0, '127.0.0.1', resolve));
+  const fixtureAddress = fixtureSocket.address();
+  assert.ok(fixtureAddress && typeof fixtureAddress !== 'string');
+  const fixturePort = fixtureAddress.port;
+  await new Promise((resolve, reject) => fixtureSocket.close(error => error ? reject(error) : resolve()));
+  const fixture = spawn('python3', ['-c', 'import http.server,os,runpy; original=http.server.HTTPServer.__init__; http.server.HTTPServer.__init__=lambda self,address,*args,**kwargs:original(self,("127.0.0.1",int(os.environ["FIXTURE_PORT"])),*args,**kwargs); runpy.run_path(os.environ["FIXTURE_PATH"],run_name="__main__")'], { env: { ...process.env, FIXTURE_PORT: String(fixturePort), FIXTURE_PATH: `${root}tests/github-fixture.py`, REPOSITORY_CHECK_TOKEN: secret }, stdio: 'ignore' });
+  runtime.fixture = fixture;
+  let fixtureReady = false;
+  for (let attempt = 0; attempt < 100; attempt++) {
+    try { await fetch(`http://127.0.0.1:${fixturePort}/health`); fixtureReady = true; break; }
+    catch { await setTimeout(100); }
+  }
+  assert.ok(fixtureReady, 'repository fixture becomes ready');
   await mkdir(`${cwd}.wrangler`, { recursive: true });
   const directory = await mkdtemp(`${cwd}.wrangler/integration-`);
   const config = JSON.parse(await readFile(`${cwd}wrangler.jsonc`, 'utf8'));
   config.main = `${cwd}src/index.ts`;
-  config.vars = { ...config.vars, JWT_SECRET: secret, CORS_ALLOWED_ORIGINS: 'https://forge.example', FRONTEND_URL: 'https://forge.example', BACKEND_BASE_URL: `http://127.0.0.1:${workerPort}` };
+  config.vars = { ...config.vars, JWT_SECRET: secret, ADMIN_GITHUB_ID: '1', REPOSITORY_CHECK_URL: `http://127.0.0.1:${fixturePort}`, REPOSITORY_CHECK_TOKEN: secret, CORS_ALLOWED_ORIGINS: 'https://forge.example', FRONTEND_URL: 'https://forge.example', BACKEND_BASE_URL: `http://127.0.0.1:${workerPort}` };
   config.hyperdrive[0].localConnectionString = connectionString;
   config.build.command = `node ${cwd}scripts/build.mjs`;
   await writeFile(`${directory}/wrangler.json`, JSON.stringify(config));
-  let output = '';
   const worker = spawn(process.execPath, ['node_modules/wrangler/bin/wrangler.js', 'dev', '--config', `${directory}/wrangler.json`, '--port', String(workerPort), '--ip', '127.0.0.1', '--local'], { cwd, env: { ...process.env, WRANGLER_SEND_METRICS: 'false' }, stdio: ['ignore', 'pipe', 'pipe'] });
   runtime.worker = worker;
   worker.stdout.on('data', chunk => { output += chunk.toString(); });
@@ -62,12 +78,19 @@ try {
     worker.stdout.on('data', () => { if (output.includes('Ready on')) { globalThis.clearTimeout(timer); resolve(); } });
   });
   const base = `http://127.0.0.1:${workerPort}`;
-  const result = spawnSync('python3', [`${root}tests/registry.py`], { encoding: 'utf8', env: { ...process.env, REGISTRY_BASE: base, TEST_JWT_SECRET: secret } });
+  const result = await new Promise((resolve, reject) => {
+    const tests = spawn('python3', [`${root}tests/registry.py`], { env: { ...process.env, REGISTRY_BASE: base, TEST_JWT_SECRET: secret }, stdio: ['ignore', 'pipe', 'pipe'] });
+    let stdout = ''; let stderr = '';
+    tests.stdout.on('data', chunk => { stdout += chunk.toString(); });
+    tests.stderr.on('data', chunk => { stderr += chunk.toString(); });
+    tests.on('error', reject);
+    tests.on('close', status => resolve({ status, stdout, stderr }));
+  });
   await writeFile(new URL('registry.log', evidence), `${result.stdout}${result.stderr}`);
   assert.equal(result.status, 0, `${result.stdout}${result.stderr}`);
   const token = user => {
     const header = Buffer.from(JSON.stringify({ alg: 'HS256', typ: 'JWT' })).toString('base64url');
-    const payload = Buffer.from(JSON.stringify({ sub: user, role: 'user', exp: Math.floor(Date.now() / 1000) + 300 })).toString('base64url');
+    const payload = Buffer.from(JSON.stringify({ sub: user, github_id: user === 'RateTester' ? '999' : String(1000 + Number(user.replace('Parallel', ''))), role: 'user', exp: Math.floor(Date.now() / 1000) + 300 })).toString('base64url');
     return `${header}.${payload}.${createHmac('sha256', secret).update(`${header}.${payload}`).digest('base64url')}`;
   };
   await Promise.all(Array.from({ length: 32 }, async (_, index) => {
@@ -91,13 +114,15 @@ try {
   assert.equal(oversized.status, 413);
   run('docker', ['stop', '-t', '1', name]);
   for (let attempt = 0; attempt < 3; attempt++) {
-    const unavailable = await fetch(`${base}/api/health`);
+    const unavailable = await fetch(`${base}/api/stats`);
     assert.equal(unavailable.status, 503);
   }
   await writeFile(new URL('surface.log', evidence), 'PASS: 32 simultaneous authenticated requests retain their own identity\nPASS: allowed/disallowed CORS and OPTIONS\nPASS: durable rate limiter permits 30 attempts and denies attempt 31\nPASS: body above 2 MiB returns 413\nPASS: three failed PostgreSQL connections return controlled 503 responses\n');
   await writeFile(new URL('worker.log', evidence), output);
   console.log('Worker integration passed; evidence: .omo/evidence/workers');
 } finally {
+  await writeFile(new URL('worker.log', evidence), output);
   runtime.worker?.kill('SIGTERM');
+  runtime.fixture?.kill('SIGTERM');
   if (runtime.container) run('docker', ['rm', '-f', name]);
 }

@@ -1,12 +1,14 @@
 import postgres;
 import web;
 import routes;
+import artifacts;
 extern fn platform_pool_set(pool: int): int;
 extern fn platform_run(host: string, port: int, workers: int): int;
 fn migrations(conn: int): int {
     if (postgres.migration_table(conn) == 0) { return 0; }
     if (postgres.migrate(conn, 1, "registry", web.read("backend/migrations/0001_registry.sql")) == 0) { return 0; }
-    return 1;
+    if (postgres.migrate(conn, 2, "immutable-github-ownership", web.read("backend/migrations/0002_github_identity.sql")) == 0) { return 0; }
+    return artifacts.backfill(conn);
 }
 fn run(): int {
     web.scope_begin();

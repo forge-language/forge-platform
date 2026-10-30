@@ -10,6 +10,7 @@ releases/*
 !releases/.gitkeep
 .omo/
 .omc/
+.serena/
 frontend/test-results/
 frontend/*.tsbuildinfo
 forge-discord/node_modules/
@@ -22,3 +23,15 @@ workers/dist/
 workers/generated/
 workers/.wrangler/
 workers/.dev.vars
+frontend/public/playground/compiler.mjs
+frontend/public/playground/compiler.wasm
+frontend/public/reports/
+frontend/public/project/
+public-data/*.tmp
+.deployment/
+
+public-data/
+
+frontend/public/materials/
+frontend/public/content-manifest.json
+frontend/public/benchmarks.json

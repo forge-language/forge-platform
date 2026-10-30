@@ -4,6 +4,7 @@ import { Arena } from './json';
 import { Postgres } from './postgres';
 import { Web } from './web';
 import { cryptoNative } from './crypto';
+import { storageNative } from './storage';
 export { RateLimits } from './rate-limits';
 
 export type Environment = {
@@ -15,7 +16,12 @@ export type Environment = {
   readonly CORS_ALLOWED_ORIGINS?: string;
   readonly GITHUB_CLIENT_ID?: string;
   readonly GITHUB_CLIENT_SECRET?: string;
-  readonly ADMIN_GITHUB_USERNAME?: string;
+  readonly ADMIN_GITHUB_ID?: string;
+  readonly REPOSITORY_CHECK_URL?: string;
+  readonly REPOSITORY_CHECK_TOKEN?: string;
+  readonly STORAGE_BASE_URL?: string;
+  readonly STORAGE_PUBLIC_URL?: string;
+  readonly STORAGE_TOKEN?: string;
 };
 
 export async function handle(request: Request, env: Environment): Promise<Response> {
@@ -40,7 +46,10 @@ export async function handle(request: Request, env: Environment): Promise<Respon
   const database = new Postgres(new Client({ connectionString: env.HYPERDRIVE.connectionString, connectionTimeoutMillis: 5000, query_timeout: 15000 }));
   const web = new Web(request, body, { env, arena });
   try {
-    const program = createProgram({ ...arena.native, ...database.native, ...web.native, ...cryptoNative(arena) });
+    const program = createProgram({ ...arena.native, ...database.native, ...web.native, ...cryptoNative(arena), ...storageNative(arena),
+      platform_redis_close: (client: bigint) => { if (client !== 0n) throw new Error('Redis is not configured for Workers'); return 1n; },
+      platform_redis_open: () => { throw new Error('Redis TCP caching is not supported by this Worker adapter; leave REDIS_HOST unset'); },
+    });
     await program.dispatch(1n);
     return web.response();
   } catch (error) {

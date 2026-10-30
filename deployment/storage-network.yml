@@ -1,0 +1,8 @@
+# Enable only when the separate Forge Storage stack is running.
+services:
+ api:
+  networks: [default, proxy, storage]
+networks:
+ storage:
+  external: true
+  name: ${FORGE_STORAGE_NETWORK:-forge-storage_default}

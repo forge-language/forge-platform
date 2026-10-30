@@ -1,7 +1,9 @@
 JWT_SECRET=replace-with-a-long-random-secret
 GITHUB_CLIENT_ID=replace-with-github-oauth-client-id
 GITHUB_CLIENT_SECRET=replace-with-github-oauth-client-secret
-ADMIN_GITHUB_USERNAME=Helloworld0822
+ADMIN_GITHUB_ID=replace-with-immutable-numeric-github-id
+REPOSITORY_CHECK_URL=https://replace-with-reachable-repository-checker
+REPOSITORY_CHECK_TOKEN=replace-with-shared-repository-checker-secret
 FRONTEND_URL=http://localhost:5173
 BACKEND_BASE_URL=http://localhost:8787
 CORS_ALLOWED_ORIGINS=http://localhost:5173

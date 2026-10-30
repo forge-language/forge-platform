@@ -1,0 +1,10 @@
+[Unit]
+Description=Refresh public Forge repository and benchmark evidence
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=%h/.local/lib/forge-public-refresh/run
+TimeoutStartSec=180
+NoNewPrivileges=true
