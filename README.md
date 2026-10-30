@@ -8,6 +8,10 @@ Forge language website, module registry, package manager and verified installer.
 - `cli/native/`: generic atomic filesystem writes and bounded argv subprocesses.
 - `vendor/forge-{postgres,web}`: independent Git submodules, native protocol bridges.
 - `vendor/toolchain/`: pinned Forge compiler/runtime sources, including JavaScript output.
+- `forge-discord/`: Discord moderation and reaction-role bot with Forge policies.
+- `workers/`: Cloudflare Workers adapter for the existing Forge registry backend.
+
+Join the [Forge Discord community](https://discord.gg/sVRBHRtMPf).
 
 The compiler and runtime are still experimental. Native OS/protocol/crypto bridges
 are allowed; this does not claim Rust ownership/type safety or a fully self-hosted
@@ -110,6 +114,12 @@ owner. Releases are immutable. Registry manifests reference GitHub HTTPS commits
 the client verifies checkout SHA and module presence when installing.
 
 ## Validation
+
+For the Discord bot, see [configuration and commands](forge-discord/README.md).
+The bot uses a persistent Discord Gateway connection and runs as a Node process.
+For preparing the registry backend for Cloudflare Workers with PostgreSQL
+Hyperdrive, see [the migration guide](docs/cloudflare-workers.md). These are
+separate runtimes; the migration guide does not deploy or change the live stack.
 
 ```sh
 sh scripts/test.sh

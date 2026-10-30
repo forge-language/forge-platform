@@ -6,3 +6,12 @@ build
 frontend/node_modules
 frontend/dist
 releases
+**/node_modules
+forge-discord/dist
+forge-discord/generated
+forge-discord/.env
+forge-discord/config.json
+workers/dist
+workers/generated
+workers/.wrangler
+workers/.dev.vars

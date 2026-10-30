@@ -12,3 +12,13 @@ releases/*
 .omc/
 frontend/test-results/
 frontend/*.tsbuildinfo
+forge-discord/node_modules/
+forge-discord/dist/
+forge-discord/generated/
+forge-discord/.env
+forge-discord/config.json
+workers/node_modules/
+workers/dist/
+workers/generated/
+workers/.wrangler/
+workers/.dev.vars
