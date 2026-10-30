@@ -1,0 +1,50 @@
+// Decisions live in Forge; the Discord bridge supplies protocol facts only.
+import strings;
+import json;
+fn flag(input: string, key: string): int { return json_get_int(input, key); }
+fn text(input: string, key: string): string { return json_get_string(input, key); }
+fn authorize(input: string): int {
+    if (str_eq(text(input,"guild"),text(input,"configuredGuild")) == 0) { return 0; }
+    let command: string = text(input,"command");
+    if (str_eq(command,"purge") != 0) {
+        return flag(input,"actorManageMessages") * flag(input,"botManageMessages");
+    }
+    if (str_eq(command,"roles") != 0) {
+        return flag(input,"actorManageGuild") * flag(input,"botManageRoles");
+    }
+    if (flag(input,"targetPresent") == 0 || flag(input,"targetOwner") != 0 || flag(input,"targetSelf") != 0 || flag(input,"targetBot") != 0) { return 0; }
+    if (flag(input,"botPosition") <= flag(input,"targetPosition")) { return 0; }
+    if (flag(input,"actorOwner") == 0 && flag(input,"actorPosition") <= flag(input,"targetPosition")) { return 0; }
+    if (str_eq(command,"timeout") != 0) {
+        if (flag(input,"targetAdmin") != 0) { return 0; }
+        return flag(input,"actorModerate") * flag(input,"botModerate");
+    }
+    if (str_eq(command,"kick") != 0) { return flag(input,"actorKick") * flag(input,"botKick"); }
+    if (str_eq(command,"ban") != 0) { return flag(input,"actorBan") * flag(input,"botBan"); }
+    return 0;
+}
+fn reaction_role(input: string): string {
+    if (str_eq(text(input,"guild"),text(input,"configuredGuild")) == 0) { return ""; }
+    if (str_eq(text(input,"channel"),text(input,"bindingChannel")) == 0) { return ""; }
+    if (str_eq(text(input,"message"),text(input,"bindingMessage")) == 0) { return ""; }
+    if (str_eq(text(input,"emoji"),text(input,"bindingEmoji")) == 0) { return ""; }
+    if (flag(input,"memberBot") != 0 || flag(input,"roleManaged") != 0 || flag(input,"roleDangerous") != 0 || flag(input,"roleEveryone") != 0) { return ""; }
+    if (flag(input,"botManageRoles") == 0 || flag(input,"botPosition") <= flag(input,"rolePosition")) { return ""; }
+    return text(input,"bindingRole");
+}
+fn automod(input: string): int {
+    if (str_eq(text(input,"guild"),text(input,"configuredGuild")) == 0 || flag(input,"memberBot") != 0 || flag(input,"memberOwner") != 0 || flag(input,"memberManageMessages") != 0 || flag(input,"exemptRole") != 0 || flag(input,"exemptChannel") != 0 || flag(input,"botManageMessages") == 0) { return 0; }
+    let content: string = text(input,"content");
+    let terms: string = text(input,"terms");
+    let start: int = 0; let offset: int = 0;
+    while (offset <= str_len(terms)) {
+        if (offset == str_len(terms) || str_char_at(terms,offset) == 10) {
+            let term: string = str_sub(terms,start,offset-start);
+            if (str_len(term) > 0 && str_contains(content,term) != 0) { return 1; }
+            start = offset + 1;
+        }
+        offset = offset + 1;
+    }
+    if (flag(input,"messageCount") >= flag(input,"messageLimit") || flag(input,"mentions") >= flag(input,"mentionLimit")) { return 2; }
+    return 0;
+}

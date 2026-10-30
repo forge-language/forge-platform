@@ -1,0 +1,16 @@
+{
+  "name": "forge-discord",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=20.19.0" },
+  "scripts": {
+    "build": "node scripts/build-policy.mjs && tsc",
+    "test": "npm run build && node --test tests/*.test.mjs",
+    "check-config": "node --env-file=.env dist/check-config.js",
+    "register": "node --env-file=.env dist/register.js",
+    "start": "node --env-file=.env dist/main.js"
+  },
+  "dependencies": { "discord.js": "14.27.0", "zod": "4.6.7" },
+  "devDependencies": { "@types/node": "22.15.30", "typescript": "5.9.3" }
+}

@@ -1,0 +1,22 @@
+{
+  "guildId": "123456789012345678",
+  "logChannelId": "123456789012345679",
+  "reactionRoles": [
+    {
+      "channelId": "123456789012345680",
+      "messageId": "123456789012345681",
+      "emoji": "✅",
+      "roleId": "123456789012345682"
+    }
+  ],
+  "moderation": {
+    "enabled": true,
+    "blockedTerms": ["시발", "씨발", "병신", "fuck"],
+    "exemptRoleIds": [],
+    "exemptChannelIds": [],
+    "messageLimit": 6,
+    "windowSeconds": 5,
+    "mentionLimit": 8,
+    "timeoutSeconds": 300
+  }
+}
