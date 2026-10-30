@@ -1,4 +1,17 @@
 import {test,expect} from '../frontend/node_modules/@playwright/test/index';
+test('community invite remains accessible across pages and narrow screens',async({page})=>{
+ for (const width of [320,390,1280]) {
+  await page.setViewportSize({width,height:844});
+  for (const path of ['/','/docs','/publish']) {
+   await page.goto(path);
+   const invite=page.getByRole('navigation',{name:'주 메뉴'}).getByRole('link',{name:'Discord'});
+   await expect(invite).toBeVisible();
+   await expect(invite).toHaveAttribute('href','https://discord.gg/sVRBHRtMPf');
+   await expect(invite).toHaveAttribute('target','_blank');
+   expect(await page.locator('header').evaluate(element=>element.scrollWidth)).toBeLessThanOrEqual(width);
+  }
+ }
+});
 test('installation docs, real registry search and version detail',async({page})=>{
  const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));
  await page.goto('/');await expect(page.getByRole('heading',{level:1})).toContainText('언어에서 서버까지');
