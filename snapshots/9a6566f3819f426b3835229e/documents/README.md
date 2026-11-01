@@ -13,6 +13,10 @@ Official site: [forge-lang.org](https://forge-lang.org) ·
 [Roadmap](ROADMAP.md) · [RFC process](RFC_PROCESS.md) ·
 [First contribution candidates](GOOD_FIRST_ISSUES.md) · [Code of conduct](CODE_OF_CONDUCT.md).
 
+[Design principles](docs/design-principles.md) turn these goals into implementation
+rules: preserve observable behavior, make resource costs explicit, protect
+concurrent progress and support performance claims with reproducible measurements.
+
 ## Repositories
 
 Each component lives in its own repository and directory under the
@@ -92,7 +96,11 @@ remain valid; this boundary copy is not zero-copy ownership or lifetime checking
 General `move` expressions, standard-library and binary-library signatures,
 ownership aliases and lifetimes remain unsupported by this check. Integer process
 handles still rely on the runtime/FFI contract. The separate `forge-fg` compiler
-does not yet share this stage0 semantic pass.
+checks names, scalar types, function signatures, loop control and reachable
+non-void function fallthrough within its documented subset before writing C or
+invoking the native compiler. It also checks the mapped `strings/fs/os/io` SDK
+signatures. This is a separate implementation; it does not establish full
+stage0 parity or implement stage0's integer arithmetic contract.
 
 The language includes functions, pattern matching, constants, pipe expressions,
 libraries, processes, coroutines, messages and ownership syntax. Examples under
