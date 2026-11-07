@@ -13,6 +13,10 @@ Official site: [forge-lang.org](https://forge-lang.org) ·
 [Roadmap](ROADMAP.md) · [RFC process](RFC_PROCESS.md) ·
 [First contribution candidates](GOOD_FIRST_ISSUES.md) · [Code of conduct](CODE_OF_CONDUCT.md).
 
+[Design principles](docs/design-principles.md) turn these goals into implementation
+rules: preserve observable behavior, make resource costs explicit, protect
+concurrent progress and support performance claims with reproducible measurements.
+
 ## Repositories
 
 Each component lives in its own repository and directory under the
