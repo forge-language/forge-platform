@@ -1,0 +1,31 @@
+import strings;
+import web;
+import api;
+import config;
+import context;
+import permissions;
+import discord;
+
+fn handle(ctx: int, event: int, add: int): int {
+ let data: int=web.get(event,"d");let guild: string=web.field_text(data,"guild_id");
+ let settings: int=config.load(guild);if(web.kind(settings)!=4){return 0;}
+ let emoji_data: int=web.get(data,"emoji");let emoji: string=web.field_text(emoji_data,"id");
+ if(web.chars(emoji)==0){emoji=web.field_text(emoji_data,"name");}
+ let matches: int=web.array();let bindings: int=web.get(settings,"reactionRoles");let i: int=0;
+ while(i<web.count(bindings)){
+  let binding: int=web.at(bindings,i);
+  if(web.equal(web.field_text(binding,"channelId"),web.field_text(data,"channel_id"))!=0 && web.equal(web.field_text(binding,"messageId"),web.field_text(data,"message_id"))!=0 && web.equal(web.field_text(binding,"emoji"),emoji)!=0){web.push(matches,binding);}i=i+1;
+ }
+ if(web.count(matches)==0){return 1;}
+ if(context.load(ctx,guild,web.field_text(data,"channel_id"),web.field_text(data,"user_id"))==0){return 0;}
+ web.set(ctx,"messageId",web.get(data,"message_id"));web.set(ctx,"emoji",web.jstring(emoji));
+ let member_bot: int=web.boolean(web.get(web.get(web.get(ctx,"actor"),"user"),"bot"));
+ i=0;while(i<web.count(matches)){
+  let binding: int=web.at(matches,i);let role: int=context.role(ctx,web.field_text(binding,"roleId"));
+  if(web.kind(role)==4 && web.chars(permissions.reaction(ctx,binding,role,member_bot))>0){
+   let path: string=str_concat(str_concat(context.member_path(guild,web.field_text(data,"user_id")),"/roles/"),web.field_text(binding,"roleId"));
+   let method: string="DELETE";if(add!=0){method="PUT";}
+   if(api.write(ctx,method,path,0)==0){return 0;}
+  }i=i+1;
+ }return 1;
+}

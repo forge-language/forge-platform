@@ -1,0 +1,110 @@
+import web;
+import strings;
+import permissions;
+import policy;
+
+fn check(value: int, name: string): int {
+    if (!value) { println(str_concat("FAIL: ",name)); return 1; }
+    return 0;
+}
+fn fixture(): int {
+    return web.parse("{\"config\":{\"guildId\":\"100000000000000001\"},\"guild\":{\"id\":\"100000000000000001\",\"owner_id\":\"100000000000000009\"},\"channel\":{\"id\":\"100000000000000010\",\"guild_id\":\"100000000000000001\",\"permission_overwrites\":[]},\"roles\":[{\"id\":\"100000000000000001\",\"position\":0,\"permissions\":\"1024\",\"managed\":false},{\"id\":\"100000000000000004\",\"position\":20,\"permissions\":\"1099511636006\",\"managed\":false},{\"id\":\"100000000000000005\",\"position\":30,\"permissions\":\"1099780071462\",\"managed\":false},{\"id\":\"100000000000000006\",\"position\":10,\"permissions\":\"0\",\"managed\":false}],\"actor\":{\"user\":{\"id\":\"100000000000000002\",\"bot\":false},\"roles\":[\"100000000000000004\"]},\"bot\":{\"user\":{\"id\":\"100000000000000003\",\"bot\":true},\"roles\":[\"100000000000000005\"]},\"target\":{\"user\":{\"id\":\"100000000000000008\",\"bot\":false},\"roles\":[\"100000000000000006\"]}}");
+}
+fn binding(): int { return web.parse("{\"channelId\":\"100000000000000010\",\"messageId\":\"100000000000000011\",\"emoji\":\"✅\",\"roleId\":\"100000000000000006\"}"); }
+fn policy_contract(): int {
+    let failures: int = 0;
+    failures = failures + check(policy.authorize("{\"command\":\"setup\",\"guild\":\"a\",\"configuredGuild\":\"a\",\"actorManageGuild\":1}") == 1,"numeric JSON permission flags are read natively");
+    failures = failures + check(policy.authorize("{\"command\":\"setup\",\"guild\":\"a\",\"configuredGuild\":\"b\",\"actorManageGuild\":1}") == 0,"separate JSON strings do not alias during equality checks");
+    failures = failures + check(str_eq(policy.text("{\"emoji\":\"✅\"}","emoji"),"✅"),"native JSON policy reads Unicode strings");
+    return failures;
+}
+fn basic(): int {
+    let ctx: int = fixture(); let roles: int = web.get(ctx,"roles"); let actor: int = web.get(ctx,"actor"); let failures: int = 0;
+    let bits: int = permissions.bits(actor,roles,"100000000000000001","100000000000000009");
+    failures = failures + check(permissions.has(bits,1024) && permissions.has(bits,8192) && permissions.has(bits,32),"everyone and assigned role permissions aggregate");
+    failures = failures + check(!permissions.has(bits,268435456),"unassigned role permissions do not leak");
+    failures = failures + check(permissions.position(actor,roles) == 20,"highest role position");
+    web.push(web.get(actor,"roles"),web.jstring("100000000000000006"));
+    failures = failures + check(permissions.position(actor,roles) == 20,"lower role does not replace highest role");
+    web.push(web.get(actor,"roles"),web.jstring("100000000000000099"));
+    failures = failures + check(permissions.bits(actor,roles,"100000000000000001","100000000000000009") == 0 && permissions.position(actor,roles) == -1,"unknown role fails closed");
+    failures = failures + check(permissions.mask(web.jstring("9223372036854775808")) == -1,"overflow permission mask rejected");
+    failures = failures + check(permissions.mask(web.jstring("-1")) == -1 && permissions.mask(web.jstring("1x")) == -1,"malformed permission masks rejected");
+    return failures;
+}
+fn overwrites(): int {
+    let ctx: int = fixture(); let channel: int = web.get(ctx,"channel"); let actor: int = web.get(ctx,"actor"); let roles: int = web.get(ctx,"roles"); let failures: int = 0;
+    web.set(channel,"permission_overwrites",web.parse("[{\"id\":\"100000000000000001\",\"type\":0,\"deny\":\"8192\",\"allow\":\"0\"}]"));
+    failures = failures + check(!permissions.has(permissions.channel_bits(actor,roles,channel,"100000000000000001","100000000000000009"),8192),"everyone overwrite denies permission");
+    web.push(web.get(channel,"permission_overwrites"),web.parse("{\"id\":\"100000000000000004\",\"type\":0,\"deny\":\"0\",\"allow\":\"8192\"}"));
+    failures = failures + check(permissions.has(permissions.channel_bits(actor,roles,channel,"100000000000000001","100000000000000009"),8192),"role overwrite follows everyone");
+    web.push(web.get(actor,"roles"),web.jstring("100000000000000006"));
+    web.push(web.get(channel,"permission_overwrites"),web.parse("{\"id\":\"100000000000000006\",\"type\":0,\"deny\":\"8192\",\"allow\":\"0\"}"));
+    failures = failures + check(permissions.has(permissions.channel_bits(actor,roles,channel,"100000000000000001","100000000000000009"),8192),"aggregate role allow wins over role deny");
+    web.push(web.get(channel,"permission_overwrites"),web.parse("{\"id\":\"100000000000000002\",\"type\":1,\"deny\":\"8192\",\"allow\":\"0\"}"));
+    failures = failures + check(!permissions.has(permissions.channel_bits(actor,roles,channel,"100000000000000001","100000000000000009"),8192),"member overwrite is last");
+    failures = failures + check(permissions.allowed(ctx,"purge") == 0 && permissions.allowed(ctx,"setup") == 1,"channel denial affects purge but not guild setup");
+    web.set(web.get(ctx,"guild"),"owner_id",web.jstring(permissions.member_id(actor)));
+    failures = failures + check(permissions.has(permissions.channel_bits(actor,roles,channel,"100000000000000001","100000000000000002"),8192),"guild owner bypasses channel overwrites");
+    web.set(web.get(ctx,"guild"),"owner_id",web.jstring("100000000000000009"));
+    web.set(permissions.role(roles,"100000000000000004"),"permissions",web.jstring("8"));
+    failures = failures + check(permissions.has(permissions.channel_bits(actor,roles,channel,"100000000000000001","100000000000000009"),8192),"administrator bypasses channel overwrites");
+    web.set(channel,"guild_id",web.jstring("100000000000000099"));
+    failures = failures + check(permissions.allowed(ctx,"purge") == 0,"foreign guild channel rejected");
+    return failures;
+}
+fn commands(): int {
+    let ctx: int = fixture(); let target: int = web.get(ctx,"target"); let roles: int = web.get(ctx,"roles"); let failures: int = 0;
+    failures = failures + check(permissions.allowed(ctx,"setup") == 1 && permissions.allowed(ctx,"roles") == 1 && permissions.allowed(ctx,"purge") == 1,"authorized management commands");
+    failures = failures + check(permissions.allowed(ctx,"timeout") == 1 && permissions.allowed(ctx,"kick") == 1 && permissions.allowed(ctx,"ban") == 1,"authorized target moderation");
+    web.set(permissions.role(roles,"100000000000000004"),"permissions",web.jstring("0"));
+    failures = failures + check(permissions.allowed(ctx,"setup") == 0 && permissions.allowed(ctx,"kick") == 0,"low permission actor rejected");
+    web.set(permissions.role(roles,"100000000000000004"),"permissions",web.jstring("1099511636006"));
+    web.set(permissions.role(roles,"100000000000000006"),"position",web.number(20));
+    failures = failures + check(permissions.allowed(ctx,"ban") == 0,"equal actor role hierarchy rejected");
+    web.set(web.get(ctx,"guild"),"owner_id",web.jstring(permissions.member_id(web.get(ctx,"actor"))));
+    failures = failures + check(permissions.allowed(ctx,"ban") == 1,"owner bypasses own role hierarchy");
+    web.set(permissions.role(roles,"100000000000000006"),"position",web.number(30));
+    failures = failures + check(permissions.allowed(ctx,"ban") == 0,"owner cannot bypass bot role hierarchy");
+    ctx = fixture(); target = web.get(ctx,"target"); roles = web.get(ctx,"roles");
+    web.set(web.get(target,"user"),"bot",web.jbool(1));
+    failures = failures + check(permissions.allowed(ctx,"kick") == 0,"bot target rejected");
+    web.set(web.get(target,"user"),"bot",web.jbool(0)); web.set(web.get(target,"user"),"id",web.jstring("100000000000000009"));
+    failures = failures + check(permissions.allowed(ctx,"kick") == 0,"owner target rejected");
+    web.set(web.get(target,"user"),"id",web.jstring("100000000000000002"));
+    failures = failures + check(permissions.allowed(ctx,"kick") == 0,"self target rejected");
+    web.set(web.get(target,"user"),"id",web.jstring("100000000000000008")); web.set(permissions.role(roles,"100000000000000006"),"permissions",web.jstring("8"));
+    failures = failures + check(permissions.allowed(ctx,"timeout") == 0,"administrator target timeout rejected");
+    web.set(web.get(ctx,"config"),"guildId",web.jstring("100000000000000099"));
+    failures = failures + check(permissions.allowed(ctx,"setup") == 0,"foreign server configuration rejected");
+    return failures;
+}
+fn reactions(): int {
+    let ctx: int = fixture(); let value: int = permissions.role(web.get(ctx,"roles"),"100000000000000006"); let bound: int = binding(); let failures: int = 0;
+    failures = failures + check(str_eq(permissions.reaction(ctx,bound,value,0),"100000000000000006"),"safe role binding accepted");
+    failures = failures + check(str_len(permissions.reaction(ctx,bound,value,1)) == 0,"bot reaction rejected");
+    web.set(value,"permissions",web.jstring("8192"));
+    failures = failures + check(str_len(permissions.reaction(ctx,bound,value,0)) == 0,"privileged role rejected");
+    web.set(value,"permissions",web.jstring("0")); web.set(value,"managed",web.jbool(1));
+    failures = failures + check(str_len(permissions.reaction(ctx,bound,value,0)) == 0,"managed role rejected");
+    web.set(value,"managed",web.jbool(0)); web.set(value,"position",web.number(30));
+    failures = failures + check(str_len(permissions.reaction(ctx,bound,value,0)) == 0,"equal bot hierarchy role rejected");
+    web.set(value,"position",web.number(10)); web.set(ctx,"messageId",web.jstring("100000000000000099"));
+    failures = failures + check(str_len(permissions.reaction(ctx,bound,value,0)) == 0,"unmatched event message rejected");
+    web.set(ctx,"messageId",web.get(bound,"messageId")); web.set(ctx,"emoji",web.jstring("❌"));
+    failures = failures + check(str_len(permissions.reaction(ctx,bound,value,0)) == 0,"unmatched event emoji rejected");
+    web.set(ctx,"emoji",web.get(bound,"emoji")); web.set(value,"guild_id",web.jstring("100000000000000099"));
+    failures = failures + check(str_len(permissions.reaction(ctx,bound,value,0)) == 0,"foreign role guild rejected");
+    ctx = fixture(); value = permissions.role(web.get(ctx,"roles"),"100000000000000006");
+    web.set(web.get(ctx,"channel"),"permission_overwrites",web.parse("[{\"id\":\"100000000000000003\",\"type\":1,\"deny\":\"1024\",\"allow\":\"0\"}]"));
+    failures = failures + check(str_len(permissions.reaction(ctx,bound,value,0)) == 0,"hidden channel reaction cannot mutate roles");
+    return failures;
+}
+native main {
+    web.scope_begin();
+    let failures: int = policy_contract() + basic() + overwrites() + commands() + reactions();
+    web.scope_end();
+    if (failures != 0) { println(str_concat("Permission scenarios failed: ",str_from_int(failures))); return 1; }
+    println("PASS: 38 native permission scenarios");
+    return 0;
+}

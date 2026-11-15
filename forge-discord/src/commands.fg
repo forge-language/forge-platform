@@ -1,0 +1,75 @@
+import web;
+import strings;
+
+fn entry(name: string, description: string, kind: int): int {
+    let value: int = web.object();
+    web.set(value,"name",web.jstring(name)); web.set(value,"description",web.jstring(description));
+    web.set(value,"type",web.number(kind)); return value;
+}
+fn command(name: string, description: string, permission: string): int {
+    let value: int = entry(name,description,1);
+    web.set(value,"default_member_permissions",web.jstring(permission)); web.set(value,"dm_permission",web.jbool(0));
+    web.set(value,"options",web.array()); return value;
+}
+fn subcommand(name: string, description: string): int {
+    let value: int = entry(name,description,1); web.set(value,"options",web.array()); return value;
+}
+fn option(name: string, description: string, kind: int, required: int): int {
+    let value: int = entry(name,description,kind); web.set(value,"required",web.jbool(required)); return value;
+}
+fn integer(name: string, description: string, required: int, minimum: int, maximum: int): int {
+    let value: int = option(name,description,4,required);
+    web.set(value,"min_value",web.number(minimum)); web.set(value,"max_value",web.number(maximum)); return value;
+}
+fn text(name: string, description: string, required: int, maximum: int): int {
+    let value: int = option(name,description,3,required);
+    if (maximum > 0) { web.set(value,"max_length",web.number(maximum)); } return value;
+}
+fn channel(required: int): int {
+    let value: int = option("channel","대상 텍스트 채널",7,required);
+    web.set(value,"channel_types",web.parse("[0,5]")); return value;
+}
+fn append(parent: int, child: int): int { return web.push(web.get(parent,"options"),child); }
+fn setup(): int {
+    let root: int = command("setup","이 서버의 봇 설정을 저장합니다.","32");
+    append(root,subcommand("show","현재 설정을 확인합니다."));
+    let log: int = subcommand("log","감사 채널을 지정합니다. 채널을 생략하면 해제합니다.");
+    append(log,channel(0)); append(root,log);
+    let automod: int = subcommand("automod","자동 관리와 제한값을 설정합니다.");
+    append(automod,option("enabled","자동 관리 사용",5,1));
+    append(automod,integer("messages","창당 메시지 한도",0,2,100));
+    append(automod,integer("window","도배 검사 시간 (초)",0,1,60));
+    append(automod,integer("mentions","고유 멘션 한도",0,2,100));
+    append(automod,integer("timeout","제한 시간 (초), 0이면 삭제만",0,0,2419200)); append(root,automod);
+    let reaction: int = subcommand("reaction-add","기존 메시지의 반응과 역할을 연결합니다.");
+    append(reaction,channel(1)); append(reaction,text("message","메시지 ID",1,0));
+    append(reaction,text("emoji","Unicode 이모지 또는 커스텀 이모지 ID",1,100));
+    append(reaction,option("role","지급할 역할",8,1)); append(root,reaction);
+    let remove: int = subcommand("reaction-remove","반응 역할 연결을 해제합니다.");
+    append(remove,option("role","연결을 해제할 역할",8,1)); append(root,remove);
+    let add_word: int = subcommand("word-add","자동 관리 금칙어를 추가합니다.");
+    append(add_word,text("word","금칙어",1,100)); append(root,add_word);
+    let remove_word: int = subcommand("word-remove","금칙어를 삭제합니다.");
+    append(remove_word,text("word","금칙어",1,100)); append(root,remove_word);
+    let role: int = subcommand("exempt-role","자동 관리 제외 역할을 설정합니다.");
+    append(role,option("role","대상 역할",8,1)); append(role,option("exempt","제외 여부",5,1)); append(root,role);
+    let exempt: int = subcommand("exempt-channel","자동 관리 제외 채널을 설정합니다.");
+    append(exempt,channel(1)); append(exempt,option("exempt","제외 여부",5,1)); append(root,exempt);
+    return root;
+}
+fn member_command(name: string, description: string, permission: string): int {
+    let value: int = command(name,description,permission);
+    append(value,option("member","대상 멤버",6,1));
+    if (str_eq(name,"timeout")) { append(value,integer("minutes","제한 시간 (분)",1,1,40320)); }
+    append(value,text("reason","사유",0,400)); return value;
+}
+fn list(): int {
+    let result: int = web.array(); web.push(result,setup());
+    let purge: int = command("purge","최근 메시지를 정리합니다 (14일 미만).","8192");
+    append(purge,integer("count","삭제 개수",1,1,100)); web.push(result,purge);
+    web.push(result,member_command("timeout","멤버를 일시 제한합니다.","1099511627776"));
+    web.push(result,member_command("kick","멤버를 추방합니다.","2"));
+    web.push(result,member_command("ban","멤버를 차단합니다.","4"));
+    let roles: int = command("roles","설정된 역할 메시지에 반응 이모지를 붙입니다.","32");
+    append(roles,text("message","/setup reaction-add로 등록한 메시지 ID",1,0)); web.push(result,roles); return result;
+}

@@ -1,0 +1,78 @@
+import strings;
+import web;
+import env;
+import api;
+import discord;
+import rest;
+import gateway_client;
+import events;
+extern fn bot_init(): int;
+extern fn bot_signal_stop(): int;
+extern fn bot_read_text(path: string): string;
+extern fn fr_os_argc(): int;
+extern fn fr_os_argv(index: int): string;
+extern fn fr_monotonic_now_ms(): int;
+extern fn fr_buffer_from_string(text: string): int;
+extern fn fr_buffer_free(handle: int): int;
+
+fn credentials(): int {
+ let result: int=web.object();let token: string=env.get(".env","DISCORD_TOKEN");let application: string=env.get(".env","DISCORD_CLIENT_ID");
+ if(str_len(token)==0 || discord.id_valid(application)==0 || str_len(application)<17 || str_contains(token,"\n") || str_contains(token,"\r")){return 0;}
+ web.set(result,"token",web.jstring(token));web.set(result,"application",web.jstring(application));return result;
+}
+
+fn fixture(): int {
+ let base: string=env.get(".env","DISCORD_API_BASE");
+ if(web.starts(base,"http://127.0.0.1:")==0 && web.starts(base,"http://localhost:")==0){println("Fixture mode requires a loopback DISCORD_API_BASE.");return 1;}
+ let secret: int=credentials();if(web.kind(secret)!=4){return 1;}
+ let ctx: int=api.context(web.field_text(secret,"token"),web.field_text(secret,"application"),0);
+ let windows: int=web.object();let path: string=env.get(".env","BOT_TEST_WINDOWS");
+ if(str_len(path)>0){windows=web.parse(bot_read_text(path));if(web.kind(windows)!=4){windows=web.object();}}
+ web.set(ctx,"windows",windows);
+ let input: int=web.parse(bot_read_text(fr_os_argv(2)));let values: int=input;
+ if(web.kind(input)==4){values=web.array();web.push(values,input);}
+ if(web.kind(values)!=5){return 1;}
+ let i: int=0;let ok: int=1;
+ while(i<web.count(values)){
+  web.set(ctx,"deadline",web.number(fr_monotonic_now_ms()+12000));
+  if(events.handle(ctx,web.at(values,i))==0){ok=0;println("bot.fixture.event_failed");}i=i+1;
+ }
+ if(ok!=0){println("bot.fixture.passed");return 0;}return 1;
+}
+
+fn run(): int {
+ if(bot_init()==0){println("Native initialization failed.");return 1;}
+ web.scope_begin();
+ if(fr_os_argc()>2 && web.equal(fr_os_argv(1),"--event")==1){let result: int=fixture();web.scope_end();str_reset_arena();return result;}
+ let secret: int=credentials();
+ if(web.kind(secret)!=4){println("DISCORD_TOKEN and DISCORD_CLIENT_ID are required.");web.scope_end();return 1;}
+ let token: int=fr_buffer_from_string(web.field_text(secret,"token"));let application: int=fr_buffer_from_string(web.field_text(secret,"application"));
+ if(token<0 || application<0){web.scope_end();return 1;}
+ let ctx: int=api.context(rest.text(token),rest.text(application),0);
+ let user: int=api.get(ctx,"/users/@me");
+ if(web.equal(web.field_text(user,"id"),rest.text(application))==0 || web.boolean(web.get(user,"bot"))==0){println("Bot token or application ID verification failed.");fr_buffer_free(token);fr_buffer_free(application);web.scope_end();return 1;}
+ let discovery: int=api.get(ctx,"/gateway/bot");let url: string=web.field_text(discovery,"url");
+ if(web.starts(url,"wss://")==0){println("Gateway discovery failed.");fr_buffer_free(token);fr_buffer_free(application);web.scope_end();return 1;}
+ let client: int=gateway_client.open(str_concat(url,"/?v=10&encoding=json"),rest.text(token),34305,0,1);
+ web.scope_end();str_reset_arena();
+ if(client<0){println("Gateway connection failed.");fr_buffer_free(token);fr_buffer_free(application);return 1;}
+ let pending: int=fr_buffer_from_string("[]");let windows: int=fr_buffer_from_string("{}");let result: int=1;
+ let check: int=fr_os_argc()>1 && web.equal(fr_os_argv(1),"--gateway-check")==1;let limit: int=fr_monotonic_now_ms()+25000;
+ while(bot_signal_stop()==0 && (gateway_client.status(client)==1 || gateway_client.status(client)==3)){
+  web.scope_begin();let queue: int=web.parse(rest.text(pending));let event: int=0;let remaining: int=web.array();
+  if(web.count(queue)>0){event=web.at(queue,0);let i: int=1;while(i<web.count(queue)){web.push(remaining,web.at(queue,i));i=i+1;}}
+  else{event=web.parse(gateway_client.poll(client,1000));}
+  let current: int=api.context(rest.text(token),rest.text(application),client);web.set(current,"queue",remaining);web.set(current,"windows",web.parse(rest.text(windows)));
+  if(web.equal(web.field_text(event,"t"),"READY")!=0){println("bot.ready native=Forge");if(check!=0){result=0;web.scope_end();str_reset_arena();break;}}
+  if(check==0 && web.kind(event)==4 && events.handle(current,event)==0){println("bot.event.failed");}
+  let next_pending: int=fr_buffer_from_string(web.dump(web.get(current,"queue")));let next_windows: int=fr_buffer_from_string(web.dump(web.get(current,"windows")));
+  let overloaded: int=web.boolean(web.get(current,"overloaded"));web.scope_end();str_reset_arena();
+  if(next_pending<0 || next_windows<0){if(next_pending>=0){fr_buffer_free(next_pending);}if(next_windows>=0){fr_buffer_free(next_windows);}break;}
+  fr_buffer_free(pending);fr_buffer_free(windows);pending=next_pending;windows=next_windows;
+  if(overloaded!=0){println("bot.queue.overloaded");break;}
+  if(check!=0 && fr_monotonic_now_ms()>limit){println("Gateway READY timed out.");break;}
+ }
+ if(bot_signal_stop()!=0){result=0;}
+ gateway_client.close(client);fr_buffer_free(pending);fr_buffer_free(windows);fr_buffer_free(token);fr_buffer_free(application);
+ if(result!=0){println("Gateway stopped. Check the bot token and Message Content Intent in the Developer Portal.");}return result;
+}

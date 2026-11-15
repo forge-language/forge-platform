@@ -1,0 +1,131 @@
+import web;
+import strings;
+import policy;
+extern fn bot_bit_and(a: int, b: int): int;
+extern fn bot_bit_or(a: int, b: int): int;
+extern fn bot_bit_not(value: int): int;
+
+fn has(value: int, flag: int): int { return bot_bit_and(value, flag) == flag; }
+fn member_id(member: int): string { return web.field_text(web.get(member,"user"),"id"); }
+fn contains(values: int, id: string): int {
+    let i: int = 0;
+    while (i < web.count(values)) { if (str_eq(web.text(web.at(values,i)),id)) { return 1; } i = i + 1; }
+    return 0;
+}
+fn role(roles: int, id: string): int {
+    let i: int = 0;
+    while (i < web.count(roles)) { let value: int = web.at(roles,i); if (str_eq(web.field_text(value,"id"),id)) { return value; } i = i + 1; }
+    return 0;
+}
+fn mask(value: int): int {
+    if (web.kind(value) != 3) { return -1; }
+    let text: string = web.text(value); let i: int = 0;
+    if (str_len(text) == 0 || str_len(text) > 19) { return -1; }
+    while (i < str_len(text)) { let c: int = str_char_at(text,i); if (c < 48 || c > 57) { return -1; } i = i + 1; }
+    let parsed: int = web.parse(text);
+    if (web.kind(parsed) != 2 || web.integer(parsed) < 0) { return -1; }
+    return web.integer(parsed);
+}
+fn member_valid(member: int, roles: int): int {
+    if (web.kind(member) != 4 || str_len(member_id(member)) == 0 || web.kind(web.get(member,"roles")) != 5 || web.kind(roles) != 5) { return 0; }
+    let ids: int = web.get(member,"roles"); let i: int = 0;
+    while (i < web.count(ids)) {
+        let id: int = web.at(ids,i);
+        if (web.kind(id) != 3 || web.kind(role(roles,web.text(id))) != 4) { return 0; }
+        i = i + 1;
+    }
+    i = 0;
+    while (i < web.count(roles)) {
+        let entry: int = web.at(roles,i);
+        if (str_len(web.field_text(entry,"id")) == 0 || mask(web.get(entry,"permissions")) < 0 || web.kind(web.get(entry,"position")) != 2 || web.field_int(entry,"position") < 0) { return 0; }
+        i = i + 1;
+    }
+    return 1;
+}
+fn bits(member: int, roles: int, guild: string, owner: string): int {
+    if (!member_valid(member,roles) || web.kind(role(roles,guild)) != 4) { return 0; }
+    if (str_len(owner) > 0 && str_eq(member_id(member),owner)) { return 9223372036854775807; }
+    let result: int = mask(web.get(role(roles,guild),"permissions")); let i: int = 0;
+    while (i < web.count(roles)) {
+        let item: int = web.at(roles,i);
+        if (contains(web.get(member,"roles"),web.field_text(item,"id"))) { result = bot_bit_or(result,mask(web.get(item,"permissions"))); }
+        i = i + 1;
+    }
+    if (has(result,8)) { return 9223372036854775807; }
+    return result;
+}
+fn apply_overwrite(value: int, deny: int, allow: int): int { return bot_bit_or(bot_bit_and(value,bot_bit_not(deny)),allow); }
+fn channel_bits(member: int, roles: int, channel: int, guild: string, owner: string): int {
+    if (web.kind(channel) != 4 || !member_valid(member,roles)) { return 0; }
+    if (web.has(channel,"guild_id") && !str_eq(web.field_text(channel,"guild_id"),guild)) { return 0; }
+    let result: int = bits(member,roles,guild,owner);
+    if (has(result,8)) { return result; }
+    let overwrites: int = web.get(channel,"permission_overwrites");
+    if (web.kind(overwrites) != 5) { return 0; }
+    let role_deny: int = 0; let role_allow: int = 0; let member_deny: int = 0; let member_allow: int = 0; let i: int = 0;
+    while (i < web.count(overwrites)) {
+        let item: int = web.at(overwrites,i); let deny: int = mask(web.get(item,"deny")); let allow: int = mask(web.get(item,"allow"));
+        let kind: int = web.field_int(item,"type"); let id: string = web.field_text(item,"id");
+        if (deny < 0 || allow < 0 || web.kind(web.get(item,"type")) != 2 || (kind != 0 && kind != 1) || str_len(id) == 0) { return 0; }
+        if (kind == 0 && str_eq(id,guild)) { result = apply_overwrite(result,deny,allow); }
+        else if (kind == 0 && contains(web.get(member,"roles"),id)) { role_deny = bot_bit_or(role_deny,deny); role_allow = bot_bit_or(role_allow,allow); }
+        else if (kind == 1 && str_eq(id,member_id(member))) { member_deny = bot_bit_or(member_deny,deny); member_allow = bot_bit_or(member_allow,allow); }
+        i = i + 1;
+    }
+    return apply_overwrite(apply_overwrite(result,role_deny,role_allow),member_deny,member_allow);
+}
+fn position(member: int, roles: int): int {
+    if (!member_valid(member,roles)) { return -1; }
+    let result: int = 0; let i: int = 0;
+    while (i < web.count(roles)) {
+        let item: int = web.at(roles,i); let current: int = web.field_int(item,"position");
+        if (contains(web.get(member,"roles"),web.field_text(item,"id")) && current > result) { result = current; }
+        i = i + 1;
+    }
+    return result;
+}
+fn context_valid(ctx: int): int {
+    let guild: int = web.get(ctx,"guild"); let id: string = web.field_text(guild,"id"); let roles: int = web.get(ctx,"roles");
+    if (str_len(id) == 0 || str_len(web.field_text(guild,"owner_id")) == 0 || !str_eq(id,web.field_text(web.get(ctx,"config"),"guildId")) || web.kind(role(roles,id)) != 4) { return 0; }
+    if (!member_valid(web.get(ctx,"actor"),roles) || !member_valid(web.get(ctx,"bot"),roles)) { return 0; }
+    let channel: int = web.get(ctx,"channel");
+    if (web.kind(channel) != 4 || (web.has(channel,"guild_id") && !str_eq(web.field_text(channel,"guild_id"),id))) { return 0; }
+    return 1;
+}
+fn allowed(ctx: int, command: string): int {
+    if (!context_valid(ctx)) { return 0; }
+    let guild: int = web.get(ctx,"guild"); let id: string = web.field_text(guild,"id"); let owner: string = web.field_text(guild,"owner_id");
+    let roles: int = web.get(ctx,"roles"); let actor: int = web.get(ctx,"actor"); let bot: int = web.get(ctx,"bot"); let target: int = web.get(ctx,"target"); let channel: int = web.get(ctx,"channel");
+    if (web.kind(target) != 0 && !member_valid(target,roles)) { return 0; }
+    let actor_bits: int = bits(actor,roles,id,owner); let bot_bits: int = bits(bot,roles,id,owner);
+    let input: int = web.object(); web.set(input,"command",web.jstring(command)); web.set(input,"guild",web.jstring(id)); web.set(input,"configuredGuild",web.jstring(web.field_text(web.get(ctx,"config"),"guildId")));
+    web.set(input,"actorManageMessages",web.number(has(channel_bits(actor,roles,channel,id,owner),8192)));
+    web.set(input,"botManageMessages",web.number(has(channel_bits(bot,roles,channel,id,owner),8192)));
+    web.set(input,"actorManageGuild",web.number(has(actor_bits,32))); web.set(input,"botManageRoles",web.number(has(bot_bits,268435456)));
+    web.set(input,"actorModerate",web.number(has(actor_bits,1099511627776))); web.set(input,"botModerate",web.number(has(bot_bits,1099511627776)));
+    web.set(input,"actorKick",web.number(has(actor_bits,2))); web.set(input,"botKick",web.number(has(bot_bits,2)));
+    web.set(input,"actorBan",web.number(has(actor_bits,4))); web.set(input,"botBan",web.number(has(bot_bits,4)));
+    web.set(input,"actorOwner",web.number(str_eq(member_id(actor),owner))); web.set(input,"actorPosition",web.number(position(actor,roles))); web.set(input,"botPosition",web.number(position(bot,roles)));
+    web.set(input,"targetPresent",web.number(web.kind(target) == 4)); web.set(input,"targetPosition",web.number(position(target,roles)));
+    web.set(input,"targetOwner",web.number(str_eq(member_id(target),owner))); web.set(input,"targetSelf",web.number(str_eq(member_id(target),member_id(actor))));
+    web.set(input,"targetBot",web.number(web.boolean(web.get(web.get(target,"user"),"bot")))); web.set(input,"targetAdmin",web.number(has(bits(target,roles,id,owner),8)));
+    return policy.authorize(web.dump(input));
+}
+// Administrator, server/role/channel/webhook/message management, moderation and mass mentions.
+fn dangerous(value: int): int { return bot_bit_and(value,1100317073470) != 0; }
+fn reaction(ctx: int, binding: int, value: int, member_bot: int): string {
+    if (!context_valid(ctx)) { return ""; }
+    let guild: int = web.get(ctx,"guild"); let id: string = web.field_text(guild,"id"); let bot: int = web.get(ctx,"bot"); let roles: int = web.get(ctx,"roles");
+    if (!has(channel_bits(bot,roles,web.get(ctx,"channel"),id,web.field_text(guild,"owner_id")),1024)) { return ""; }
+    if (web.kind(value) != 4 || !str_eq(web.field_text(value,"id"),web.field_text(binding,"roleId")) || mask(web.get(value,"permissions")) < 0 || web.kind(web.get(value,"position")) != 2 || web.field_int(value,"position") < 0 || web.kind(web.get(value,"managed")) != 1) { return ""; }
+    if (web.has(value,"guild_id") && !str_eq(web.field_text(value,"guild_id"),id)) { return ""; }
+    let message: string = web.field_text(binding,"messageId"); let emoji: string = web.field_text(binding,"emoji");
+    if (web.has(ctx,"messageId")) { message = web.field_text(ctx,"messageId"); }
+    if (web.has(ctx,"emoji")) { emoji = web.field_text(ctx,"emoji"); }
+    let input: int = web.object(); web.set(input,"guild",web.jstring(id)); web.set(input,"configuredGuild",web.jstring(web.field_text(web.get(ctx,"config"),"guildId")));
+    web.set(input,"channel",web.jstring(web.field_text(web.get(ctx,"channel"),"id"))); web.set(input,"bindingChannel",web.get(binding,"channelId"));
+    web.set(input,"message",web.jstring(message)); web.set(input,"bindingMessage",web.get(binding,"messageId")); web.set(input,"emoji",web.jstring(emoji)); web.set(input,"bindingEmoji",web.get(binding,"emoji")); web.set(input,"bindingRole",web.get(binding,"roleId"));
+    web.set(input,"memberBot",web.number(member_bot)); web.set(input,"roleManaged",web.number(web.boolean(web.get(value,"managed")))); web.set(input,"roleDangerous",web.number(dangerous(mask(web.get(value,"permissions"))))); web.set(input,"roleEveryone",web.number(str_eq(web.field_text(value,"id"),id)));
+    web.set(input,"botManageRoles",web.number(has(bits(bot,roles,id,web.field_text(guild,"owner_id")),268435456))); web.set(input,"botPosition",web.number(position(bot,roles))); web.set(input,"rolePosition",web.get(value,"position"));
+    return policy.reaction_role(web.dump(input));
+}

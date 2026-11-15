@@ -34,7 +34,7 @@ Production domain, Cloudflare Tunnel, updates and rollback:
 - `cli/native/`: generic atomic filesystem writes and bounded argv subprocesses.
 - `vendor/forge-{postgres,web}`: independent Git submodules, native protocol bridges.
 - `vendor/toolchain/`: pinned Forge compiler/runtime sources, including JavaScript output.
-- `forge-discord/`: Discord moderation and reaction-role bot with Forge policies.
+- `forge-discord/`: Discord moderation and reaction-role bot with Forge policies and persistent per-server `/setup` commands.
 - `workers/`: Cloudflare Workers adapter for the existing Forge registry backend.
 
 Join the [Forge Discord community](https://discord.gg/sVRBHRtMPf).
@@ -155,7 +155,9 @@ the client verifies checkout SHA and module presence when installing.
 ## Validation
 
 For the Discord bot, see [configuration and commands](forge-discord/README.md).
-The bot uses a persistent Discord Gateway connection and runs as a Node process.
+For HTTP-free Forge bot functions and the Serenity/Twilight comparison, see the [Discord library guide](vendor/forge-discord/README.md).
+The bot uses the official Forge Discord library, compiles to a native binary,
+and stores per-server settings through `/setup`. Its runtime does not require Node.js.
 For preparing the registry backend for Cloudflare Workers with PostgreSQL
 Hyperdrive, see [the migration guide](docs/cloudflare-workers.md). These are
 separate runtimes; the migration guide does not deploy or change the live stack.

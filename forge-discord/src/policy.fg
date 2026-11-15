@@ -1,11 +1,13 @@
 // Decisions live in Forge; the Discord bridge supplies protocol facts only.
 import strings;
-import json;
-fn flag(input: string, key: string): int { return json_get_int(input, key); }
-fn text(input: string, key: string): string { return json_get_string(input, key); }
+extern fn fr_json_get_path_int(input: string, key: string): int;
+extern fn fr_json_get_path_string(input: string, key: string): string;
+fn flag(input: string, key: string): int { return fr_json_get_path_int(input, key); }
+fn text(input: string, key: string): string { return fr_json_get_path_string(input, key); }
 fn authorize(input: string): int {
     if (str_eq(text(input,"guild"),text(input,"configuredGuild")) == 0) { return 0; }
     let command: string = text(input,"command");
+    if (str_eq(command,"setup") != 0) { return flag(input,"actorManageGuild"); }
     if (str_eq(command,"purge") != 0) {
         return flag(input,"actorManageMessages") * flag(input,"botManageMessages");
     }

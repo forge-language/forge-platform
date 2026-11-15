@@ -1,0 +1,40 @@
+import strings;
+import bot;
+import slash;
+extern fn bot_init(): int;
+
+native main {
+    if (!bot_init()) { return 1; }
+    let client: int = bot.from_env();
+    if (client < 0) { println("client creation failed"); return 1; }
+    let echo: string = slash.add(slash.new("echo", "Repeat text"), slash.text("text", "What to say", 1));
+    if (!bot.command(client, "ping", "Reply with Pong!") || !bot.guild_register(client, "12", echo)) { println(bot.error(client)); bot.close(client); return 1; }
+    let event: string = "{\"t\":\"INTERACTION_CREATE\",\"d\":{\"id\":\"56\",\"application_id\":\"10\",\"type\":2,\"token\":\"event/token\",\"data\":{\"name\":\"ping\"}}}";
+    if (!bot.reply(client, event, "한글 \"hello\" @everyone") || !bot.whisper(client, event, "private") || !bot.defer(client, event) || !bot.edit_reply(client, event, "done")) { println(bot.error(client)); bot.close(client); return 1; }
+    let message: string = "{\"t\":\"MESSAGE_CREATE\",\"d\":{\"id\":\"78\",\"channel_id\":\"34\"}}";
+    if (!bot.reply(client, message, "thread reply") || !bot.react(client, message, "✅") || !bot.say(client, "34", "retry me")) { println(bot.error(client)); bot.close(client); return 1; }
+    if (bot.say(client, "99", "forbidden") || !str_contains(bot.error(client), "403")) { println("permission error hidden"); bot.close(client); return 1; }
+    if (bot.say(client, "../escape", "invalid") || !str_contains(bot.error(client), "Invalid")) { println("invalid ID accepted"); bot.close(client); return 1; }
+    if (bot.react(client, event, "✅") || !str_contains(bot.error(client), "message")) { println("interaction ID used as message ID"); bot.close(client); return 1; }
+    if (bot.reply(client, "{\"t\":\"INTERACTION_CREATE\",\"d\":{\"id\":\"56\",\"type\":4,\"token\":\"token\"}}", "invalid")) { println("autocomplete accepted as message response"); bot.close(client); return 1; }
+    if (!bot.say(client, "34", "after error") || str_len(bot.error(client)) != 0) { println("error did not clear"); bot.close(client); return 1; }
+    // Transport handles must be released even on failure, beyond the bridge's 4096 slots.
+    let i: int = 0;
+    while (i < 4100) {
+        if (bot.say(client, "99", "forbidden")) { bot.close(client); return 1; }
+        i = i + 1; str_reset_arena();
+    }
+    if (!bot.say(client, "34", "after reset")) { println("client did not survive arena reset"); bot.close(client); return 1; }
+    if (!bot.start(client) || !bot.running(client)) { println(bot.error(client)); bot.close(client); return 1; }
+    let received: int = 0; let polls: int = 0;
+    while (bot.running(client) && received == 0 && polls < 10) {
+        let incoming: string = bot.next(client);
+        if (bot.is_command(incoming, "ping")) {
+            if (!bot.reply(client, incoming, "loop pong")) { println(bot.error(client)); bot.close(client); return 1; }
+            received = 1;
+        }
+        polls = polls + 1; str_reset_arena();
+    }
+    if (received == 0) { println("Gateway command not delivered"); bot.close(client); return 1; }
+    bot.close(client); println("high-level bot integration passed"); return 0;
+}

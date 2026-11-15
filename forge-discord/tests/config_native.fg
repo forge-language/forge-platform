@@ -1,0 +1,89 @@
+import config;
+import commands;
+import web;
+import strings;
+import fs;
+extern fn fr_os_argc(): int;
+extern fn fr_os_argv(index: int): string;
+
+fn fail(label: string): int { println(str_concat("FAIL: ",label)); return 1; }
+fn probe(mode: string): int {
+    let guild: string = "123456789012345678";
+    if (str_eq(mode,"persist")) {
+        let value: int = config.apply(config.defaults(guild),"automod",web.parse("{\"enabled\":true,\"messages\":10}"));
+        if (!config.save(value)) { return fail("probe save"); }
+    } else if (str_eq(mode,"reload")) {
+        let value: int = config.load(guild);
+        if (value == 0 || !web.boolean(web.get(web.get(value,"moderation"),"enabled")) || web.field_int(web.get(value,"moderation"),"messageLimit") != 10) { return fail("probe reload"); }
+    } else if (str_eq(mode,"reject")) {
+        if (config.load(guild) != 0) { return fail("probe rejects invalid storage"); }
+    } else if (str_eq(mode,"save-failure")) {
+        if (config.save(config.defaults(guild)) != 0) { return fail("probe reports persistence failure"); }
+    } else { return fail("unknown probe"); }
+    println(str_concat("PASS: ",mode)); return 0;
+}
+native main {
+    web.scope_begin();
+    if (fr_os_argc() > 1) { let result: int = probe(fr_os_argv(1)); web.scope_end(); return result; }
+    let guild: string = "123456789012345678";
+    let other: string = "123456789012345679";
+    let base: int = config.defaults(guild);
+    if (!config.valid(base) || web.boolean(web.get(web.get(base,"moderation"),"enabled")) || web.count(web.get(base,"reactionRoles")) != 0) { return fail("new guild defaults"); }
+    if (config.defaults("../secrets") != 0 || config.defaults("012345678901234567") != 0) { return fail("guild path validation"); }
+    let changed: int = config.apply(base,"automod",web.parse("{\"enabled\":true,\"messages\":10,\"window\":8,\"mentions\":5,\"timeout\":0}"));
+    let moderation: int = web.get(changed,"moderation");
+    if (changed == 0 || !web.boolean(web.get(moderation,"enabled")) || web.field_int(moderation,"messageLimit") != 10 || web.field_int(moderation,"windowSeconds") != 8 || web.field_int(moderation,"mentionLimit") != 5 || web.field_int(moderation,"timeoutSeconds") != 0) { return fail("automod option update"); }
+    if (web.boolean(web.get(web.get(base,"moderation"),"enabled"))) { return fail("apply preserves input snapshot"); }
+    if (config.apply(base,"automod",web.parse("{\"enabled\":true,\"messages\":0}")) != 0 || config.apply(base,"automod",web.parse("{\"enabled\":1}")) != 0 || config.apply(base,"automod",web.parse("{\"enabled\":true,\"window\":1.5}")) != 0) { return fail("invalid limits rejected"); }
+    if (config.apply(base,"automod",web.parse("{\"enabled\":true,\"messages\":101}")) != 0 || config.apply(base,"automod",web.parse("{\"enabled\":true,\"window\":61}")) != 0 || config.apply(base,"automod",web.parse("{\"enabled\":true,\"mentions\":101}")) != 0 || config.apply(base,"automod",web.parse("{\"enabled\":true,\"timeout\":2419201}")) != 0) { return fail("maximum limits rejected"); }
+    if (config.apply(base,"word-add",web.parse("{\"word\":\"one\\ntwo\"}")) != 0 || config.apply(base,"word-add",web.parse("{\"word\":\"one\\rtwo\"}")) != 0) { return fail("multiline word rejected"); }
+    let bounded: int = config.defaults(guild); let bounded_words: int = web.array(); let wi: int = 0;
+    while (wi < 500) { web.push(bounded_words,web.jstring(str_concat("term",str_from_int(wi)))); wi = wi + 1; }
+    web.set(web.get(bounded,"moderation"),"blockedTerms",bounded_words);
+    if (!config.valid(bounded)) { return fail("word count boundary accepted"); }
+    web.push(bounded_words,web.jstring("overflow"));
+    if (config.valid(bounded)) { return fail("word count maximum rejected"); }
+    changed = config.apply(changed,"word-add",web.parse("{\"word\":\" ＦＵＣＫ \"}"));
+    changed = config.apply(changed,"word-add",web.parse("{\"word\":\"fuck\"}"));
+    let words: int = web.get(web.get(changed,"moderation"),"blockedTerms");
+    if (web.count(words) != 1 || !str_eq(web.text(web.at(words,0)),"fuck")) { return fail("normalized deduplicated words"); }
+    changed = config.apply(changed,"word-remove",web.parse("{\"word\":\"ＦＵＣＫ\"}"));
+    if (web.count(web.get(web.get(changed,"moderation"),"blockedTerms")) != 0 || config.apply(changed,"word-add",web.parse("{\"word\":\" \"}")) != 0) { return fail("word removal and empty word validation"); }
+    let binding: int = web.parse("{\"channel\":\"123456789012345680\",\"message\":\"123456789012345681\",\"role\":\"123456789012345682\",\"emoji\":\"✅\"}");
+    changed = config.apply(changed,"reaction-add",binding);
+    if (changed == 0 || web.count(web.get(changed,"reactionRoles")) != 1) { return fail("reaction binding add"); }
+    web.set(binding,"role",web.jstring("123456789012345683"));
+    if (config.apply(changed,"reaction-add",binding) != 0) { return fail("duplicate message emoji rejection"); }
+    changed = config.apply(changed,"reaction-remove",web.parse("{\"role\":\"123456789012345682\"}"));
+    if (changed == 0 || web.count(web.get(changed,"reactionRoles")) != 0) { return fail("reaction remove"); }
+    changed = config.apply(changed,"exempt-role",web.parse("{\"role\":\"123456789012345682\",\"exempt\":true}"));
+    changed = config.apply(changed,"exempt-channel",web.parse("{\"channel\":\"123456789012345680\",\"exempt\":true}"));
+    if (web.count(web.get(web.get(changed,"moderation"),"exemptRoleIds")) != 1 || web.count(web.get(web.get(changed,"moderation"),"exemptChannelIds")) != 1) { return fail("exemptions add"); }
+    changed = config.apply(changed,"exempt-role",web.parse("{\"role\":\"123456789012345682\",\"exempt\":false}"));
+    changed = config.apply(changed,"exempt-channel",web.parse("{\"channel\":\"123456789012345680\",\"exempt\":false}"));
+    if (web.count(web.get(web.get(changed,"moderation"),"exemptRoleIds")) != 0 || web.count(web.get(web.get(changed,"moderation"),"exemptChannelIds")) != 0) { return fail("exemptions remove"); }
+    changed = config.apply(changed,"log",web.parse("{\"channel\":\"123456789012345680\"}"));
+    if (!str_eq(web.field_text(changed,"logChannelId"),"123456789012345680")) { return fail("audit channel set"); }
+    changed = config.apply(changed,"log",web.object());
+    if (web.has(changed,"logChannelId") || config.apply(changed,"log",web.parse("{\"channel\":null}")) != 0) { return fail("audit channel clear"); }
+    if (config.apply(changed,"unknown",web.object()) != 0 || config.apply(changed,"log",web.parse("{\"guildId\":\"123456789012345679\"}")) != 0) { return fail("unknown action and options"); }
+    let invalid: int = web.parse(web.dump(changed)); web.set(invalid,"unknown",web.number(1));
+    if (config.valid(invalid)) { return fail("unknown persisted fields"); }
+    let legacy: int = config.canonical(web.parse("{\"guildId\":\"123456789012345678\",\"moderation\":{\"blockedTerms\":[]}}"));
+    if (legacy == 0 || !web.boolean(web.get(web.get(legacy,"moderation"),"enabled"))) { return fail("legacy defaults"); }
+    if (str_len(web.env("BOT_CONFIG_DIR","")) == 0) { return fail("isolated test directory required"); }
+    if (!config.save(changed)) { return fail("persistent save"); }
+    let loaded: int = config.load(guild);
+    if (loaded == 0 || !str_eq(web.dump(loaded),web.dump(changed))) { return fail("persistent reload"); }
+    if (web.boolean(web.get(web.get(config.load(other),"moderation"),"enabled"))) { return fail("cross guild isolation"); }
+    if (config.save(invalid) != 0 || !str_eq(web.dump(config.load(guild)),web.dump(changed))) { return fail("failed validation preserves saved data"); }
+    fs_write(config.path(guild),"{broken");
+    if (config.load(guild) != 0) { return fail("corrupt file fails closed"); }
+    fs_write(config.path(guild),web.dump(config.defaults(other)));
+    if (config.load(guild) != 0) { return fail("misfiled guild fails closed"); }
+    fs_remove(config.path(guild));
+    let definitions: int = commands.list(); let setup: int = web.at(definitions,0);
+    if (web.count(definitions) != 6 || !str_eq(web.field_text(setup,"name"),"setup") || web.count(web.get(setup,"options")) != 9 || !str_eq(web.field_text(setup,"default_member_permissions"),"32") || web.boolean(web.get(setup,"dm_permission"))) { return fail("slash command schema"); }
+    println("PASS: native configuration defaults, validation, persistence, isolation, dynamic updates and command schema");
+    web.scope_end(); return 0;
+}

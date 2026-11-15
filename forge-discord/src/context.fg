@@ -1,0 +1,46 @@
+import strings;
+import web;
+import api;
+import discord;
+import config;
+
+fn member_path(guild: string, member: string): string {
+ if(discord.id_valid(guild)==0 || discord.id_valid(member)==0){return "";}
+ return discord.child_path(discord.guild_path(guild),"members",member);
+}
+
+fn load(ctx: int, guild: string, channel: string, actor: string): int {
+ if(discord.id_valid(guild)==0 || discord.id_valid(channel)==0 || discord.id_valid(actor)==0){return 0;}
+ let settings: int=config.load(guild);if(web.kind(settings)!=4){return 0;}
+ web.set(ctx,"config",settings);
+ let guild_data: int=api.get(ctx,discord.guild_path(guild));
+ let roles: int=api.get(ctx,discord.child_path(discord.guild_path(guild),"roles",""));
+ let actor_data: int=api.get(ctx,member_path(guild,actor));
+ let bot: int=api.get(ctx,member_path(guild,web.field_text(ctx,"application")));
+ let channel_data: int=api.get(ctx,discord.channel_path(channel));
+ let channel_type: int=web.field_int(channel_data,"type");
+ if(channel_type>=10 && channel_type<=12){
+  let parent: int=api.get(ctx,discord.channel_path(web.field_text(channel_data,"parent_id")));
+  if(web.equal(web.field_text(parent,"guild_id"),guild)==0 || web.kind(web.get(parent,"permission_overwrites"))!=5){return 0;}
+  web.set(channel_data,"permission_overwrites",web.get(parent,"permission_overwrites"));
+ }
+ if(web.equal(web.field_text(guild_data,"id"),guild)==0 || discord.id_valid(web.field_text(guild_data,"owner_id"))==0 || web.kind(roles)!=5 || web.kind(actor_data)!=4 || web.kind(bot)!=4 || web.equal(web.field_text(channel_data,"guild_id"),guild)==0){return 0;}
+ if(web.equal(web.field_text(web.get(actor_data,"user"),"id"),actor)==0 || web.equal(web.field_text(web.get(bot,"user"),"id"),web.field_text(ctx,"application"))==0){return 0;}
+ web.set(ctx,"guild",guild_data);web.set(ctx,"roles",roles);web.set(ctx,"actor",actor_data);web.set(ctx,"bot",bot);web.set(ctx,"channel",channel_data);return 1;
+}
+
+fn role(ctx: int, id: string): int {
+ let roles: int=web.get(ctx,"roles");let index: int=0;
+ while(index<web.count(roles)){let value: int=web.at(roles,index);if(web.equal(web.field_text(value,"id"),id)!=0){return value;}index=index+1;}return 0;
+}
+
+fn options(event: int): int {
+ let all: int=web.get(web.get(web.get(event,"d"),"data"),"options");
+ let first: int=web.at(all,0);if(web.field_int(first,"type")==1){all=web.get(first,"options");}
+ let result: int=web.object();let index: int=0;
+ while(index<web.count(all)){let option: int=web.at(all,index);web.set(result,web.field_text(option,"name"),web.get(option,"value"));index=index+1;}return result;
+}
+
+fn action(event: int): string {
+ return web.field_text(web.at(web.get(web.get(web.get(event,"d"),"data"),"options"),0),"name");
+}

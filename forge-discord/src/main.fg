@@ -1,0 +1,2 @@
+import bot_runtime;
+native main { return bot_runtime.run(); }

@@ -1,0 +1,12 @@
+import strings;
+import web;
+import bot_runtime;
+import config;
+extern fn fr_os_argc(): int;
+extern fn fr_os_argv(index: int): string;
+native main {
+ web.scope_begin();let ok: int=web.kind(bot_runtime.credentials())==4;
+ if(fr_os_argc()>1){ok=ok && web.kind(config.load(fr_os_argv(1)))==4;}
+ if(ok!=0){println("Bot environment/configuration valid.");}else{println("Invalid bot environment/configuration.");}
+ web.scope_end();str_reset_arena();if(ok!=0){return 0;}return 1;
+}

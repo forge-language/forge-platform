@@ -1,0 +1,90 @@
+import strings;
+import web;
+import rest;
+import discord;
+import gateway_client;
+import env;
+extern fn fr_monotonic_now_ms(): int;
+
+fn context(token: string, application: string, client: int): int {
+ let value: int=web.object();
+ web.set(value,"token",web.jstring(token));web.set(value,"application",web.jstring(application));
+ web.set(value,"gateway",web.number(client));web.set(value,"queue",web.array());
+ let base: string=env.get(".env","DISCORD_API_BASE");if(str_len(base)==0){base="https://discord.com/api/v10";}
+ web.set(value,"apiBase",web.jstring(base));
+ web.set(value,"deadline",web.number(fr_monotonic_now_ms()+12000));return value;
+}
+
+fn raw(ctx: int, method: string, path: string, body: string): int {
+ let remaining: int=web.field_int(ctx,"deadline")-fr_monotonic_now_ms();
+ if(remaining<=0 || str_len(path)==0 || str_char_at(path,0)!=47){return 0;}
+ if(remaining>3000){remaining=3000;}
+ let response: int=rest.create(method,str_concat(web.field_text(ctx,"apiBase"),path),web.field_text(ctx,"token"),body);
+ if(response<0){return 0;}
+ if(str_len(body)>0){rest.add_header(response,"Content-Type: application/json");}
+ if(web.chars(web.field_text(ctx,"reason"))>0){rest.add_header(response,str_concat("X-Audit-Log-Reason: ",discord.url_encode(web.field_text(ctx,"reason"))));}
+ rest.perform(response,remaining);
+ let result: int=web.object();web.set(result,"status",web.number(rest.status(response)));
+ web.set(result,"data",web.parse(rest.body(response)));rest.close(response);return result;
+}
+
+fn success(response: int): int {
+ let status: int=web.field_int(response,"status");return status>=200 && status<300;
+}
+
+fn callback_path(event: int): string {
+ let data: int=web.get(event,"d");let id: string=web.field_text(data,"id");
+ if(discord.id_valid(id)==0 || str_len(web.field_text(data,"token"))==0){return "";}
+ return str_concat(str_concat(str_concat("/interactions/",id),"/"),str_concat(discord.url_encode(web.field_text(data,"token")),"/callback"));
+}
+
+fn defer(ctx: int, event: int): int {
+ if(web.boolean(web.get(event,"_forge_deferred"))!=0){return 1;}
+ let response: int=raw(ctx,"POST",callback_path(event),"{\"type\":5,\"data\":{\"flags\":64}}");
+ if(success(response)==0){return 0;}web.set(event,"_forge_deferred",web.jbool(true));return 1;
+}
+
+// Poll between REST calls so heartbeat ACKs and new dispatches keep moving.
+// Incoming interactions are acknowledged before they wait behind another event.
+fn pulse(ctx: int): int {
+ let client: int=web.field_int(ctx,"gateway");if(client<=0){return 1;}
+ let event: int=web.parse(gateway_client.poll(client,1));
+ if(web.kind(event)!=4){return 1;}
+ let queue: int=web.get(ctx,"queue");
+ if(web.count(queue)>=128){web.set(ctx,"overloaded",web.jbool(true));return 0;}
+ if(web.equal(web.field_text(event,"t"),"INTERACTION_CREATE")!=0 && web.field_int(web.get(event,"d"),"type")==2){defer(ctx,event);}
+ web.push(queue,event);return 1;
+}
+
+fn request(ctx: int, method: string, path: string, body: string): int {
+ if(pulse(ctx)==0){return 0;}
+ let result: int=raw(ctx,method,path,body);pulse(ctx);return result;
+}
+
+fn get(ctx: int, path: string): int {
+ let response: int=request(ctx,"GET",path,"");if(success(response)==0){return 0;}return web.get(response,"data");
+}
+
+fn write(ctx: int, method: string, path: string, body: int): int {
+ let text: string="";if(web.kind(body)!=0){text=web.dump(body);}return success(request(ctx,method,path,text));
+}
+
+fn content(text: string): int {
+ let value: int=web.object();web.set(value,"content",web.jstring(text));
+ let mentions: int=web.object();web.set(mentions,"parse",web.array());web.set(value,"allowed_mentions",mentions);return value;
+}
+
+fn reply(ctx: int, event: int, text: string): int {
+ let data: int=web.get(event,"d");
+ let path: string=str_concat(str_concat(str_concat("/webhooks/",web.field_text(ctx,"application")),"/"),discord.url_encode(web.field_text(data,"token")));
+ return write(ctx,"PATCH",str_concat(path,"/messages/@original"),content(text));
+}
+
+fn audit(ctx: int, text: string): int {
+ if(str_len(text)==0){return 1;}
+ println(text);let config: int=web.get(ctx,"config");let channel: string=web.field_text(config,"logChannelId");
+ if(discord.id_valid(channel)==0){return 1;}
+ let target: int=get(ctx,discord.channel_path(channel));
+ if(web.equal(web.field_text(target,"guild_id"),web.field_text(config,"guildId"))==0){return 0;}
+ return write(ctx,"POST",discord.messages_path(channel),content(text));
+}

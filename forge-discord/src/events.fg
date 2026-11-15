@@ -1,0 +1,26 @@
+import strings;
+import web;
+import api;
+import context;
+import discord;
+import setup_native;
+import moderation_native;
+import reaction_native;
+import automod_native;
+
+fn handle(ctx: int, event: int): int {
+ let name: string=web.field_text(event,"t");let data: int=web.get(event,"d");
+ if(web.equal(name,"INTERACTION_CREATE")!=0){
+  if(web.field_int(data,"type")!=2){return 1;}
+  if(api.defer(ctx,event)==0){println("bot.interaction.defer_failed");return 0;}
+  let member: int=web.get(data,"member");let actor: string=web.field_text(web.get(member,"user"),"id");
+  if(context.load(ctx,web.field_text(data,"guild_id"),web.field_text(data,"channel_id"),actor)==0){return api.reply(ctx,event,"서버 설정이나 권한 정보를 읽지 못했습니다.");}
+  if(web.equal(web.field_text(web.get(data,"data"),"name"),"setup")!=0){return setup_native.apply(ctx,event);}
+  return moderation_native.handle(ctx,event);
+ }
+ if(web.equal(name,"MESSAGE_REACTION_ADD")!=0){return reaction_native.handle(ctx,event,1);}
+ if(web.equal(name,"MESSAGE_REACTION_REMOVE")!=0){return reaction_native.handle(ctx,event,0);}
+ if(web.equal(name,"MESSAGE_CREATE")!=0){return automod_native.handle(ctx,event,0);}
+ if(web.equal(name,"MESSAGE_UPDATE")!=0){return automod_native.handle(ctx,event,1);}
+ return 1;
+}

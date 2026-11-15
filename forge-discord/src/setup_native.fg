@@ -1,0 +1,51 @@
+import strings;
+import web;
+import api;
+import context;
+import config;
+import permissions;
+import discord;
+extern fn bot_bit_and(a: int,b: int): int;
+
+fn channel_permissions(ctx: int, channel: int): int {
+ let guild: int=web.get(ctx,"guild");
+ return permissions.channel_bits(web.get(ctx,"bot"),web.get(ctx,"roles"),channel,web.field_text(guild,"id"),web.field_text(guild,"owner_id"));
+}
+
+fn apply(ctx: int, event: int): int {
+ if(permissions.allowed(ctx,"setup")==0){return api.reply(ctx,event,"서버 관리 권한이 필요합니다.");}
+ let action: string=context.action(event);let options: int=context.options(event);let current: int=web.get(ctx,"config");
+ if(web.equal(action,"show")!=0){
+  let text: string=web.dump(current);
+  if(str_len(text)>1800){let end: int=1800;while(end>0 && str_char_at(text,end)>=128 && str_char_at(text,end)<192){end=end-1;}text=str_concat(str_sub(text,0,end)," …");}
+  return api.reply(ctx,event,str_concat(str_concat("현재 서버 설정:\n```json\n",text),"\n```"));
+ }
+ let next: int=config.apply(current,action,options);
+ if(web.kind(next)!=4){return api.reply(ctx,event,"설정 값이 잘못되었거나 반응 역할이 중복됩니다. 저장하지 않았습니다.");}
+ if(web.equal(action,"log")!=0 && web.chars(web.field_text(next,"logChannelId"))>0){
+  let channel: int=api.get(ctx,discord.channel_path(web.field_text(next,"logChannelId")));
+  let guild: string=web.field_text(current,"guildId");
+  if(web.equal(web.field_text(channel,"guild_id"),guild)==0 || (web.field_int(channel,"type")!=0 && web.field_int(channel,"type")!=5) || bot_bit_and(channel_permissions(ctx,channel),3072)!=3072){return api.reply(ctx,event,"봇이 읽고 쓸 수 있는 서버 텍스트 채널을 선택해 주세요.");}
+ }
+ if(web.equal(action,"exempt-channel")!=0){
+  let channel: int=api.get(ctx,discord.channel_path(web.field_text(options,"channel")));
+  if(web.equal(web.field_text(channel,"guild_id"),web.field_text(current,"guildId"))==0){return api.reply(ctx,event,"서버 채널을 찾을 수 없습니다.");}
+ }
+ if(web.equal(action,"exempt-role")!=0 && web.kind(context.role(ctx,web.field_text(options,"role")))!=4){return api.reply(ctx,event,"서버 역할을 찾을 수 없습니다.");}
+ if(web.equal(action,"reaction-add")!=0){
+  let binding: int=0;let values: int=web.get(next,"reactionRoles");let i: int=0;
+  while(i<web.count(values)){let item: int=web.at(values,i);if(web.equal(web.field_text(item,"roleId"),web.field_text(options,"role"))!=0){binding=item;}i=i+1;}
+  let channel: int=api.get(ctx,discord.channel_path(web.field_text(binding,"channelId")));
+  let role: int=context.role(ctx,web.field_text(binding,"roleId"));
+  if(web.equal(web.field_text(channel,"guild_id"),web.field_text(current,"guildId"))==0 || (web.field_int(channel,"type")!=0 && web.field_int(channel,"type")!=5) || bot_bit_and(channel_permissions(ctx,channel),66624)!=66624){return api.reply(ctx,event,"봇의 채널 권한을 확인해 주세요.");}
+  web.set(ctx,"channel",channel);
+  if(web.kind(role)!=4 || web.chars(permissions.reaction(ctx,binding,role,0))==0){return api.reply(ctx,event,"안전하지 않거나 봇보다 높은 역할은 연결할 수 없습니다.");}
+  let message: int=api.get(ctx,str_concat(str_concat(discord.messages_path(web.field_text(binding,"channelId")),"/"),web.field_text(binding,"messageId")));
+  if(web.equal(web.field_text(message,"id"),web.field_text(binding,"messageId"))==0 || web.equal(web.field_text(message,"channel_id"),web.field_text(binding,"channelId"))==0){return api.reply(ctx,event,"역할 메시지를 찾을 수 없습니다.");}
+ }
+ if(config.save(next)==0){return api.reply(ctx,event,"설정을 저장하지 못했습니다. 저장 디렉터리를 확인해 주세요.");}
+ web.set(ctx,"config",next);
+ if(web.equal(action,"reaction-add")!=0){api.reply(ctx,event,"연결을 저장했습니다. /roles message:메시지ID로 이모지를 붙여 주세요.");}
+ else{api.reply(ctx,event,"설정을 저장했습니다. 재시작 없이 적용됩니다.");}
+ return api.audit(ctx,str_concat("setup action=",action));
+}

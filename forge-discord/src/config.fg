@@ -1,0 +1,181 @@
+import web;
+import strings;
+import fs;
+import env;
+extern fn bot_write_atomic(path: string, value: string): int;
+extern fn bot_nfkc_lower(value: string): string;
+extern fn bot_read_text(path: string): string;
+
+fn id(value: string): int {
+    let size: int = str_len(value);
+    if (size < 17 || size > 20 || str_char_at(value,0) == 48) { return 0; }
+    let i: int = 0;
+    while (i < size) { let c: int = str_char_at(value,i); if (c < 48 || c > 57) { return 0; } i = i + 1; }
+    return 1;
+}
+fn keys_allowed(value: int, allowed: string): int {
+    if (web.kind(value) != 4) { return 0; }
+    let keys: int = web.keys(value); let i: int = 0;
+    while (i < web.count(keys)) {
+        if (!str_contains(allowed,str_concat(str_concat("|",web.text(web.at(keys,i))),"|"))) { return 0; }
+        i = i + 1;
+    }
+    return 1;
+}
+fn number_in(value: int, key: string, low: int, high: int): int {
+    return web.required(value,key,2) && web.field_int(value,key) >= low && web.field_int(value,key) <= high;
+}
+fn id_array(value: int): int {
+    if (web.kind(value) != 5 || web.count(value) > 1000) { return 0; }
+    let i: int = 0;
+    while (i < web.count(value)) { if (!id(web.text(web.at(value,i)))) { return 0; } i = i + 1; }
+    return 1;
+}
+fn word_valid(word: string): int {
+    return web.chars(word) >= 1 && web.chars(word) <= 100 && !str_contains(word,"\n") && !str_contains(word,"\r");
+}
+fn binding_valid(binding: int): int {
+    return keys_allowed(binding,"|channelId|messageId|emoji|roleId|") && web.count(binding) == 4
+        && id(web.field_text(binding,"channelId")) && id(web.field_text(binding,"messageId"))
+        && id(web.field_text(binding,"roleId")) && word_valid(web.field_text(binding,"emoji"));
+}
+fn valid(value: int): int {
+    if (!keys_allowed(value,"|guildId|logChannelId|reactionRoles|moderation|") || !id(web.field_text(value,"guildId"))) { return 0; }
+    if (web.has(value,"logChannelId") && !id(web.field_text(value,"logChannelId"))) { return 0; }
+    let rules: int = web.get(value,"reactionRoles"); let moderation: int = web.get(value,"moderation");
+    if (web.kind(rules) != 5 || web.count(rules) > 100 || !keys_allowed(moderation,"|enabled|blockedTerms|exemptRoleIds|exemptChannelIds|messageLimit|windowSeconds|mentionLimit|timeoutSeconds|")) { return 0; }
+    if (!web.required(moderation,"enabled",1) || !number_in(moderation,"messageLimit",2,100)
+        || !number_in(moderation,"windowSeconds",1,60) || !number_in(moderation,"mentionLimit",2,100)
+        || !number_in(moderation,"timeoutSeconds",0,2419200)
+        || !id_array(web.get(moderation,"exemptRoleIds")) || !id_array(web.get(moderation,"exemptChannelIds"))) { return 0; }
+    let words: int = web.get(moderation,"blockedTerms"); let i: int = 0;
+    if (web.kind(words) != 5 || web.count(words) > 500) { return 0; }
+    while (i < web.count(words)) { if (!word_valid(web.text(web.at(words,i)))) { return 0; } i = i + 1; }
+    i = 0;
+    while (i < web.count(rules)) {
+        let current: int = web.at(rules,i); let previous: int = 0;
+        if (!binding_valid(current)) { return 0; }
+        while (previous < i) {
+            let other: int = web.at(rules,previous);
+            if (str_eq(web.field_text(current,"roleId"),web.field_text(other,"roleId"))) { return 0; }
+            if (str_eq(web.field_text(current,"channelId"),web.field_text(other,"channelId"))
+                && str_eq(web.field_text(current,"messageId"),web.field_text(other,"messageId"))
+                && str_eq(web.field_text(current,"emoji"),web.field_text(other,"emoji"))) { return 0; }
+            previous = previous + 1;
+        }
+        i = i + 1;
+    }
+    return 1;
+}
+fn fallback(value: int, key: string, item: int): int {
+    if (!web.has(value,key)) { return web.set(value,key,item); } return 1;
+}
+fn canonical(value: int): int {
+    if (web.kind(value) != 4 || web.kind(web.get(value,"moderation")) != 4) { return 0; }
+    let result: int = web.parse(web.dump(value)); let moderation: int = web.get(result,"moderation");
+    fallback(result,"reactionRoles",web.array()); fallback(moderation,"enabled",web.jbool(1));
+    fallback(moderation,"exemptRoleIds",web.array()); fallback(moderation,"exemptChannelIds",web.array());
+    fallback(moderation,"messageLimit",web.number(6)); fallback(moderation,"windowSeconds",web.number(5));
+    fallback(moderation,"mentionLimit",web.number(8)); fallback(moderation,"timeoutSeconds",web.number(300));
+    let words: int = web.get(moderation,"blockedTerms"); let normalized: int = web.array(); let i: int = 0;
+    if (web.kind(words) != 5) { return 0; }
+    while (i < web.count(words)) {
+        if (web.kind(web.at(words,i)) != 3) { return 0; }
+        web.push(normalized,web.jstring(web.trim(web.text(web.at(words,i))))); i = i + 1;
+    }
+    web.set(moderation,"blockedTerms",normalized);
+    if (!valid(result)) { return 0; } return result;
+}
+fn defaults(guild: string): int {
+    if (!id(guild)) { return 0; }
+    let value: int = web.object(); let moderation: int = web.object();
+    web.set(value,"guildId",web.jstring(guild)); web.set(moderation,"enabled",web.jbool(0));
+    web.set(moderation,"blockedTerms",web.array()); web.set(value,"moderation",moderation);
+    return canonical(value);
+}
+fn directory(): string {
+    let path: string = env.get(".env","BOT_CONFIG_DIR"); if (str_len(path) == 0) { return "data/guilds"; } return path;
+}
+fn path(guild: string): string { return str_concat(str_concat(str_concat(directory(),"/"),guild),".json"); }
+fn save(value: int): int {
+    let checked: int = canonical(value); if (checked == 0) { return 0; }
+    return bot_write_atomic(path(web.field_text(checked,"guildId")),web.dump(checked));
+}
+fn read(path: string): int {
+    if (!fs_is_file(path) || fs_size(path) > 1048576) { return 0; }
+    return canonical(web.parse(bot_read_text(path)));
+}
+fn load(guild: string): int {
+    if (!id(guild)) { return 0; }
+    let location: string = path(guild);
+    if (fs_exists(location)) {
+        let value: int = read(location);
+        if (value == 0 || !str_eq(web.field_text(value,"guildId"),guild)) { return 0; }
+        return value;
+    }
+    let legacy: string = env.get(".env","BOT_CONFIG"); if (str_len(legacy) == 0) { legacy = "config.json"; }
+    if (fs_exists(legacy)) {
+        let old: int = read(legacy); if (old == 0) { return 0; }
+        if (str_eq(web.field_text(old,"guildId"),guild)) { if (!save(old)) { return 0; } return old; }
+    }
+    return defaults(guild);
+}
+fn without(value: int, excluded: string): int {
+    let result: int = web.object(); let keys: int = web.keys(value); let i: int = 0;
+    while (i < web.count(keys)) {
+        let key: string = web.text(web.at(keys,i));
+        if (!str_eq(key,excluded)) { web.set(result,key,web.get(value,key)); } i = i + 1;
+    }
+    return result;
+}
+fn strings_update(values: int, item: string, add: int, normalized: int): int {
+    let result: int = web.array(); let i: int = 0;
+    while (i < web.count(values)) {
+        let current: string = web.text(web.at(values,i)); let compared: string = current;
+        if (normalized) { compared = bot_nfkc_lower(current); }
+        if (!str_eq(compared,item)) { web.push(result,web.jstring(current)); } i = i + 1;
+    }
+    if (add) { web.push(result,web.jstring(item)); } return result;
+}
+fn replace_if_present(target: int, key: string, options: int, option: string): int {
+    if (web.has(options,option)) { web.set(target,key,web.get(options,option)); } return 1;
+}
+fn apply(current: int, action: string, options: int): int {
+    let next: int = canonical(current); if (next == 0 || web.kind(options) != 4) { return 0; }
+    let moderation: int = web.get(next,"moderation");
+    if (str_eq(action,"log")) {
+        if (!keys_allowed(options,"|channel|")) { return 0; }
+        next = without(next,"logChannelId");
+        if (web.has(options,"channel")) { web.set(next,"logChannelId",web.get(options,"channel")); }
+    } else if (str_eq(action,"automod")) {
+        if (!keys_allowed(options,"|enabled|messages|window|mentions|timeout|") || !web.required(options,"enabled",1)) { return 0; }
+        web.set(moderation,"enabled",web.get(options,"enabled"));
+        replace_if_present(moderation,"messageLimit",options,"messages"); replace_if_present(moderation,"windowSeconds",options,"window");
+        replace_if_present(moderation,"mentionLimit",options,"mentions"); replace_if_present(moderation,"timeoutSeconds",options,"timeout");
+    } else if (str_eq(action,"reaction-add") || str_eq(action,"reaction-remove")) {
+        if (!id(web.field_text(options,"role"))) { return 0; }
+        let allowed: string = "|role|"; if (str_eq(action,"reaction-add")) { allowed = "|role|channel|message|emoji|"; }
+        if (!keys_allowed(options,allowed)) { return 0; }
+        let list: int = web.array(); let previous: int = web.get(next,"reactionRoles"); let i: int = 0;
+        while (i < web.count(previous)) {
+            let binding: int = web.at(previous,i);
+            if (!str_eq(web.field_text(binding,"roleId"),web.field_text(options,"role"))) { web.push(list,binding); } i = i + 1;
+        }
+        if (str_eq(action,"reaction-add")) {
+            let binding: int = web.object();
+            web.set(binding,"channelId",web.get(options,"channel")); web.set(binding,"messageId",web.get(options,"message"));
+            web.set(binding,"emoji",web.get(options,"emoji")); web.set(binding,"roleId",web.get(options,"role")); web.push(list,binding);
+        }
+        web.set(next,"reactionRoles",list);
+    } else if (str_eq(action,"word-add") || str_eq(action,"word-remove")) {
+        if (!keys_allowed(options,"|word|") || !web.required(options,"word",3)) { return 0; }
+        let word: string = bot_nfkc_lower(web.trim(web.field_text(options,"word"))); if (!word_valid(word)) { return 0; }
+        web.set(moderation,"blockedTerms",strings_update(web.get(moderation,"blockedTerms"),word,str_eq(action,"word-add"),1));
+    } else if (str_eq(action,"exempt-role") || str_eq(action,"exempt-channel")) {
+        let option: string = "role"; let field: string = "exemptRoleIds"; let allowed: string = "|role|exempt|";
+        if (str_eq(action,"exempt-channel")) { option = "channel"; field = "exemptChannelIds"; allowed = "|channel|exempt|"; }
+        if (!keys_allowed(options,allowed) || !id(web.field_text(options,option)) || !web.required(options,"exempt",1)) { return 0; }
+        web.set(moderation,field,strings_update(web.get(moderation,field),web.field_text(options,option),web.boolean(web.get(options,"exempt")),0));
+    } else { return 0; }
+    if (!valid(next)) { return 0; } return next;
+}

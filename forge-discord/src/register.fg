@@ -1,0 +1,19 @@
+import strings;
+import web;
+import bot_runtime;
+import api;
+import commands;
+import discord;
+extern fn bot_init(): int;
+extern fn fr_os_argc(): int;
+extern fn fr_os_argv(index: int): string;
+native main {
+ if(bot_init()==0){return 1;}web.scope_begin();let secret: int=bot_runtime.credentials();
+ if(web.kind(secret)!=4){println("DISCORD_TOKEN and DISCORD_CLIENT_ID are required.");web.scope_end();return 1;}
+ let application: string=web.field_text(secret,"application");let path: string=str_concat(str_concat("/applications/",application),"/commands");
+ if(fr_os_argc()>1){let guild: string=fr_os_argv(1);if(discord.id_valid(guild)==0 || str_len(guild)<17){web.scope_end();return 1;}path=str_concat(str_concat(str_concat(str_concat("/applications/",application),"/guilds/"),guild),"/commands");}
+ let ctx: int=api.context(web.field_text(secret,"token"),application,0);
+ let result: int=api.write(ctx,"PUT",path,commands.list());
+ if(result!=0){println("Discord commands registered.");}else{println("Command registration failed.");}
+ web.scope_end();str_reset_arena();if(result!=0){return 0;}return 1;
+}

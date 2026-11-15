@@ -1,0 +1,20 @@
+name: forge-discord
+services:
+ bot:
+  build:
+   context: ..
+   dockerfile: forge-discord/Native.Containerfile
+  image: forge-discord-native:local
+  env_file: .env
+  environment:
+   BOT_CONFIG_DIR: /app/data/guilds
+  volumes: [discord-data:/app/data]
+  init: true
+  read_only: true
+  cap_drop: [ALL]
+  security_opt: [no-new-privileges:true]
+  mem_limit: 256m
+  pids_limit: 32
+  restart: unless-stopped
+volumes:
+ discord-data:

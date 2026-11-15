@@ -1,0 +1,74 @@
+import strings;
+import web;
+import api;
+import discord;
+import context;
+import permissions;
+extern fn bot_time_iso(seconds: int): string;
+
+fn prepare_roles(ctx: int, event: int, message_id: string): int {
+ if(discord.id_valid(message_id)==0){return api.reply(ctx,event,"메시지 ID를 확인해 주세요.");}
+ let bindings: int=web.get(web.get(ctx,"config"),"reactionRoles");let selected: int=web.array();let i: int=0;
+ while(i<web.count(bindings)){
+  let binding: int=web.at(bindings,i);
+  if(web.equal(web.field_text(binding,"messageId"),message_id)!=0){
+   let channel: int=api.get(ctx,discord.channel_path(web.field_text(binding,"channelId")));
+   if(web.equal(web.field_text(channel,"guild_id"),web.field_text(web.get(ctx,"guild"),"id"))==0){return api.reply(ctx,event,"역할 채널을 찾을 수 없습니다.");}
+   web.set(ctx,"channel",channel);let role: int=context.role(ctx,web.field_text(binding,"roleId"));
+   if(web.kind(role)!=4 || web.chars(permissions.reaction(ctx,binding,role,0))==0){return api.reply(ctx,event,"안전하지 않거나 봇보다 높은 역할이 포함되어 있습니다.");}
+   let emoji: string=web.field_text(binding,"emoji");
+   if(discord.id_valid(emoji)!=0){
+    let custom: int=api.get(ctx,discord.child_path(discord.guild_path(web.field_text(web.get(ctx,"guild"),"id")),"emojis",emoji));
+    if(web.chars(web.field_text(custom,"name"))==0){return api.reply(ctx,event,"서버 커스텀 이모지를 찾을 수 없습니다.");}
+    emoji=str_concat(str_concat(web.field_text(custom,"name"),":"),emoji);
+   }
+   let item: int=web.parse(web.dump(binding));web.set(item,"transportEmoji",web.jstring(emoji));web.push(selected,item);
+  }i=i+1;
+ }
+ if(web.count(selected)==0){return api.reply(ctx,event,"/setup reaction-add로 먼저 메시지와 역할을 연결해 주세요.");}
+ i=0;while(i<web.count(selected)){
+  let item: int=web.at(selected,i);
+  if(api.write(ctx,"PUT",discord.reaction_path(web.field_text(item,"channelId"),message_id,web.field_text(item,"transportEmoji"),"@me"),0)==0){return api.reply(ctx,event,"이모지를 붙이지 못했습니다. 봇의 채널 권한을 확인해 주세요.");}i=i+1;
+ }
+ api.reply(ctx,event,"반응 역할 메시지를 준비했습니다. 반응을 추가하면 역할이 붙고 제거하면 해제됩니다.");
+ return api.audit(ctx,str_concat("roles actor=",web.field_text(web.get(web.get(ctx,"actor"),"user"),"id")));
+}
+
+fn purge(ctx: int, event: int, count: int): int {
+ if(count<1 || count>100){return api.reply(ctx,event,"삭제 개수는 1~100입니다.");}
+ let channel: string=web.field_text(web.get(ctx,"channel"),"id");
+ let messages: int=api.get(ctx,str_concat(str_concat(discord.messages_path(channel),"?limit="),str_from_int(count)));
+ if(web.kind(messages)!=5){return api.reply(ctx,event,"메시지를 읽지 못했습니다.");}
+ let selected: int=web.array();let i: int=0;let cutoff: int=web.now()*1000-1209600000;
+ while(i<web.count(messages)){
+  let id: string=web.field_text(web.at(messages,i),"id");
+  if(discord.id_valid(id)!=0 && web.integer(web.parse(id))/4194304+1420070400000>cutoff){web.push(selected,web.jstring(id));}i=i+1;
+ }
+ let amount: int=web.count(selected);let ok: int=1;
+ if(amount==1){ok=api.write(ctx,"DELETE",str_concat(str_concat(discord.messages_path(channel),"/"),web.text(web.at(selected,0))),0);}
+ if(amount>1){let body: int=web.object();web.set(body,"messages",selected);ok=api.write(ctx,"POST",str_concat(discord.messages_path(channel),"/bulk-delete"),body);}
+ if(ok==0){return api.reply(ctx,event,"메시지를 삭제하지 못했습니다.");}
+ api.reply(ctx,event,str_concat(str_from_int(amount),"개 메시지를 삭제했습니다. 14일 이상 된 메시지는 제외했습니다."));
+ return api.audit(ctx,str_concat("purge actor=",web.field_text(web.get(web.get(ctx,"actor"),"user"),"id")));
+}
+
+fn handle(ctx: int, event: int): int {
+ let data: int=web.get(event,"d");let name: string=web.field_text(web.get(data,"data"),"name");let options: int=context.options(event);
+ let target_id: string=web.field_text(options,"member");let guild: string=web.field_text(web.get(ctx,"guild"),"id");
+ if(web.chars(target_id)>0){let member: int=api.get(ctx,context.member_path(guild,target_id));if(web.equal(web.field_text(web.get(member,"user"),"id"),target_id)==0){return api.reply(ctx,event,"대상 멤버를 찾을 수 없습니다.");}web.set(ctx,"target",member);}
+ if(permissions.allowed(ctx,name)==0){return api.reply(ctx,event,"권한 또는 역할 서열 때문에 실행할 수 없습니다.");}
+ let actor: string=web.field_text(web.get(web.get(ctx,"actor"),"user"),"id");
+ web.set(ctx,"reason",web.jstring(str_concat(str_concat(actor,": "),web.field_text(options,"reason"))));
+ let ok: int=0;
+ if(web.equal(name,"purge")!=0){return purge(ctx,event,web.field_int(options,"count"));}
+ if(web.equal(name,"roles")!=0){return prepare_roles(ctx,event,web.field_text(options,"message"));}
+ if(web.equal(name,"timeout")!=0){
+  let minutes: int=web.field_int(options,"minutes");if(minutes<1 || minutes>40320){return api.reply(ctx,event,"제한 시간은 1~40320분입니다.");}
+  let body: int=web.object();web.set(body,"communication_disabled_until",web.jstring(bot_time_iso(web.now()+minutes*60)));
+  ok=api.write(ctx,"PATCH",context.member_path(guild,target_id),body);
+ }
+ if(web.equal(name,"kick")!=0){ok=api.write(ctx,"DELETE",context.member_path(guild,target_id),0);}
+ if(web.equal(name,"ban")!=0){let body: int=web.object();web.set(body,"delete_message_seconds",web.number(0));ok=api.write(ctx,"PUT",discord.child_path(discord.guild_path(guild),"bans",target_id),body);}
+ if(ok==0){return api.reply(ctx,event,"실행하지 못했습니다. 봇 권한과 역할 서열을 확인해 주세요.");}
+ api.reply(ctx,event,"실행했습니다.");return api.audit(ctx,str_concat(str_concat(str_concat(name," actor="),actor),str_concat(" target=",target_id)));
+}

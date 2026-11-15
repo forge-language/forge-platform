@@ -1,0 +1,77 @@
+import strings;
+import web;
+import api;
+import context;
+import permissions;
+import policy;
+import config;
+import discord;
+extern fn bot_nfkc_lower(text: string): string;
+extern fn bot_bit_and(a: int,b: int): int;
+extern fn bot_time_iso(seconds: int): string;
+
+fn contains(values: int, id: string): int {
+ let i: int=0;while(i<web.count(values)){if(web.equal(web.text(web.at(values,i)),id)!=0){return 1;}i=i+1;}return 0;
+}
+
+fn exempt(member: int, settings: int): int {
+ let roles: int=web.get(member,"roles");let ids: int=web.get(settings,"exemptRoleIds");let i: int=0;
+ while(i<web.count(ids)){if(contains(roles,web.text(web.at(ids,i)))!=0){return 1;}i=i+1;}return 0;
+}
+
+fn count_mentions(message: int): int {
+ let seen: int=web.object();let users: int=web.get(message,"mentions");let roles: int=web.get(message,"mention_roles");let i: int=0;
+ while(i<web.count(users)){web.set(seen,web.field_text(web.at(users,i),"id"),web.number(1));i=i+1;}
+ i=0;while(i<web.count(roles)){web.set(seen,str_concat("role-",web.text(web.at(roles,i))),web.number(1));i=i+1;}return web.count(web.keys(seen));
+}
+
+fn window(ctx: int, key: string, seconds: int, edit: int): int {
+ let windows: int=web.get(ctx,"windows");let now: int=web.now();let clean: int=web.object();let keys: int=web.keys(windows);let i: int=0;let retained: int=0;
+ while(i<web.count(keys)){
+  let id: string=web.text(web.at(keys,i));let row: int=web.get(windows,id);
+  if(web.field_int(row,"last")>=now-60 && retained<9999){web.set(clean,id,row);retained=retained+1;}i=i+1;
+ }
+ let previous: int=web.get(web.get(windows,key),"times");let times: int=web.array();i=web.count(previous)-99;if(i<0){i=0;}
+ while(i<web.count(previous)){let value: int=web.at(previous,i);if(web.integer(value)>=now-seconds && web.count(times)<99){web.push(times,value);}i=i+1;}
+ if(edit==0){web.push(times,web.number(now));}
+ let row: int=web.object();web.set(row,"last",web.number(now));web.set(row,"times",times);web.set(clean,key,row);web.set(ctx,"windows",clean);return web.count(times);
+}
+
+fn handle(ctx: int, event: int, edit: int): int {
+ let message: int=web.get(event,"d");let guild_id: string=web.field_text(message,"guild_id");
+ if(discord.id_valid(guild_id)==0){return 1;}
+ let value: int=config.load(guild_id);let settings: int=web.get(value,"moderation");
+ if(web.kind(value)!=4 || web.boolean(web.get(settings,"enabled"))==0){return 1;}
+ let channel_id: string=web.field_text(message,"channel_id");let message_id: string=web.field_text(message,"id");
+ if(edit!=0 && (web.kind(web.get(message,"content"))!=3 || web.chars(web.field_text(web.get(message,"author"),"id"))==0)){
+  message=api.get(ctx,str_concat(str_concat(discord.messages_path(channel_id),"/"),message_id));
+  if(web.kind(message)!=4){return 0;}
+ }
+ let author: string=web.field_text(web.get(message,"author"),"id");
+ if(web.boolean(web.get(web.get(message,"author"),"bot"))!=0 || contains(web.get(settings,"exemptChannelIds"),channel_id)!=0){return 1;}
+ if(context.load(ctx,guild_id,channel_id,author)==0){return 0;}
+ let member: int=web.get(ctx,"actor");let bot: int=web.get(ctx,"bot");let guild: int=web.get(ctx,"guild");let roles: int=web.get(ctx,"roles");
+ let flags: int=permissions.bits(member,roles,guild_id,web.field_text(guild,"owner_id"));
+ let input: int=web.object();
+ web.set(input,"guild",web.jstring(guild_id));web.set(input,"configuredGuild",web.jstring(web.field_text(value,"guildId")));
+ web.set(input,"memberBot",web.number(web.boolean(web.get(web.get(member,"user"),"bot"))));
+ web.set(input,"memberOwner",web.number(web.equal(author,web.field_text(guild,"owner_id"))));
+ web.set(input,"memberManageMessages",web.number(bot_bit_and(flags,8192)!=0));
+ web.set(input,"botManageMessages",web.number(bot_bit_and(permissions.channel_bits(bot,roles,web.get(ctx,"channel"),guild_id,web.field_text(guild,"owner_id")),8192)!=0));
+ web.set(input,"exemptRole",web.number(exempt(member,settings)));web.set(input,"exemptChannel",web.number(0));
+ web.set(input,"content",web.jstring(bot_nfkc_lower(web.field_text(message,"content"))));
+ let terms: int=web.get(settings,"blockedTerms");let builder: int=str_builder();let i: int=0;
+ while(i<web.count(terms)){str_builder_append(builder,bot_nfkc_lower(web.text(web.at(terms,i))));str_builder_append(builder,"\n");i=i+1;}
+ web.set(input,"terms",web.jstring(str_builder_finish(builder)));
+ web.set(input,"messageCount",web.number(window(ctx,str_concat(str_concat(guild_id,"/"),author),web.field_int(settings,"windowSeconds"),edit)));
+ web.set(input,"messageLimit",web.get(settings,"messageLimit"));web.set(input,"mentionLimit",web.get(settings,"mentionLimit"));
+ web.set(input,"mentions",web.number(count_mentions(message)+web.boolean(web.get(message,"mention_everyone"))*web.field_int(settings,"mentionLimit")));
+ let decision: int=policy.automod(web.dump(input));if(decision==0){return 1;}
+ if(api.write(ctx,"DELETE",str_concat(str_concat(discord.messages_path(channel_id),"/"),message_id),0)==0){return 0;}
+ web.set(ctx,"target",member);web.set(ctx,"actor",bot);
+ if(web.field_int(settings,"timeoutSeconds")>0 && permissions.allowed(ctx,"timeout")!=0){
+  let body: int=web.object();web.set(body,"communication_disabled_until",web.jstring(bot_time_iso(web.now()+web.field_int(settings,"timeoutSeconds"))));
+  if(api.write(ctx,"PATCH",context.member_path(guild_id,author),body)==0){println("bot.automod.timeout_failed_after_delete");return 0;}
+ }
+ return api.audit(ctx,str_concat(str_concat("automod member=",author),str_concat(" message=",message_id)));
+}
