@@ -1,0 +1,1161 @@
+{
+  "scope": "Shared-host runtime microbenchmark, same 100000 yield-once coroutines in one process. Spawn/destruction outside wall/process CPU timing. No Rust comparison. Main-thread wait/CPU diagnostics are separate instrumented binaries and not mixed with timing samples.",
+  "time_utc": "2026-10-09T16:58:00Z",
+  "platform": "Linux-6.8.0-139-generic-x86_64-with-glibc2.39",
+  "cpu_count": 12,
+  "cpu_model": "AMD BC-250",
+  "compiler": "cc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+  "flags": [
+    "-std=c11",
+    "-O3",
+    "-D_GNU_SOURCE",
+    "-lpthread"
+  ],
+  "before_runtime_commit": "39ab3daa90f15852cbbf4dd97f5d4c1502bd392d",
+  "source_sha256": {
+    "/tmp/forge-scheduler-notify-20261009/before/src/scheduler.c": "85a4ffec9204ce1804f5bcb826927b1491556c61691e0714dbc2d2ced05abde0",
+    "/home/helloworld0822/coding/forge-runtime/src/scheduler.c": "120df468e87497c48daf21ce9e0192512091c4deb7bf7d270fcdb23b34221b5b",
+    "/home/helloworld0822/coding/forge-benchmarks/benchmark/scheduler_bench.c": "2a03ebdb424c80b733b64ede44eb2a416df87014820e2865c20eee249066de78",
+    "/tmp/forge-scheduler-notify-20261009/wait-probe.c": "e0f156f638601f5fa1fd6eee5720584bf8702a6a429e8710b85598ea4938dbeb",
+    "/tmp/forge-scheduler-notify-20261009/probe-bench.c": "9993e1cc8ba29bfdec7c01aff4e0918df16b15f26967cf1f6d5ff1f260ed380e"
+  },
+  "binary_sha256": {
+    "before-bench": "80b96f418fd1933765d145f19a640b2bfdd5d9291224aaeeb5f9d0325769975f",
+    "after-bench": "2ad608fd8e7639c3c030dd352d9f1ce0cc79d006cfd0dcc2310a3f512bd06113",
+    "before-probe": "844e437274b7cbf36b1d51dcfd98a91c14f97f206aa85b58ff4f5f9693ad7e0d",
+    "after-probe": "f9a2feae63be0ece358174d2d25df02ced7a113dfd52860d80f756716d921e51"
+  },
+  "warmups_per_variant_workers": 2,
+  "repeats": 15,
+  "diagnostic_repeats": 5,
+  "summary": [
+    {
+      "workers": 1,
+      "before_wall_median_ms": 33.724,
+      "after_wall_median_ms": 19.961,
+      "before_cpu_median_ms": 54.342,
+      "after_cpu_median_ms": 18.94,
+      "paired_speedup_median": 1.887350974120384,
+      "paired_bootstrap_median_95pct": [
+        1.5285581969743747,
+        2.3959751260833375
+      ],
+      "before_wall_range_ms": [
+        19.218,
+        48.933
+      ],
+      "after_wall_range_ms": [
+        7.209,
+        27.384
+      ],
+      "before_main_waits_median": 4307,
+      "after_main_waits_median": 1,
+      "before_main_cpu_median_ms": 30.116,
+      "after_main_cpu_median_ms": 1.901
+    },
+    {
+      "workers": 2,
+      "before_wall_median_ms": 58.502,
+      "after_wall_median_ms": 38.048,
+      "before_cpu_median_ms": 129.33,
+      "after_cpu_median_ms": 66.745,
+      "paired_speedup_median": 1.5690368847056342,
+      "paired_bootstrap_median_95pct": [
+        1.429404128592155,
+        1.7497461069735951
+      ],
+      "before_wall_range_ms": [
+        32.069,
+        74.93
+      ],
+      "after_wall_range_ms": [
+        13.941,
+        53.688
+      ],
+      "before_main_waits_median": 6095,
+      "after_main_waits_median": 1,
+      "before_main_cpu_median_ms": 35.222,
+      "after_main_cpu_median_ms": 1.874
+    },
+    {
+      "workers": 4,
+      "before_wall_median_ms": 110.098,
+      "after_wall_median_ms": 71.045,
+      "before_cpu_median_ms": 393.106,
+      "after_cpu_median_ms": 227.571,
+      "paired_speedup_median": 1.577328499361348,
+      "paired_bootstrap_median_95pct": [
+        1.3407365910076623,
+        1.7636758118701008
+      ],
+      "before_wall_range_ms": [
+        74.191,
+        125.997
+      ],
+      "after_wall_range_ms": [
+        50.129,
+        80.74
+      ],
+      "before_main_waits_median": 11765,
+      "after_main_waits_median": 1,
+      "before_main_cpu_median_ms": 71.855,
+      "after_main_cpu_median_ms": 2.057
+    }
+  ],
+  "samples": [
+    {
+      "trial": 0,
+      "variant": "before",
+      "workers": 1,
+      "wall_ms": 46.466,
+      "cpu_ms": 70.968,
+      "completed": 100000
+    },
+    {
+      "trial": 0,
+      "variant": "after",
+      "workers": 1,
+      "wall_ms": 21.448,
+      "cpu_ms": 21.444,
+      "completed": 100000
+    },
+    {
+      "trial": 0,
+      "variant": "before",
+      "workers": 2,
+      "wall_ms": 58.502,
+      "cpu_ms": 129.33,
+      "completed": 100000
+    },
+    {
+      "trial": 0,
+      "variant": "after",
+      "workers": 2,
+      "wall_ms": 40.961,
+      "cpu_ms": 72.098,
+      "completed": 100000
+    },
+    {
+      "trial": 0,
+      "variant": "before",
+      "workers": 4,
+      "wall_ms": 117.883,
+      "cpu_ms": 425.552,
+      "completed": 100000
+    },
+    {
+      "trial": 0,
+      "variant": "after",
+      "workers": 4,
+      "wall_ms": 78.6,
+      "cpu_ms": 252.872,
+      "completed": 100000
+    },
+    {
+      "trial": 1,
+      "variant": "after",
+      "workers": 4,
+      "wall_ms": 71.44,
+      "cpu_ms": 227.835,
+      "completed": 100000
+    },
+    {
+      "trial": 1,
+      "variant": "before",
+      "workers": 4,
+      "wall_ms": 125.997,
+      "cpu_ms": 451.909,
+      "completed": 100000
+    },
+    {
+      "trial": 1,
+      "variant": "after",
+      "workers": 2,
+      "wall_ms": 49.883,
+      "cpu_ms": 97.401,
+      "completed": 100000
+    },
+    {
+      "trial": 1,
+      "variant": "before",
+      "workers": 2,
+      "wall_ms": 74.138,
+      "cpu_ms": 161.834,
+      "completed": 100000
+    },
+    {
+      "trial": 1,
+      "variant": "after",
+      "workers": 1,
+      "wall_ms": 26.93,
+      "cpu_ms": 26.924,
+      "completed": 100000
+    },
+    {
+      "trial": 1,
+      "variant": "before",
+      "workers": 1,
+      "wall_ms": 37.636,
+      "cpu_ms": 57.819,
+      "completed": 100000
+    },
+    {
+      "trial": 2,
+      "variant": "before",
+      "workers": 1,
+      "wall_ms": 43.84,
+      "cpu_ms": 70.148,
+      "completed": 100000
+    },
+    {
+      "trial": 2,
+      "variant": "after",
+      "workers": 1,
+      "wall_ms": 27.384,
+      "cpu_ms": 27.385,
+      "completed": 100000
+    },
+    {
+      "trial": 2,
+      "variant": "before",
+      "workers": 2,
+      "wall_ms": 56.157,
+      "cpu_ms": 124.065,
+      "completed": 100000
+    },
+    {
+      "trial": 2,
+      "variant": "after",
+      "workers": 2,
+      "wall_ms": 39.287,
+      "cpu_ms": 68.208,
+      "completed": 100000
+    },
+    {
+      "trial": 2,
+      "variant": "before",
+      "workers": 4,
+      "wall_ms": 117.537,
+      "cpu_ms": 422.148,
+      "completed": 100000
+    },
+    {
+      "trial": 2,
+      "variant": "after",
+      "workers": 4,
+      "wall_ms": 80.74,
+      "cpu_ms": 258.615,
+      "completed": 100000
+    },
+    {
+      "trial": 3,
+      "variant": "after",
+      "workers": 4,
+      "wall_ms": 77.507,
+      "cpu_ms": 248.496,
+      "completed": 100000
+    },
+    {
+      "trial": 3,
+      "variant": "before",
+      "workers": 4,
+      "wall_ms": 122.254,
+      "cpu_ms": 444.097,
+      "completed": 100000
+    },
+    {
+      "trial": 3,
+      "variant": "after",
+      "workers": 2,
+      "wall_ms": 37.929,
+      "cpu_ms": 65.959,
+      "completed": 100000
+    },
+    {
+      "trial": 3,
+      "variant": "before",
+      "workers": 2,
+      "wall_ms": 59.512,
+      "cpu_ms": 131.268,
+      "completed": 100000
+    },
+    {
+      "trial": 3,
+      "variant": "after",
+      "workers": 1,
+      "wall_ms": 20.423,
+      "cpu_ms": 18.94,
+      "completed": 100000
+    },
+    {
+      "trial": 3,
+      "variant": "before",
+      "workers": 1,
+      "wall_ms": 48.933,
+      "cpu_ms": 73.861,
+      "completed": 100000
+    },
+    {
+      "trial": 4,
+      "variant": "before",
+      "workers": 1,
+      "wall_ms": 47.636,
+      "cpu_ms": 74.906,
+      "completed": 100000
+    },
+    {
+      "trial": 4,
+      "variant": "after",
+      "workers": 1,
+      "wall_ms": 20.07,
+      "cpu_ms": 20.06,
+      "completed": 100000
+    },
+    {
+      "trial": 4,
+      "variant": "before",
+      "workers": 2,
+      "wall_ms": 59.712,
+      "cpu_ms": 134.007,
+      "completed": 100000
+    },
+    {
+      "trial": 4,
+      "variant": "after",
+      "workers": 2,
+      "wall_ms": 53.688,
+      "cpu_ms": 105.288,
+      "completed": 100000
+    },
+    {
+      "trial": 4,
+      "variant": "before",
+      "workers": 4,
+      "wall_ms": 118.196,
+      "cpu_ms": 424.019,
+      "completed": 100000
+    },
+    {
+      "trial": 4,
+      "variant": "after",
+      "workers": 4,
+      "wall_ms": 64.995,
+      "cpu_ms": 202.175,
+      "completed": 100000
+    },
+    {
+      "trial": 5,
+      "variant": "after",
+      "workers": 4,
+      "wall_ms": 65.345,
+      "cpu_ms": 207.863,
+      "completed": 100000
+    },
+    {
+      "trial": 5,
+      "variant": "before",
+      "workers": 4,
+      "wall_ms": 120.892,
+      "cpu_ms": 438.537,
+      "completed": 100000
+    },
+    {
+      "trial": 5,
+      "variant": "after",
+      "workers": 2,
+      "wall_ms": 38.048,
+      "cpu_ms": 66.745,
+      "completed": 100000
+    },
+    {
+      "trial": 5,
+      "variant": "before",
+      "workers": 2,
+      "wall_ms": 61.472,
+      "cpu_ms": 134.584,
+      "completed": 100000
+    },
+    {
+      "trial": 5,
+      "variant": "after",
+      "workers": 1,
+      "wall_ms": 15.081,
+      "cpu_ms": 15.11,
+      "completed": 100000
+    },
+    {
+      "trial": 5,
+      "variant": "before",
+      "workers": 1,
+      "wall_ms": 46.979,
+      "cpu_ms": 73.804,
+      "completed": 100000
+    },
+    {
+      "trial": 6,
+      "variant": "before",
+      "workers": 1,
+      "wall_ms": 33.724,
+      "cpu_ms": 54.342,
+      "completed": 100000
+    },
+    {
+      "trial": 6,
+      "variant": "after",
+      "workers": 1,
+      "wall_ms": 9.093,
+      "cpu_ms": 9.088,
+      "completed": 100000
+    },
+    {
+      "trial": 6,
+      "variant": "before",
+      "workers": 2,
+      "wall_ms": 53.268,
+      "cpu_ms": 119.801,
+      "completed": 100000
+    },
+    {
+      "trial": 6,
+      "variant": "after",
+      "workers": 2,
+      "wall_ms": 16.455,
+      "cpu_ms": 26.91,
+      "completed": 100000
+    },
+    {
+      "trial": 6,
+      "variant": "before",
+      "workers": 4,
+      "wall_ms": 78.925,
+      "cpu_ms": 279.471,
+      "completed": 100000
+    },
+    {
+      "trial": 6,
+      "variant": "after",
+      "workers": 4,
+      "wall_ms": 64.378,
+      "cpu_ms": 204.711,
+      "completed": 100000
+    },
+    {
+      "trial": 7,
+      "variant": "after",
+      "workers": 4,
+      "wall_ms": 50.497,
+      "cpu_ms": 156.803,
+      "completed": 100000
+    },
+    {
+      "trial": 7,
+      "variant": "before",
+      "workers": 4,
+      "wall_ms": 101.127,
+      "cpu_ms": 354.601,
+      "completed": 100000
+    },
+    {
+      "trial": 7,
+      "variant": "after",
+      "workers": 2,
+      "wall_ms": 13.941,
+      "cpu_ms": 22.012,
+      "completed": 100000
+    },
+    {
+      "trial": 7,
+      "variant": "before",
+      "workers": 2,
+      "wall_ms": 32.069,
+      "cpu_ms": 70.372,
+      "completed": 100000
+    },
+    {
+      "trial": 7,
+      "variant": "after",
+      "workers": 1,
+      "wall_ms": 13.628,
+      "cpu_ms": 13.623,
+      "completed": 100000
+    },
+    {
+      "trial": 7,
+      "variant": "before",
+      "workers": 1,
+      "wall_ms": 31.936,
+      "cpu_ms": 49.569,
+      "completed": 100000
+    },
+    {
+      "trial": 8,
+      "variant": "before",
+      "workers": 1,
+      "wall_ms": 33.151,
+      "cpu_ms": 51.782,
+      "completed": 100000
+    },
+    {
+      "trial": 8,
+      "variant": "after",
+      "workers": 1,
+      "wall_ms": 18.278,
+      "cpu_ms": 18.272,
+      "completed": 100000
+    },
+    {
+      "trial": 8,
+      "variant": "before",
+      "workers": 2,
+      "wall_ms": 43.234,
+      "cpu_ms": 93.607,
+      "completed": 100000
+    },
+    {
+      "trial": 8,
+      "variant": "after",
+      "workers": 2,
+      "wall_ms": 42.401,
+      "cpu_ms": 75.36,
+      "completed": 100000
+    },
+    {
+      "trial": 8,
+      "variant": "before",
+      "workers": 4,
+      "wall_ms": 121.842,
+      "cpu_ms": 443.493,
+      "completed": 100000
+    },
+    {
+      "trial": 8,
+      "variant": "after",
+      "workers": 4,
+      "wall_ms": 72.896,
+      "cpu_ms": 230.546,
+      "completed": 100000
+    },
+    {
+      "trial": 9,
+      "variant": "after",
+      "workers": 4,
+      "wall_ms": 71.045,
+      "cpu_ms": 227.571,
+      "completed": 100000
+    },
+    {
+      "trial": 9,
+      "variant": "before",
+      "workers": 4,
+      "wall_ms": 98.885,
+      "cpu_ms": 355.106,
+      "completed": 100000
+    },
+    {
+      "trial": 9,
+      "variant": "after",
+      "workers": 2,
+      "wall_ms": 36.497,
+      "cpu_ms": 64.374,
+      "completed": 100000
+    },
+    {
+      "trial": 9,
+      "variant": "before",
+      "workers": 2,
+      "wall_ms": 57.331,
+      "cpu_ms": 127.339,
+      "completed": 100000
+    },
+    {
+      "trial": 9,
+      "variant": "after",
+      "workers": 1,
+      "wall_ms": 19.961,
+      "cpu_ms": 19.946,
+      "completed": 100000
+    },
+    {
+      "trial": 9,
+      "variant": "before",
+      "workers": 1,
+      "wall_ms": 19.374,
+      "cpu_ms": 29.191,
+      "completed": 100000
+    },
+    {
+      "trial": 10,
+      "variant": "before",
+      "workers": 1,
+      "wall_ms": 32.453,
+      "cpu_ms": 50.694,
+      "completed": 100000
+    },
+    {
+      "trial": 10,
+      "variant": "after",
+      "workers": 1,
+      "wall_ms": 17.195,
+      "cpu_ms": 17.228,
+      "completed": 100000
+    },
+    {
+      "trial": 10,
+      "variant": "before",
+      "workers": 2,
+      "wall_ms": 57.5,
+      "cpu_ms": 127.369,
+      "completed": 100000
+    },
+    {
+      "trial": 10,
+      "variant": "after",
+      "workers": 2,
+      "wall_ms": 37.716,
+      "cpu_ms": 65.865,
+      "completed": 100000
+    },
+    {
+      "trial": 10,
+      "variant": "before",
+      "workers": 4,
+      "wall_ms": 93.154,
+      "cpu_ms": 330.916,
+      "completed": 100000
+    },
+    {
+      "trial": 10,
+      "variant": "after",
+      "workers": 4,
+      "wall_ms": 74.987,
+      "cpu_ms": 238.08,
+      "completed": 100000
+    },
+    {
+      "trial": 11,
+      "variant": "after",
+      "workers": 4,
+      "wall_ms": 55.397,
+      "cpu_ms": 175.135,
+      "completed": 100000
+    },
+    {
+      "trial": 11,
+      "variant": "before",
+      "workers": 4,
+      "wall_ms": 88.807,
+      "cpu_ms": 317.587,
+      "completed": 100000
+    },
+    {
+      "trial": 11,
+      "variant": "after",
+      "workers": 2,
+      "wall_ms": 39.118,
+      "cpu_ms": 76.003,
+      "completed": 100000
+    },
+    {
+      "trial": 11,
+      "variant": "before",
+      "workers": 2,
+      "wall_ms": 66.562,
+      "cpu_ms": 149.333,
+      "completed": 100000
+    },
+    {
+      "trial": 11,
+      "variant": "after",
+      "workers": 1,
+      "wall_ms": 16.195,
+      "cpu_ms": 16.209,
+      "completed": 100000
+    },
+    {
+      "trial": 11,
+      "variant": "before",
+      "workers": 1,
+      "wall_ms": 24.755,
+      "cpu_ms": 40.487,
+      "completed": 100000
+    },
+    {
+      "trial": 12,
+      "variant": "before",
+      "workers": 1,
+      "wall_ms": 42.682,
+      "cpu_ms": 67.811,
+      "completed": 100000
+    },
+    {
+      "trial": 12,
+      "variant": "after",
+      "workers": 1,
+      "wall_ms": 25.334,
+      "cpu_ms": 25.362,
+      "completed": 100000
+    },
+    {
+      "trial": 12,
+      "variant": "before",
+      "workers": 2,
+      "wall_ms": 62.025,
+      "cpu_ms": 136.13,
+      "completed": 100000
+    },
+    {
+      "trial": 12,
+      "variant": "after",
+      "workers": 2,
+      "wall_ms": 35.448,
+      "cpu_ms": 61.927,
+      "completed": 100000
+    },
+    {
+      "trial": 12,
+      "variant": "before",
+      "workers": 4,
+      "wall_ms": 74.191,
+      "cpu_ms": 267.137,
+      "completed": 100000
+    },
+    {
+      "trial": 12,
+      "variant": "after",
+      "workers": 4,
+      "wall_ms": 55.336,
+      "cpu_ms": 172.828,
+      "completed": 100000
+    },
+    {
+      "trial": 13,
+      "variant": "after",
+      "workers": 4,
+      "wall_ms": 50.129,
+      "cpu_ms": 154.527,
+      "completed": 100000
+    },
+    {
+      "trial": 13,
+      "variant": "before",
+      "workers": 4,
+      "wall_ms": 110.098,
+      "cpu_ms": 393.106,
+      "completed": 100000
+    },
+    {
+      "trial": 13,
+      "variant": "after",
+      "workers": 2,
+      "wall_ms": 37.374,
+      "cpu_ms": 65.057,
+      "completed": 100000
+    },
+    {
+      "trial": 13,
+      "variant": "before",
+      "workers": 2,
+      "wall_ms": 74.93,
+      "cpu_ms": 164.395,
+      "completed": 100000
+    },
+    {
+      "trial": 13,
+      "variant": "after",
+      "workers": 1,
+      "wall_ms": 23.019,
+      "cpu_ms": 23.011,
+      "completed": 100000
+    },
+    {
+      "trial": 13,
+      "variant": "before",
+      "workers": 1,
+      "wall_ms": 33.015,
+      "cpu_ms": 51.178,
+      "completed": 100000
+    },
+    {
+      "trial": 14,
+      "variant": "before",
+      "workers": 1,
+      "wall_ms": 19.218,
+      "cpu_ms": 29.78,
+      "completed": 100000
+    },
+    {
+      "trial": 14,
+      "variant": "after",
+      "workers": 1,
+      "wall_ms": 7.209,
+      "cpu_ms": 7.233,
+      "completed": 100000
+    },
+    {
+      "trial": 14,
+      "variant": "before",
+      "workers": 2,
+      "wall_ms": 43.636,
+      "cpu_ms": 97.731,
+      "completed": 100000
+    },
+    {
+      "trial": 14,
+      "variant": "after",
+      "workers": 2,
+      "wall_ms": 45.265,
+      "cpu_ms": 81.74,
+      "completed": 100000
+    },
+    {
+      "trial": 14,
+      "variant": "before",
+      "workers": 4,
+      "wall_ms": 93.862,
+      "cpu_ms": 330.423,
+      "completed": 100000
+    },
+    {
+      "trial": 14,
+      "variant": "after",
+      "workers": 4,
+      "wall_ms": 78.779,
+      "cpu_ms": 253.154,
+      "completed": 100000
+    }
+  ],
+  "diagnostic_samples": [
+    {
+      "trial": 0,
+      "variant": "before",
+      "workers": 1,
+      "wall_ms": 56.649,
+      "cpu_ms": 89.668,
+      "completed": 100000,
+      "main_waits": 4591,
+      "main_cpu_ms": 35.092
+    },
+    {
+      "trial": 0,
+      "variant": "after",
+      "workers": 1,
+      "wall_ms": 19.986,
+      "cpu_ms": 20.011,
+      "completed": 100000,
+      "main_waits": 1,
+      "main_cpu_ms": 1.973
+    },
+    {
+      "trial": 0,
+      "variant": "before",
+      "workers": 2,
+      "wall_ms": 60.56,
+      "cpu_ms": 133.282,
+      "completed": 100000,
+      "main_waits": 5949,
+      "main_cpu_ms": 35.222
+    },
+    {
+      "trial": 0,
+      "variant": "after",
+      "workers": 2,
+      "wall_ms": 40.907,
+      "cpu_ms": 72.892,
+      "completed": 100000,
+      "main_waits": 1,
+      "main_cpu_ms": 2.071
+    },
+    {
+      "trial": 0,
+      "variant": "before",
+      "workers": 4,
+      "wall_ms": 115.267,
+      "cpu_ms": 411.525,
+      "completed": 100000,
+      "main_waits": 12457,
+      "main_cpu_ms": 72.067
+    },
+    {
+      "trial": 0,
+      "variant": "after",
+      "workers": 4,
+      "wall_ms": 72.745,
+      "cpu_ms": 225.979,
+      "completed": 100000,
+      "main_waits": 1,
+      "main_cpu_ms": 2.057
+    },
+    {
+      "trial": 1,
+      "variant": "after",
+      "workers": 1,
+      "wall_ms": 8.024,
+      "cpu_ms": 8.05,
+      "completed": 100000,
+      "main_waits": 1,
+      "main_cpu_ms": 1.76
+    },
+    {
+      "trial": 1,
+      "variant": "before",
+      "workers": 1,
+      "wall_ms": 39.206,
+      "cpu_ms": 60.178,
+      "completed": 100000,
+      "main_waits": 3955,
+      "main_cpu_ms": 24.499
+    },
+    {
+      "trial": 1,
+      "variant": "after",
+      "workers": 2,
+      "wall_ms": 51.892,
+      "cpu_ms": 100.775,
+      "completed": 100000,
+      "main_waits": 1,
+      "main_cpu_ms": 1.859
+    },
+    {
+      "trial": 1,
+      "variant": "before",
+      "workers": 2,
+      "wall_ms": 58.159,
+      "cpu_ms": 128.131,
+      "completed": 100000,
+      "main_waits": 6220,
+      "main_cpu_ms": 33.878
+    },
+    {
+      "trial": 1,
+      "variant": "after",
+      "workers": 4,
+      "wall_ms": 76.07,
+      "cpu_ms": 243.547,
+      "completed": 100000,
+      "main_waits": 1,
+      "main_cpu_ms": 2.157
+    },
+    {
+      "trial": 1,
+      "variant": "before",
+      "workers": 4,
+      "wall_ms": 106.145,
+      "cpu_ms": 378.682,
+      "completed": 100000,
+      "main_waits": 9597,
+      "main_cpu_ms": 68.139
+    },
+    {
+      "trial": 2,
+      "variant": "before",
+      "workers": 1,
+      "wall_ms": 25.91,
+      "cpu_ms": 40.076,
+      "completed": 100000,
+      "main_waits": 3026,
+      "main_cpu_ms": 17.251
+    },
+    {
+      "trial": 2,
+      "variant": "after",
+      "workers": 1,
+      "wall_ms": 23.521,
+      "cpu_ms": 23.347,
+      "completed": 100000,
+      "main_waits": 1,
+      "main_cpu_ms": 1.901
+    },
+    {
+      "trial": 2,
+      "variant": "before",
+      "workers": 2,
+      "wall_ms": 62.753,
+      "cpu_ms": 137.619,
+      "completed": 100000,
+      "main_waits": 6237,
+      "main_cpu_ms": 36.141
+    },
+    {
+      "trial": 2,
+      "variant": "after",
+      "workers": 2,
+      "wall_ms": 39.673,
+      "cpu_ms": 70.047,
+      "completed": 100000,
+      "main_waits": 1,
+      "main_cpu_ms": 1.874
+    },
+    {
+      "trial": 2,
+      "variant": "before",
+      "workers": 4,
+      "wall_ms": 123.643,
+      "cpu_ms": 440.291,
+      "completed": 100000,
+      "main_waits": 14487,
+      "main_cpu_ms": 76.632
+    },
+    {
+      "trial": 2,
+      "variant": "after",
+      "workers": 4,
+      "wall_ms": 76.187,
+      "cpu_ms": 243.882,
+      "completed": 100000,
+      "main_waits": 1,
+      "main_cpu_ms": 1.814
+    },
+    {
+      "trial": 3,
+      "variant": "after",
+      "workers": 1,
+      "wall_ms": 24.82,
+      "cpu_ms": 24.795,
+      "completed": 100000,
+      "main_waits": 1,
+      "main_cpu_ms": 1.834
+    },
+    {
+      "trial": 3,
+      "variant": "before",
+      "workers": 1,
+      "wall_ms": 46.846,
+      "cpu_ms": 73.58,
+      "completed": 100000,
+      "main_waits": 4307,
+      "main_cpu_ms": 30.116
+    },
+    {
+      "trial": 3,
+      "variant": "after",
+      "workers": 2,
+      "wall_ms": 46.18,
+      "cpu_ms": 83.527,
+      "completed": 100000,
+      "main_waits": 1,
+      "main_cpu_ms": 1.938
+    },
+    {
+      "trial": 3,
+      "variant": "before",
+      "workers": 2,
+      "wall_ms": 58.929,
+      "cpu_ms": 130.103,
+      "completed": 100000,
+      "main_waits": 6095,
+      "main_cpu_ms": 34.512
+    },
+    {
+      "trial": 3,
+      "variant": "after",
+      "workers": 4,
+      "wall_ms": 79.009,
+      "cpu_ms": 252.774,
+      "completed": 100000,
+      "main_waits": 1,
+      "main_cpu_ms": 1.899
+    },
+    {
+      "trial": 3,
+      "variant": "before",
+      "workers": 4,
+      "wall_ms": 108.734,
+      "cpu_ms": 392.589,
+      "completed": 100000,
+      "main_waits": 11165,
+      "main_cpu_ms": 69.789
+    },
+    {
+      "trial": 4,
+      "variant": "before",
+      "workers": 1,
+      "wall_ms": 53.932,
+      "cpu_ms": 84.089,
+      "completed": 100000,
+      "main_waits": 5262,
+      "main_cpu_ms": 32.71
+    },
+    {
+      "trial": 4,
+      "variant": "after",
+      "workers": 1,
+      "wall_ms": 20.472,
+      "cpu_ms": 20.468,
+      "completed": 100000,
+      "main_waits": 1,
+      "main_cpu_ms": 2.163
+    },
+    {
+      "trial": 4,
+      "variant": "before",
+      "workers": 2,
+      "wall_ms": 57.855,
+      "cpu_ms": 130.093,
+      "completed": 100000,
+      "main_waits": 5201,
+      "main_cpu_ms": 35.874
+    },
+    {
+      "trial": 4,
+      "variant": "after",
+      "workers": 2,
+      "wall_ms": 40.412,
+      "cpu_ms": 71.32,
+      "completed": 100000,
+      "main_waits": 1,
+      "main_cpu_ms": 1.833
+    },
+    {
+      "trial": 4,
+      "variant": "before",
+      "workers": 4,
+      "wall_ms": 115.779,
+      "cpu_ms": 412.388,
+      "completed": 100000,
+      "main_waits": 11765,
+      "main_cpu_ms": 71.855
+    },
+    {
+      "trial": 4,
+      "variant": "after",
+      "workers": 4,
+      "wall_ms": 76.724,
+      "cpu_ms": 244.176,
+      "completed": 100000,
+      "main_waits": 1,
+      "main_cpu_ms": 2.104
+    }
+  ],
+  "after_runtime_commit": "uncommitted; identified by source SHA-256",
+  "measurement_script": "from pathlib import Path\nimport hashlib,json,subprocess,statistics,random,platform,re,time,os\nbase=Path('/tmp/forge-scheduler-notify-20261009')\nr=[];probes=[]\ndef invoke(variant,workers,probe=False):\n binary=base/(variant+('-probe' if probe else '-bench'))\n p=subprocess.run([str(binary),'throughput','100000',str(workers)],capture_output=True,text=True,check=True,timeout=20)\n values=p.stdout.strip().splitlines()[-1].split(',')\n record=dict(variant=variant,workers=workers,wall_ms=float(values[2]),cpu_ms=float(values[3]),completed=int(values[4]))\n assert record['completed']==100000\n if probe:\n  match=re.search(r'main_waits=(\\d+) main_cpu_ms=([0-9.]+)',p.stderr);assert match,p.stderr\n  record.update(main_waits=int(match[1]),main_cpu_ms=float(match[2]))\n return record\nfor workers in [1,2,4]:\n for variant in ['before','after']:\n  for _ in range(2):invoke(variant,workers)\nfor trial in range(15):\n for workers in ([1,2,4] if trial%2==0 else [4,2,1]):\n  for variant in (['before','after'] if trial%2==0 else ['after','before']):\n   r.append(dict(trial=trial,**invoke(variant,workers)))\nfor trial in range(5):\n for workers in [1,2,4]:\n  for variant in (['before','after'] if trial%2==0 else ['after','before']):\n   probes.append(dict(trial=trial,**invoke(variant,workers,True)))\nsummary=[];rng=random.Random(20261009)\nfor workers in [1,2,4]:\n before=[x for x in r if x['workers']==workers and x['variant']=='before']\n after=[x for x in r if x['workers']==workers and x['variant']=='after']\n ratios=[b['wall_ms']/a['wall_ms'] for b,a in zip(before,after)]\n boot=sorted(statistics.median(rng.choices(ratios,k=len(ratios))) for _ in range(10000))\n summary.append(dict(workers=workers,before_wall_median_ms=statistics.median(x['wall_ms'] for x in before),after_wall_median_ms=statistics.median(x['wall_ms'] for x in after),before_cpu_median_ms=statistics.median(x['cpu_ms'] for x in before),after_cpu_median_ms=statistics.median(x['cpu_ms'] for x in after),paired_speedup_median=statistics.median(ratios),paired_bootstrap_median_95pct=[boot[249],boot[9749]],before_wall_range_ms=[min(x['wall_ms'] for x in before),max(x['wall_ms'] for x in before)],after_wall_range_ms=[min(x['wall_ms'] for x in after),max(x['wall_ms'] for x in after)],before_main_waits_median=statistics.median(x['main_waits'] for x in probes if x['workers']==workers and x['variant']=='before'),after_main_waits_median=statistics.median(x['main_waits'] for x in probes if x['workers']==workers and x['variant']=='after'),before_main_cpu_median_ms=statistics.median(x['main_cpu_ms'] for x in probes if x['workers']==workers and x['variant']=='before'),after_main_cpu_median_ms=statistics.median(x['main_cpu_ms'] for x in probes if x['workers']==workers and x['variant']=='after')))\nresult=dict(scope='Shared-host runtime microbenchmark, same 100000 yield-once coroutines in one process. Spawn/destruction outside wall/process CPU timing. No Rust comparison. Main-thread wait/CPU diagnostics are separate instrumented binaries and not mixed with timing samples.',time_utc=time.strftime('%Y-%m-%dT%H:%M:%SZ',time.gmtime()),platform=platform.platform(),cpu_count=os.cpu_count(),cpu_model=next((x.split(':',1)[1].strip() for x in Path('/proc/cpuinfo').read_text().splitlines() if x.startswith('model name')),None),compiler=subprocess.check_output(['cc','--version'],text=True).splitlines()[0],flags=['-std=c11','-O3','-D_GNU_SOURCE','-lpthread'],before_runtime_commit='39ab3daa90f15852cbbf4dd97f5d4c1502bd392d',source_sha256={str(p):hashlib.sha256(p.read_bytes()).hexdigest() for p in [base/'before/src/scheduler.c',Path('/home/helloworld0822/coding/forge-runtime/src/scheduler.c'),Path('/home/helloworld0822/coding/forge-benchmarks/benchmark/scheduler_bench.c'),base/'wait-probe.c',base/'probe-bench.c']},binary_sha256={x:hashlib.sha256((base/x).read_bytes()).hexdigest() for x in ['before-bench','after-bench','before-probe','after-probe']},warmups_per_variant_workers=2,repeats=15,diagnostic_repeats=5,summary=summary,samples=r,diagnostic_samples=probes)\n(base/'results.json').write_text(json.dumps(result,indent=2)+'\\n');print(json.dumps(summary,indent=2))\n",
+  "diagnostic_sources": {
+    "wait-probe.c": "#define _POSIX_C_SOURCE 200809L\n#include \"forge/thread.h\"\n#include <pthread.h>\n#include <stdio.h>\n#include <time.h>\nstatic pthread_t main_thread;\nstatic unsigned long waits;\nstatic struct timespec start;\nvoid __real_fr_cond_wait(fr_cond_t *,fr_mutex_t *);\nvoid probe_begin(void) {main_thread=pthread_self();waits=0;clock_gettime(CLOCK_THREAD_CPUTIME_ID,&start);}\nvoid __wrap_fr_cond_wait(fr_cond_t *c,fr_mutex_t *m) {if(pthread_equal(pthread_self(),main_thread))waits++;__real_fr_cond_wait(c,m);}\nvoid probe_end(void) {struct timespec end;clock_gettime(CLOCK_THREAD_CPUTIME_ID,&end);fprintf(stderr,\"main_waits=%lu main_cpu_ms=%.3f\\n\",waits,(end.tv_sec-start.tv_sec)*1000.0+(end.tv_nsec-start.tv_nsec)/1000000.0);}\n",
+    "probe-bench.c": "#define _POSIX_C_SOURCE 200809L\n#include \"forge_runtime.h\"\n#include \"forge/event.h\"\n#include \"forge/thread.h\"\n#include <errno.h>\n#include <stdatomic.h>\n#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\n#include <time.h>\n#include <unistd.h>\nextern void probe_begin(void);\nextern void probe_end(void);\n\ntypedef struct { int fd; unsigned milliseconds; } io_state_t;\nstatic void *writer(void *arg) {\n    io_state_t *s = arg;\n    struct timespec delay = {s->milliseconds / 1000, (s->milliseconds % 1000) * 1000000L};\n    nanosleep(&delay, NULL);\n    if (write(s->fd, \"x\", 1) != 1) exit(1);\n    return NULL;\n}\nstatic fr_coro_status_t reader(fr_coro_t *coro, void *arg) {\n    io_state_t *s = arg;\n    int64_t ready = fr_await_fd(coro, s->fd, FR_EVENT_READ);\n    if (ready < 0) exit(1);\n    if (!ready) return FR_CORO_WAITING_IO;\n    char c;\n    if (read(s->fd, &c, 1) != 1) exit(1);\n    return FR_CORO_DONE;\n}\nstatic double elapsed(struct timespec a, struct timespec b) {\n    return (b.tv_sec - a.tv_sec) * 1000.0 + (b.tv_nsec - a.tv_nsec) / 1000000.0;\n}\n\ntypedef struct { atomic_size_t *completed; int yielded; } task_state_t;\nstatic fr_coro_status_t task(fr_coro_t *coro, void *arg) {\n    task_state_t *s = arg;\n    if (!s->yielded) { s->yielded = 1; return fr_yield(coro); }\n    atomic_fetch_add_explicit(s->completed, 1, memory_order_relaxed);\n    return FR_CORO_DONE;\n}\nstatic int throughput(size_t count, int workers) {\n    atomic_size_t completed = 0;\n    fr_scheduler_t *sched = fr_scheduler_create(workers);\n    fr_process_t *proc = fr_process_create(\"throughput\");\n    if (!sched || !proc) return 1;\n    fr_scheduler_add_process(sched, proc);\n    for (size_t i = 0; i < count; i++) {\n        task_state_t *state = malloc(sizeof(*state));\n        if (!state) return 1;\n        *state = (task_state_t){&completed, 0};\n        if (!fr_coro_spawn(proc, task, state, sizeof(*state))) return 1;\n    }\n    struct timespec cpu_start, cpu_end, wall_start, wall_end;\n    clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &cpu_start);\n    clock_gettime(CLOCK_MONOTONIC, &wall_start);\n    probe_begin(); fr_scheduler_run(sched); probe_end();\n    clock_gettime(CLOCK_MONOTONIC, &wall_end);\n    clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &cpu_end);\n    size_t result = atomic_load(&completed);\n    printf(\"coroutines,workers,wall_ms,process_cpu_ms,completed\\n%zu,%d,%.3f,%.3f,%zu\\n\",\n           count, workers, elapsed(wall_start, wall_end), elapsed(cpu_start, cpu_end), result);\n    fr_scheduler_destroy(sched);\n    return result != count;\n}\n\nstatic unsigned long number(const char *text, unsigned long min, unsigned long max) {\n    char *end;\n    errno = 0;\n    unsigned long value = strtoul(text, &end, 10);\n    if (errno || end == text || *end || value < min || value > max) return 0;\n    return value;\n}\nint main(int argc, char **argv) {\n    if (argc > 1 && strcmp(argv[1], \"throughput\") == 0) {\n        if (argc != 4) return 1;\n        unsigned long count = number(argv[2], 1, 1000000);\n        unsigned long workers = number(argv[3], 1, 32);\n        return count && workers ? throughput(count, (int)workers) : 1;\n    }\n    unsigned ms = 500;\n    if (argc > 2) return 1;\n    if (argc == 2) {\n        unsigned long value = number(argv[1], 50, 10000);\n        if (!value) return 1;\n        ms = (unsigned)value;\n    }\n    int fds[2];\n    if (pipe(fds)) return 1;\n    fr_scheduler_t *sched = fr_scheduler_create(2);\n    fr_process_t *proc = fr_process_create(\"idle-io\");\n    if (!sched || !proc) return 1;\n    fr_scheduler_add_process(sched, proc);\n    io_state_t *state = malloc(sizeof(*state));\n    if (!state) return 1;\n    *state = (io_state_t){fds[0], ms};\n    if (!fr_coro_spawn(proc, reader, state, sizeof(*state))) return 1;\n    io_state_t write_state = {fds[1], ms};\n    fr_thread_t *thread;\n    struct timespec cpu_start, cpu_end, wall_start, wall_end;\n    clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &cpu_start);\n    clock_gettime(CLOCK_MONOTONIC, &wall_start);\n    if (fr_thread_start(&thread, writer, &write_state)) return 1;\n    probe_begin(); fr_scheduler_run(sched); probe_end();\n    fr_thread_join(thread);\n    clock_gettime(CLOCK_MONOTONIC, &wall_end);\n    clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &cpu_end);\n    printf(\"wait_ms,wall_ms,process_cpu_ms\\n%u,%.3f,%.3f\\n\", ms,\n           elapsed(wall_start, wall_end), elapsed(cpu_start, cpu_end));\n    fr_scheduler_destroy(sched);\n    close(fds[0]); close(fds[1]);\n    return 0;\n}\n"
+  },
+  "all_runtime_source_sha256": {
+    "before": {
+      "platform.c": "d1ac2112c712f96984420ac3014a2fd93ae60e5f7b5ff1bcf95175ef6a1d7f69",
+      "scheduler.c": "85a4ffec9204ce1804f5bcb826927b1491556c61691e0714dbc2d2ced05abde0",
+      "event_loop.c": "452c61d8bcc197d220fcca334d17822416d8c231659cf94d2293a4f5e33c5856",
+      "work_queue.c": "42bf9567f03764d4b79c83496a592c958b711ff7d070d8735722fc81fcb90978",
+      "thread.c": "d8cc97546bb3d38b541a78075314df84e09677cab680354460b720d28b3b7204",
+      "ownership.c": "44c2abedd34e73013a37a78ba239d66e42fc278bbe2b2ef87cbab9e34a1e5d41",
+      "arena.c": "3d7b4035323e21c5d1b8150428e1f09f83b65420f80701bf391c3a7e453f6b30"
+    },
+    "after": {
+      "platform.c": "d1ac2112c712f96984420ac3014a2fd93ae60e5f7b5ff1bcf95175ef6a1d7f69",
+      "scheduler.c": "120df468e87497c48daf21ce9e0192512091c4deb7bf7d270fcdb23b34221b5b",
+      "event_loop.c": "452c61d8bcc197d220fcca334d17822416d8c231659cf94d2293a4f5e33c5856",
+      "work_queue.c": "42bf9567f03764d4b79c83496a592c958b711ff7d070d8735722fc81fcb90978",
+      "thread.c": "d8cc97546bb3d38b541a78075314df84e09677cab680354460b720d28b3b7204",
+      "ownership.c": "44c2abedd34e73013a37a78ba239d66e42fc278bbe2b2ef87cbab9e34a1e5d41",
+      "arena.c": "3d7b4035323e21c5d1b8150428e1f09f83b65420f80701bf391c3a7e453f6b30"
+    }
+  },
+  "tests": {
+    "release_ctest": "3/3 passed",
+    "asan_ubsan_ctest": "3/3 passed",
+    "new_regression": "mixed 1000 coroutines, 8 native tasks, 6 pipe reads; 1 and 4 workers, early and delayed writers, repeat run"
+  },
+  "benchmark_commit": "2ac8735973c3f46a482cbace3fd763e1419a6493"
+}
