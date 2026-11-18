@@ -13,7 +13,9 @@ COPY frontend/package*.json ./
 RUN npm ci
 COPY frontend ./
 COPY --from=playground /src/frontend/public/ ./public/
-RUN npm run build
+ARG ASSET_BASE=/
+RUN npm run build -- --base="$ASSET_BASE" && \
+    if [ "$ASSET_BASE" != / ]; then sed -i "s|href=\"${ASSET_BASE}logo.webp\" type=\"image/webp\"/>|href=\"/logo.webp\" type=\"image/webp\" />|" dist/index.html; fi
 FROM nginx:1.30-alpine
 COPY --from=builder /site/dist /usr/share/nginx/html
 COPY frontend/security-*.conf /etc/nginx/forge/
