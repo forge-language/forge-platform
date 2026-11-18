@@ -45,16 +45,20 @@ for name in "${names[@]}"; do
   tag=$(source_tag "$name")
   if ! digest=$(gcloud artifacts docker images describe "$tag" --project "$project" --format='value(image_summary.digest)' 2>/dev/null); then
     case "$name" in site) file=frontend/Containerfile ;; api) file=backend/Containerfile ;; repository-checker) file=repository-checker/Containerfile ;; esac
-    docker buildx build --platform=linux/amd64 --provenance=false --push -t "$tag" -f "$file" .
+    options=()
+    if [[ "$name" == site ]]; then options+=(--build-arg ASSET_BASE=https://storage.googleapis.com/forge-lang-514802-frontend/); fi
+    docker buildx build "${options[@]}" --platform=linux/amd64 --provenance=false --push -t "$tag" -f "$file" .
     digest=$(gcloud artifacts docker images describe "$tag" --project "$project" --format='value(image_summary.digest)')
   fi
   [[ "$digest" =~ ^sha256:[0-9a-f]{64}$ ]]
   image="$registry/$name@$digest"
+  if [[ "$name" == site ]]; then site_image=$image; fi
   old=$(jq -er --arg name "$name" '.spec.template.spec.containers[] | select(.name==$name) | .image' <<<"$state")
   if [[ "$image" != "$old" ]]; then updates+=(--container "$name" --image "$image"); fi
 done
 if (( ${#updates[@]} == 0 )); then
   echo "Verified source tags match all three serving image digests."
+  python3 scripts/publish-site.py "$site_image" "$commit"
   exit 0
 fi
 current_main || exit 0
@@ -75,6 +79,10 @@ check "$url"
 current_main || exit 0
 gcloud run services update-traffic "$service" "${run[@]}" --to-revisions "$candidate=100"
 if ! check "$(jq -er '.status.url' <<<"$state")"; then
+  gcloud run services update-traffic "$service" "${run[@]}" --to-revisions "$previous=100"
+  exit 1
+fi
+if ! python3 scripts/publish-site.py "$site_image" "$commit"; then
   gcloud run services update-traffic "$service" "${run[@]}" --to-revisions "$previous=100"
   exit 1
 fi
