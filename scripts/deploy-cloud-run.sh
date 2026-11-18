@@ -35,10 +35,20 @@ current_main || exit 0
 state=$(gcloud run services describe "$service" "${run[@]}" --format=json)
 previous=$(jq -er '[.status.traffic[] | select(.percent == 100)] | if length == 1 then .[0].revisionName else error("unexpected traffic split") end' <<<"$state")
 jq -e --arg previous "$previous" '
-  .status.latestReadyRevisionName == $previous and .status.latestCreatedRevisionName == $previous
+  .status.latestReadyRevisionName == .status.latestCreatedRevisionName
   and ([.spec.template.spec.containers[].name] | sort) == ["api","repository-checker","site"]
   and any(.spec.template.spec.containers[] | select(.name=="api") | .env[]; .name=="DATABASE_URL" and .valueFrom.secretKeyRef.name=="forge-neon-database-url")
 ' <<<"$state" >/dev/null
+latest=$(jq -er '.status.latestReadyRevisionName' <<<"$state")
+serving=$(jq '.spec.template.spec.containers' <<<"$state")
+if [[ "$latest" != "$previous" ]]; then
+  # A rolled-back candidate remains the latest revision even after traffic moves back.
+  serving_revision=$(gcloud run revisions describe "$previous" "${run[@]}" --format=json)
+  latest_revision=$(gcloud run revisions describe "$latest" "${run[@]}" --format=json)
+  comparable() { jq -S '.spec | .containers |= map(del(.image))' <<<"$1"; }
+  [[ "$(comparable "$serving_revision")" == "$(comparable "$latest_revision")" ]]
+  serving=$(jq '.spec.containers' <<<"$serving_revision")
+fi
 gcloud auth configure-docker "$region-docker.pkg.dev" --quiet
 updates=()
 for name in "${names[@]}"; do
@@ -53,7 +63,7 @@ for name in "${names[@]}"; do
   [[ "$digest" =~ ^sha256:[0-9a-f]{64}$ ]]
   image="$registry/$name@$digest"
   if [[ "$name" == site ]]; then site_image=$image; fi
-  old=$(jq -er --arg name "$name" '.spec.template.spec.containers[] | select(.name==$name) | .image' <<<"$state")
+  old=$(jq -er --arg name "$name" '.[] | select(.name==$name) | .image' <<<"$serving")
   if [[ "$image" != "$old" ]]; then updates+=(--container "$name" --image "$image"); fi
 done
 if (( ${#updates[@]} == 0 )); then

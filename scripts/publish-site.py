@@ -10,7 +10,7 @@ import re
 import subprocess
 import tempfile
 import time
-import urllib.request
+from email.parser import Parser
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
@@ -83,21 +83,27 @@ def publish_files(bucket, directory):
 
 
 def verify(host, digest, directory):
-    for path in ("/", "/play", "/learn", "/logo.webp", "/playground/runner.html", "/playground/compiler.wasm"):
-        local = directory / ("index.html" if path in ("/", "/play", "/learn") else path.lstrip("/"))
-        for attempt in range(12):
-            with urllib.request.urlopen(host + path, timeout=30) as response:
-                if response.headers.get("X-Forge-Site-Revision") == digest:
-                    if response.read() != local.read_bytes():
+    with tempfile.TemporaryDirectory(prefix="forge-probe-") as temporary:
+        header_file = Path(temporary) / "headers"
+        body_file = Path(temporary) / "body"
+        for path in ("/", "/play", "/learn", "/logo.webp", "/playground/runner.html", "/playground/compiler.wasm"):
+            local = directory / ("index.html" if path in ("/", "/play", "/learn") else path.lstrip("/"))
+            for attempt in range(12):
+                subprocess.run(["curl", "--fail", "--silent", "--show-error", "--max-time", "30",
+                                "--dump-header", str(header_file), "--output", str(body_file),
+                                host + path], check=True)
+                last_header = header_file.read_text().strip().rsplit("\n\n", 1)[-1]
+                headers = Parser().parsestr(last_header.partition("\n")[2])
+                if headers.get("X-Forge-Site-Revision") == digest:
+                    if body_file.read_bytes() != local.read_bytes():
                         raise RuntimeError("Public content differs from the image: " + path)
-                    csp = response.headers.get("Content-Security-Policy", "")
                     required = "sandbox allow-scripts" if path.endswith("/runner.html") else "default-src 'self'"
-                    if required not in csp:
+                    if required not in headers.get("Content-Security-Policy", ""):
                         raise RuntimeError("Missing expected CSP: " + path)
                     break
-            time.sleep(3)
-        else:
-            raise RuntimeError("Public Worker did not serve the expected image on " + host + path)
+                time.sleep(3)
+            else:
+                raise RuntimeError("Public Worker did not serve the expected image on " + host + path)
 
 
 def is_main(commit):
