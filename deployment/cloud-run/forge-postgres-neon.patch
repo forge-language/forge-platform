@@ -1,0 +1,31 @@
+--- a/src/bridge.c
++++ b/src/bridge.c
+@@ -101,7 +101,10 @@
+         p->busy[i] = 1;
+         Connection *c = p->conns[i];
+         pthread_mutex_unlock(&p->mutex);
+-        if (!c->pg || PQstatus(c->pg) != CONNECTION_OK) {
++        int alive = c->pg && PQconsumeInput(c->pg);
++        PGresult *pending = alive ? PQgetResult(c->pg) : NULL;
++        if (pending) { PQclear(pending); alive = 0; }
++        if (!alive || !PQconsumeInput(c->pg) || PQstatus(c->pg) != CONNECTION_OK) {
+           /* A reset creates a new server session: none of its named statements
+            * survive. Discard metadata before reconnecting, even if reset fails. */
+           prepared_forget(c);
+--- a/tests/prepared.c
++++ b/tests/prepared.c
+@@ -156,6 +156,14 @@
+   result = fpg_query_prepared(conn, "SELECT 42", 0); success(result);
+   CHECK(strcmp(fpg_value(result, 0, 0), "42") == 0); fpg_clear(result);
+   CHECK(prepared_count(conn) == 1);
++  result = fpg_query(conn, "SELECT pg_backend_pid()", 0); success(result);
++  snprintf(terminate, sizeof(terminate), "SELECT pg_terminate_backend(%s,1000)", fpg_value(result, 0, 0));
++  fpg_clear(result);
++  CHECK(fpg_release(pool, conn));
++  command(control, terminate);
++  conn = fpg_acquire(pool); CHECK(conn);
++  result = fpg_query_prepared(conn, "SELECT 42", 0); success(result);
++  CHECK(strcmp(fpg_value(result, 0, 0), "42") == 0); fpg_clear(result);
+   /* Unsupported unfinished COPY cannot poison a future lease. */
+   command(conn, "CREATE TEMP TABLE prepared_copy(value text)");
+   result = fpg_exec(conn, "COPY prepared_copy FROM STDIN");

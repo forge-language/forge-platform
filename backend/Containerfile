@@ -1,7 +1,9 @@
 FROM alpine:3.23 AS builder
-RUN apk add --no-cache build-base cmake pkgconf postgresql-dev json-c-dev libmicrohttpd-dev curl-dev openssl-dev hiredis-dev libarchive-dev
+RUN apk add --no-cache build-base cmake pkgconf libpq-dev json-c-dev libmicrohttpd-dev curl-dev openssl-dev hiredis-dev libarchive-dev
 WORKDIR /src
 COPY vendor vendor
+COPY deployment/cloud-run/forge-postgres-neon.patch /tmp/forge-postgres-neon.patch
+RUN patch -p1 -d vendor/forge-postgres < /tmp/forge-postgres-neon.patch
 COPY backend backend
 COPY cli cli
 COPY scripts/build.sh scripts/build.sh
