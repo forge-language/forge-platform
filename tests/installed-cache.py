@@ -133,14 +133,6 @@ def main():
         def execute(command, cwd=root, timeout=180):
             result = subprocess.run([str(part) for part in command], cwd=cwd, env=env,
                                     text=True, capture_output=True, timeout=timeout)
-            if result.returncode and list(command)[-2:] == ['pkg', 'install']:
-                for stage in sorted((cwd / '.forge').glob('staging-*')):
-                    print("Package staging diagnostics", flush=True)
-                    for options in (['rev-parse', 'HEAD'], ['config', '--local', '--name-only', '--list'],
-                                    ['status', '--porcelain'], ['ls-files', '--others']):
-                        diagnostic = subprocess.run(['git', *options], cwd=stage, env=env,
-                                                    capture_output=True, text=True, timeout=10)
-                        print(options, diagnostic.returncode, diagnostic.stdout[:1800], flush=True)
             require(result.returncode == 0,
                     f'Command failed: {command}\n{result.stdout}\n{result.stderr}')
             return result.stdout
