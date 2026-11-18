@@ -13,7 +13,7 @@ fn migrations(conn: int): int {
 fn run(): int {
     web.scope_begin();
     if (web.chars(web.env("DATABASE_URL", "")) == 0 || web.chars(web.env("JWT_SECRET", "")) == 0) { println("DATABASE_URL and JWT_SECRET are required"); web.scope_end(); return 1; }
-    let pool: int = postgres.pool_open(web.env("DATABASE_URL", ""), 5);
+    let pool: int = postgres.pool_open(web.env("DATABASE_URL", ""), web.integer(web.parse(web.env("DATABASE_POOL_SIZE", "5"))));
     if (pool == 0) { println("PostgreSQL connection failed"); web.scope_end(); return 1; }
     let conn: int = postgres.acquire(pool);
     let ready: int = migrations(conn);
