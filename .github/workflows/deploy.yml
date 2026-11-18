@@ -1,0 +1,51 @@
+name: Deploy Forge Cloud Run
+on:
+  workflow_run:
+    workflows: [Forge platform, Learning experience]
+    types: [completed]
+    branches: [main]
+permissions: {}
+concurrency:
+  group: forge-cloud-run-production
+  cancel-in-progress: false
+jobs:
+  release:
+    if: github.event.workflow_run.event == 'push' && github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_repository.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    permissions:
+      contents: read
+      actions: read
+      id-token: write
+    steps:
+      - name: Check both CI workflows on the current main commit
+        id: gate
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SHA: ${{ github.event.workflow_run.head_sha }}
+        run: |
+          set -euo pipefail
+          ref=$(gh api "repos/$GITHUB_REPOSITORY/git/ref/heads/main" --jq '.object.sha')
+          if [[ "$ref" != "$SHA" ]]; then exit 0; fi
+          for workflow in check.yml learning.yml; do
+            result=$(gh api --method GET "repos/$GITHUB_REPOSITORY/actions/workflows/$workflow/runs" -f branch=main -f event=push -f head_sha="$SHA" --jq '.workflow_runs | max_by(.id) | .conclusion')
+            if [[ "$result" != success ]]; then exit 0; fi
+          done
+          echo "deploy=true" >> "$GITHUB_OUTPUT"
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        if: steps.gate.outputs.deploy == 'true'
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+          submodules: recursive
+          persist-credentials: false
+      - uses: google-github-actions/auth@7c6bc770dae815cd3e89ee6cdf493a5fab2cc093
+        if: steps.gate.outputs.deploy == 'true'
+        with:
+          project_id: forge-lang-514802
+          workload_identity_provider: projects/194762369722/locations/global/workloadIdentityPools/forge-actions/providers/github
+          service_account: forge-deploy@forge-lang-514802.iam.gserviceaccount.com
+      - uses: google-github-actions/setup-gcloud@aa5489c8933f4cc7a4f7d45035b3b1440c9c10db
+        if: steps.gate.outputs.deploy == 'true'
+      - name: Publish changed container images and verify the candidate revision
+        if: steps.gate.outputs.deploy == 'true'
+        run: bash scripts/deploy-cloud-run.sh

@@ -1,4 +1,9 @@
 # Forge Platform
+
+## Cloud Run delivery
+
+Main pushes run the Forge platform and learning checks. After both pass, the [deployment workflow](.github/workflows/deploy.yml) reuses Artifact Registry digests for unchanged source trees and builds changed Cloud Run containers. It checks the candidate origin before moving traffic and restores the previous revision if the post-deploy origin probe fails. The runtime service account, secret references, database and release bucket are managed separately. Public Cloudflare assets have a separate release path.
+
 ## Learn Forge and connect your editor
 
 Start with the [eight-lesson browser course](https://forge-lang.org/learn).
