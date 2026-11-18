@@ -48,4 +48,6 @@ jobs:
         if: steps.gate.outputs.deploy == 'true'
       - name: Publish changed container images and verify the candidate revision
         if: steps.gate.outputs.deploy == 'true'
-        run: bash scripts/deploy-cloud-run.sh
+        run: |
+          python3 -m pip install google-cloud-storage==3.4.1
+          bash scripts/deploy-cloud-run.sh
