@@ -13,6 +13,37 @@ Official site: [forge-lang.org](https://forge-lang.org) ·
 [Roadmap](ROADMAP.md) · [RFC process](RFC_PROCESS.md) ·
 [First contribution candidates](GOOD_FIRST_ISSUES.md) · [Code of conduct](CODE_OF_CONDUCT.md).
 
+[Design principles](docs/design-principles.md) turn these goals into implementation
+rules: preserve observable behavior, make resource costs explicit, protect
+concurrent progress and support performance claims with reproducible measurements.
+
+## Try Forge on a UTF-8 log
+
+A telemetry collector and its JavaScript dashboard can share the same alert
+rule. The [log example](examples/log_alerts.fg) counts records beginning with
+`WARN ` or `오류 `. It scans one byte view of the buffer, so a warning mentioned
+inside a message does not count and the code needs no substring per line.
+
+With the Release build below and Node on your path, run the same file three ways:
+
+```sh
+./build/bin/log_alerts
+./build/bin/forge examples/log_alerts.fg --emit-js -o build/log_alerts.js
+node build/log_alerts.js
+./build/bin/forge-stage2 examples/log_alerts.fg --check
+./build/bin/forge-stage2 examples/log_alerts.fg --forge-root "$PWD/build" -o build/alerts-fg
+./build/alerts-fg
+```
+
+Each executable and the Node program print `alerts=3`. To try the language
+inside an existing C application, the [external CMake example](docs/examples/external_project.md)
+calls a Forge function through its generated C header.
+
+On a generated 100,000-record input, the Node version of this filter took
+114 ms, down from 220 ms at compiler revision `642aea4` (25 alternating
+pairs on one Linux host). The [measurement report and raw samples](https://github.com/forge-language/forge-benchmarks/blob/c62b2832f1228825d64c5bda0a660ff63e4b8008/docs/compiler/utf8-toolchain-2026-11-19.md)
+include the input, reproduction commands and cases with little change.
+
 ## Repositories
 
 Each component lives in its own repository and directory under the
